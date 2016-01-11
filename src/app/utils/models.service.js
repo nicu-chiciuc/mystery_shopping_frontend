@@ -10,6 +10,7 @@
     var modelsFactory = {
       projects: projects,
       questionnaires: questionnaires,
+      clients: clients,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
       manager: modelManager
@@ -24,6 +25,10 @@
 
     function questionnaires () {
       return Restangular.service('questionnaires');
+    }
+
+    function clients () {
+      return Restangular.service('clients');
     }
 
     function restangularizeElement ( object, model ) {
