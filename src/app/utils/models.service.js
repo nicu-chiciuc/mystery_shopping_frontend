@@ -31,13 +31,13 @@
       return Restangular.service('clients');
     }
 
-    function restangularizeElement ( object, model ) {
-      Restangular.restangularizeElement(null, object, model);
+    function restangularizeElement ( parent, object, model ) {
+      Restangular.restangularizeElement(parent, object, model);
       return object;
     }
 
-    function restangularizeCollection ( object, model ) {
-      Restangular.restangularizeCollection(null, object, model);
+    function restangularizeCollection ( parent, object, model ) {
+      Restangular.restangularizeCollection(parent, object, model);
       return object;
     }
   }
