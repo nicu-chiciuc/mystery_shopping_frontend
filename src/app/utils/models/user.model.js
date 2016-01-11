@@ -4,10 +4,10 @@
 
   angular
     .module('spark')
-    .factory('QuestionnaireModel', QuestionnaireModel);
+    .factory('UserModel', UserModel);
 
   /** @ngInject */
-  function QuestionnaireModel () {
+  function UserModel() {
     var Model = {
       initialize: initialize
     };
@@ -16,7 +16,8 @@
 
 
     function initialize () {
-      var questionnaire = this;
+      var user = this;
     }
+
   }
 })();
