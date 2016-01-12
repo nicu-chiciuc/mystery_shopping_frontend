@@ -3,10 +3,10 @@
 
   angular
     .module('spark')
-    .directive('acmeNavbar', acmeNavbar);
+    .directive('msNavbar', msNavbar);
 
   /** @ngInject */
-  function acmeNavbar() {
+  function msNavbar() {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/navbar/navbar.html',
