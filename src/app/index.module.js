@@ -12,7 +12,9 @@
       'ngMaterial',
       'LocalStorageModule',
       'pascalprecht.translate',
-      'toastr'
+      'toastr',
+      'formly',
+      'formlyMaterial'
     ]);
 
 })();
