@@ -4,7 +4,7 @@
   angular
     .module('spark', [
       'ngCookies',
-      'ngTouch',
+      //'ngTouch',
       'ngSanitize',
       'ngMessages',
       'restangular',
