@@ -6,14 +6,15 @@
     .controller('CompanyFormController', CompanyFormController);
 
   /** @ngInject */
-  function CompanyFormController ( $log, $filter, company ) {
+  function CompanyFormController ( $log, $filter, company, user ) {
     $log.debug('Entered CompanyFormController');
 
     var vm = this;
 
     $log.debug(company);
 
-    vm.company = {};
+    vm.company = company;
+    vm.user = user;
     vm.submit = function () {};
 
     vm.companyFields = [
