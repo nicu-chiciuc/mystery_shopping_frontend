@@ -9,7 +9,9 @@
   /** @ngInject */
   function UserModel() {
     var Model = {
-      initialize: initialize
+      initialize: initialize,
+      hasRole: hasRole,
+      hasAnyRole: hasAnyRole
     };
 
     return Model;
@@ -17,6 +19,14 @@
 
     function initialize () {
       var user = this;
+    }
+
+    function hasRole ( role ) {
+
+    }
+
+    function hasAnyRole ( roles ) {
+
     }
 
   }

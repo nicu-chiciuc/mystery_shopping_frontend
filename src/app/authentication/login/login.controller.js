@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /** @ngInject */
-  function LoginController($location, $log, Authentication, AuthToken) {
+  function LoginController($scope, $state, $log, Authentication, principal) {
     var vm = this;
 
     vm.login = login;
@@ -15,14 +15,20 @@
 
     function activate() {
       // If the user is authenticated, they should not be here.
-      if (AuthToken.isAuthenticated()) {
-        $location.url('/');
-      }
+      //if (AuthToken.isAuthenticated()) {
+      //  $location.url('/');
+      //}
     }
 
     function login() {
       Authentication.login(vm.email, vm.password)
-        .then(null, function (error) { $log.error(error); });
+        .then(
+          function ( user ) { principal.authenticate(user); },
+          function ( error ) { $log.error(error); }
+        );
+
+      if ($scope.returnToState) $state.go($scope.returnToState.name, $scope.returnToStateParams);
+      else $state.go('home');
     }
   }
 })();
