@@ -14,8 +14,8 @@
     activate();
 
     function activate() {
-      $log.debug('Activating companies.new state');
-      $state.go('projects.create');
+      //$log.debug('Activating companies.new state');
+      //$state.go('projects.create');
     }
 
   }

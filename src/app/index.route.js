@@ -24,7 +24,8 @@
           user: function ( authorization ) {
             authorization.authorize();
           }
-        }
+        },
+        controller: 'SideMenuController as vm'
         //onEnter: function ($log, user) {
         //  $log.debug('OnEnter event');
         //  $log.debug(user);
