@@ -34,6 +34,14 @@
           //  user.close();
           //}
       })
+      .state('accessdenied', {
+        parent: 'authenticated',
+        url: '/denied',
+        data: {
+          roles: []
+        },
+        templateUrl: 'denied.html'
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'app/authentication/login/login.html',
@@ -72,6 +80,9 @@
         resolve: {
           company: function () { return {}; }
         },
+        data: {
+          roles: []
+        },
         url: '/companies',
         templateUrl: 'app/clients/companies/list/company_list.html',
         controller: 'CompanyFormController as vm'
@@ -87,7 +98,7 @@
         templateUrl: 'app/projects/projects.html',
         controller: 'ProjectController as vm',
         resolve: {
-          projects: function ( models ) { return models.projects().getList(); }
+          projects: function ( models ) { return []; return models.projects().getList(); }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
@@ -96,14 +107,26 @@
       .state('projects.create', {
         url: '/new',
         templateUrl: 'app/projects/new/project-initial-form.html',
+        resolve: {
+          clients: function ( models ) { return models.clients().getList(); },
+          projectManagers: function ( models ) { return models.projectManagers().getList(); },
+          projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
+          questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
+          scripts: function ( models ) { return models.scripts().getList(); },
+          project: function () { return {}; }
+        },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         },
         controller: 'ProjectFormController as vm'
       })
       .state('projects.create.methodology', {
-        url: '/new',
+        url: '/methodology',
         templateUrl: 'app/projects/new/project-methodology-form.html',
+        //resolve: {
+          //questionnaireTemplates: function ( models ) { return []; return models.questionnaireTemplates().getList(); },
+          //scripts: function ( models ) { return models.scripts().getList(); }
+        //},
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         },
@@ -132,16 +155,6 @@
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         },
         controller: 'ProjectFormController as vm'
-      })
-      .state('clients.edit', {
-        url: '/{id:int}/edit',
-        templateUrl: 'app/clients/edit/client-form.html',
-        controller: 'ClientFormController as vm'
-      })
-      .state('clients.detail', {
-        url: '/{id:int}',
-        templateUrl: 'app/clients/detail/client-detail.html',
-        controller: 'ClientController as vm'
       })
 
     ;

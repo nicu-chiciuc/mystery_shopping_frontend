@@ -6,7 +6,12 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock ( $rootScope, $state, $stateParams, $log, Restangular, modelManager, authorization ) {
+  function runBlock ( $rootScope, $state, $stateParams, $log, formlyConfig, Restangular, modelManager, authorization, principal ) {
+
+    formlyConfig.setType({
+      name: 'checkbox-list',
+      templateUrl: 'app/utils/formly_templates/checkbox-list-template.html'
+    });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
       // track the state the user wants to go to; authorization service needs this

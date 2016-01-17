@@ -72,6 +72,7 @@
         _identity.user = angular.extend(_identity.user, models.manager.UserModel);
       }
 
+      _identity = {name: 'Iulian', roles: ['tenantproductmanager']};
       this.authenticate(_identity);
       deferred.resolve(_identity);
 

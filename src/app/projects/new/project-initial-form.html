@@ -1,0 +1,11 @@
+<div layout-gt-sm="row">
+  <formly-form model="vm.project" fields="vm.projectInitialFields">
+    <md-button type="submit" class="md-raised md-primary" ng-click="vm.submit(vm.project)">
+      Submit
+    </md-button>
+  </formly-form>
+</div>
+
+<md-button ui-sref="projects.create.methodology">Go to methodology</md-button>
+
+<div ui-view></div>

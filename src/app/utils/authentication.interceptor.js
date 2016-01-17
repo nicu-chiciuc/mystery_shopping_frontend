@@ -6,7 +6,7 @@
     .factory('AuthenticationInterceptor', AuthenticationInterceptor);
 
   /** @ngInject */
-  function AuthenticationInterceptor( $log, AuthToken ) {
+  function AuthenticationInterceptor( $log, authStorage ) {
     var interceptor = {
       request: addToken
     };
@@ -14,9 +14,9 @@
     return interceptor;
 
     function addToken(config) {
-      var authObject = AuthToken.getAuthenticatedAccount();
+      var authObject = authStorage.getAuthenticatedAccount();
 
-      $log.debug(authObject);
+      //$log.debug(authObject);
 
       if (angular.isDefined(authObject) && angular.isDefined(authObject.token)) {
         config.headers = config.headers || {};

@@ -11,6 +11,10 @@
       projects: projects,
       questionnaires: questionnaires,
       clients: clients,
+      projectManagers: projectManagers,
+      projectWorkers: projectWorkers,
+      questionnaireTemplates: questionnaireTemplates ,
+      scripts: scripts,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
       manager: modelManager
@@ -28,7 +32,23 @@
     }
 
     function clients () {
-      return Restangular.service('clients');
+      return Restangular.service('companies');
+    }
+
+    function projectManagers () {
+      return Restangular.service('tenantprojectmanagers');
+    }
+
+    function projectWorkers () {
+      return Restangular.service('projectworkers');
+    }
+
+    function questionnaireTemplates () {
+      return Restangular.service('questionnairetemplates');
+    }
+
+    function scripts () {
+      return Restangular.service('scripts');
     }
 
     function restangularizeElement ( parent, object, model ) {
