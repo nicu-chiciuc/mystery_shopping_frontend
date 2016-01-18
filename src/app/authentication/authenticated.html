@@ -2,12 +2,6 @@
             md-component-id="left"
             md-is-locked-open="$mdMedia('gt-sm')">
 
-  <ul class="skip-links">
-    <li class="md-whiteframe-z2">
-      <md-button ng-click="focusMainContent($event)" href="#">Skip to content</md-button>
-    </li>
-  </ul>
-
   <md-content flex role="navigation">
     <ul class="docs-menu">
       <li ng-repeat="section in sideMenu.sections" class="parent-list-item {{section.className || ''}}" ng-class="{'parentActive' : isSectionSelected(section)}">
@@ -29,3 +23,14 @@
     </ul>
   </md-content>
 </md-sidenav>
+
+<div layout="column" tabIndex="-1" role="main" flex>
+  <md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar">
+
+  </md-toolbar>
+
+  <md-content md-scroll-y layout="column" flex>
+    <div ui-view></div>
+  </md-content>
+
+</div>

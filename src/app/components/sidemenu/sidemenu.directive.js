@@ -9,6 +9,7 @@
   function sideMenu ( $rootScope, $state, $location ) {
     var sections = [];
 
+    // Project Management section
     sections.push({
       name: 'Project Management',
       type: 'heading',
@@ -18,24 +19,32 @@
           type: 'toggle',
           pages: [
             {
-              name: 'New',
-              url: 'projects/new',
+              name: 'New project',
+              state: 'projects.create',
               type: 'link'
             },
             {
-              name : 'List',
-              url: 'projects/',
+              name : 'List projects',
+              state: 'projects',
               type: 'link'
             }
           ]
-        },
+        }
+      ]
+    });
+
+    // Client Management section
+    sections.push({
+      name: 'Client Management',
+      type: 'heading',
+      children: [
         {
-          name: 'Client Management',
+          name: 'Clients',
           type: 'toggle',
           pages: [
             {
-              name: 'Clients',
-              url: 'clients',
+              name: 'New client',
+              state: 'companies.new',
               type: 'link'
             }
           ]
@@ -45,7 +54,7 @@
 
     var self;
 
-    $rootScope.$on('$locationChangeSuccess', onLocationChange);
+    $rootScope.$on('$stateChangeSuccess', onStateChange);
 
     return self = {
       sections: sections,
@@ -69,22 +78,9 @@
       }
     };
 
-    function onLocationChange() {
-      var path = $location.path();
-      var introLink = {
-        name: "Introduction",
-        url:  "/",
-        type: "link"
-      };
-
-      if (path == '/') {
-        self.selectSection(introLink);
-        self.selectPage(introLink, introLink);
-        return;
-      }
-
+    function onStateChange() {
       var matchPage = function(section, page) {
-        if (path.indexOf(page.url) !== -1) {
+        if ($state.current.name === page.state) {
           self.selectSection(section);
           self.selectPage(section, page);
         }
