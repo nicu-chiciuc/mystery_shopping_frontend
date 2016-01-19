@@ -10,6 +10,17 @@
       "period_end": "2016-01-24T22:00:00.000Z",
       "project_manager": 2,
       "id": 1
+    },
+    {
+      "consultants": [
+        1,
+        2
+      ],
+      "company": 4,
+      "period_start": "2015-12-31T22:00:00.000Z",
+      "period_end": "2016-01-31T22:00:00.000Z",
+      "project_manager": 1,
+      "id": 2
     }
   ],
   "companies": [
