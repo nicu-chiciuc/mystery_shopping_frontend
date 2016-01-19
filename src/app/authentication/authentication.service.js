@@ -37,18 +37,6 @@
 
     function login(email, password) {
       return $http.post(urls.DOMAIN_URL + 'api-token-auth/', {email: email, password: password});
-        //.then(loginSuccessFn, loginErrorFn);
-
-      function loginSuccessFn( response ) {  // data, status, headers, config
-        AuthToken.setAuthenticatedAccount(response.data);
-
-        window.location = '/';
-      }
-
-      function loginErrorFn() {  // data, status, headers, config
-        // TODO deal with the error
-        toastr.error('Incorrect email or password.', 'Error!');
-      }
     }
 
     function logout() {

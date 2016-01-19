@@ -1,6 +1,5 @@
-<div layout-fill>
-  <ms-navbar></ms-navbar>
-  <md-content>
+
+  <md-content flex layout="row">
 
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
       <md-toolbar class="md-theme-indigo">
@@ -17,18 +16,17 @@
       </md-content>
     </md-sidenav>
 
+    <div>
+      <div layout="row">
+        <div flex>First item in row</div>
+        <div flex="20">Second item in row</div>
+      </div>
+      <div layout="column">
+        <div flex="66">First item in column</div>
+        <div flex="33">Second item in column</div>
+      </div>
+    </div>
+
   </md-content>
 
-  <div>
-    <div layout="row">
-      <div flex>First item in row</div>
-      <div flex="20">Second item in row</div>
-    </div>
-    <div layout="column">
-      <div flex="66">First item in column</div>
-      <div flex="33">Second item in column</div>
-    </div>
-  </div>
-
   <div ui-view></div>
-</div>
