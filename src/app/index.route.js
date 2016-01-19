@@ -96,14 +96,48 @@
       .state('projects', {
         parent: 'authenticated',
         url: '/projects',
-        templateUrl: 'app/projects/projects.html',
+        templateUrl: 'app/projects/list/project-list.html',
         controller: 'ProjectController as vm',
         resolve: {
-          projects: function ( models ) { return []; return models.projects().getList(); }
+          projects: function ( models ) { return models.projects().getList(); }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         }
+      })
+      .state('projects.edit', {
+        url: '/{id:int}',
+        templateUrl: 'app/projects/edit/project-edit-form.html',
+        views: {
+          initial: {
+            templateUrl: 'app/projects/new/project-initial-form.html',
+            controller: 'ProjectFormController as vm',
+            resolve: {
+              clients: function ( models ) { return models.clients().getList(); },
+              projectManagers: function ( models ) { return models.projectManagers().getList(); },
+              projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
+              questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
+              scripts: function ( models ) { return models.scripts().getList(); },
+              project: function ( $stateParams, models ) { return models.projects().one($stateParams.id).get(); }
+            }
+          },
+          methodology: {
+            templateUrl: 'app/projects/new/project-methodology-form.html',
+            controller: 'ProjectMethodologyFormController as vm',
+            resolve: {
+              clients: function ( models ) { return models.clients().getList(); },
+              projectManagers: function ( models ) { return models.projectManagers().getList(); },
+              projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
+              questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
+              scripts: function ( models ) { return models.scripts().getList(); },
+              project: function ( $stateParams, models ) { return models.projects().one($stateParams.id).get(); }
+            }
+          }
+        },
+        data: {
+          roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
+        },
+        controller: 'ProjectController as vm'
       })
       .state('projects.create', {
         url: '/new',
