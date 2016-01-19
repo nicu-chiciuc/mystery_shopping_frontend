@@ -6,9 +6,15 @@
     .config(config);
 
   /** @ngInject */
-  function config ( $httpProvider, $logProvider, toastrConfig, RestangularProvider, localStorageServiceProvider, $translateProvider, urls ) {
+  function config ( $httpProvider, $logProvider, toastrConfig, RestangularProvider, localStorageServiceProvider, $translateProvider, urls, $mdThemingProvider ) {
     // Enable log
     $logProvider.debugEnabled(true);
+
+    // Configure angular-material theme
+    $mdThemingProvider.theme('default')
+      .primaryPalette('blue')
+      .accentPalette('orange')
+      .warnPalette('red');
 
     // Tell translate to use messageFormatInterpolation
     $translateProvider.useSanitizeValueStrategy('escape');

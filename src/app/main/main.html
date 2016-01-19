@@ -1,30 +1,56 @@
 
-  <md-content flex layout="row">
+  <md-content layout="row" layout-padding>
 
-    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-      <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">Sidenav Left</h1>
-      </md-toolbar>
-      <md-content layout-padding>
-        <md-button class="md-primary" hide-gt-md>
-          Close Sidenav Left
-        </md-button>
-        <p hide-md show-gt-md>
-          This sidenav is locked open on your device. To go back to the default behavior,
-          narrow your display.
-        </p>
-      </md-content>
-    </md-sidenav>
+    <div ng-cloak class="md-inline-form" flex>
+          <form name="projectForm">
+            <!--<div layout-gt-xs="row">-->
 
-    <div>
-      <div layout="row">
-        <div flex>First item in row</div>
-        <div flex="20">Second item in row</div>
-      </div>
-      <div layout="column">
-        <div flex="66">First item in column</div>
-        <div flex="33">Second item in column</div>
-      </div>
+              <md-input-container class="md-block" flex-gt-xs>
+                <label>{{ 'PROJECT.CLIENT' | translate}}</label>
+                <md-select ng-model="vm.project.company">
+                  <md-option ng-repeat="company in ['Iulian', 'Olea']" value="{{company}}">
+                    {{ company }}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+
+              <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="projectStartDate">{{ 'PROJECT.START_DATE' | translate }}</label>
+              <div>
+                <md-datepicker id="projectStartDate" ng-model="vm.project.period_start" md-placeholder="{{ 'PROJECT.PLACEHOLDER.START_DATE' | translate }}">
+                </md-datepicker>
+              </div>
+
+              <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="projectEndDate">{{ 'PROJECT.END_DATE' | translate }}</label>
+            <div>
+              <md-datepicker id="projectEndDate" ng-model="vm.project.period_end" md-placeholder="{{ 'PROJECT.PLACEHOLDER.END_DATE' | translate }}">
+              </md-datepicker>
+            </div>
+
+            <!--</div>-->
+
+
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Project Manager</label>
+                <md-select ng-model="user.project_manager">
+                  <md-option ng-repeat="pm in ['Iulian', 'Olea']" value="{{pm}}">
+                    {{pm}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+
+              <div class="md-block" flex-gt-sm>
+                <fieldset class="standard md-block" >
+                  <legend>List of consultants</legend>
+                  <div layout="row" layout-wrap flex>
+                    <div flex="50" ng-repeat="item in [1,2,3,4,5]">
+                      <md-checkbox >
+                        {{ item }}
+                      </md-checkbox>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+          </form>
     </div>
 
   </md-content>

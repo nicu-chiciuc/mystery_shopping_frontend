@@ -83,6 +83,27 @@ section.jumbotron h1 {
   width: 100px;
 }
 
+fieldset {
+  border-style: solid;
+  border-width: 1px;
+  height: 100%;
+}
+
+.validation-messages {
+  font-size: 12px;
+  color: rgb(213, 0, 0);
+  margin: 5px 0;
+}
+
+.margin-left-xs {
+  margin-left: 5px;
+}
+.margin-left-sm {
+  margin-left: 12px;
+}
+.margin-left-md {
+  margin-left: 24px;
+}
 
 /************
  * DOCS MENU

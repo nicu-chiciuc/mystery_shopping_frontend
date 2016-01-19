@@ -6,13 +6,19 @@
     .controller('ProjectFormController', ProjectFormController);
 
   /** @ngInject */
-  function ProjectFormController ( $log, $filter, project, clients, projectManagers, projectWorkers, questionnaireTemplates, scripts ) {
+  function ProjectFormController ( $scope, $log, $filter, $state, models, project, clients, projectManagers, projectWorkers, questionnaireTemplates, scripts ) {
     $log.debug('Entered ProjectFormController');
     $log.debug('Project object equals to:');
     $log.debug(project);
     var vm = this;
 
-    vm.submit = function () {};
+    vm.clients = clients;
+    vm.projectManagers = projectManagers;
+    vm.projectWorkers = projectWorkers;
+    vm.questionnaireTemplates = questionnaireTemplates;
+    vm.scripts = scripts;
+
+    vm.saveProject = saveProject;
     vm.checkboxListToggle = checkboxListToggle;
     vm.checkboxListState = checkboxListState;
 
@@ -23,12 +29,20 @@
       {
         key: 'client',
         type: 'select',
+        className: 'md-block',
         templateOptions: {
           label: $filter('translate')('PROJECT.CLIENT'),
           labelProp: 'name',
           valueProp: 'id',
-          options: clients
-          //placeholder: $filter('translate')('COMPANY.PLACEHOLDER.INDUSTRY')
+          options: clients,
+          required: true,
+          flexGtXs: ''
+        },
+        ngModelAttrs: {
+          flexGtXs: {
+            bound: 'ng-flex-gt-xs',
+            attribute: 'flex-gt-xs'
+          }
         }
       },
       {
@@ -36,7 +50,8 @@
         key: 'period_start',
         templateOptions: {
           placeholder: $filter('translate')('PROJECT.PLACEHOLDER.START_DATE'),
-          label: $filter('translate')('PROJECT.START_DATE')
+          label: $filter('translate')('PROJECT.START_DATE'),
+          required: true
         }
       },
       {
@@ -44,7 +59,8 @@
         key: 'period_end',
         templateOptions: {
           placeholder: $filter('translate')('PROJECT.PLACEHOLDER.END_DATE'),
-          label: $filter('translate')('PROJECT.END_DATE')
+          label: $filter('translate')('PROJECT.END_DATE'),
+          required: true
         }
       },
       {
@@ -54,14 +70,15 @@
           label: $filter('translate')('PROJECT.PROJECT_MANAGER'),
           labelProp: 'name',
           valueProp: 'id',
-          options: projectManagers
+          options: projectManagers,
+          required: true
         }
       },
       {
         key: "consultants",
         type: "checkbox-list",
         templateOptions: {
-          label: $filter('translate')('PROJECT.CONSULTANTS'),
+          legend: $filter('translate')('PROJECT.CONSULTANTS'),
           labelProp: 'name',
           valueProp: 'id',
           options: projectWorkers,
@@ -106,20 +123,40 @@
     activate();
 
     function activate() {
+      _.forEach()
     }
 
-    function checkboxListToggle ( item, list ) {
-      console.log(item);
-      console.log(list);
-      var idx = list.indexOf(item);
+    function saveProject ( project, formIsValid, nextState ) {
+      console.log($scope);
+      if (formIsValid) {
+        project = models.restangularizeElement(null, project, 'projects');
+        project.post().then(saveProjectSuccessFn, saveProjectErrorFn);
+      }
+
+      function saveProjectSuccessFn () {
+        $state.go(nextState);
+      }
+      function saveProjectErrorFn () {
+        // TODO deal with the error
+      }
+    }
+
+    function checkboxListToggle ( item, list, itemKey ) {
+      //console.log(item);
+      //console.log(list);
+      //console.log(itemKey);
+      var value = itemKey ? item[itemKey] : item;
+      var idx = list.indexOf(value);
       if (idx > -1) list.splice(idx, 1);
-      else list.push(item);
+      else
+        list.push(value);
     }
 
-    function checkboxListState (item, list) {
-      console.log(item);
-      console.log(list);
-      return list.indexOf(item) > -1;
+    function checkboxListState (item, list, itemKey) {
+      //console.log(item);
+      //console.log(list);
+      var value = itemKey ? item[itemKey] : item;
+      return list.indexOf(value) > -1;
     }
   }
 })();

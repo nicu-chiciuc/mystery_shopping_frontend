@@ -1,18 +1,21 @@
-<div>
   <!--
     In IE, we cannot apply flex directly to <fieldset>
     @see https://github.com/philipwalton/flexbugs#9-some-html-elements-cant-be-flex-containers
   -->
+  <fieldset>
+    <legend ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}">
+      {{ to.legend }}
+    </legend>
     <div layout="row" layout-wrap flex>
-      <div flex="50" ng-repeat="option in options.templateOptions.options">
-        <md-checkbox ng-checked="options.templateOptions.selectedStateFn(option, model[options.key])"
-                     ng-click="options.templateOptions.clickActionFn(option, model[options.key])"
+      <div flex="100" flex-gt-sm="50" flex-gt-md="33" ng-repeat="option in to.options">
+        <md-checkbox ng-checked="to.selectedStateFn(option, model[options.key], to.valueProp)"
+                     ng-click="to.clickActionFn(option, model[options.key], to.valueProp)"
                      formly-dynamic-name="id + '_'+ $index"
                      id="{{id + '_'+ $index}}"
                      aria-describedby="{{id}}_description"
                      ng-required="options.required">
-          {{ option[options.templateOptions.labelProp] }}
+          {{ option[to.labelProp] }}
         </md-checkbox>
       </div>
     </div>
-</div>
+  </fieldset>

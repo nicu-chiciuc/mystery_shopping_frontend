@@ -1,11 +1,123 @@
-<div layout-gt-sm="row">
-  <formly-form model="vm.project" fields="vm.projectInitialFields">
-    <md-button type="submit" class="md-raised md-primary" ng-click="vm.submit(vm.project)">
-      Submit
-    </md-button>
-  </formly-form>
-</div>
+<md-content layout="row" layout-padding>
+  <!--<div ng-cloak class="md-inline-form" flex>-->
+    <!--<formly-form model="vm.project" fields="vm.projectInitialFields">-->
+      <!--<md-button type="submit" class="md-raised md-primary" ng-click="vm.saveProject(vm.project)">-->
+        <!--{{ 'BUTTON.SAVE' | translate }}-->
+      <!--</md-button>-->
+    <!--</formly-form>-->
 
-<md-button ui-sref="projects.create.methodology">Go to methodology</md-button>
+    <!--<md-button ui-sref="projects.create.methodology">Go to methodology</md-button>-->
+  <!--</div>-->
+
+  <div ng-cloak flex>
+    <form name="projectForm" ng-submit="vm.saveProject(vm.project, projectForm.$valid, 'projects.new.methodology')">
+      <!--<div layout-gt-xs="row">-->
+
+
+      <!--
+      Company select
+      -->
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>{{ 'PROJECT.CLIENT' | translate}}</label>
+        <md-select ng-model="vm.project.company" name="company" required>
+          <md-option ng-repeat="company in vm.clients" value="{{ company.id }}">
+            {{ company.name }}
+          </md-option>
+        </md-select>
+
+        <!-- Validation messages -->
+        <div ng-show="projectForm.$submitted" ng-messages="projectForm.company.$error">
+          <div ng-message="required">Company is required!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Dates row
+      -->
+      <div layout="row">
+        <div layout="column">
+          <!--
+          Start date datepicker
+          -->
+          <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="projectStartDate">{{ 'PROJECT.START_DATE' | translate }}</label>
+          <div>
+            <md-datepicker id="projectStartDate"
+                           name="period_start"
+                           ng-model="vm.project.period_start"
+                           md-placeholder="{{ 'PROJECT.PLACEHOLDER.START_DATE' | translate }}"
+                           required>
+            </md-datepicker>
+
+            <!-- Validation messages -->
+            <div ng-show="projectForm.$submitted" class="validation-messages" ng-messages="projectForm.period_start.$error">
+              <div ng-message="valid">The entered value is not a date!</div>
+              <div ng-message="required">This date is required!</div>
+            </div>
+          </div>
+        </div><!-- End of layout="column" -->
+
+        <!--
+        End date datepicker
+        -->
+        <div layout="column" class="margin-left-md">
+          <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="projectEndDate">{{ 'PROJECT.END_DATE' | translate }}</label>
+          <div>
+            <md-datepicker id="projectEndDate"
+                           name="period_end"
+                           ng-model="vm.project.period_end"
+                           md-placeholder="{{ 'PROJECT.PLACEHOLDER.END_DATE' | translate }}"
+                           required>
+            </md-datepicker>
+
+            <!-- Validation messages -->
+            <div ng-show="projectForm.$submitted" class="validation-messages" ng-messages="projectForm.period_end.$error">
+              <div ng-message="valid">The entered value is not a date!</div>
+              <div ng-message="required">This date is required!</div>
+            </div>
+          </div>
+        </div><!-- End of layout="column" -->
+      </div><!-- End of layout="row" -->
+
+      <!--
+      Project manager select
+      -->
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>{{ 'PROJECT.PROJECT_MANAGER' | translate }}</label>
+        <md-select ng-model="vm.project.project_manager" name="project_manager" required>
+          <md-option ng-repeat="projectManager in vm.projectManagers" value="{{ projectManager.id }}">
+            {{ projectManager.displayName }}
+          </md-option>
+        </md-select>
+
+        <!-- Validation messages -->
+        <div ng-show="projectForm.$submitted" ng-messages="projectForm.project_manager.$error">
+          <div ng-message="required">Project Manager is required!</div>
+        </div>
+      </md-input-container>
+
+
+      <!--
+      List of Project Workers
+      -->
+      <div class="md-block" flex-gt-sm>
+        <fieldset>
+          <legend ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}">
+            {{ 'PROJECT.CONSULTANTS' | translate }}
+          </legend>
+          <div layout="row" layout-wrap flex layout-padding>
+            <div flex="100" flex-gt-sm="50" flex-gt-md="33" ng-repeat="projectWorker in vm.projectWorkers">
+              <md-checkbox ng-checked="vm.checkboxListState(projectWorker, vm.project.consultants, 'id')"
+                           ng-click="vm.checkboxListToggle(projectWorker, vm.project.consultants, 'id')">
+                {{ projectWorker.displayName }}
+              </md-checkbox>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <md-button type="submit" class="md-primary">Submit</md-button>
+    </form>
+  </div>
+</md-content>
 
 <div ui-view></div>

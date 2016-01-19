@@ -12,6 +12,9 @@
         RO: 'Rom',
         RU: 'Rus'
       },
+      BUTTON: {
+        SAVE: 'Save'
+      },
       PROJECT: {
         CLIENT: 'Company',
         START_DATE: 'Start date',
@@ -30,6 +33,12 @@
             NUMBER_OF_EVALUATIONS: 'Number of evaluations'
           }
         }
+      },
+      VALIDATION_MESSAGE: {
+        GENERIC: {
+          FIELD_IS_REQUIRED: 'This field is required.'
+        },
+        SPECIFIC_FIELD_IS_REQUIRED: '{FIELD_NAME} is required.'
       }
     });
 
