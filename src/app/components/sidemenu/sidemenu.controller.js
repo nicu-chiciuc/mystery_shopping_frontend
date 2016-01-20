@@ -10,10 +10,10 @@
     $log.debug('Entered SideMenuController');
     var vm = this;
 
-    this.isOpen = sideMenu.isSectionSelected;
-    this.isSelected = sideMenu.isPageSelected;
-    this.toggleOpen = sideMenu.toggleSelectSection;
-    this.autoFocusContent = false;
+    vm.isOpen = sideMenu.isSectionSelected;
+    vm.isSelected = sideMenu.isPageSelected;
+    vm.toggleOpen = sideMenu.toggleSelectSection;
+    vm.autoFocusContent = false;
 
     $scope.sideMenu = sideMenu;
     $scope.isSelected = sideMenu.isPageSelected;
