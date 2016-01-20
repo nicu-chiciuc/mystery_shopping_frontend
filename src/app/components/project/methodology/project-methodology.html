@@ -1,0 +1,51 @@
+<md-content layout="row" layout-padding>
+
+  <div ng-cloak flex>
+    <form name="methodologyForm">
+      <!--<div layout-gt-xs="row">-->
+
+
+      <!--
+      Number of evaluations
+      -->
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>{{ 'PROJECT.METHODOLOGY.NUMBER_OF_EVALUATIONS' | translate}}</label>
+        <input ng-model="vm.project.methodology.number_of_evaluations" name="number_of_evaluations" required>
+
+        <!-- Validation messages -->
+        <div ng-show="methodologyForm.$submitted" ng-messages="methodologyForm.number_of_evaluations.$error">
+          <div ng-message="required">Company is required!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Questionnaire Templates and Scripts
+      -->
+      <div layout="row">
+        <div layout="column" flex="100" flex-gt-sm="50">
+          <!--
+          Questionnaire Templates
+          -->
+          <ms-checkbox-list checkbox-list-elements="vm.questionnaireTemplates"
+                            checkbox-list-options="vm.questionnaireTemplatesCheckboxListOptions"
+                            target-list="vm.project.methodology.questionnaires">
+          </ms-checkbox-list>
+        </div><!-- End of layout="column" -->
+
+        <!--
+        Scripts
+        -->
+        <div layout="column" flex="100" flex-gt-sm="50">
+          <ms-checkbox-list checkbox-list-elements="vm.scripts"
+                            checkbox-list-options="vm.scriptsCheckboxListOptions"
+                            target-list="vm.project.methodology.scripts">
+          </ms-checkbox-list>
+        </div><!-- End of layout="column" -->
+      </div><!-- End of layout="row" -->
+
+      <md-button type="submit" class="md-primary">Submit</md-button>
+    </form>
+  </div>
+</md-content>
+
+<div ui-view></div>

@@ -14,7 +14,9 @@
         project: '=',
         clients: '=',
         projectManagers: '=',
-        projectWorkers: '='
+        projectWorkers: '=',
+        questionnaireTemplates: '=',
+        scripts: '='
       },
       controller: ProjectController,
       controllerAs: 'vm',
