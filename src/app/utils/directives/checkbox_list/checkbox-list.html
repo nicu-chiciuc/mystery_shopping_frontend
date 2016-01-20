@@ -1,0 +1,15 @@
+<fieldset>
+  <legend ng-show="clo.showLegend"
+          ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}">
+    {{ clo.legendTitle }}
+    <!--{{ 'PROJECT.CONSULTANTS' | translate }}-->
+  </legend>
+  <div layout="row" layout-wrap flex layout-padding>
+    <div flex="100" flex-gt-sm="50" flex-gt-md="33" ng-repeat="element in vm.checkboxListElements">
+      <md-checkbox ng-checked="vm.checkboxListState(element, vm.targetList, clo.valueProp)"
+                   ng-click="vm.checkboxListToggle(element, vm.targetList, clo.valueProp)">
+        {{ clo.labelProp ? element[clo.labelProp] : element }}
+      </md-checkbox>
+    </div>
+  </div>
+</fieldset>

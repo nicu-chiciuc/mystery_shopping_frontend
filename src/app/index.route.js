@@ -97,7 +97,7 @@
         parent: 'authenticated',
         url: '/projects',
         templateUrl: 'app/projects/list/project-list.html',
-        controller: 'ProjectController as vm',
+        controller: 'Project1Controller as vm',
         resolve: {
           projects: function ( models ) { return models.projects().getList(); }
         },
@@ -108,31 +108,13 @@
       .state('projects.edit', {
         url: '/{id:int}',
         templateUrl: 'app/projects/edit/project-edit-form.html',
-        views: {
-          initial: {
-            templateUrl: 'app/projects/new/project-initial-form.html',
-            controller: 'ProjectFormController as vm',
-            resolve: {
-              clients: function ( models ) { return models.clients().getList(); },
-              projectManagers: function ( models ) { return models.projectManagers().getList(); },
-              projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
-              questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
-              scripts: function ( models ) { return models.scripts().getList(); },
-              project: function ( $stateParams, models ) { return models.projects().one($stateParams.id).get(); }
-            }
-          },
-          methodology: {
-            templateUrl: 'app/projects/new/project-methodology-form.html',
-            controller: 'ProjectMethodologyFormController as vm',
-            resolve: {
-              clients: function ( models ) { return models.clients().getList(); },
-              projectManagers: function ( models ) { return models.projectManagers().getList(); },
-              projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
-              questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
-              scripts: function ( models ) { return models.scripts().getList(); },
-              project: function ( $stateParams, models ) { return models.projects().one($stateParams.id).get(); }
-            }
-          }
+        resolve: {
+          clients: function ( models ) { return models.clients().getList(); },
+          projectManagers: function ( models ) { return models.projectManagers().getList(); },
+          projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
+          questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
+          scripts: function ( models ) { return models.scripts().getList(); },
+          project: function ( $stateParams, models ) { console.log('wtf?'); return models.projects().one($stateParams.id).get(); }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']

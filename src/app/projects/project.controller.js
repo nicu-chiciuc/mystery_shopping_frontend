@@ -6,11 +6,17 @@
     .controller('ProjectController', ProjectController);
 
   /** @ngInject */
-  function ProjectController ( $log, projects ) {
+  function ProjectController ( $log, projects, clients, projectManagers, projectWorkers, questionnaireTemplates, scripts, project ) {
     $log.debug('Entered ProjectController');
     var vm = this;
 
     vm.projects = projects;
+    vm.clients = clients;
+    vm.projectManagers = projectManagers;
+    vm.projectWorkers = projectWorkers;
+    vm.questionnaireTemplates = questionnaireTemplates;
+    vm.scripts = scripts;
+    vm.project = project;
 
     vm.submit = function () {};
 
