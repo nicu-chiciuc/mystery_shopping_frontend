@@ -21,6 +21,7 @@
         END_DATE: 'End date',
         PROJECT_MANAGER: 'Project manager',
         CONSULTANTS: 'Consultants',
+        SHOPPERS: 'Shoppers',
         METHODOLOGY: {
           NUMBER_OF_EVALUATIONS: 'Number of evaluations',
           QUESTIONNAIRES: 'Questionnaires',

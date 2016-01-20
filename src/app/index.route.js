@@ -114,7 +114,8 @@
           projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
           questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
           scripts: function ( models ) { return models.scripts().getList(); },
-          project: function ( $stateParams, models ) { console.log('wtf?'); return models.projects().one($stateParams.id).get(); }
+          project: function ( $stateParams, models ) { return models.projects().one($stateParams.id).get(); },
+          shoppers: function ( models ) { return models.shoppers().getList(); }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']

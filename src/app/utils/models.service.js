@@ -15,6 +15,7 @@
       projectWorkers: projectWorkers,
       questionnaireTemplates: questionnaireTemplates ,
       scripts: scripts,
+      shoppers: shoppers,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
       manager: modelManager
@@ -49,6 +50,10 @@
 
     function scripts () {
       return Restangular.service('scripts');
+    }
+
+    function shoppers () {
+      return Restangular.service('shoppers');
     }
 
     function restangularizeElement ( parent, object, model ) {

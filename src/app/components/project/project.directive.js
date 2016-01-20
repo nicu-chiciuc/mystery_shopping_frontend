@@ -16,7 +16,8 @@
         projectManagers: '=',
         projectWorkers: '=',
         questionnaireTemplates: '=',
-        scripts: '='
+        scripts: '=',
+        shoppers: '='
       },
       controller: ProjectController,
       controllerAs: 'vm',

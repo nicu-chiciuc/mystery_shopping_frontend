@@ -92,5 +92,15 @@
       "id": 4,
       "title": "Script Dispozitiv"
     }
+  ],
+  "shoppers": [
+    {
+      "id": 1,
+      "name": "Vasea"
+    },
+    {
+      "id": 2,
+      "name": "Petea"
+    }
   ]
 }

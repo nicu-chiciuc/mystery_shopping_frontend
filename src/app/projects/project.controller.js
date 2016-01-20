@@ -6,7 +6,7 @@
     .controller('ProjectController', ProjectController);
 
   /** @ngInject */
-  function ProjectController ( $log, projects, clients, projectManagers, projectWorkers, questionnaireTemplates, scripts, project ) {
+  function ProjectController ( $log, projects, clients, projectManagers, projectWorkers, questionnaireTemplates, scripts, shoppers, project ) {
     $log.debug('Entered ProjectController');
     var vm = this;
 
@@ -16,6 +16,7 @@
     vm.projectWorkers = projectWorkers;
     vm.questionnaireTemplates = questionnaireTemplates;
     vm.scripts = scripts;
+    vm.shoppers = shoppers;
     vm.project = project;
 
     console.log(vm.projects);
