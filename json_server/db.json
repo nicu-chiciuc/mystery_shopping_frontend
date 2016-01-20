@@ -78,19 +78,19 @@
   "scripts": [
     {
       "id": 1,
-      "name": "Script Abonament"
+      "title": "Script Abonament"
     },
     {
       "id": 2,
-      "name": "Script PrePay"
+      "title": "Script PrePay"
     },
     {
       "id": 3,
-      "name": "Script Internet Acum"
+      "title": "Script Internet Acum"
     },
     {
       "id": 4,
-      "name": "Script Dispozitiv"
+      "title": "Script Dispozitiv"
     }
   ]
 }
