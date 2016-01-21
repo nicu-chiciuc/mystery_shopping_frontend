@@ -22,7 +22,7 @@
         abstract: true,
         resolve: {
           user: function ( authorization ) {
-            authorization.authorize();
+            return authorization.authorize();
           }
         },
         controller: 'SideMenuController as vm'
@@ -48,50 +48,6 @@
         templateUrl: 'app/authentication/login/login.html',
         controller: 'LoginController',
         controllerAs: 'vm'
-      })
-      .state('clients', {
-        parent: 'authenticated',
-        url: '/clients',
-        templateUrl: 'app/clients/clients.html',
-        controller: 'ClientController as vm',
-        resolve: {
-          clients: function ( user, models ) { return models.clients().getList(); }
-        },
-        data: {
-          roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
-        }
-      })
-      .state('clients.new', {
-        url: '/new',
-        templateUrl: 'app/clients/new/client-form.html',
-        controller: 'ClientFormController as vm'
-      })
-      .state('clients.edit', {
-        url: '/{id:int}/edit',
-        templateUrl: 'app/clients/edit/client-form.html',
-        controller: 'ClientFormController as vm'
-      })
-      .state('clients.detail', {
-        url: '/{id:int}',
-        templateUrl: 'app/clients/detail/client-detail.html',
-        controller: 'ClientController as vm'
-      })
-      .state('companies', {
-        parent: 'authenticated',
-        resolve: {
-          company: function () { return {}; }
-        },
-        data: {
-          roles: []
-        },
-        url: '/companies',
-        templateUrl: 'app/clients/companies/list/company_list.html',
-        controller: 'CompanyFormController as vm'
-      })
-      .state('companies.new', {
-        url: '/new',
-        templateUrl: 'app/clients/companies/company_form.html',
-        controller: 'CompanyFormController as vm'
       })
       .state('projects', {
         parent: 'authenticated',

@@ -16,7 +16,7 @@
 
     function authorize () {
       return principal.identity()
-        .then(function() {
+        .then(function(identity) {
           var isAuthenticated = principal.isAuthenticated();
           console.log(isAuthenticated);
 
@@ -32,6 +32,8 @@
               $state.go('login');
             }
           }
+
+          return identity;
         });
     }
   }

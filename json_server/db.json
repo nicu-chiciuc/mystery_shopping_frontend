@@ -39,6 +39,17 @@
     {
       "id": 4,
       "name": "Orange"
+    },
+    {
+      "name": "Spark Research Labs",
+      "industry": 2,
+      "country": 3,
+      "contact_person": "Iulian Gulea",
+      "contact_phone": "068033022",
+      "contact_email": "iulian.gulea@gmail.com",
+      "domain": "spark",
+      "tenant": 1,
+      "id": 5
     }
   ],
   "tenantprojectmanagers": [
@@ -101,6 +112,34 @@
     {
       "id": 2,
       "name": "Petea"
+    }
+  ],
+  "industries": [
+    {
+      "id": 1,
+      "name": "Consulting"
+    },
+    {
+      "id": 2,
+      "name": "IT"
+    }
+  ],
+  "countries": [
+    {
+      "id": 1,
+      "name": "Moldova"
+    },
+    {
+      "id": 2,
+      "name": "New Zealand"
+    },
+    {
+      "id": 3,
+      "name": "UK"
+    },
+    {
+      "id": 4,
+      "name": "Canada"
     }
   ]
 }

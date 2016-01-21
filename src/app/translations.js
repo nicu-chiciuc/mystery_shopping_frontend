@@ -15,6 +15,15 @@
       BUTTON: {
         SAVE: 'Save'
       },
+      COMPANY: {
+        NAME: 'Company name',
+        INDUSTRY: 'Industry company activates in',
+        COUNTRY: 'Country',
+        CONTACT_PERSON: 'Contact person',
+        CONTACT_PHONE: 'Contact phone',
+        CONTACT_EMAIL: 'Contact email',
+        DOMAIN: 'Domain'
+      },
       PROJECT: {
         CLIENT: 'Company',
         START_DATE: 'Start date',

@@ -10,12 +10,14 @@
     var modelsFactory = {
       projects: projects,
       questionnaires: questionnaires,
-      clients: clients,
+      companies: companies,
       projectManagers: projectManagers,
       projectWorkers: projectWorkers,
       questionnaireTemplates: questionnaireTemplates ,
       scripts: scripts,
       shoppers: shoppers,
+      industries: industries,
+      countries: countries,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
       manager: modelManager
@@ -32,7 +34,7 @@
       return Restangular.service('questionnaires');
     }
 
-    function clients () {
+    function companies () {
       return Restangular.service('companies');
     }
 
@@ -42,6 +44,14 @@
 
     function projectWorkers () {
       return Restangular.service('projectworkers');
+    }
+
+    function industries () {
+      return Restangular.service('industries');
+    }
+
+    function countries () {
+      return Restangular.service('countries');
     }
 
     function questionnaireTemplates () {

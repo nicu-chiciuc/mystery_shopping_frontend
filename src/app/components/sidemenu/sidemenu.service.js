@@ -44,7 +44,12 @@
           pages: [
             {
               name: 'New client',
-              state: 'companies.new',
+              state: 'companies.create',
+              type: 'link'
+            },
+            {
+              name: 'List clients',
+              state: 'companies.list',
               type: 'link'
             }
           ]

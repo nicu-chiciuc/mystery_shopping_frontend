@@ -1,0 +1,120 @@
+Company form.
+
+<md-content layout="row" layout-padding>
+
+  <div ng-cloak flex layout="column">
+    <form name="companyForm" ng-submit="vm.saveCompany(vm.company, companyForm.$valid, 'companies.detail.view')">
+
+      <!--
+      Company name
+      -->
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>{{ 'COMPANY.NAME' | translate }}</label>
+        <input ng-model="vm.company.name" name="name" type="text" required>
+
+        <!-- Validation messages -->
+        <div ng-show="companyForm.$submitted" ng-messages="companyForm.name.$error">
+          <div ng-message="required">Company name is REQUIRED!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Industry select
+      -->
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>{{ 'COMPANY.INDUSTRY' | translate }}</label>
+        <md-select ng-model="vm.company.industry" name="industry" required>
+          <md-option ng-repeat="industry in vm.industries" value="{{ industry.id }}">
+            {{ industry.name }}
+          </md-option>
+        </md-select>
+
+        <!-- Validation messages -->
+        <div ng-show="companyForm.$submitted" ng-messages="companyForm.industry.$error">
+          <div ng-message="required">Industry is required!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Country select
+      -->
+      <md-input-container class="md-block" flex-gt-xs>
+        <label>{{ 'COMPANY.COUNTRY' | translate }}</label>
+        <md-select ng-model="vm.company.country" name="country" required>
+          <md-option ng-repeat="country in vm.countries" value="{{ country.id }}">
+            {{ country.name }}
+          </md-option>
+        </md-select>
+
+        <!-- Validation messages -->
+        <div ng-show="companyForm.$submitted" ng-messages="companyForm.country.$error">
+          <div ng-message="required">Country is required!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Contact person
+      -->
+      <md-input-container class="md-block">
+        <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>-->
+        <ng-md-icon icon="person" style="fill: green"></ng-md-icon>
+        <input ng-model="vm.company.contact_person"
+               name="contact_person"
+               placeholder="{{ 'COMPANY.CONTACT_PERSON' | translate }}"
+               type="text"
+               ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="companyForm.$submitted" ng-messages="companyForm.contact_person.$error">
+          <div ng-message="required">Contact person is required!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Contact phone
+      -->
+      <md-input-container md-no-float class="md-block">
+        <!--<label>{{ 'COMPANY.CONTACT_PHONE' | translate }}</label>-->
+        <ng-md-icon icon="phone"></ng-md-icon>
+        <input ng-model="vm.company.contact_phone" name="contact_phone" placeholder="TELEFON" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="companyForm.$submitted" ng-messages="companyForm.contact_phone.$error">
+          <div ng-message="required">Contact phone is required!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Contact email
+      -->
+      <md-input-container class="md-block md-has-icon">
+        <label>{{ 'COMPANY.CONTACT_EMAIL' | translate }}</label>
+        <ng-md-icon icon="mail"></ng-md-icon>
+        <input ng-model="vm.company.contact_email" name="contact_email" type="email" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="companyForm.$submitted" ng-messages="companyForm.contact_email.$error">
+          <div ng-message="required">Contact email is required!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Domain name
+      -->
+      <md-input-container md-no-float class="md-block">
+        <label>{{ 'COMPANY.DOMAIN' | translate }}</label>
+        <ng-md-icon icon="link" style="display:inline-block;"></ng-md-icon>
+        <input ng-model="vm.company.domain" name="domain" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="companyForm.$submitted" ng-messages="companyForm.domain.$error">
+          <div ng-message="required">Domain is required!</div>
+        </div>
+      </md-input-container>
+
+      <md-button type="submit" class="md-primary">Submit</md-button>
+    </form>
+  </div>
+</md-content>
+
+<div ui-view></div>
