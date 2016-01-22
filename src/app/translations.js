@@ -16,7 +16,11 @@
         SAVE: 'Save'
       },
       COMMON: {
-        CITY: 'City'
+        CITY: 'City',
+        ADDRESS: 'Address',
+        GEOGRAPHICAL_COORDINATES: 'Geographical coordinates',
+        LATITUDE: 'Latitude',
+        LONGITUDE: 'Longitude'
       },
       COMPANY: {
         NAME: 'Company name',
@@ -29,7 +33,10 @@
         DEPARTMENT: {
           NAME: 'Department name',
           ENTITY: {
-            NAME: 'Entity name'
+            NAME: 'Entity name',
+            SECTION: {
+              NAME: 'Section name'
+            }
           }
         }
       },
