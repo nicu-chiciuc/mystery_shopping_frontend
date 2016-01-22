@@ -6,13 +6,17 @@
     .factory('modelManager', modelManager);
 
   /** @ngInject */
-  function modelManager( ProjectModel, QuestionnaireModel, ProjectWorkerModel, ProjectManagerModel, UserModel ) {
+  function modelManager( ProjectModel, QuestionnaireModel, ProjectWorkerModel, ProjectManagerModel, UserModel, CompanyModel, DepartmentModel, EntityModel, SectionModel ) {
     var manager = {
       ProjectModel: ProjectModel,
       QuestionnaireModel: QuestionnaireModel,
       ProjectWorkerModel: ProjectWorkerModel,
       ProjectManagerModel: ProjectManagerModel,
-      UserModel: UserModel
+      UserModel: UserModel,
+      CompanyModel: CompanyModel,
+      DepartmentModel: DepartmentModel,
+      EntityModel: EntityModel,
+      SectionModel: SectionModel
     };
 
     return manager;

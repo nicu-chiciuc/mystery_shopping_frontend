@@ -1,0 +1,10 @@
+{{ vm.department | json }}
+
+<md-button ui-sref="companies.detail.departments.detail.entities.create">
+  Add entity
+</md-button>
+<br/>
+<md-button ng-repeat="entity in vm.department.entities"
+           ui-sref="companies.detail.departments.detail.entities.detail.view({entityId: entity.id})">
+  {{ entity.name }}
+</md-button>

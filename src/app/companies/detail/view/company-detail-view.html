@@ -1,1 +1,15 @@
 Company {{ vm.company.name }} View
+<md-button ui-sref="companies.detail.edit({id: vm.company.id})">
+  Edit {{ vm.company.name }}
+</md-button>
+
+<md-button ui-sref="companies.detail.departments.create">
+  Add department
+</md-button>
+
+<br/>
+
+<md-button ng-repeat="department in vm.company.departments"
+           ui-sref="companies.detail.departments.detail.view({departmentId: department.id})">
+  {{ department.name }}
+</md-button>

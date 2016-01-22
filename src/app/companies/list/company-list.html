@@ -1,4 +1,5 @@
 ALL COMPANIES!
-<md-button ng-repeat="company in vm.companies" ui-sref="companies.detail.view({id: company.id})">
+<md-button ng-repeat="company in vm.companies"
+           ui-sref="companies.detail.view({companyId: company.id})">
   {{ company.name }}
 </md-button>

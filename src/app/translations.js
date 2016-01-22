@@ -15,6 +15,9 @@
       BUTTON: {
         SAVE: 'Save'
       },
+      COMMON: {
+        CITY: 'City'
+      },
       COMPANY: {
         NAME: 'Company name',
         INDUSTRY: 'Industry company activates in',
@@ -22,7 +25,13 @@
         CONTACT_PERSON: 'Contact person',
         CONTACT_PHONE: 'Contact phone',
         CONTACT_EMAIL: 'Contact email',
-        DOMAIN: 'Domain'
+        DOMAIN: 'Domain',
+        DEPARTMENT: {
+          NAME: 'Department name',
+          ENTITY: {
+            NAME: 'Entity name'
+          }
+        }
       },
       PROJECT: {
         CLIENT: 'Company',

@@ -51,6 +51,30 @@
       return obj;
     });
 
+    Restangular.extendModel('companies', function (obj) {
+      angular.extend(obj, modelManager.CompanyModel);
+      obj.initialize();
+      return obj;
+    });
+
+    Restangular.extendModel('departments', function (obj) {
+      angular.extend(obj, modelManager.DepartmentModel);
+      obj.initialize();
+      return obj;
+    });
+
+    Restangular.extendModel('entities', function (obj) {
+      angular.extend(obj, modelManager.EntityModel);
+      obj.initialize();
+      return obj;
+    });
+
+    Restangular.extendModel('sections', function (obj) {
+      angular.extend(obj, modelManager.SectionModel);
+      obj.initialize();
+      return obj;
+    });
+
     Restangular.extendModel('questionnaires', function (obj) {
       return angular.extend(obj, modelManager.QuestionnaireModel);
     });

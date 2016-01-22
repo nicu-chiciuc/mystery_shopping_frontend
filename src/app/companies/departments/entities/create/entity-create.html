@@ -1,0 +1,67 @@
+Create Entity here!!!
+
+<md-content layout="row" layout-padding>
+
+  <div ng-cloak flex>
+    <form name="entityForm" ng-submit="vm.saveEntity(vm.entity, entityForm.$valid, 'companies.detail.departments.detail.entities.view')">
+
+
+      <!--
+      Department name
+      -->
+      <md-input-container class="md-block">
+        <label>{{ 'COMPANY.DEPARTMENT.ENTITY.NAME' | translate }}</label>
+        <input ng-model="vm.entity.name" name="name" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="entityForm.$submitted" ng-messages="entityForm.name.$error">
+          <div ng-message="required">Entity name is REQUIRED!</div>
+        </div>
+      </md-input-container>
+
+
+      <!--
+      City select
+      -->
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>{{ 'COMMON.CITY' | translate }}</label>
+        <md-select ng-model="vm.entity.city" ng-change="vm.citySelected(vm.cities, vm.entity.city)" name="city" ng-required="true">
+          <md-option ng-repeat="city in vm.cities" value="{{ city.id }}">
+            {{ city.name }}
+          </md-option>
+        </md-select>
+
+        <!-- Validation messages -->
+        <div ng-show="entityForm.$submitted" ng-messages="entityForm.city.$error">
+          <div ng-message="required">City is required!</div>
+        </div>
+      </md-input-container>
+
+
+      <!--
+      Sector select
+      -->
+      <md-input-container class="md-block" flex-gt-sm ng-if="vm.sectors.length">
+        <label>{{ 'COMMON.SECTOR' | translate }}</label>
+        <md-select ng-model="vm.entity.sector" name="city" ng-required="true">
+          <md-option ng-repeat="sector in vm.sectors" value="{{ sector.id }}">
+            {{ sector.name }}
+          </md-option>
+        </md-select>
+
+        <!-- Validation messages -->
+        <div ng-show="entityForm.$submitted" ng-messages="entityForm.sector.$error">
+          <div ng-message="required">Sector is required!</div>
+        </div>
+      </md-input-container>
+
+
+      <md-button type="submit" class="md-primary">Submit</md-button>
+    </form>
+  </div>
+</md-content>
+
+{{ vm.entity | json }}
+{{ vm.sectors | json }}
+
+<div ui-view></div>

@@ -23,7 +23,8 @@
         controller: 'CompanyCreateController as vm',
         resolve: {
           industries: function ( models ) { return models.industries().getList(); },
-          countries: function ( models ) { return models.countries().getList(); }
+          countries: function ( models ) { return models.countries().getList(); },
+          company: function () { return {}; }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
@@ -42,10 +43,10 @@
       })
       .state('companies.detail', {
         abstract: true,
-        url: '/{id:int}',
+        url: '/{companyId:int}',
         template: '<div ui-view></div>',
         resolve: {
-          company: function ( $stateParams, models ) { return models.companies().one($stateParams.id).get(); }
+          company: function ( $stateParams, models ) { return models.companies().one($stateParams.companyId).get(); }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
@@ -58,8 +59,10 @@
       })
       .state('companies.detail.edit', {
         url: '/edit',
-        templateUrl: 'app/companies/detail/edit/company-detail-edit.html',
-        controller: 'CompanyDetailViewController as vm',
+        //templateUrl: 'app/companies/detail/edit/company-detail-edit.html',
+        //controller: 'CompanyDetailViewController as vm',
+        templateUrl: 'app/companies/create/company-create.html',
+        controller: 'CompanyCreateController as vm',
         resolve: {
           industries: function ( models ) { return models.industries().getList(); },
           countries: function ( models ) { return models.countries().getList(); }
@@ -71,9 +74,76 @@
         template: '<div ui-view></div>'
       })
       .state('companies.detail.departments.create', {
-        url: '/departments',
-        templateUrl: 'app/companies/departments/create/department-create.html'
-      });
+        url: '/new',
+        templateUrl: 'app/companies/departments/create/department-create.html',
+        controller: 'DepartmentCreateController as vm',
+        resolve: {
+          department: function () { return {}; }
+        }
+      })
+      .state('companies.detail.departments.detail', {
+        abstract: true,
+        url: '/{departmentId:int}',
+        template: '<div ui-view></div>',
+        resolve: {
+          department: function ( $stateParams, company ) {
+            return _.find(company.departments, function ( department ) {
+              return department.id === $stateParams.departmentId;
+            });
+          }
+        }
+      })
+      .state('companies.detail.departments.detail.view', {
+        url: '/detail',
+        templateUrl: 'app/companies/departments/detail/view/department-detail-view.html',
+        controller: 'DepartmentDetailViewController as vm'
+      })
+      .state('companies.detail.departments.detail.edit', {
+        url: '/edit',
+        templateUrl: 'app/companies/departments/create/department-create.html',
+        controller: 'DepartmentCreateController as vm'
+      })
+      .state('companies.detail.departments.detail.entities', {
+        abstract: true,
+        url: '/entities',
+        template: '<div ui-view></div>'
+      })
+      .state('companies.detail.departments.detail.entities.create', {
+        url: '/new',
+        templateUrl: 'app/companies/departments/entities/create/entity-create.html',
+        controller: 'EntityCreateController as vm',
+        resolve: {
+          entity: function () { return {}; },
+          cities: function ( models ) { return models.cities().getList(); }
+        }
+      })
+      .state('companies.detail.departments.detail.entities.detail', {
+        abstract: true,
+        url: '/{entityId:int}',
+        template: '<div ui-view></div>',
+        resolve: {
+          entity: function ( $stateParams, department ) {
+            return _.find(department.entities, function ( entity ) {
+              return entity.id === $stateParams.entityId;
+            });
+          }
+        }
+      })
+      .state('companies.detail.departments.detail.entities.detail.view', {
+        url: '/detail',
+        templateUrl: 'app/companies/departments/entities/detail/view/entity-detail-view.html',
+        controller: 'EntityDetailViewController as vm'
+      })
+      .state('companies.detail.departments.detail.entities.detail.edit', {
+        url: '/edit',
+        templateUrl: 'app/companies/departments/create/department-create.html',
+        controller: 'EntityCreateController as vm',
+        resolve: {
+          cities: function ( models ) { return models.cities().getList(); }
+        }
+      })
+
+    ;
   }
 
 })();

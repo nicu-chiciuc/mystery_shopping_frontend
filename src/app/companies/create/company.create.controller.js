@@ -6,10 +6,12 @@
     .controller('CompanyCreateController', CompanyCreateController);
 
   /** @ngInject */
-  function CompanyCreateController ( $log, $state, models, industries, countries, user ) {
+  function CompanyCreateController ( $log, $state, models, industries, countries, company, user ) {
     $log.debug('Entered CompanyCreateController');
     $log.debug(user);
     var vm = this;
+
+    vm.company = company;
 
     vm.industries = industries;
     vm.countries = countries;
@@ -29,7 +31,7 @@
       }
 
       function saveCompanySuccessFn ( response ) {
-        $state.go(nextState, {id: response.id});
+        $state.go(nextState, {companyId: response.id});
       }
       function saveCompanyErrorFn () {
         // TODO deal with the error

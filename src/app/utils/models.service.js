@@ -18,6 +18,7 @@
       shoppers: shoppers,
       industries: industries,
       countries: countries,
+      cities: cities,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
       manager: modelManager
@@ -52,6 +53,10 @@
 
     function countries () {
       return Restangular.service('countries');
+    }
+
+    function cities () {
+      return Restangular.service('cities');
     }
 
     function questionnaireTemplates () {

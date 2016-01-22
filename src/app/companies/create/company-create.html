@@ -1,14 +1,14 @@
 Company form.
 
-<md-content layout="row" layout-padding>
+<md-content layout="column" layout-padding>
 
-  <div ng-cloak flex layout="column">
+  <div ng-cloak >
     <form name="companyForm" ng-submit="vm.saveCompany(vm.company, companyForm.$valid, 'companies.detail.view')">
 
       <!--
       Company name
       -->
-      <md-input-container class="md-block" flex-gt-xs>
+      <md-input-container class="md-block">
         <label>{{ 'COMPANY.NAME' | translate }}</label>
         <input ng-model="vm.company.name" name="name" type="text" required>
 
@@ -38,7 +38,7 @@ Company form.
       <!--
       Country select
       -->
-      <md-input-container class="md-block" flex-gt-xs>
+      <md-input-container class="md-block">
         <label>{{ 'COMPANY.COUNTRY' | translate }}</label>
         <md-select ng-model="vm.company.country" name="country" required>
           <md-option ng-repeat="country in vm.countries" value="{{ country.id }}">
