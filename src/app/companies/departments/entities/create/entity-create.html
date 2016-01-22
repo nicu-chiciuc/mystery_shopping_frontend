@@ -3,11 +3,11 @@ Create Entity here!!!
 <md-content layout="row" layout-padding>
 
   <div ng-cloak flex>
-    <form name="entityForm" ng-submit="vm.saveEntity(vm.entity, entityForm.$valid, 'companies.detail.departments.detail.entities.view')">
+    <form name="entityForm" ng-submit="vm.saveEntity(vm.entity, entityForm.$valid, 'companies.detail.departments.detail.entities.detail.view')">
 
 
       <!--
-      Department name
+      Entity name
       -->
       <md-input-container class="md-block">
         <label>{{ 'COMPANY.DEPARTMENT.ENTITY.NAME' | translate }}</label>
@@ -55,6 +55,38 @@ Create Entity here!!!
         </div>
       </md-input-container>
 
+
+      <!--
+      Entity address
+      -->
+      <md-input-container class="md-block">
+        <label>{{ 'COMMON.ADDRESS' | translate }}</label>
+        <input ng-model="vm.entity.address" name="address" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="entityForm.$submitted" ng-messages="entityForm.address.$error">
+          <div ng-message="required">Address is REQUIRED!</div>
+        </div>
+      </md-input-container>
+
+
+      <!--
+      Geographical coordinates
+      -->
+      <div layout-gt-xs="row">
+
+        <!-- Latitude-->
+        <md-input-container class="md-block" flex-gt-xs>
+          <label>{{ 'COMMON.LATITUDE' | translate }}</label>
+          <input ng-model="vm.entity.latitude" name="latitude" type="text">
+        </md-input-container>
+
+        <!-- Longitude-->
+        <md-input-container class="md-block" flex-gt-xs>
+          <label>{{ 'COMMON.LONGITUDE' | translate }}</label>
+          <input ng-model="vm.entity.longitude" name="longitude" type="text">
+        </md-input-container>
+      </div>
 
       <md-button type="submit" class="md-primary">Submit</md-button>
     </form>
