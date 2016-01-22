@@ -20,7 +20,7 @@
       <md-input-container class="md-block" flex-gt-xs>
         <label>{{ 'PROJECT.CLIENT' | translate}}</label>
         <md-select ng-model="vm.project.company" name="company" required>
-          <md-option ng-repeat="company in vm.clients" value="{{ company.id }}">
+          <md-option ng-repeat="company in vm.companies" value="{{ company.id }}">
             {{ company.name }}
           </md-option>
         </md-select>

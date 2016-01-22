@@ -12,7 +12,7 @@
       templateUrl: 'app/components/project/project.html',
       scope: {
         project: '=',
-        clients: '=',
+        companies: '=',
         projectManagers: '=',
         projectWorkers: '=',
         questionnaireTemplates: '=',

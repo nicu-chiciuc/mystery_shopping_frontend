@@ -12,7 +12,7 @@
       templateUrl: 'app/components/project/basic_info/project-basic-info.html',
       scope: {
         project: '=',
-        clients: '=',
+        companies: '=',
         projectManagers: '=',
         projectWorkers: '='
       },

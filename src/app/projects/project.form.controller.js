@@ -6,17 +6,18 @@
     .controller('ProjectFormController', ProjectFormController);
 
   /** @ngInject */
-  function ProjectFormController ( $scope, $log, $filter, $state, models, project, clients, projectManagers, projectWorkers, questionnaireTemplates, scripts ) {
+  function ProjectFormController ( $scope, $log, $filter, $state, models, project, companies, projectManagers, projectWorkers, questionnaireTemplates, scripts, shoppers ) {
     $log.debug('Entered ProjectFormController');
     $log.debug('Project object equals to:');
     $log.debug(project);
     var vm = this;
 
-    vm.clients = clients;
+    vm.companies = companies;
     vm.projectManagers = projectManagers;
     vm.projectWorkers = projectWorkers;
     vm.questionnaireTemplates = questionnaireTemplates;
     vm.scripts = scripts;
+    vm.shoppers = shoppers;
 
     vm.saveProject = saveProject;
     vm.checkboxListToggle = checkboxListToggle;
@@ -34,7 +35,7 @@
           label: $filter('translate')('PROJECT.CLIENT'),
           labelProp: 'name',
           valueProp: 'id',
-          options: clients,
+          options: companies,
           required: true,
           flexGtXs: ''
         },

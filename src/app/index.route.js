@@ -65,7 +65,7 @@
         url: '/{id:int}',
         templateUrl: 'app/projects/edit/project-edit-form.html',
         resolve: {
-          clients: function ( models ) { return models.clients().getList(); },
+          companies: function ( models ) { return models.companies().getList(); },
           projectManagers: function ( models ) { return models.projectManagers().getList(); },
           projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
           questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
@@ -82,11 +82,12 @@
         url: '/new',
         templateUrl: 'app/projects/new/project-initial-form.html',
         resolve: {
-          clients: function ( models ) { return models.clients().getList(); },
+          companies: function ( models ) { return models.companies().getList(); },
           projectManagers: function ( models ) { return models.projectManagers().getList(); },
           projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
           questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
           scripts: function ( models ) { return models.scripts().getList(); },
+          shoppers: function ( models ) { return models.shoppers().getList(); },
           project: function () { return {}; }
         },
         data: {
