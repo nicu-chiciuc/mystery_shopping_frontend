@@ -7,7 +7,7 @@
     .factory('DepartmentModel', DepartmentModel);
 
   /** @ngInject */
-  function DepartmentModel () {
+  function DepartmentModel ( EntityModel ) {
     var Model = {
       initialize: initialize,
       addEntity: addEntity
@@ -18,6 +18,11 @@
 
     function initialize () {
       var department = this;
+
+      _.forEach(department.entities, function ( entity ) {
+        angular.extend(entity, EntityModel);
+        entity.initialize();
+      });
     }
 
     function addEntity ( entity ) {

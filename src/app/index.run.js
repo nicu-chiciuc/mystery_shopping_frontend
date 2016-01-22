@@ -70,7 +70,8 @@
     });
 
     Restangular.extendModel('sections', function (obj) {
-      angular.extend(obj, modelManager.SectionModel);
+      angular.extend(obj, modelManager.SectionModel
+      );
       obj.initialize();
       return obj;
     });

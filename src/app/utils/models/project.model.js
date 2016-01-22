@@ -7,7 +7,7 @@
     .factory('ProjectModel', ProjectModel);
 
   /** @ngInject */
-  function ProjectModel () {
+  function ProjectModel ( CompanyModel ) {
     var Model = {
       initialize: initialize
     };
@@ -17,6 +17,9 @@
 
     function initialize () {
       var project = this;
+
+      angular.extend(project.company_repr, CompanyModel);
+      project.company_repr.initialize();
     }
   }
 })();
