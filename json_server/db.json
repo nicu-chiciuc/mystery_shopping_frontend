@@ -68,7 +68,26 @@
               "tenant": 1,
               "department": 1,
               "id": 1,
-              "sections": [],
+              "sections": [
+                {
+                  "name": "Prism Development",
+                  "entity": 1,
+                  "id": 1,
+                  "employees": []
+                },
+                {
+                  "name": "Mystery Shopping Team",
+                  "entity": 1,
+                  "id": 2,
+                  "employees": []
+                },
+                {
+                  "name": "VerityFlow Awesome Dev Team",
+                  "entity": 1,
+                  "id": 3,
+                  "employees": []
+                }
+              ],
               "employees": []
             },
             {
@@ -145,7 +164,26 @@
           "tenant": 1,
           "department": 1,
           "id": 1,
-          "sections": [],
+          "sections": [
+            {
+              "name": "Prism Development",
+              "entity": 1,
+              "id": 1,
+              "employees": []
+            },
+            {
+              "name": "Mystery Shopping Team",
+              "entity": 1,
+              "id": 2,
+              "employees": []
+            },
+            {
+              "name": "VerityFlow Awesome Dev Team",
+              "entity": 1,
+              "id": 3,
+              "employees": []
+            }
+          ],
           "employees": []
         },
         {
@@ -214,7 +252,26 @@
       "tenant": 1,
       "department": 1,
       "id": 1,
-      "sections": []
+      "sections": [
+        {
+          "name": "Prism Development",
+          "entity": 1,
+          "id": 1,
+          "employees": []
+        },
+        {
+          "name": "Mystery Shopping Team",
+          "entity": 1,
+          "id": 2,
+          "employees": []
+        },
+        {
+          "name": "VerityFlow Awesome Dev Team",
+          "entity": 1,
+          "id": 3,
+          "employees": []
+        }
+      ]
     },
     {
       "name": "Testing Team",
@@ -256,7 +313,26 @@
       "sections": []
     }
   ],
-  "sections": [],
+  "sections": [
+    {
+      "name": "Prism Development",
+      "entity": 1,
+      "id": 1,
+      "employees": []
+    },
+    {
+      "name": "Mystery Shopping Team",
+      "entity": 1,
+      "id": 2,
+      "employees": []
+    },
+    {
+      "name": "VerityFlow Awesome Dev Team",
+      "entity": 1,
+      "id": 3,
+      "employees": []
+    }
+  ],
   "employees": [],
   "clientmanagers": [],
   "tenantprojectmanagers": [
