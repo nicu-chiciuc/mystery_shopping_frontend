@@ -6,7 +6,7 @@
     .controller('DepartmentCreateController', DepartmentCreateController);
 
   /** @ngInject */
-  function DepartmentCreateController ( $log, $state, models, company, department ) {
+  function DepartmentCreateController ( $log, $state, models, user, company, department ) {
     $log.debug('Entered DepartmentCreateController');
     var vm = this;
 
@@ -22,7 +22,7 @@
     }
 
     function saveDepartment ( department, isValid, nextState ) {
-      department.tenant = 1;
+      department.tenant = user.tenantId;
       department.company = company.id;
       department = models.restangularizeElement(null, department, 'departments');
       if ( isValid ) {

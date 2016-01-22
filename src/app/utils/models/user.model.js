@@ -7,7 +7,7 @@
     .factory('UserModel', UserModel);
 
   /** @ngInject */
-  function UserModel() {
+  function UserModel () {
     var Model = {
       initialize: initialize,
       hasRole: hasRole,
@@ -19,6 +19,8 @@
 
     function initialize () {
       var user = this;
+
+      user.tenantId = 1;
     }
 
     function hasRole ( role ) {

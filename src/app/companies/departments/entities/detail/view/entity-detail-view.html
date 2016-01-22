@@ -1,1 +1,11 @@
 {{ vm.entity | json }}
+
+
+<md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.create">
+  Add section
+</md-button>
+<br/>
+<md-button ng-repeat="section in vm.entity.sections"
+           ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.view({sectionId: section.id})">
+  {{ section.name }}
+</md-button>

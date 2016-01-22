@@ -136,11 +136,46 @@
       })
       .state('companies.detail.departments.detail.entities.detail.edit', {
         url: '/edit',
-        templateUrl: 'app/companies/departments/create/department-create.html',
+        templateUrl: 'app/companies/departments/entities/create/entity-create.html',
         controller: 'EntityCreateController as vm',
         resolve: {
           cities: function ( models ) { return models.cities().getList(); }
         }
+      })
+      .state('companies.detail.departments.detail.entities.detail.sections', {
+        abstract: true,
+        url: '/sections',
+        template: '<div ui-view></div>'
+      })
+      .state('companies.detail.departments.detail.entities.detail.sections.create', {
+        url: '/new',
+        templateUrl: 'app/companies/departments/entities/sections/create/section-create.html',
+        controller: 'SectionCreateController as vm',
+        resolve: {
+          section: function () { return {}; }
+        }
+      })
+      .state('companies.detail.departments.detail.entities.detail.sections.detail', {
+        abstract: true,
+        url: '/{sectionId:int}',
+        template: '<div ui-view></div>',
+        resolve: {
+          section: function ( $stateParams, entity ) {
+            return _.find(entity.sections, function ( section ) {
+              return section.id === $stateParams.sectionId;
+            });
+          }
+        }
+      })
+      .state('companies.detail.departments.detail.entities.detail.sections.detail.view', {
+        url: '/detail',
+        templateUrl: 'app/companies/departments/entities/sections/detail/view/section-detail-view.html',
+        controller: 'SectionDetailViewController as vm'
+      })
+      .state('companies.detail.departments.detail.entities.detail.sections.detail.edit', {
+        url: '/edit',
+        templateUrl: 'app/companies/departments/entities/sections/create/section-create.html',
+        controller: 'SectionCreateController as vm'
       })
 
     ;

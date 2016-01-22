@@ -6,7 +6,7 @@
     .controller('EntityCreateController', EntityCreateController);
 
   /** @ngInject */
-  function EntityCreateController ( $log, $state, models, cities, company, department, entity ) {
+  function EntityCreateController ( $log, $state, models, user, cities, company, department, entity ) {
     $log.debug('Entered EntityCreateController');
     var vm = this;
 
@@ -28,7 +28,7 @@
     }
 
     function saveEntity ( entity, isValid, nextState ) {
-      entity.tenant = 1;
+      entity.tenant = user.tenantId;
       entity.department = department.id;
       entity = models.restangularizeElement(null, entity, 'entities');
       if ( isValid ) {
