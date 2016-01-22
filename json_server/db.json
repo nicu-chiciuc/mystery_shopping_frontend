@@ -67,7 +67,19 @@
               "name": "Development Team",
               "tenant": 1,
               "department": 1,
-              "id": 1
+              "id": 1,
+              "sections": [],
+              "employees": []
+            },
+            {
+              "name": "Testing Team",
+              "city": 2,
+              "sector": null,
+              "tenant": 1,
+              "department": 1,
+              "id": 2,
+              "sections": [],
+              "employees": []
             }
           ]
         },
@@ -75,7 +87,40 @@
           "name": "Consulting",
           "tenant": 1,
           "company": 5,
-          "id": 2
+          "id": 2,
+          "entities": [
+            {
+              "name": "Restructurization Entity",
+              "city": 1,
+              "sector": 1,
+              "address": "str. Dacia 9/1",
+              "tenant": 1,
+              "department": 2,
+              "id": 6,
+              "sections": [],
+              "employees": []
+            },
+            {
+              "name": "Operations Entity",
+              "city": 2,
+              "sector": null,
+              "address": "str. Chisinaului 18",
+              "tenant": 1,
+              "department": 2,
+              "id": 7,
+              "sections": []
+            },
+            {
+              "name": "Grants Entity",
+              "city": 1,
+              "sector": 2,
+              "address": "str. Studentilor 7/2",
+              "tenant": 1,
+              "department": 2,
+              "id": 8,
+              "sections": []
+            }
+          ]
         },
         {
           "name": "Research",
@@ -99,7 +144,19 @@
           "name": "Development Team",
           "tenant": 1,
           "department": 1,
-          "id": 1
+          "id": 1,
+          "sections": [],
+          "employees": []
+        },
+        {
+          "name": "Testing Team",
+          "city": 2,
+          "sector": null,
+          "tenant": 1,
+          "department": 1,
+          "id": 2,
+          "sections": [],
+          "employees": []
         }
       ]
     },
@@ -107,7 +164,40 @@
       "name": "Consulting",
       "tenant": 1,
       "company": 5,
-      "id": 2
+      "id": 2,
+      "entities": [
+        {
+          "name": "Restructurization Entity",
+          "city": 1,
+          "sector": 1,
+          "address": "str. Dacia 9/1",
+          "tenant": 1,
+          "department": 2,
+          "id": 6,
+          "sections": [],
+          "employees": []
+        },
+        {
+          "name": "Operations Entity",
+          "city": 2,
+          "sector": null,
+          "address": "str. Chisinaului 18",
+          "tenant": 1,
+          "department": 2,
+          "id": 7,
+          "sections": []
+        },
+        {
+          "name": "Grants Entity",
+          "city": 1,
+          "sector": 2,
+          "address": "str. Studentilor 7/2",
+          "tenant": 1,
+          "department": 2,
+          "id": 8,
+          "sections": []
+        }
+      ]
     },
     {
       "name": "Research",
@@ -123,11 +213,51 @@
       "name": "Development Team",
       "tenant": 1,
       "department": 1,
-      "id": 1
+      "id": 1,
+      "sections": []
+    },
+    {
+      "name": "Testing Team",
+      "city": 2,
+      "sector": null,
+      "tenant": 1,
+      "department": 1,
+      "id": 2,
+      "sections": []
+    },
+    {
+      "name": "Restructurization Entity",
+      "city": 1,
+      "sector": 1,
+      "address": "str. Dacia 9/1",
+      "tenant": 1,
+      "department": 2,
+      "id": 6,
+      "sections": []
+    },
+    {
+      "name": "Operations Entity",
+      "city": 2,
+      "sector": null,
+      "address": "str. Chisinaului 18",
+      "tenant": 1,
+      "department": 2,
+      "id": 7,
+      "sections": []
+    },
+    {
+      "name": "Grants Entity",
+      "city": 1,
+      "sector": 2,
+      "address": "str. Studentilor 7/2",
+      "tenant": 1,
+      "department": 2,
+      "id": 8,
+      "sections": []
     }
   ],
   "sections": [],
-  "clientemployees": [],
+  "employees": [],
   "clientmanagers": [],
   "tenantprojectmanagers": [
     {
