@@ -26,19 +26,23 @@
   "companies": [
     {
       "id": 1,
-      "name": "Tucano"
+      "name": "Tucano",
+      "departments": []
     },
     {
       "id": 2,
-      "name": "Linella"
+      "name": "Linella",
+      "departments": []
     },
     {
       "id": 3,
-      "name": "instrumente.md"
+      "name": "instrumente.md",
+      "departments": []
     },
     {
       "id": 4,
-      "name": "Orange"
+      "name": "Orange",
+      "departments": []
     },
     {
       "name": "Spark Research Labs",
@@ -49,9 +53,82 @@
       "contact_email": "iulian.gulea@gmail.com",
       "domain": "spark",
       "tenant": 1,
-      "id": 5
+      "id": 5,
+      "departments": [
+        {
+          "name": "IT Development",
+          "tenant": 1,
+          "company": 5,
+          "id": 1,
+          "entities": [
+            {
+              "city": 1,
+              "sector": 4,
+              "name": "Development Team",
+              "tenant": 1,
+              "department": 1,
+              "id": 1
+            }
+          ]
+        },
+        {
+          "name": "Consulting",
+          "tenant": 1,
+          "company": 5,
+          "id": 2
+        },
+        {
+          "name": "Research",
+          "tenant": 1,
+          "company": 5,
+          "id": 3
+        }
+      ]
     }
   ],
+  "departments": [
+    {
+      "name": "IT Development",
+      "tenant": 1,
+      "company": 5,
+      "id": 1,
+      "entities": [
+        {
+          "city": 1,
+          "sector": 4,
+          "name": "Development Team",
+          "tenant": 1,
+          "department": 1,
+          "id": 1
+        }
+      ]
+    },
+    {
+      "name": "Consulting",
+      "tenant": 1,
+      "company": 5,
+      "id": 2
+    },
+    {
+      "name": "Research",
+      "tenant": 1,
+      "company": 5,
+      "id": 3
+    }
+  ],
+  "entities": [
+    {
+      "city": 1,
+      "sector": 4,
+      "name": "Development Team",
+      "tenant": 1,
+      "department": 1,
+      "id": 1
+    }
+  ],
+  "sections": [],
+  "clientemployees": [],
+  "clientmanagers": [],
   "tenantprojectmanagers": [
     {
       "id": 1,
@@ -140,6 +217,61 @@
     {
       "id": 4,
       "name": "Canada"
+    }
+  ],
+  "cities": [
+    {
+      "id": 1,
+      "name": "Chisinau",
+      "sectors": [
+        {
+          "id": 1,
+          "name": "Botanica",
+          "city": 1
+        },
+        {
+          "id": 2,
+          "name": "Riscanovca",
+          "city": 1
+        },
+        {
+          "id": 3,
+          "name": "Ciocana",
+          "city": 1
+        },
+        {
+          "id": 4,
+          "name": "Centru",
+          "city": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Drochia",
+      "sectors": []
+    }
+  ],
+  "sectors": [
+    {
+      "id": 1,
+      "name": "Botanica",
+      "city": 1
+    },
+    {
+      "id": 2,
+      "name": "Riscanovca",
+      "city": 1
+    },
+    {
+      "id": 3,
+      "name": "Ciocana",
+      "city": 1
+    },
+    {
+      "id": 4,
+      "name": "Centru",
+      "city": 1
     }
   ]
 }
