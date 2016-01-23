@@ -13,6 +13,7 @@
       'ngMdIcons',
       'LocalStorageModule',
       'pascalprecht.translate',
+      'RecursionHelper',
       'toastr',
       'formly',
       'formlyMaterial'

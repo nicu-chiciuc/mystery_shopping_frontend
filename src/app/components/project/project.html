@@ -9,7 +9,9 @@
                         scripts="vm.scripts">
 </ms-project-methodology>
 
-<ms-project-list-of-places-and-people project="vm.project">
+<ms-project-list-of-places-and-people ng-if="vm.project.company_repr"
+                                      project="vm.project"
+                                      companies="vm.companies">
 </ms-project-list-of-places-and-people>
 
 <ms-project-shoppers project="vm.project"

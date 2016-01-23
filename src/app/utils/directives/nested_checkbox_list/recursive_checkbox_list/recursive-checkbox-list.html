@@ -1,0 +1,13 @@
+<div layout="column">
+  <md-checkbox>
+    {{ rclo.itemLabelProp ? vm.recursiveCheckboxItem[rclo.itemLabelProp] : vm.recursiveCheckboxItem }}
+  </md-checkbox>
+</div>
+
+<div style="padding-left: 30px;" ng-repeat="childOptions in rclo.children">
+  <ms-recursive-checkbox-list ng-repeat="item in vm.recursiveCheckboxItem[childOptions.itemsProp]"
+                              recursive-checkbox-item="item"
+                              recursive-checkbox-list-options="childOptions"
+                              target-list="vm.targetList">
+  </ms-recursive-checkbox-list>
+</div>

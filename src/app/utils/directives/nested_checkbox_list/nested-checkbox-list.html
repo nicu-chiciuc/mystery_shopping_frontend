@@ -1,0 +1,20 @@
+<!--
+  In IE, we cannot apply flex directly to <fieldset>
+  @see https://github.com/philipwalton/flexbugs#9-some-html-elements-cant-be-flex-containers
+-->
+<fieldset>
+  <legend ng-show="nclo.showLegend"
+          ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}">
+    {{ nclo.legend }}
+  </legend>
+
+  <div layout="column" flex ng-repeat="childOptions in nclo.children">
+
+    <ms-recursive-checkbox-list ng-repeat="item in vm.nestedCheckboxListItems[childOptions.itemsProp]"
+                                recursive-checkbox-item="item"
+                                recursive-checkbox-list-options="childOptions"
+                                target-list="vm.targetList">
+    </ms-recursive-checkbox-list>
+
+  </div>
+</fieldset>

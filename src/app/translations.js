@@ -50,7 +50,8 @@
         METHODOLOGY: {
           NUMBER_OF_EVALUATIONS: 'Number of evaluations',
           QUESTIONNAIRES: 'Questionnaires',
-          SCRIPTS: 'Scripts'
+          SCRIPTS: 'Scripts',
+          LIST_OF_PLACES_AND_PEOPLE: 'List of places and people to assess'
         },
         PLACEHOLDER: {
           START_DATE: 'Start date',

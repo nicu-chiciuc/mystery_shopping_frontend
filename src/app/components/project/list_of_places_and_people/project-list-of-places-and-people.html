@@ -8,9 +8,9 @@
       <!--
       List of places and people
       -->
-      <!--<ms-nested-checkbox-list ng-repeat="department in vm.project.company.departments" -->
-                               <!--nested-checkbox-list-options="vm.listOfPlacesAndPeopleNestedCheckboxListOptions">-->
-      <!--</ms-nested-checkbox-list>-->
+      <ms-nested-checkbox-list nested-checkbox-list-items="vm.project.company_repr"
+                               nested-checkbox-list-options="vm.listOfPlacesAndPeopleNestedCheckboxListOptions">
+      </ms-nested-checkbox-list>
 
       <md-button type="submit" class="md-primary">Submit</md-button>
     </form>
