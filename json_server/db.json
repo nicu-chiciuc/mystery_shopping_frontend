@@ -60,6 +60,12 @@
           "tenant": 1,
           "company": 5,
           "id": 1,
+          "managers": [
+            {
+              "id": 1,
+              "name": "Iulian Gulea"
+            }
+          ],
           "entities": [
             {
               "city": 1,
@@ -85,10 +91,24 @@
                   "name": "VerityFlow Awesome Dev Team",
                   "entity": 1,
                   "id": 3,
-                  "employees": []
+                  "employees": [
+                    {
+                      "id": 3,
+                      "name": "Olea Gulea"
+                    }
+                  ]
                 }
               ],
-              "employees": []
+              "employees": [
+                {
+                  "id": 2,
+                  "name": "Mihai Coslet"
+                },
+                {
+                  "id": 4,
+                  "name": "Vasea Pupkin"
+                }
+              ]
             },
             {
               "name": "Testing Team",
@@ -145,7 +165,8 @@
           "name": "Research",
           "tenant": 1,
           "company": 5,
-          "id": 3
+          "id": 3,
+          "entities": []
         }
       ]
     }
