@@ -36,7 +36,7 @@
                            name="period_start"
                            ng-model="vm.project.period_start"
                            md-placeholder="{{ 'PROJECT.PLACEHOLDER.START_DATE' | translate }}"
-                           required>
+                           ng-required="true">
             </md-datepicker>
 
             <!-- Validation messages -->
@@ -57,7 +57,7 @@
                            name="period_end"
                            ng-model="vm.project.period_end"
                            md-placeholder="{{ 'PROJECT.PLACEHOLDER.END_DATE' | translate }}"
-                           required>
+                           ng-required="true">
             </md-datepicker>
 
             <!-- Validation messages -->
