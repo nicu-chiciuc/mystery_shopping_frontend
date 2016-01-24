@@ -1,15 +1,64 @@
-Company {{ vm.company.name }} View
-<md-button ui-sref="companies.detail.edit({id: vm.company.id})">
-  Edit {{ vm.company.name }}
-</md-button>
+<md-content layout-padding>
 
-<md-button ui-sref="companies.detail.departments.create">
-  Add department
-</md-button>
+  <!--<md-toolbar>-->
+    <!--<div class="md-toolbar-tools">-->
+      <!--<h2 class="md-flex">{{ vm.company.name }}</h2>-->
+    <!--</div>-->
+  <!--</md-toolbar>-->
 
-<br/>
+  <div layout="row" layout-align="none center">
+    <h2 flex>{{ vm.company.name }}</h2>
+    <md-button ui-sref="companies.detail.edit({id: vm.company.id})"
+               flex="none">
+      Edit
+    </md-button>
+  </div>
 
-<md-button ng-repeat="department in vm.company.departments"
-           ui-sref="companies.detail.departments.detail.view({departmentId: department.id})">
-  {{ department.name }}
-</md-button>
+  <div layout="row">
+
+    <div layout="column" flex="100" flex-gt-sm="50">
+      <h4>{{ 'COMPANY.INDUSTRY' | translate }}</h4>
+      <span>{{ vm.company.industry }}</span>
+    </div>
+
+    <div layout="column" flex="100" flex-gt-sm="50">
+      <h4>{{ 'COMPANY.COUNTRY' | translate }}</h4>
+      <span>{{ vm.company.country }}</span>
+    </div>
+
+  </div>
+
+  <md-divider></md-divider>
+
+  <div layout="row">
+
+    <div layout="column" flex>
+      <h4>{{ 'COMPANY.CONTACT_PERSON' | translate }}</h4>
+      <span>{{ vm.company.contact_person }}</span>
+    </div>
+
+    <div layout="column" flex>
+      <h4>{{ 'COMPANY.CONTACT_PHONE' | translate }}</h4>
+      <span>{{ vm.company.contact_phone }}</span>
+    </div>
+
+    <div layout="column" flex>
+      <h4>{{ 'COMPANY.CONTACT_EMAIL' | translate }}</h4>
+      <span>{{ vm.company.contact_email }}</span>
+    </div>
+
+
+
+  </div>
+
+  <md-button ui-sref="companies.detail.departments.create">
+    Add department
+  </md-button>
+
+  <br/>
+
+  <md-button ng-repeat="department in vm.company.departments"
+             ui-sref="companies.detail.departments.detail.view({departmentId: department.id})">
+    {{ department.name }}
+  </md-button>
+</md-content>
