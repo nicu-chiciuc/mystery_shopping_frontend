@@ -13,9 +13,8 @@
       scope: {
         recursiveCheckboxItem: '=',
         recursiveCheckboxListOptions: '=',
-        targetList: '='
+        targetLists: '='
       },
-      link: link,
       controller: RecursiveCheckboxListController,
       controllerAs: 'vm',
       bindToController: true,
@@ -23,31 +22,6 @@
     };
 
     return directive;
-
-    function link (scope, element, attrs) {
-      function getRecursiveDirectiveHtml ( child ) {
-        return [
-          '<div ng-repeat="childOptions in rclo.children">',
-          '<ms-recursive-checkbox-list ng-repeat="item in currentItem[\'',
-          child.itemsProp,
-          '\']" ',
-          'recursive-checkbox-item="item" ',
-          'recursive-checkbox-list-options="childOptions" ',
-          'target-list="vm.targetList">',
-          '{{ currentItem }}',
-          '</ms-recursive-checkbox-list>',
-          '</div>'
-        ].join('');
-      }
-      console.log(element);
-      console.log(scope);
-      if ( angular.isArray(scope.rclo.children) ) {
-        _.forEach(scope.rclo.children, function (child) {
-          element.after(getRecursiveDirectiveHtml(child));
-        });
-        $compile(element.contents())(scope);
-      }
-    }
 
     /** @ngInject */
     function RecursiveCheckboxListController ( $log, $scope ) {
@@ -62,20 +36,29 @@
       $scope.rclo.children = $scope.rclo.children || [];
 
       // Checkbox actions definition
-      vm.checkboxListToggle = checkboxListToggle;
-      vm.checkboxListState = checkboxListState;
+      vm.checkboxToggle = checkboxToggle;
+      vm.checkboxState = checkboxState;
 
-      function checkboxListToggle ( item, list, itemKey ) {
-        //var value = itemKey ? item[itemKey] : item;
-        //var idx = list.indexOf(value);
-        //if (idx > -1) list.splice(idx, 1);
-        //else
-        //  list.push(value);
+      function checkboxToggle ( item, itemOptions ) {
+        var value = itemOptions.valueProp ? item[itemOptions.valueProp] : item;
+        if ( itemOptions.includeInList ) {
+          toggleItemInList(item, itemOptions);
+        }
+        var idx = list.indexOf(value);
+        if (idx > -1) list.splice(idx, 1);
+        else
+          list.push(value);
       }
 
-      function checkboxListState (item, list, itemKey) {
-        //var value = itemKey ? item[itemKey] : item;
+      function checkboxState (item, list, itemKey) {
+        var value = itemKey ? item[itemKey] : item;
         //return list.indexOf(value) > -1;
+      }
+
+      function toggleItemInList ( item, itemOptions ) {
+        if ( itemOptions.includeInList ) {
+          toggleItemInList(item);
+        }
       }
 
     }

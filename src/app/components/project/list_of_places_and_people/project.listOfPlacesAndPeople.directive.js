@@ -26,6 +26,14 @@
       $log.debug('Entered ProjectListOfPlacesAndPeopleController');
       var vm = this;
 
+      vm.project.list_of_places = vm.project.list_of_places || [];
+      vm.project.list_of_people = vm.project.list_of_people || [];
+
+      vm.listOfPlacesAndPeopleLists = {
+        place: vm.project.list_of_places,
+        person: vm.project.list_of_people
+      };
+
       vm.listOfPlacesAndPeopleNestedCheckboxListOptions = {
         showLegend: true,
         legend: $filter('translate')('PROJECT.METHODOLOGY.LIST_OF_PLACES_AND_PEOPLE'),
@@ -34,41 +42,57 @@
             itemsProp: 'departments',
             itemLabelProp: 'name',
             itemValueProp: 'id',
+            type: 'place',
+            includeInList: false,
             children: [
               {
                 itemsProp: 'managers',
                 itemLabelProp: 'name',
-                itemValueProp: 'id'
+                itemValueProp: 'id',
+                type: 'person',
+                includeInList: false
               },
               {
                 itemsProp: 'entities',
                 itemLabelProp: 'name',
                 itemValueProp: 'id',
+                type: 'place',
+                includeInList: true,
                 children: [
                   {
                     itemsProp: 'managers',
                     itemLabelProp: 'name',
-                    itemValueProp: 'id'
+                    itemValueProp: 'id',
+                    type: 'person',
+                    includeInList: true
                   },
                   {
                     itemsProp: 'employees',
                     itemLabelProp: 'name',
-                    itemValueProp: 'id'
+                    itemValueProp: 'id',
+                    type: 'person',
+                    includeInList: true
                   },
                   {
                     itemsProp: 'sections',
                     itemLabelProp: 'name',
                     itemValueProp: 'id',
+                    type: 'place',
+                    includeInList: true,
                     children: [
                       {
                         itemsProp: 'managers',
                         itemLabelProp: 'name',
-                        itemValueProp: 'id'
+                        itemValueProp: 'id',
+                        type: 'person',
+                        includeInList: true
                       },
                       {
                         itemsProp: 'employees',
                         itemLabelProp: 'name',
-                        itemValueProp: 'id'
+                        itemValueProp: 'id',
+                        type: 'person',
+                        includeInList: true
                       }
                     ]
                   }
