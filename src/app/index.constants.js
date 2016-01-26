@@ -24,7 +24,7 @@
     clientprojectmanager: 16,
     clientmanager: 17,
     clientemployee: 18,
-    shopper: 19,
+    shopper: 19
   };
 
   angular
