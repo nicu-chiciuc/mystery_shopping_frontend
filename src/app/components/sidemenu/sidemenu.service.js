@@ -6,16 +6,40 @@
     .factory('sideMenu', sideMenu);
 
   /** @ngInject */
-  function sideMenu ( $rootScope, $state, $location ) {
+  function sideMenu ( $rootScope, $state, $filter ) {
     var sections = [];
 
-    // Project Management section
+    // Client Management section
     sections.push({
-      name: 'Project Management',
+      name: $filter('translate')('MENU.CLIENT_MANAGEMENT.HEADING'),
       type: 'heading',
       children: [
         {
-          name: 'Projects',
+          name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CLIENTS'),
+          type: 'toggle',
+          pages: [
+            {
+              name: 'New client',
+              state: 'companies.create',
+              type: 'link'
+            },
+            {
+              name: 'List clients',
+              state: 'companies.list',
+              type: 'link'
+            }
+          ]
+        }
+      ]
+    });
+
+    // Project Management section
+    sections.push({
+      name: $filter('translate')('MENU.PROJECT_MANAGEMENT.HEADING'),
+      type: 'heading',
+      children: [
+        {
+          name: $filter('translate')('MENU.PROJECT_MANAGEMENT.PROJECTS'),
           type: 'toggle',
           pages: [
             {
@@ -33,23 +57,23 @@
       ]
     });
 
-    // Client Management section
+    // Questionnaires section
     sections.push({
-      name: 'Client Management',
+      name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.HEADING'),
       type: 'heading',
       children: [
         {
-          name: 'Clients',
+          name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
           type: 'toggle',
           pages: [
             {
-              name: 'New client',
-              state: 'companies.create',
+              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
+              state: 'questionnaires.create',
               type: 'link'
             },
             {
-              name: 'List clients',
-              state: 'companies.list',
+              name : 'List questionnaires',
+              state: 'questionnaires',
               type: 'link'
             }
           ]

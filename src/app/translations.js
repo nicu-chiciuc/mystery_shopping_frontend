@@ -15,6 +15,21 @@
       BUTTON: {
         SAVE: 'Save'
       },
+      MENU: {
+        PROJECT_MANAGEMENT: {
+          HEADING: 'Project Management',
+          PROJECTS: 'Projects'
+        },
+        CLIENT_MANAGEMENT: {
+          HEADING: 'Client Management',
+          CLIENTS: 'Clients'
+        },
+        QUESTIONNAIRE_MANAGEMENT: {
+          HEADING: 'Questionnaire Management',
+          QUESTIONNAIRES: 'Questionnaires',
+          CREATE_QUESTIONNAIRE: 'Create questionnaire'
+        }
+      },
       COMMON: {
         CITY: 'City',
         ADDRESS: 'Address',
