@@ -1,0 +1,19 @@
+questionnaire
+
+<md-content layout="column" layout-padding>
+
+  <div dragula="'questionnaire'">
+
+    <div ng-repeat="block in vm.questionnaireTemplate.template_blocks"
+         dragula="'block"
+         dragula-model="vm.questionnaireTemplate.template_blocks">
+      <div>{{ block.title }}</div>
+    </div>
+
+  </div>
+
+</md-content>
+
+{{ vm.questionnaireTemplate | json }}
+
+<div ui-view></div>

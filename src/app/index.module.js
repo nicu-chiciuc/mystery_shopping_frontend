@@ -14,6 +14,7 @@
       'LocalStorageModule',
       'pascalprecht.translate',
       'RecursionHelper',
+      angularDragula(angular),
       'toastr',
       'formly',
       'formlyMaterial'
