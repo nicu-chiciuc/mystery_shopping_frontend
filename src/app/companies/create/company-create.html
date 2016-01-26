@@ -1,6 +1,7 @@
-Company form.
-
 <md-content layout="column" layout-padding>
+
+  <h2 ng-show="vm.isNewCompany">{{ 'COMPANY.NEW_COMPANY' | translate }}</h2>
+  <h2 ng-hide="vm.isNewCompany">{{ 'COMPANY.EDIT_COMPANY' | translate }}</h2>
 
   <div ng-cloak >
     <form name="companyForm" ng-submit="vm.saveCompany(vm.company, companyForm.$valid, 'companies.detail.view')">
@@ -88,8 +89,8 @@ Company form.
       Contact email
       -->
       <md-input-container md-no-float class="md-block md-has-icon">
-        <label>{{ 'COMPANY.CONTACT_EMAIL' | translate }}</label>
         <ng-md-icon icon="mail"></ng-md-icon>
+        <label>{{ 'COMPANY.CONTACT_EMAIL' | translate }}</label>
         <input ng-model="vm.company.contact_email" name="contact_email" type="email" ng-required="true">
 
         <!-- Validation messages -->
@@ -113,7 +114,7 @@ Company form.
       </md-input-container>
 
       <md-button type="submit" class="md-raised md-primary">
-        {{ 'BUTTON.CREATE' | translate }}
+        {{ vm.isNewCompany ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
       </md-button>
     </form>
   </div>

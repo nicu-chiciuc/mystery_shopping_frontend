@@ -8,7 +8,6 @@
   /** @ngInject */
   function CompanyCreateController ( $log, $state, models, industries, countries, company, user ) {
     $log.debug('Entered CompanyCreateController');
-    $log.debug(user);
     var vm = this;
 
     vm.company = company;
@@ -21,13 +20,19 @@
     activate();
 
     function activate() {
+      vm.isNewCompany = _.isEmpty(vm.company);
     }
 
     function saveCompany ( company, isValid, nextState ) {
-      company.tenant = user.tenantId;
-      company = models.restangularizeElement(null, company, 'companies');
+
       if ( isValid ) {
-        company.save().then(saveCompanySuccessFn, saveCompanyErrorFn);
+        if ( vm.isNewCompany ) {
+          company.tenant = user.tenantId;
+          company = models.restangularizeElement(null, company, 'companies');
+          company.post().then(saveCompanySuccessFn, saveCompanyErrorFn);
+        } else {
+          company.put().then(saveCompanySuccessFn, saveCompanyErrorFn);
+        }
       }
 
       function saveCompanySuccessFn ( response ) {
