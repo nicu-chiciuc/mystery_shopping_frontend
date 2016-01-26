@@ -24,7 +24,7 @@ Company form.
       <md-input-container class="md-block">
         <label>{{ 'COMPANY.INDUSTRY' | translate }}</label>
         <md-select ng-model="vm.company.industry" name="industry" ng-required="true">
-          <md-option ng-repeat="industry in vm.industries" value="{{ industry.id }}">
+          <md-option ng-repeat="industry in vm.industries" ng-value="industry.id">
             {{ industry.name }}
           </md-option>
         </md-select>
@@ -41,7 +41,7 @@ Company form.
       <md-input-container class="md-block">
         <label>{{ 'COMPANY.COUNTRY' | translate }}</label>
         <md-select ng-model="vm.company.country" name="country" ng-required="true">
-          <md-option ng-repeat="country in vm.countries" value="{{ country.id }}">
+          <md-option ng-repeat="country in vm.countries" ng-value="country.id">
             {{ country.name }}
           </md-option>
         </md-select>
