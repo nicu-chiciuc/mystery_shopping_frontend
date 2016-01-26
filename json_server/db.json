@@ -60,6 +60,7 @@
           "tenant": 1,
           "company": 5,
           "id": 1,
+          "type": "department",
           "managers": [
             {
               "id": 1,
@@ -74,26 +75,31 @@
               "tenant": 1,
               "department": 1,
               "id": 1,
+              "type": "entity",
               "sections": [
                 {
                   "name": "Prism Development",
                   "entity": 1,
                   "id": 1,
+                  "type": "section",
                   "employees": []
                 },
                 {
                   "name": "Mystery Shopping Team",
                   "entity": 1,
                   "id": 2,
+                  "type": "section",
                   "employees": []
                 },
                 {
                   "name": "VerityFlow Awesome Dev Team",
                   "entity": 1,
                   "id": 3,
+                  "type": "section",
                   "employees": [
                     {
                       "id": 3,
+                      "type": "clientemployee",
                       "name": "Olea Gulea"
                     }
                   ]
@@ -102,10 +108,12 @@
               "employees": [
                 {
                   "id": 2,
+                  "type": "clientemployee",
                   "name": "Mihai Coslet"
                 },
                 {
                   "id": 4,
+                  "type": "clientemployee",
                   "name": "Vasea Pupkin"
                 }
               ]
@@ -117,6 +125,7 @@
               "tenant": 1,
               "department": 1,
               "id": 2,
+              "type": "entity",
               "sections": [],
               "employees": []
             }
@@ -127,6 +136,7 @@
           "tenant": 1,
           "company": 5,
           "id": 2,
+          "type": "department",
           "entities": [
             {
               "name": "Restructurization Entity",
@@ -136,6 +146,7 @@
               "tenant": 1,
               "department": 2,
               "id": 6,
+              "type": "entity",
               "sections": [],
               "employees": []
             },
@@ -147,6 +158,7 @@
               "tenant": 1,
               "department": 2,
               "id": 7,
+              "type": "entity",
               "sections": []
             },
             {
@@ -157,6 +169,7 @@
               "tenant": 1,
               "department": 2,
               "id": 8,
+              "type": "entity",
               "sections": []
             }
           ]
@@ -166,6 +179,7 @@
           "tenant": 1,
           "company": 5,
           "id": 3,
+          "type": "department",
           "entities": []
         }
       ]
