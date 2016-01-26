@@ -27,7 +27,7 @@
 
     function addDepartment ( department ) {
       var company = this;
-      company.departments.push(department);
+      company.departments_repr.push(department);
     }
   }
 })();

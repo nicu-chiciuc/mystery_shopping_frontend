@@ -57,7 +57,7 @@
 
   <br/>
 
-  <md-button ng-repeat="department in vm.company.departments"
+  <md-button ng-repeat="department in vm.company.departments_repr"
              ui-sref="companies.detail.departments.detail.view({departmentId: department.id})">
     {{ department.name }}
   </md-button>
