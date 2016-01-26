@@ -13,7 +13,8 @@
         RU: 'Rus'
       },
       BUTTON: {
-        SAVE: 'Save'
+        SAVE: 'Save',
+        CREATE: 'Create'
       },
       MENU: {
         PROJECT_MANAGEMENT: {

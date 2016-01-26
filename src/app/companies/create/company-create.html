@@ -10,7 +10,7 @@ Company form.
       -->
       <md-input-container class="md-block">
         <label>{{ 'COMPANY.NAME' | translate }}</label>
-        <input ng-model="vm.company.name" name="name" type="text" required>
+        <input ng-model="vm.company.name" name="name" type="text" ng-required="true">
 
         <!-- Validation messages -->
         <div ng-show="companyForm.$submitted" ng-messages="companyForm.name.$error">
@@ -21,9 +21,9 @@ Company form.
       <!--
       Industry select
       -->
-      <md-input-container class="md-block" flex-gt-xs>
+      <md-input-container class="md-block">
         <label>{{ 'COMPANY.INDUSTRY' | translate }}</label>
-        <md-select ng-model="vm.company.industry" name="industry" required>
+        <md-select ng-model="vm.company.industry" name="industry" ng-required="true">
           <md-option ng-repeat="industry in vm.industries" value="{{ industry.id }}">
             {{ industry.name }}
           </md-option>
@@ -40,7 +40,7 @@ Company form.
       -->
       <md-input-container class="md-block">
         <label>{{ 'COMPANY.COUNTRY' | translate }}</label>
-        <md-select ng-model="vm.company.country" name="country" required>
+        <md-select ng-model="vm.company.country" name="country" ng-required="true">
           <md-option ng-repeat="country in vm.countries" value="{{ country.id }}">
             {{ country.name }}
           </md-option>
@@ -55,12 +55,12 @@ Company form.
       <!--
       Contact person
       -->
-      <md-input-container class="md-block">
+      <md-input-container md-no-float class="md-block md-has-icon">
         <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>-->
-        <ng-md-icon icon="person" style="fill: green"></ng-md-icon>
+        <ng-md-icon icon="person"></ng-md-icon>
+        <label>{{ 'COMPANY.CONTACT_PERSON' | translate }}</label>
         <input ng-model="vm.company.contact_person"
                name="contact_person"
-               placeholder="{{ 'COMPANY.CONTACT_PERSON' | translate }}"
                type="text"
                ng-required="true">
 
@@ -73,10 +73,10 @@ Company form.
       <!--
       Contact phone
       -->
-      <md-input-container md-no-float class="md-block">
-        <!--<label>{{ 'COMPANY.CONTACT_PHONE' | translate }}</label>-->
+      <md-input-container md-no-float class="md-block md-has-icon">
         <ng-md-icon icon="phone"></ng-md-icon>
-        <input ng-model="vm.company.contact_phone" name="contact_phone" placeholder="TELEFON" type="text" ng-required="true">
+        <label>{{ 'COMPANY.CONTACT_PHONE' | translate }}</label>
+        <input ng-model="vm.company.contact_phone" name="contact_phone" type="text" ng-required="true">
 
         <!-- Validation messages -->
         <div ng-show="companyForm.$submitted" ng-messages="companyForm.contact_phone.$error">
@@ -87,7 +87,7 @@ Company form.
       <!--
       Contact email
       -->
-      <md-input-container class="md-block md-has-icon">
+      <md-input-container md-no-float class="md-block md-has-icon">
         <label>{{ 'COMPANY.CONTACT_EMAIL' | translate }}</label>
         <ng-md-icon icon="mail"></ng-md-icon>
         <input ng-model="vm.company.contact_email" name="contact_email" type="email" ng-required="true">
@@ -101,9 +101,9 @@ Company form.
       <!--
       Domain name
       -->
-      <md-input-container md-no-float class="md-block">
+      <md-input-container md-no-float class="md-block md-has-icon">
+        <ng-md-icon icon="link"></ng-md-icon>
         <label>{{ 'COMPANY.DOMAIN' | translate }}</label>
-        <ng-md-icon icon="link" style="display:inline-block;"></ng-md-icon>
         <input ng-model="vm.company.domain" name="domain" type="text" ng-required="true">
 
         <!-- Validation messages -->
@@ -112,7 +112,9 @@ Company form.
         </div>
       </md-input-container>
 
-      <md-button type="submit" class="md-primary">Submit</md-button>
+      <md-button type="submit" class="md-raised md-primary">
+        {{ 'BUTTON.CREATE' | translate }}
+      </md-button>
     </form>
   </div>
 </md-content>
