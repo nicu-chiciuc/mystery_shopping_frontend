@@ -26,7 +26,7 @@ Create Entity here!!!
       <md-input-container class="md-block" flex-gt-sm>
         <label>{{ 'COMMON.CITY' | translate }}</label>
         <md-select ng-model="vm.entity.city" ng-change="vm.citySelected(vm.cities, vm.entity.city)" name="city" ng-required="true">
-          <md-option ng-repeat="city in vm.cities" value="{{ city.id }}">
+          <md-option ng-repeat="city in vm.cities" ng-value="city.id">
             {{ city.name }}
           </md-option>
         </md-select>
@@ -74,7 +74,7 @@ Create Entity here!!!
       Geographical coordinates
       -->
       <div layout-gt-xs="row">
-
+        <!-- TODO Add a validator to check whether both latitude and longitude are set before saving -->
         <!-- Latitude-->
         <md-input-container class="md-block" flex-gt-xs>
           <label>{{ 'COMMON.LATITUDE' | translate }}</label>
@@ -88,7 +88,11 @@ Create Entity here!!!
         </md-input-container>
       </div>
 
-      <md-button type="submit" class="md-primary">Submit</md-button>
+      <!-- TODO add a google map and an input field to set the ZOOM parameter to save for the specific coordinates -->
+
+      <md-button type="submit" class="md-primary">
+        {{ 'BUTTON.CREATE' | translate }}
+      </md-button>
     </form>
   </div>
 </md-content>

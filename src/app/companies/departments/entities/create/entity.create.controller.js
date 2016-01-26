@@ -30,6 +30,7 @@
     function saveEntity ( entity, isValid, nextState ) {
       entity.tenant = user.tenantId;
       entity.department = department.id;
+
       entity = models.restangularizeElement(null, entity, 'entities');
       if ( isValid ) {
         entity.save().then(saveEntitySuccessFn, saveEntityErrorFn);
