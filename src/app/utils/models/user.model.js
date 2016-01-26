@@ -21,6 +21,8 @@
       var user = this;
 
       user.tenantId = 1;
+      user.roles = ['tenantproductmanager'];
+      console.log('User initialized!');
     }
 
     function hasRole ( role ) {

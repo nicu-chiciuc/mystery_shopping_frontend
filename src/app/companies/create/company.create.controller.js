@@ -24,7 +24,7 @@
     }
 
     function saveCompany ( company, isValid, nextState ) {
-      company.tenant = 1;
+      company.tenant = user.tenantId;
       company = models.restangularizeElement(null, company, 'companies');
       if ( isValid ) {
         company.save().then(saveCompanySuccessFn, saveCompanyErrorFn);

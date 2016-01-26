@@ -24,7 +24,6 @@
      */
     function getAuthenticatedAccount() {
       var authenticatedAccount = angular.fromJson(localStorageService.get("authenticatedAccount"));
-      authenticatedAccount.token = 'a123';
 
       //$log.debug('Authenticated account from authStorage service:');
       //$log.debug(authenticatedAccount);

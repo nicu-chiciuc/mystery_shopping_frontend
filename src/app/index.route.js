@@ -13,7 +13,7 @@
         url: '/',
         templateUrl: 'app/main/main.html',
         data: {
-          roles: []
+          roles: ['tenantproductmanager']
         },
         controller: 'MainController as main'
       })
@@ -47,7 +47,10 @@
         url: '/login',
         templateUrl: 'app/authentication/login/login.html',
         controller: 'LoginController',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        data: {
+          roles: []
+        }
       })
       .state('projects', {
         parent: 'authenticated',

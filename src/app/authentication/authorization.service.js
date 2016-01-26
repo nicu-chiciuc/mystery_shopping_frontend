@@ -33,7 +33,7 @@
             }
           }
 
-          return identity;
+          return identity.user;
         });
     }
   }

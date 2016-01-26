@@ -18,7 +18,8 @@
 
       //$log.debug(authObject);
 
-      if (angular.isDefined(authObject) && angular.isDefined(authObject.token)) {
+      if (authObject && authObject.token) {
+        console.log(authObject);
         config.headers = config.headers || {};
         config.headers.Authorization = 'JWT ' + authObject.token;
       }

@@ -7,10 +7,9 @@
     .factory('Authentication', Authentication);
 
   /** @ngInject */
-  function Authentication($http, toastr, Restangular, AuthToken, urls) {
+  function Authentication($http, toastr, Restangular, urls) {
     var Auth = {
       login: login,
-      logout: logout,
       register: register
     };
 
@@ -35,13 +34,9 @@
       }
     }
 
-    function login(email, password) {
-      return $http.post(urls.DOMAIN_URL + 'api-token-auth/', {email: email, password: password});
+    function login(username, password) {
+      return $http.post(urls.DOMAIN_URL + 'api-token-auth/', {username: username, password: password});
     }
 
-    function logout() {
-      AuthToken.unauthenticate();
-      window.location = '/';
-    }
   }
 })();

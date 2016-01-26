@@ -19,6 +19,7 @@
       industries: industries,
       countries: countries,
       cities: cities,
+      companyManagers: companyManagers,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
       manager: modelManager
@@ -69,6 +70,10 @@
 
     function shoppers () {
       return Restangular.service('shoppers');
+    }
+
+    function companyManagers () {
+      return Restangular.service('clientmanagers');
     }
 
     function restangularizeElement ( parent, object, model ) {
