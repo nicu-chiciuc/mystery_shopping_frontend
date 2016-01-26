@@ -1,5 +1,6 @@
 <div layout="column">
-  <md-checkbox ng-click="vm.checkboxToggle(currentItem, rclo)">
+  <md-checkbox ng-checked="vm.checkboxState(vm.targetLists, currentItem, rclo)"
+               ng-click="vm.checkboxToggle(vm.targetLists, currentItem, rclo)">
     {{ rclo.itemLabelProp ? vm.recursiveCheckboxItem[rclo.itemLabelProp] : vm.recursiveCheckboxItem }}
     <!--({{ rclo.itemsProp }})-->
   </md-checkbox>
@@ -9,6 +10,6 @@
   <ms-recursive-checkbox-list ng-repeat="item in vm.recursiveCheckboxItem[childOptions.itemsProp]"
                               recursive-checkbox-item="item"
                               recursive-checkbox-list-options="childOptions"
-                              target-lists="vm.targetList">
+                              target-lists="vm.targetLists">
   </ms-recursive-checkbox-list>
 </div>

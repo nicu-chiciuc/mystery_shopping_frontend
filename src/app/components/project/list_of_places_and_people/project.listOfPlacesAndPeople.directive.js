@@ -31,7 +31,8 @@
 
       vm.listOfPlacesAndPeopleLists = {
         place: vm.project.list_of_places,
-        person: vm.project.list_of_people
+        person: vm.project.list_of_people,
+        ignored: []
       };
 
       vm.listOfPlacesAndPeopleNestedCheckboxListOptions = {
@@ -42,14 +43,16 @@
             itemsProp: 'departments',
             itemLabelProp: 'name',
             itemValueProp: 'id',
-            type: 'place',
+            type: 'ignored',
+            contentType: 'department',
             includeInList: false,
             children: [
               {
                 itemsProp: 'managers',
                 itemLabelProp: 'name',
                 itemValueProp: 'id',
-                type: 'person',
+                type: 'ignored',
+                contentType: 'clientmanager',
                 includeInList: false
               },
               {
@@ -57,6 +60,7 @@
                 itemLabelProp: 'name',
                 itemValueProp: 'id',
                 type: 'place',
+                contentType: 'entity',
                 includeInList: true,
                 children: [
                   {
@@ -64,6 +68,7 @@
                     itemLabelProp: 'name',
                     itemValueProp: 'id',
                     type: 'person',
+                    contentType: 'clientmanager',
                     includeInList: true
                   },
                   {
@@ -71,6 +76,7 @@
                     itemLabelProp: 'name',
                     itemValueProp: 'id',
                     type: 'person',
+                    contentType: 'clientemployee',
                     includeInList: true
                   },
                   {
@@ -78,6 +84,7 @@
                     itemLabelProp: 'name',
                     itemValueProp: 'id',
                     type: 'place',
+                    contentType: 'section',
                     includeInList: true,
                     children: [
                       {
@@ -85,6 +92,7 @@
                         itemLabelProp: 'name',
                         itemValueProp: 'id',
                         type: 'person',
+                        contentType: 'clientmanager',
                         includeInList: true
                       },
                       {
@@ -92,6 +100,7 @@
                         itemLabelProp: 'name',
                         itemValueProp: 'id',
                         type: 'person',
+                        contentType: 'clientemployee',
                         includeInList: true
                       }
                     ]

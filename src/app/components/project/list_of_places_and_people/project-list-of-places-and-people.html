@@ -13,6 +13,12 @@
                                target-lists="vm.listOfPlacesAndPeopleLists">
       </ms-nested-checkbox-list>
 
+      {{ vm.listOfPlacesAndPeopleLists.place | json }}
+      <hr/>
+      {{ vm.listOfPlacesAndPeopleLists.person | json }}
+      <hr/>
+      {{ vm.listOfPlacesAndPeopleLists.ignored | json }}
+
       <md-button type="submit" class="md-primary">Submit</md-button>
     </form>
   </div>
