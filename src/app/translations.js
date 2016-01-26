@@ -39,6 +39,8 @@
         LONGITUDE: 'Longitude'
       },
       COMPANY: {
+        NEW_COMPANY: 'New company',
+        EDIT_COMPANY: 'Edit company',
         NAME: 'Company name',
         INDUSTRY: 'Industry company activates in',
         COUNTRY: 'Country',
