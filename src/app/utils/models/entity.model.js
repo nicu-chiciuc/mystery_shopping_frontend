@@ -25,7 +25,7 @@
     function initialize () {
       var entity = this;
 
-      _.forEach(entity.sections_repr, function ( section ) {
+      _.forEach(entity.sections, function ( section ) {
         angular.extend(section, SectionModel);
         section.initialize();
       })
@@ -33,7 +33,7 @@
 
     function addSection ( section ) {
       var entity = this;
-      entity.sections_repr.push(section);
+      entity.sections.push(section);
     }
 
     function addEmployee ( employee ) {
