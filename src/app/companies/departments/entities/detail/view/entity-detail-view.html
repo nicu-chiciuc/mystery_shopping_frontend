@@ -1,11 +1,25 @@
-{{ vm.entity | json }}
+<md-content>
+  {{ vm.entity | json }}
 
+  <br/>
 
-<md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.create">
-  Add section
-</md-button>
-<br/>
-<md-button ng-repeat="section in vm.entity.sections"
-           ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.view({sectionId: section.id})">
-  {{ section.name }}
-</md-button>
+  <md-button ng-repeat="section in vm.entity.sections"
+             ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.view({sectionId: section.id})">
+    {{ section.name }}
+  </md-button>
+
+  <hr/>
+
+  <md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.create">
+    Add section
+  </md-button>
+
+  <md-button ui-sref="companies.detail.departments.detail.entities.detail.managers.create">
+    Add manager
+  </md-button>
+
+  <md-button ui-sref="companies.detail.departments.detail.entities.detail.employees.create">
+    Add employee
+  </md-button>
+
+</md-content>

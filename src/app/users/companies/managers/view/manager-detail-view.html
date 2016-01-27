@@ -8,7 +8,7 @@
       Manager of {{ vm.place.name }}
     </h2>
     <div flex="none">
-      <md-button ui-sref="companies.detail.departments.detail.managers.detail.edit({companyManagerId: vm.companyManager.id})">
+      <md-button ng-click="vm.goToManagerDetailViewState()">
         Edit
       </md-button>
     </div>
@@ -17,11 +17,11 @@
   <div layout="row" layout-padding>
 
     <div layout="column">
-      {{ vm.companyManager.first_name + ' ' + vm.companyManager.last_name }}
+      {{ vm.manager.first_name + ' ' + vm.manager.last_name }}
     </div>
 
     <div layout="column">
-      {{ vm.companyManager.job_title }}
+      {{ vm.manager.job_title }}
     </div>
 
   </div>

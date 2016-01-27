@@ -6,44 +6,50 @@
     .controller('CompanyManagerCreateController', CompanyManagerCreateController);
 
   /** @ngInject */
-  function CompanyManagerCreateController ( $log, $state, models, user, company, place, companyManager ) {
+  function CompanyManagerCreateController ( $log, $state, models, user, company, place, manager ) {
     $log.debug('Entered CompanyManagerCreateController');
     console.log(place);
     var vm = this;
 
-    vm.companyManager = companyManager;
+    vm.manager = manager;
 
-    vm.saveCompanyManager = saveCompanyManager;
+    vm.saveManager = saveManager;
 
     activate();
 
     function activate() {
-      vm.isNewCompanyManager = _.isEmpty(vm.companyManager);
-      companyManager.place_id = place.id;
-      companyManager.place_type = place.contentType;
-      companyManager.company = company.id;
+      vm.isNewManager = _.isEmpty(vm.manager);
+      manager.place_id = place.id;
+      manager.place_type = place.contentType;
+      manager.company = company.id;
     }
 
-    function saveCompanyManager ( companyManager, isValid, nextState ) {
+    function saveManager ( manager, isValid ) {
 
       if ( isValid ) {
-        if ( vm.isNewCompanyManager ) {
-          companyManager = models.restangularizeElement(null, companyManager, 'clientmanagers');
-          companyManager.post().then(saveCompanyManagerSuccessFn, saveCompanyManagerErrorFn);
+        if ( vm.isNewManager ) {
+          manager = models.restangularizeElement(null, manager, 'clientmanagers');
+          manager.post().then(saveManagerSuccessFn, saveManagerErrorFn);
         } else {
-          companyManager.put().then(saveCompanyManagerSuccessFn, saveCompanyManagerErrorFn);
+          manager.put().then(saveManagerSuccessFn, saveManagerErrorFn);
         }
       }
 
-      function saveCompanyManagerSuccessFn ( response ) {
-        if ( vm.isNewCompanyManager ) {
+      function saveManagerSuccessFn ( response ) {
+        if ( vm.isNewManager ) {
           place.addManager(response);
+          vm.manager = response;
         }
-        $state.go(nextState, {companyManagerId: response.id});
+        goToManagerDetailViewState();
       }
-      function saveCompanyManagerErrorFn () {
+      function saveManagerErrorFn () {
         // TODO deal with the error
       }
+    }
+
+    function goToManagerDetailViewState () {
+      var managerDetailViewState = $state.current.name.replace(/create/g, 'detail.view');
+      $state.go(managerDetailViewState, {managerId: vm.manager.id});
     }
   }
 })();

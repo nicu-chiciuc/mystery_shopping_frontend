@@ -3,17 +3,17 @@ HI! this is manager create page.
 <md-content layout="row" layout-padding>
 
   <div ng-cloak flex>
-    <form name="companyManagerForm" ng-submit="vm.saveCompanyManager(vm.companyManager, companyManagerForm.$valid, 'companies.detail.departments.detail.managers.detail.view')">
+    <form name="managerForm" ng-submit="vm.saveManager(vm.manager, managerForm.$valid)">
 
       <!--
       First Name
       -->
       <md-input-container class="md-block">
         <label>{{ 'ACCOUNT.FIRST_NAME' | translate }}</label>
-        <input ng-model="vm.companyManager.first_name" name="first_name" type="text" ng-required="true">
+        <input ng-model="vm.manager.first_name" name="first_name" type="text" ng-required="true">
 
         <!-- Validation messages -->
-        <div ng-show="companyManagerForm.$submitted" ng-messages="companyManagerForm.first_name.$error">
+        <div ng-show="managerForm.$submitted" ng-messages="managerForm.first_name.$error">
           <div ng-message="required">First name is REQUIRED!</div>
         </div>
       </md-input-container>
@@ -24,10 +24,10 @@ HI! this is manager create page.
       -->
       <md-input-container class="md-block">
         <label>{{ 'ACCOUNT.LAST_NAME' | translate }}</label>
-        <input ng-model="vm.companyManager.last_name" name="last_name" type="text" ng-required="true">
+        <input ng-model="vm.manager.last_name" name="last_name" type="text" ng-required="true">
 
         <!-- Validation messages -->
-        <div ng-show="companyManagerForm.$submitted" ng-messages="companyManagerForm.last_name.$error">
+        <div ng-show="managerForm.$submitted" ng-messages="managerForm.last_name.$error">
           <div ng-message="required">Last name is REQUIRED!</div>
         </div>
       </md-input-container>
@@ -38,12 +38,12 @@ HI! this is manager create page.
       -->
       <md-input-container class="md-block">
         <label>{{ 'ACCOUNT.JOB_TITLE' | translate }}</label>
-        <input ng-model="vm.companyManager.job_title" name="job_title" type="text">
+        <input ng-model="vm.manager.job_title" name="job_title" type="text">
       </md-input-container>
 
 
       <md-button type="submit" class="md-primary">
-        {{ vm.isNewCompanyManager ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
+        {{ vm.isNewManager ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
       </md-button>
     </form>
   </div>

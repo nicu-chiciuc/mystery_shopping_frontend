@@ -8,6 +8,12 @@
 
 <hr/>
 
+<md-button ng-repeat="manager in vm.department.managers"
+           ui-sref="companies.detail.departments.detail.managers.detail.view({managerId: manager.id})">
+  {{ manager.first_name }}
+</md-button>
+<hr/>
+
 <md-button ui-sref="companies.detail.departments.detail.entities.create">
   Add entity
 </md-button>
