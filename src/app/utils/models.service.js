@@ -61,7 +61,7 @@
     }
 
     function questionnaireTemplates () {
-      return Restangular.service('questionnairetemplates');
+      return Restangular.service('templatequestionnaires');
     }
 
     function scripts () {
