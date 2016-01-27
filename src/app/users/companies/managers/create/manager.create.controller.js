@@ -48,7 +48,7 @@
     }
 
     function goToManagerDetailViewState () {
-      var managerDetailViewState = $state.current.name.replace(/create/g, 'detail.view');
+      var managerDetailViewState = $state.current.name.replace(/(create|detail\.edit)/g, 'detail.view');
       $state.go(managerDetailViewState, {managerId: vm.manager.id});
     }
   }

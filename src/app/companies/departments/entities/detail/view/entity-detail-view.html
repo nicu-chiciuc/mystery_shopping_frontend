@@ -10,6 +10,13 @@
 
   <hr/>
 
+  <md-button ng-repeat="manager in vm.entity.managers"
+             ui-sref="companies.detail.departments.detail.entities.detail.managers.detail.view({managerId: manager.id})">
+    {{ manager.first_name }}
+  </md-button>
+
+  <hr/>
+
   <md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.create">
     Add section
   </md-button>
