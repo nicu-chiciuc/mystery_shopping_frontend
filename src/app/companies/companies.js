@@ -87,7 +87,7 @@
         template: '<div ui-view></div>',
         resolve: {
           department: function ( $stateParams, company ) {
-            return _.find(company.departments, function ( department ) {
+            return _.find(company.departments_repr, function ( department ) {
               return department.id === $stateParams.departmentId;
             });
           }

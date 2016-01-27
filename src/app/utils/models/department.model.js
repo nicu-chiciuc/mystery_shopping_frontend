@@ -10,7 +10,9 @@
   function DepartmentModel ( EntityModel ) {
     var Model = {
       initialize: initialize,
-      addEntity: addEntity
+      addEntity: addEntity,
+      addEmployee: addEmployee,
+      addManager: addManager
     };
 
     return Model;
@@ -29,5 +31,16 @@
       var department = this;
       department.entities.push(entity);
     }
+
+    function addEmployee ( employee ) {
+      var entity = this;
+      entity.employees.push(employee);
+    }
+
+    function addManager ( manager ) {
+      var entity = this;
+      entity.managers.push(manager);
+    }
+
   }
 })();

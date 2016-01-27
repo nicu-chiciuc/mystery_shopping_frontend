@@ -19,7 +19,7 @@
     function initialize () {
       var company = this;
 
-      _.forEach(company.departments, function ( department ) {
+      _.forEach(company.departments_repr, function ( department ) {
         angular.extend(department, DepartmentModel);
         department.initialize();
       });

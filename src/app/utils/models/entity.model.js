@@ -25,7 +25,7 @@
     function initialize () {
       var entity = this;
 
-      _.forEach(entity.sections, function ( section ) {
+      _.forEach(entity.sections_repr, function ( section ) {
         angular.extend(section, SectionModel);
         section.initialize();
       })
@@ -33,7 +33,7 @@
 
     function addSection ( section ) {
       var entity = this;
-      entity.sections.push(section);
+      entity.sections_repr.push(section);
     }
 
     function addEmployee ( employee ) {
@@ -50,7 +50,9 @@
       // TODO create a directive that will append automatically the 'z' char to the zoomCoefficient
       var entity = this;
       var zoomCoefficient = entity.zoomCoefficient || defaultZoomCoefficient;  // 14 is the default zoom coefficient close enough to see streets
-      entity.coordinates = [entity.latitude, entity.longitude, zoomCoefficient + 'z'].join(',');
+      if ( entity.latitude && entity.longitude ) {
+        entity.coordinates = [entity.latitude, entity.longitude, zoomCoefficient + 'z'].join(',');
+      }
     }
 
     function splitCoordinates () {

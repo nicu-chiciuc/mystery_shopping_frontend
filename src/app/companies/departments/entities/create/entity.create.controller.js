@@ -25,11 +25,13 @@
     activate();
 
     function activate() {
+      angular.extend(entity, models.manager.EntityModel);
     }
 
     function saveEntity ( entity, isValid, nextState ) {
       entity.tenant = user.tenantId;
       entity.department = department.id;
+      entity.mergeCoordinates();
 
       entity = models.restangularizeElement(null, entity, 'entities');
       if ( isValid ) {
