@@ -1,0 +1,28 @@
+<md-content>
+  {{ vm.employee | json }}
+
+  <hr/>
+
+  <div layout="row" layout-align="none center">
+    <h2 flex>
+      Employee of {{ vm.place.name }}
+    </h2>
+    <div flex="none">
+      <md-button ng-click="vm.goToEmployeeDetailViewState()">
+        Edit
+      </md-button>
+    </div>
+  </div>
+
+  <div layout="row" layout-padding>
+
+    <div layout="column">
+      {{ vm.employee.first_name + ' ' + vm.employee.last_name }}
+    </div>
+
+    <div layout="column">
+      {{ vm.employee.job_title }}
+    </div>
+
+  </div>
+</md-content>

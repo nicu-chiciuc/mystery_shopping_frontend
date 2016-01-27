@@ -82,37 +82,42 @@
         templateUrl: 'app/users/companies/managers/create/manager-create.html',
         controller: 'CompanyManagerCreateController as vm'
       })
+      .state('companies.detail.departments.detail.entities.detail.employees', {
+        abstract: true,
+        url: '/employees',
+        template: '<div ui-view></div>'
+      })
       .state('companies.detail.departments.detail.entities.detail.employees.create', {
         url: '/new',
-        templateUrl: 'app/users/companies/managers/create/manager-create.html',
-        controller: 'CompanyManagerCreateController as vm',
+        templateUrl: 'app/users/companies/employees/create/employee-form.html',
+        controller: 'CompanyEmployeeFormController as vm',
         resolve: {
-          manager: function () { return {}; },
-          place: function ( entity ) { return entity; }
+          employee: function () { return {}; },
+          section: function () { return {}; }
         }
       })
       .state('companies.detail.departments.detail.entities.detail.employees.detail', {
         abstract: true,
-        url: '/{managerId:int}',
+        url: '/{employeeId:int}',
         template: '<div ui-view></div>',
         resolve: {
-          manager: function ( $stateParams, entity ) {
-            return _.find(entity.managers, function ( manager ) {
-              return manager.id === $stateParams.managerId;
+          employee: function ( $stateParams, entity ) {
+            return _.find(entity.employees, function ( employee ) {
+              return employee.id === $stateParams.employeeId;
             });
           },
-          place: function ( entity ) { return entity; }
+          section: function () { return {}; }
         }
       })
       .state('companies.detail.departments.detail.entities.detail.employees.detail.view', {
         url: '/detail',
-        templateUrl: 'app/users/companies/managers/view/manager-detail-view.html',
-        controller: 'CompanyManagerDetailViewController as vm'
+        templateUrl: 'app/users/companies/employees/view/employee-detail-view.html',
+        controller: 'CompanyEmployeeDetailViewController as vm'
       })
       .state('companies.detail.departments.detail.entities.detail.employees.detail.edit', {
         url: '/edit',
-        templateUrl: 'app/users/companies/managers/create/manager-create.html',
-        controller: 'CompanyManagerCreateController as vm'
+        templateUrl: 'app/users/companies/employees/create/employee-form.html',
+        controller: 'CompanyEmployeeFormController as vm'
       })
 
     ;

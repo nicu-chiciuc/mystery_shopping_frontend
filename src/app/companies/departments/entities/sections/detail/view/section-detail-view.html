@@ -1,2 +1,28 @@
-{{ vm.section | json }}
+<md-content>
+  {{ vm.section | json }}
 
+  <hr/>
+
+  <md-button ng-repeat="manager in vm.section.managers"
+             ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.managers.detail.view({managerId: manager.id})">
+    {{ manager.first_name }}
+  </md-button>
+
+  <hr/>
+
+  <md-button ng-repeat="employee in vm.section.employees"
+             ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.employees.detail.view({employeeId: employee.id})">
+    {{ employee.first_name }}
+  </md-button>
+
+  <hr/>
+
+  <md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.managers.create">
+    Add manager
+  </md-button>
+
+  <md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.employees.create">
+    Add employee
+  </md-button>
+
+</md-content>
