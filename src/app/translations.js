@@ -33,10 +33,16 @@
       },
       COMMON: {
         CITY: 'City',
+        SECTOR: 'Sector',
         ADDRESS: 'Address',
         GEOGRAPHICAL_COORDINATES: 'Geographical coordinates',
         LATITUDE: 'Latitude',
         LONGITUDE: 'Longitude'
+      },
+      ACCOUNT: {
+        FIRST_NAME: 'First name',
+        LAST_NAME: 'Last name',
+        JOB_TITLE: 'Job title'
       },
       COMPANY: {
         NEW_COMPANY: 'New company',
