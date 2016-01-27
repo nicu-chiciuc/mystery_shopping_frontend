@@ -40,7 +40,7 @@
         legend: $filter('translate')('PROJECT.METHODOLOGY.LIST_OF_PLACES_AND_PEOPLE'),
         children: [
           {
-            itemsProp: 'departments',
+            itemsProp: 'departments_repr',
             itemLabelProp: 'name',
             itemValueProp: 'id',
             type: 'ignored',
