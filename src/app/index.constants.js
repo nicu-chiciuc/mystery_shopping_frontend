@@ -30,7 +30,7 @@
   angular
     .module('spark')
     .constant('moment', moment)
-    .constant('urls', jsonServerUrls)
+    .constant('urls', urls)
     .constant('contentTypes', contentTypes);
 
 })();
