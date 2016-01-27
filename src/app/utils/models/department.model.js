@@ -7,11 +7,10 @@
     .factory('DepartmentModel', DepartmentModel);
 
   /** @ngInject */
-  function DepartmentModel ( EntityModel ) {
+  function DepartmentModel ( EntityModel, contentTypes, Restangular ) {
     var Model = {
       initialize: initialize,
       addEntity: addEntity,
-      addEmployee: addEmployee,
       addManager: addManager
     };
 
@@ -21,9 +20,16 @@
     function initialize () {
       var department = this;
 
+      department.contentType = contentTypes.department;
+
       _.forEach(department.entities, function ( entity ) {
+        Restangular.restangularizeElement(null, entity, 'entities');
         angular.extend(entity, EntityModel);
         entity.initialize();
+      });
+
+      _.forEach(department.managers, function ( manager ) {
+        Restangular.restangularizeElement(null, manager, 'clientmanagers');
       });
     }
 
@@ -32,14 +38,9 @@
       department.entities.push(entity);
     }
 
-    function addEmployee ( employee ) {
-      var entity = this;
-      entity.employees.push(employee);
-    }
-
     function addManager ( manager ) {
-      var entity = this;
-      entity.managers.push(manager);
+      var department = this;
+      department.managers.push(manager);
     }
 
   }

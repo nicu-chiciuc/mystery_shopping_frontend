@@ -1,0 +1,28 @@
+<md-content>
+  {{ vm.companyManager | json }}
+
+  <hr/>
+
+  <div layout="row" layout-align="none center">
+    <h2 flex>
+      Manager of {{ vm.place.name }}
+    </h2>
+    <div flex="none">
+      <md-button ui-sref="companies.detail.departments.detail.managers.detail.edit({companyManagerId: vm.companyManager.id})">
+        Edit
+      </md-button>
+    </div>
+  </div>
+
+  <div layout="row" layout-padding>
+
+    <div layout="column">
+      {{ vm.companyManager.first_name + ' ' + vm.companyManager.last_name }}
+    </div>
+
+    <div layout="column">
+      {{ vm.companyManager.job_title }}
+    </div>
+
+  </div>
+</md-content>

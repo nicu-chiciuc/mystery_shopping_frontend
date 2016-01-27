@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-</head>
-<body>
+HI! this is manager create page.
 
-</body>
-</html>
+<md-content layout="row" layout-padding>
+
+  <div ng-cloak flex>
+    <form name="companyManagerForm" ng-submit="vm.saveCompanyManager(vm.companyManager, companyManagerForm.$valid, 'companies.detail.departments.detail.managers.detail.view')">
+
+      <!--
+      First Name
+      -->
+      <md-input-container class="md-block">
+        <label>{{ 'ACCOUNT.FIRST_NAME' | translate }}</label>
+        <input ng-model="vm.companyManager.first_name" name="first_name" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="companyManagerForm.$submitted" ng-messages="companyManagerForm.first_name.$error">
+          <div ng-message="required">First name is REQUIRED!</div>
+        </div>
+      </md-input-container>
+
+
+      <!--
+      Last Name
+      -->
+      <md-input-container class="md-block">
+        <label>{{ 'ACCOUNT.LAST_NAME' | translate }}</label>
+        <input ng-model="vm.companyManager.last_name" name="last_name" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="companyManagerForm.$submitted" ng-messages="companyManagerForm.last_name.$error">
+          <div ng-message="required">Last name is REQUIRED!</div>
+        </div>
+      </md-input-container>
+
+
+      <!--
+      Job Title
+      -->
+      <md-input-container class="md-block">
+        <label>{{ 'ACCOUNT.JOB_TITLE' | translate }}</label>
+        <input ng-model="vm.companyManager.job_title" name="job_title" type="text">
+      </md-input-container>
+
+
+      <md-button type="submit" class="md-primary">
+        {{ vm.isNewCompanyManager ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
+      </md-button>
+    </form>
+  </div>
+</md-content>

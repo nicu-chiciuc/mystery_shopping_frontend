@@ -8,38 +8,42 @@
   /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('companies.detail.managers', {
+      .state('companies.detail.departments.detail.managers', {
         abstract: true,
         url: '/managers',
         template: '<div ui-view></div>'
       })
-      .state('companies.detail.managers.create', {
+      .state('companies.detail.departments.detail.managers.create', {
         url: '/new',
-        templateUrl: 'app/users/companies/managers/create/department-create.html',
+        templateUrl: 'app/users/companies/managers/create/manager-create.html',
         controller: 'CompanyManagerCreateController as vm',
         resolve: {
-          companyManager: function () { return {}; }
+          companyManager: function () { return {}; },
+          place: function ( department ) { return department; }
         }
       })
-      .state('companies.detail.managers.detail', {
+      .state('companies.detail.departments.detail.managers.detail', {
         abstract: true,
         url: '/{companyManagerId:int}',
         template: '<div ui-view></div>',
         resolve: {
-          companyManager: function ( $stateParams, models ) {
-            return models.companyManagers().one().get($stateParams.companyManagerId);
-          }
+          companyManager: function ( $stateParams, department ) {
+            return _.find(department.managers, function ( manager ) {
+              return manager.id === $stateParams.companyManagerId;
+            });
+          },
+          place: function ( department ) { return department; }
         }
       })
-      .state('companies.detail.managers.detail.view', {
+      .state('companies.detail.departments.detail.managers.detail.view', {
         url: '/detail',
-        templateUrl: 'app/companies/departments/detail/view/department-detail-view.html',
-        controller: 'DepartmentDetailViewController as vm'
+        templateUrl: 'app/users/companies/managers/view/manager-detail-view.html',
+        controller: 'CompanyManagerDetailViewController as vm'
       })
-      .state('companies.detail.managers.detail.edit', {
+      .state('companies.detail.departments.detail.managers.detail.edit', {
         url: '/edit',
-        templateUrl: 'app/companies/departments/create/department-create.html',
-        controller: 'DepartmentCreateController as vm'
+        templateUrl: 'app/users/companies/managers/create/manager-create.html',
+        controller: 'CompanyManagerCreateController as vm'
       })
 
     ;
