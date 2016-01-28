@@ -14,7 +14,9 @@
       },
       BUTTON: {
         SAVE: 'Save',
-        CREATE: 'Create'
+        CREATE: 'Create',
+        CANCEL: 'Cancel',
+        DELETE: 'Delete'
       },
       MENU: {
         PROJECT_MANAGEMENT: {
@@ -37,7 +39,10 @@
         ADDRESS: 'Address',
         GEOGRAPHICAL_COORDINATES: 'Geographical coordinates',
         LATITUDE: 'Latitude',
-        LONGITUDE: 'Longitude'
+        LONGITUDE: 'Longitude',
+        ACTIONS: {
+          CLOSE_DIALOG: 'Close dialog' // Dialog means modal/popup window
+        }
       },
       ACCOUNT: {
         FIRST_NAME: 'First name',
@@ -83,6 +88,18 @@
           METHODOLOGY: {
             NUMBER_OF_EVALUATIONS: 'Number of evaluations'
           }
+        }
+      },
+      QUESTIONNAIRE: {
+        ACTIONS: {
+          ADD_BLOCK: 'Add block',
+          ADD_QUESTION: 'Add question'
+        },
+        DIALOG: {
+          EDIT_BLOCK_TITLE: 'Edit block title',
+          DEFINE_BLOCK_TITLE: 'Define block title',
+          BLOCK_TITLE: 'Block title',
+          SET_TITLE: 'Set title'
         }
       },
       VALIDATION_MESSAGE: {

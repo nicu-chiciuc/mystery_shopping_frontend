@@ -1,0 +1,15 @@
+md-toolbar.ms-height-md {
+    min-height: 48px;
+    height: 48px;
+    max-height: 48px;
+}
+
+md-toolbar.ms-height-sm {
+    min-height: 36px;
+    height: 36px;
+    max-height: 36px;
+}
+
+.questionnaire md-whiteframe {
+    padding: 0;
+}
