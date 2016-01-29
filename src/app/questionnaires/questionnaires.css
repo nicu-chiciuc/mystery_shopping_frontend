@@ -13,3 +13,11 @@ md-toolbar.ms-height-sm {
 .questionnaire md-whiteframe {
     padding: 0;
 }
+
+.no-errors-spacer {
+    margin: 9px 0;
+}
+
+.no-errors-spacer > .md-errors-spacer {
+    min-height: 1px;
+}

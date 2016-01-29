@@ -22,8 +22,9 @@
             <span>
               {{ block_1.title }}
             </span>
-            <md-button ng-click="vm.showEditBlockTitleDialog($event, block_1)">
-              <ng-md-icon icon="edit"
+            <md-button ng-click="vm.showEditBlockTitleDialog($event, block_1)"
+                       class="md-icon-button">
+              <ng-md-icon icon="edit" size="18"
                           aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
               </ng-md-icon>
             </md-button>
@@ -53,8 +54,9 @@
                   <span>
                     {{ block_2.title }}
                   </span>
-                  <md-button ng-click="vm.showEditBlockTitleDialog($event, block_2)">
-                    <ng-md-icon icon="edit"
+                  <md-button ng-click="vm.showEditBlockTitleDialog($event, block_2)"
+                             class="md-icon-button">
+                    <ng-md-icon icon="edit" size="18"
                                 aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
                     </ng-md-icon>
                   </md-button>
@@ -84,8 +86,9 @@
                         <span>
                           {{ block_3.title }}
                         </span>
-                        <md-button ng-click="vm.showEditBlockTitleDialog($event, block_3)">
-                          <ng-md-icon icon="edit"
+                        <md-button ng-click="vm.showEditBlockTitleDialog($event, block_3)"
+                                   class="md-icon-button">
+                          <ng-md-icon icon="edit" size="18"
                                       aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
                           </ng-md-icon>
                         </md-button>
@@ -102,6 +105,15 @@
 
                     </md-content>
 
+                    <section layout="row">
+                      <span flex></span>
+                      <md-button ng-click="vm.showAddQuestionDialog($event, block_3)"
+                                 class="md-fab md-mini md-primary"
+                                 aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
+                        <ng-md-icon icon="playlist_add"></ng-md-icon>
+                      </md-button>
+                    </section>
+
                   </md-content>
 
                 </md-whiteframe>
@@ -110,10 +122,15 @@
 
               <section layout="row">
                 <span flex></span>
-                <md-button ng-click="vm.addBlock(block_2.template_blocks, 3)"
+                <md-button ng-click="vm.showAddQuestionDialog($event, block_2)"
+                           class="md-fab md-mini md-primary"
+                           aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
+                  <ng-md-icon icon="playlist_add"></ng-md-icon>
+                </md-button>
+                <md-button ng-click="vm.addBlock(block_2)"
                            class="md-fab md-mini md-primary"
                            aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}">
-                  <ng-md-icon icon="add"></ng-md-icon>
+                  <ng-md-icon icon="my_library_add"></ng-md-icon>
                 </md-button>
               </section>
 
@@ -125,12 +142,12 @@
 
         <section layout="row">
           <span flex></span>
-          <md-button ng-click="vm.addQuestion(block_1.template_block_questions, 2)"
+          <md-button ng-click="vm.showAddQuestionDialog($event, block_1)"
                      class="md-fab md-mini md-primary"
                      aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
             <ng-md-icon icon="playlist_add"></ng-md-icon>
           </md-button>
-          <md-button ng-click="vm.addBlock(block_1.template_blocks, 2)"
+          <md-button ng-click="vm.addBlock(block_1)"
                      class="md-fab md-mini md-primary"
                      aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}">
             <ng-md-icon icon="my_library_add"></ng-md-icon>
@@ -143,7 +160,7 @@
 
   </div>
 
-  <md-button ng-click="vm.addBlock(questionnaire.template_blocks, 1)" class="md-primary">
+  <md-button ng-click="vm.addBlock(questionnaire)" class="md-primary">
     Add block
   </md-button>
 

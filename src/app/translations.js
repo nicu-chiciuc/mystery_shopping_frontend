@@ -91,6 +91,15 @@
         }
       },
       QUESTIONNAIRE: {
+        QUESTION: {
+          TYPE: {
+            SINGLE_CHOICE: 'Single choice',
+            MULTIPLE_CHOICE: 'Multiple choice',
+            TEXT: 'Text',
+            DATE: 'Date'
+          },
+          QUESTION_BODY: 'Question body'
+        },
         ACTIONS: {
           ADD_BLOCK: 'Add block',
           ADD_QUESTION: 'Add question'
@@ -99,7 +108,8 @@
           EDIT_BLOCK_TITLE: 'Edit block title',
           DEFINE_BLOCK_TITLE: 'Define block title',
           BLOCK_TITLE: 'Block title',
-          SET_TITLE: 'Set title'
+          SET_TITLE: 'Set title',
+          ADD_QUESTION: 'Add question'
         }
       },
       VALIDATION_MESSAGE: {

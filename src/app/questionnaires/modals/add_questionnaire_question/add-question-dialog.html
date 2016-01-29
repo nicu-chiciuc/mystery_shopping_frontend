@@ -1,0 +1,137 @@
+<md-dialog aria-label="{{ 'QUESTIONNAIRE.DIALOG.ADD_QUESTION' | translate }}">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          {{ 'QUESTIONNAIRE.DIALOG.ADD_QUESTION' | translate }}
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <ng-md-icon icon="close" aria-label="{{ 'COMMON.ACTIONS.CLOSE_DIALOG' | translate }}"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content style="max-width:800px;width:800px;max-height:810px; ">
+      <md-tabs md-dynamic-height md-border-bottom>
+
+        <!-- Single choice tab -->
+        <md-tab ng-click="updateQuestionType('s')" label="{{ 'QUESTIONNAIRE.QUESTION.TYPE.SINGLE_CHOICE' | translate }}">
+          <md-content class="md-padding" layout="column">
+            <md-input-container flex>
+              <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
+              <textarea ng-model="question.question_body" md-autofocus columns="1" rows="3"></textarea>
+            </md-input-container>
+
+            <!--<md-table-container>-->
+              <!--<table md-table>-->
+                <!--<thead md-head>-->
+                <!--<tr md-row>-->
+                  <!--<th md-column>Choice body</th>-->
+                  <!--<th md-column md-numeric>Weight</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody md-body>-->
+                <!--<tr md-row md-select="choice" md-select-id="{{choice.body}}" ng-repeat="choice in question.choices">-->
+                  <!--<td md-cell>{{ choice.body }}</td>-->
+                  <!--<td md-cell>{{ choice.weight }}</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+              <!--</table>-->
+            <!--</md-table-container>-->
+
+            <md-subheader class="md-no-sticky">Choices</md-subheader>
+            <md-divider></md-divider>
+            <md-list>
+              <md-list-item ng-repeat="choice in question.choices" layout="row">
+
+
+
+                <md-input-container md-no-float flex class="no-errors-spacer">
+                  <!--<ng-md-icon icon="radio_button_on"></ng-md-icon>-->
+                  <input ng-model="choice.body" type="text" placeholder="Choice body"/>
+                </md-input-container>
+
+                <md-input-container md-no-float flex="none" class="no-errors-spacer">
+                  <input ng-model="choice.weight" type="text" placeholder="Choice weight"/>
+                </md-input-container>
+
+                <span flex="none">
+                  <md-button ng-click="removeChoice($index)" class="md-icon-button" aria-label="{{ 'BUTTON.REMOVE' | translate }}">
+                    <ng-md-icon icon="close"></ng-md-icon>
+                  </md-button>
+                </span>
+              </md-list-item>
+            </md-list>
+
+            <!--<form>-->
+              <!--<div layout="row" ng-repeat="choice in question.choices">-->
+                <!--<md-input-container md-no-float flex>-->
+                  <!--<input ng-model="choice.body" type="text" placeholder="Choice body"/>-->
+                <!--</md-input-container>-->
+
+                <!--<md-input-container md-no-float flex="none">-->
+                  <!--<input ng-model="choice.weight" type="text" placeholder="Choice weight"/>-->
+                <!--</md-input-container>-->
+
+                <!--<span flex="none">-->
+                  <!--<md-button ng-click="doSecondaryAction($event)" class="md-icon-button" aria-label="{{ 'BUTTON.REMOVE' | translate }}">-->
+                    <!--<ng-md-icon icon="close"></ng-md-icon>-->
+                  <!--</md-button>-->
+                <!--</span>-->
+              <!--</div>-->
+            <!--</form>-->
+
+            <md-button ng-click="addChoice()">Add choice</md-button>
+
+          </md-content>
+        </md-tab>
+
+        <!-- Multiple choice tab -->
+        <md-tab ng-click="updateQuestionType('m')" label="{{ 'QUESTIONNAIRE.QUESTION.TYPE.MULTIPLE_CHOICE' | translate }}">
+          <md-content class="md-padding" layout="row">
+            <md-input-container flex>
+              <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
+              <textarea ng-model="question_body" md-autofocus columns="1" rows="3"></textarea>
+            </md-input-container>
+          </md-content>
+        </md-tab>
+
+        <!-- Text tab -->
+        <md-tab ng-click="updateQuestionType('t')" label="{{ 'QUESTIONNAIRE.QUESTION.TYPE.TEXT' | translate }}">
+          <md-content class="md-padding" layout="row">
+            <md-input-container flex>
+              <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
+              <textarea ng-model="question_body" md-autofocus columns="1" rows="3"></textarea>
+            </md-input-container>
+          </md-content>
+        </md-tab>
+
+        <!-- Date tab -->
+        <md-tab ng-click="updateQuestionType('d')" label="{{ 'QUESTIONNAIRE.QUESTION.TYPE.DATE' | translate }}">
+          <md-content class="md-padding" layout="row">
+            <md-input-container flex>
+              <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
+              <textarea ng-model="question_body" md-autofocus columns="1" rows="3"></textarea>
+            </md-input-container>
+          </md-content>
+        </md-tab>
+
+      </md-tabs>
+    </md-dialog-content>
+
+
+    <md-dialog-actions layout="row">
+      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+        More on Wikipedia
+      </md-button>
+      <span flex></span>
+      <md-button ng-click="answer('not useful')" >
+        Cancel
+      </md-button>
+      <md-button ng-click="addQuestion(question)" style="margin-right:20px;" >
+        Add
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

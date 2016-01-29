@@ -18,6 +18,7 @@
 
     vm.addBlock = addBlock;
     vm.showEditBlockTitleDialog = showEditBlockTitleDialog;
+    vm.showAddQuestionDialog = showAddQuestionDialog;
 
     vm.saveQuestionnaireTemplate = saveQuestionnaireTemplate;
 
@@ -215,13 +216,13 @@
       questionnaireTemplate.tenant = user.tenantId;
     }
 
-    function addBlock (list, level) {
+    function addBlock ( parentBlock ) {
       var block = {};
       block.template_blocks = [];
       block.template_block_questions = [];
       block.title = $filter('translate')('QUESTIONNAIRE.DIALOG.BLOCK_TITLE');
 
-      list.push(block);
+      parentBlock.template_blocks.push(block);
     }
 
     function showEditBlockTitleDialog ( ev, block ) {
@@ -238,14 +239,23 @@
         }
       })
         .then(function(newTitle) {
-          console.log(newTitle);
           block.title = newTitle;
         });
-      //$scope.$watch(function() {
-      //  return $mdMedia('xs') || $mdMedia('sm');
-      //}, function(wantsFullScreen) {
-      //  $scope.customFullscreen = (wantsFullScreen === true);
-      //});
+    }
+
+    function showAddQuestionDialog ( ev, block ) {
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
+      $mdDialog.show({
+        controller: 'AddQuestionnaireQuestionDialogController as vm',
+        templateUrl: 'app/questionnaires/modals/add_questionnaire_question/add-question-dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        fullscreen: useFullScreen
+      })
+        .then(function(question) {
+          block.template_block_questions.push(question);
+        });
     }
   }
 })();

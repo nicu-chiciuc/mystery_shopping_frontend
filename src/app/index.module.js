@@ -10,6 +10,7 @@
       'restangular',
       'ui.router',
       'ngMaterial',
+      'md.data.table',
       'ngMdIcons',
       'LocalStorageModule',
       'pascalprecht.translate',
