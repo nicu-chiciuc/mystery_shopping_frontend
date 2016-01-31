@@ -6,7 +6,7 @@
     .controller('QuestionnaireTemplateCreateController', QuestionnaireTemplateCreateController);
 
   /** @ngInject */
-  function QuestionnaireTemplateCreateController ( $log, $scope, $filter, $mdMedia, $mdDialog, user, questionnaireTemplate, dragulaService ) {
+  function QuestionnaireTemplateCreateController ( $log, $scope, $filter, $mdMedia, $mdDialog, models, user, questionnaireTemplate, dragulaService ) {
     $log.debug('Entered QuestionnaireTemplateCreateController');
     $log.debug(user);
     var vm = this;
@@ -100,7 +100,23 @@
                   "questionnaire_template": 2,
                   "template_block": 3,
                   "question_body": "Question#2",
-                  "type": "sYes [::] 5 || No [::] 0 || NA [::] -1",
+                  "type": "mYes [::] 5 || No [::] 0 || NA [::] -1",
+                  "max_score": 5
+                },
+                {
+                  "id": 3,
+                  "questionnaire_template": 2,
+                  "template_block": 3,
+                  "question_body": "Question#3",
+                  "type": "t",
+                  "max_score": 5
+                },
+                {
+                  "id": 4,
+                  "questionnaire_template": 2,
+                  "template_block": 3,
+                  "question_body": "Question#4",
+                  "type": "d",
                   "max_score": 5
                 }
               ],
@@ -191,6 +207,9 @@
       template_blocks: []
     };
 
+    $scope.questionnaire = vm.nestedQuestionnaireTemplate;
+    angular.extend($scope.questionnaire, models.manager.TemplateQuestionnaireModel);
+    $scope.questionnaire.initialize();
 
     activate();
 

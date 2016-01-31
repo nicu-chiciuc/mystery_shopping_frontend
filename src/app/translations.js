@@ -16,7 +16,9 @@
         SAVE: 'Save',
         CREATE: 'Create',
         CANCEL: 'Cancel',
-        DELETE: 'Delete'
+        DELETE: 'Delete',
+        LOGIN: 'Login',
+        LOGOUT: 'Logout'
       },
       MENU: {
         PROJECT_MANAGEMENT: {
@@ -91,6 +93,9 @@
         }
       },
       QUESTIONNAIRE: {
+        BLOCK: {
+          WEIGHT: 'Weight'
+        },
         QUESTION: {
           TYPE: {
             SINGLE_CHOICE: 'Single choice',

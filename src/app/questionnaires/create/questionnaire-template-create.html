@@ -14,30 +14,47 @@
                    dragula-model="questionnaire.template_blocks"
                    class="md-whiteframe-2dp">
 
+      <!-- Content container for each top level block -->
       <md-content ng-repeat="block_1 in questionnaire.template_blocks"
                   flex="100">
 
+        <!-- Block header -->
         <md-toolbar flex="100" class="ms-height-md">
+
+          <!-- Header wrapper -->
           <h2 class="md-toolbar-tools handle-1" layout-align="left center" layout="row">
+
+            <!-- Block title -->
             <span>
               {{ block_1.title }}
             </span>
+
+            <!-- Edit button -->
             <md-button ng-click="vm.showEditBlockTitleDialog($event, block_1)"
                        class="md-icon-button">
               <ng-md-icon icon="edit" size="18"
                           aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
               </ng-md-icon>
             </md-button>
+
+            <!-- Empty span element to fill in the width of block header -->
+            <span flex></span>
+
+            <!-- Block weight -->
+            <span>
+              {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_1.weight }}
+            </span>
           </h2>
         </md-toolbar>
 
+        <!-- Block content container -->
         <md-content flex="100" layout="column" layout-padding>
 
-          <md-list>
-            <md-list-item ng-repeat="question in block_1.template_block_questions">
-              {{ question.question_body }}
-            </md-list-item>
-          </md-list>
+          <!-- Block questions -->
+          <div ng-repeat="question in block_1.template_block_questions">
+            <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
+            <md-divider></md-divider>
+          </div>
 
           <!--
           Level 2 blocks
@@ -46,30 +63,47 @@
                          dragula-model="block_1.template_blocks"
                          class="md-whiteframe-2dp">
 
+            <!-- Content container for each top level block -->
             <md-content ng-repeat="block_2 in block_1.template_blocks"
                         flex="100">
 
+              <!-- Block header -->
               <md-toolbar flex="100" class="ms-height-sm">
+
+                <!-- Header wrapper -->
                 <h2 class="md-toolbar-tools handle-2">
+
+                  <!-- Block title -->
                   <span>
                     {{ block_2.title }}
                   </span>
+
+                  <!-- Edit button -->
                   <md-button ng-click="vm.showEditBlockTitleDialog($event, block_2)"
                              class="md-icon-button">
                     <ng-md-icon icon="edit" size="18"
                                 aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
                     </ng-md-icon>
                   </md-button>
+
+                  <!-- Empty span element to fill in the width of block header -->
+                  <span flex></span>
+
+                  <!-- Block weight -->
+                  <span>
+                    {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_2.weight }}
+                  </span>
                 </h2>
               </md-toolbar>
 
+              <!-- Block content container -->
               <md-content flex="100" layout="column" layout-padding>
 
-                <md-list>
-                  <md-list-item ng-repeat="question in block_2.template_block_questions">
-                    {{ question.question_body }}
-                  </md-list-item>
-                </md-list>
+                <!-- Block questions -->
+                <div ng-repeat="question in block_2.template_block_questions">
+                  <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
+                  <md-divider></md-divider>
+                </div>
 
                 <!--
                 Level 3 blocks
@@ -78,30 +112,47 @@
                                dragula-model="block_2.template_blocks"
                                class="md-whiteframe-2dp">
 
+                  <!-- Content container for each top level block -->
                   <md-content ng-repeat="block_3 in block_2.template_blocks"
                               flex="100">
 
+                    <!-- Block header -->
                     <md-toolbar flex="100" class="ms-height-sm">
+
+                      <!-- Header wrapper -->
                       <h2 class="md-toolbar-tools handle-3">
+
+                        <!-- Block title -->
                         <span>
                           {{ block_3.title }}
                         </span>
+
+                        <!-- Edit button -->
                         <md-button ng-click="vm.showEditBlockTitleDialog($event, block_3)"
                                    class="md-icon-button">
                           <ng-md-icon icon="edit" size="18"
                                       aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
                           </ng-md-icon>
                         </md-button>
+
+                        <!-- Empty span element to fill in the width of block header -->
+                        <span flex></span>
+
+                        <!-- Block weight -->
+                        <span>
+                          {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_3.weight }}
+                        </span>
                       </h2>
                     </md-toolbar>
 
+                    <!-- Block content container -->
                     <md-content flex="100" layout-padding>
 
-                      <md-list>
-                        <md-list-item ng-repeat="question in block_3.template_block_questions">
-                          {{ question.question_body }}
-                        </md-list-item>
-                      </md-list>
+                      <!-- Block questions -->
+                      <div ng-repeat="question in block_3.template_block_questions">
+                        <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
+                        <md-divider></md-divider>
+                      </div>
 
                     </md-content>
 
