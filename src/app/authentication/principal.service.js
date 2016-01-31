@@ -31,13 +31,13 @@
     }
 
     function isInRole ( role ) {
-      if (!_authenticated || !_identity.user.roles) return false;
+      if (!_authenticated || !_identity || !_identity.user || !_identity.user.roles) return false;
 
       return _identity.user.roles.indexOf(role) != -1;
     }
 
     function isInAnyRole ( roles ) {
-      if (!_authenticated || !_identity.user.roles) return false;
+      if (!_authenticated || !_identity || !_identity.user || !_identity.user.roles) return false;
 
       for (var i = 0; i < roles.length; i++) {
         if (this.isInRole(roles[i])) return true;
