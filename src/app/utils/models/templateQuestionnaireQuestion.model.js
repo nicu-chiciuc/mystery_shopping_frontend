@@ -96,7 +96,7 @@
     }
 
     function preProcessSingleChoiceQuestion ( question ) {
-      question.choices = question.type.substring(1).split(choicesDelimiter);
+      question.choices = question.type.substring(1).split(choicesDelimiter).filter(function (el) { return el.length !== 0; });
       question.choices = question.choices.map(function (choice) {
         var bodyWeightPair = choice.split(choiceBodyWeightDelimiter);
         return {
