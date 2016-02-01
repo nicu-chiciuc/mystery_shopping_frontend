@@ -43,7 +43,8 @@
         LATITUDE: 'Latitude',
         LONGITUDE: 'Longitude',
         ACTIONS: {
-          CLOSE_DIALOG: 'Close dialog' // Dialog means modal/popup window
+          CLOSE_DIALOG: 'Close dialog', // Dialog means modal/popup window
+          ENTER_DATE: 'Enter date'
         }
       },
       ACCOUNT: {
@@ -103,11 +104,14 @@
             TEXT: 'Text',
             DATE: 'Date'
           },
-          QUESTION_BODY: 'Question body'
+          QUESTION_BODY: 'Question body',
+          CHOICES: 'Choices',
+          ANSWER: 'Answer'
         },
         ACTIONS: {
           ADD_BLOCK: 'Add block',
-          ADD_QUESTION: 'Add question'
+          ADD_QUESTION: 'Add question',
+          ADD_CHOICE: 'Add choice'
         },
         DIALOG: {
           EDIT_BLOCK_TITLE: 'Edit block title',
