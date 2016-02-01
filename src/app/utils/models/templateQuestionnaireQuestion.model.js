@@ -10,6 +10,10 @@
   function TemplateQuestionnaireQuestionModel () {
     var Model = {
       initialize: initialize,
+      addChoice: addChoice,
+      removeChoice: removeChoice,
+      updateQuestionType: updateQuestionType,
+      preProcess: preProcess,
       postProcess: postProcess
     };
 
@@ -36,12 +40,29 @@
     function initialize () {
       var question = this;
 
+      question.updateQuestionType();
+      question.preProcess();
+    }
+
+    function addChoice () {
+      this.choices.push({});
+    }
+
+    function removeChoice ( index ) {
+      this.choices.splice(index, 1);
+    }
+
+    function updateQuestionType ( type ) {
+      var question = this;
+
+      if ( angular.isDefined(type) ) {
+        question.type = type;
+      }
+
       question.typeIdentifier = question.type[0];
       question.isChoiceQuestion = question.typeIdentifier === 's' || question.typeIdentifier === 'm';
       question.isTextQuestion = question.typeIdentifier === 't';
       question.isDateQuestion = question.typeIdentifier === 'd';
-
-      preProcessManager[question.typeIdentifier](question);
     }
 
     function postProcess () {
@@ -67,6 +88,11 @@
 
     function postProcessDateQuestion ( question ) {
 
+    }
+
+    function preProcess () {
+      var question = this;
+      preProcessManager[question.typeIdentifier](question);
     }
 
     function preProcessSingleChoiceQuestion ( question ) {

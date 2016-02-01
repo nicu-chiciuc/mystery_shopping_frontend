@@ -14,6 +14,9 @@
       choices: []
     };
 
+    angular.extend($scope.question, models.manager.TemplateQuestionnaireQuestionModel);
+    $scope.question.initialize();
+
     $scope.updateQuestionType = updateQuestionType;
     $scope.addChoice = addChoice;
     $scope.addQuestion = addQuestion;
@@ -21,20 +24,18 @@
 
 
     function updateQuestionType ( type ) {
-      $scope.question.type = type;
+      $scope.question.updateQuestionType(type);
     }
 
-    function addChoice ( event ) {
-        $scope.question.choices.push({});
+    function addChoice () {
+        $scope.question.addChoice();
     }
 
     function removeChoice ( index ) {
-      $scope.question.choices.splice(index, 1);
+      $scope.question.removeChoice(index);
     }
 
     function addQuestion ( question ) {
-      angular.extend(question, models.manager.TemplateQuestionnaireQuestionModel);
-      question.initialize();
       question.postProcess();
       $mdDialog.hide(question);
     }
