@@ -33,7 +33,7 @@
     }
 
     function addQuestion ( question ) {
-      angular.extend(question, models.manager.QuestionnaireQuestionModel);
+      angular.extend(question, models.manager.TemplateQuestionnaireQuestionModel);
       question.initialize();
       question.postProcess();
       $mdDialog.hide(question);
