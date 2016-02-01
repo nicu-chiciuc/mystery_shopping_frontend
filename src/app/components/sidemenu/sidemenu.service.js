@@ -97,6 +97,24 @@
       ]
     });
 
+    // Shoppers section
+    sections.push({
+      name: $filter('translate')('MENU.SHOPPERS_MANAGEMENT.HEADING'),
+      type: 'heading',
+      children: [
+        {
+          name: $filter('translate')('MENU.SHOPPERS_MANAGEMENT.CREATE_SHOPPER'),
+          state: 'shoppers.create',
+          type: 'link'
+        },
+        {
+          name: $filter('translate')('MENU.SHOPPERS_MANAGEMENT.LIST_SHOPPERS'),
+          state: 'shoppers.list',
+          type: 'link'
+        }
+      ]
+    });
+
     var self;
 
     $rootScope.$on('$stateChangeSuccess', onStateChange);

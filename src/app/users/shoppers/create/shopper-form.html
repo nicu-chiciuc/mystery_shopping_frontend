@@ -1,0 +1,79 @@
+<md-content layout="row" layout-padding>
+
+  <div ng-cloak flex>
+    <form name="shopperForm" ng-submit="vm.saveShopper(vm.shopper, shopperForm.$valid)" novalidate>
+
+      <div layout-gt-sm="row">
+
+        <!--
+        First Name
+        -->
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>{{ 'ACCOUNT.FIRST_NAME' | translate }}</label>
+          <input ng-model="vm.shopper.first_name" name="first_name" type="text" ng-required="true">
+
+          <!-- Validation messages -->
+          <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.first_name.$error">
+            <div ng-message="required">First name is REQUIRED!</div>
+          </div>
+        </md-input-container>
+
+
+        <!--
+        Last Name
+        -->
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>{{ 'ACCOUNT.LAST_NAME' | translate }}</label>
+          <input ng-model="vm.shopper.last_name" name="last_name" type="text" ng-required="true">
+
+          <!-- Validation messages -->
+          <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.last_name.$error">
+            <div ng-message="required">Last name is REQUIRED!</div>
+          </div>
+        </md-input-container>
+
+        <!--
+        Birth date
+        -->
+        <div class="datepicker-container">
+          <md-datepicker id="birthDate"
+                         name="date_of_birth"
+                         ng-model="vm.shopper.date_of_birth"
+                         md-placeholder="{{ 'ACCOUNT.BIRTH_DATE' | translate }}"
+                         ng-required="true">
+          </md-datepicker>
+
+          <!-- Validation messages -->
+          <div ng-show="shopperForm.$submitted" class="validation-messages" ng-messages="shopperForm.date_of_birth.$error">
+            <div class="datepicker-validation-error-message" ng-message="valid">The entered value is not a date!</div>
+            <div class="datepicker-validation-error-message" ng-message="required">This date is required!</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!--
+      Gender
+      -->
+      <md-radio-group ng-model="vm.shopper.gender">
+        <md-radio-button class="md-primary" value="m">{{ 'COMMON.GENDER.MALE' | translate }}</md-radio-button>
+        <md-radio-button class="md-primary" value="f">{{ 'COMMON.GENDER.FEMALE' | translate }}</md-radio-button>
+      </md-radio-group>
+
+      <!--
+      Has drivers license
+      -->
+      <div layout-padding>
+        <md-checkbox ng-model="vm.shopper.has_drivers_license"
+                     aria-label="{{ 'SHOPPER.HAS_DRIVERS_LICENSE' | translate }}">
+          {{ 'SHOPPER.HAS_DRIVERS_LICENSE' | translate }}
+        </md-checkbox>
+      </div>
+
+
+      <md-button type="submit" class="md-primary">
+        {{ vm.isNewShopper ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
+      </md-button>
+    </form>
+  </div>
+</md-content>

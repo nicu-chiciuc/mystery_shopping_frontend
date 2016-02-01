@@ -1,0 +1,13 @@
+<md-content>
+
+  <md-list>
+
+    <md-list-item ng-repeat="script in vm.scripts">
+      <md-button ui-sref="scripts.detail.view({scriptId: script.id})">
+        {{ script.title }}
+      </md-button>
+    </md-list-item>
+
+  </md-list>
+
+</md-content>

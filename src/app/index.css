@@ -275,3 +275,11 @@ md-toast.md-success-toast-theme .md-toast-content {
 md-toast.md-fail-toast-theme .md-toast-content {
   background-color: darkred;
 }
+
+/* Datepicker styles */
+.datepicker-container {
+  margin: 13px 0;
+}
+.datepicker-validation-error-message {
+  margin-left: 64px;
+}

@@ -6,9 +6,18 @@
     .config(config);
 
   /** @ngInject */
-  function config ( $httpProvider, $logProvider, toastrConfig, RestangularProvider, localStorageServiceProvider, $translateProvider, urls, $mdThemingProvider ) {
+  function config ( $httpProvider, $logProvider, $mdDateLocaleProvider, toastrConfig, RestangularProvider, localStorageServiceProvider, $translateProvider, urls, $mdThemingProvider ) {
     // Enable log
     $logProvider.debugEnabled(true);
+
+    // Config Angular Material date locale format
+    $mdDateLocaleProvider.formatDate = function(date) {
+      return moment(date).format('YYYY-MM-DD');
+    };
+    $mdDateLocaleProvider.parseDate = function(dateString) {
+      var m = moment(dateString, 'YYYY-MM-DD', true);
+      return m.isValid() ? m.toDate() : new Date(NaN);
+    };
 
     // Configure angular-material theme
     $mdThemingProvider.theme('default')

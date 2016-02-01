@@ -38,6 +38,11 @@
           SCRIPTS: 'Scripts',
           CREATE_SCRIPT: 'Create scripts',
           LIST_SCRIPTS: 'List scripts'
+        },
+        SHOPPERS_MANAGEMENT: {
+          HEADING: 'Shoppers Management',
+          CREATE_SHOPPER: 'Create shopper',
+          LIST_SHOPPERS: 'List shoppers'
         }
       },
       COMMON: {
@@ -47,6 +52,10 @@
         GEOGRAPHICAL_COORDINATES: 'Geographical coordinates',
         LATITUDE: 'Latitude',
         LONGITUDE: 'Longitude',
+        GENDER: {
+          MALE: 'Male',
+          FEMALE: 'Female'
+        },
         ACTIONS: {
           CLOSE_DIALOG: 'Close dialog', // Dialog means modal/popup window
           ENTER_DATE: 'Enter date'
@@ -55,7 +64,11 @@
       ACCOUNT: {
         FIRST_NAME: 'First name',
         LAST_NAME: 'Last name',
-        JOB_TITLE: 'Job title'
+        JOB_TITLE: 'Job title',
+        BIRTH_DATE: 'Birth date'
+      },
+      SHOPPER: {
+        HAS_DRIVERS_LICENSE: 'Has drivers license'
       },
       COMPANY: {
         NEW_COMPANY: 'New company',
