@@ -13,6 +13,7 @@
         RU: 'Rus'
       },
       BUTTON: {
+        EDIT: 'Edit',
         SAVE: 'Save',
         CREATE: 'Create',
         CANCEL: 'Cancel',
@@ -32,7 +33,11 @@
         QUESTIONNAIRE_MANAGEMENT: {
           HEADING: 'Questionnaire Management',
           QUESTIONNAIRES: 'Questionnaires',
-          CREATE_QUESTIONNAIRE: 'Create questionnaire'
+          CREATE_QUESTIONNAIRE: 'Create questionnaire',
+          LIST_QUESTIONNAIRES: 'List questionnaires',
+          SCRIPTS: 'Scripts',
+          CREATE_SCRIPT: 'Create scripts',
+          LIST_SCRIPTS: 'List scripts'
         }
       },
       COMMON: {
@@ -92,6 +97,12 @@
             NUMBER_OF_EVALUATIONS: 'Number of evaluations'
           }
         }
+      },
+      SCRIPT: {
+        NEW_SCRIPT: 'New script',
+        EDIT_SCRIPT: 'Edit script',
+        TITLE: 'Title',
+        DESCRIPTION: 'Description'
       },
       QUESTIONNAIRE: {
         BLOCK: {

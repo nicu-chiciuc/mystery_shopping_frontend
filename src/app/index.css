@@ -265,3 +265,13 @@ fieldset {
   color: #202020 !important;
   z-index: 3;
 }
+
+
+/* Toast styles */
+md-toast.md-success-toast-theme .md-toast-content {
+  background-color: darkgreen;
+}
+
+md-toast.md-fail-toast-theme .md-toast-content {
+  background-color: darkred;
+}

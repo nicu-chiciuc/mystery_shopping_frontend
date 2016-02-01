@@ -11,6 +11,7 @@
       'ui.router',
       'ngMaterial',
       'md.data.table',
+      'angular-medium-editor',
       'ngMdIcons',
       'LocalStorageModule',
       'pascalprecht.translate',

@@ -72,8 +72,24 @@
               type: 'link'
             },
             {
-              name : 'List questionnaires',
-              state: 'questionnaires',
+              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
+              state: 'questionnaires.list',
+              type: 'link'
+            }
+          ]
+        },
+        {
+          name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.SCRIPTS'),
+          type: 'toggle',
+          pages: [
+            {
+              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_SCRIPT'),
+              state: 'scripts.create',
+              type: 'link'
+            },
+            {
+              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_SCRIPTS'),
+              state: 'scripts.list',
               type: 'link'
             }
           ]

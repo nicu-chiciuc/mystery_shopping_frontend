@@ -1,0 +1,12 @@
+<md-content layout-padding>
+
+  <div layout="row" layout-align="none center">
+    <h2 flex>{{ vm.script.title }}</h2>
+    <md-button ui-sref="scripts.detail.edit({id: vm.script.id})" class="md-primary">
+      {{ 'BUTTON.EDIT' | translate }}
+    </md-button>
+  </div>
+
+  <div medium-editor ng-model="vm.script.description" bind-options="{'disableEditing': true}"></div>
+
+</md-content>

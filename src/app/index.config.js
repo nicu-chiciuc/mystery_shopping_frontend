@@ -16,6 +16,9 @@
       .accentPalette('orange')
       .warnPalette('red');
 
+    $mdThemingProvider.theme('success-toast');
+    $mdThemingProvider.theme('fail-toast');
+
     // Tell translate to use messageFormatInterpolation
     $translateProvider.useSanitizeValueStrategy('escape');
     $translateProvider.useMessageFormatInterpolation();
