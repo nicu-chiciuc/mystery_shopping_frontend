@@ -6,7 +6,7 @@
     .directive('msRecursiveCheckboxList', msRecursiveCheckboxList);
 
   /** @ngInject */
-  function msRecursiveCheckboxList ( RecursionHelper ) {
+  function msRecursiveCheckboxList ( RecursionHelper, contentTypes ) {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/utils/directives/nested_checkbox_list/recursive_checkbox_list/recursive-checkbox-list.html',
@@ -41,7 +41,7 @@
 
       function getCheckboxListObjectForTargetList ( item, itemOptions ) {
         var obj = {};
-        obj[itemOptions.type + '_type'] = itemOptions.contentType;
+        obj[itemOptions.type + '_type'] = contentTypes[itemOptions.contentType];
         obj[itemOptions.type + '_id'] = item.id;
 
         return obj;

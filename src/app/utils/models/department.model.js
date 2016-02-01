@@ -7,7 +7,7 @@
     .factory('DepartmentModel', DepartmentModel);
 
   /** @ngInject */
-  function DepartmentModel ( EntityModel, contentTypes, Restangular ) {
+  function DepartmentModel ( EntityModel, CompanyManagerModel, contentTypes, Restangular ) {
     var Model = {
       initialize: initialize,
       addEntity: addEntity,
@@ -30,6 +30,8 @@
 
       _.forEach(department.managers, function ( manager ) {
         Restangular.restangularizeElement(null, manager, 'clientmanagers');
+        angular.extend(manager, CompanyManagerModel);
+        manager.initialize();
       });
     }
 

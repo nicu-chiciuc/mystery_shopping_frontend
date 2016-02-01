@@ -7,7 +7,7 @@
     .factory('SectionModel', SectionModel);
 
   /** @ngInject */
-  function SectionModel ( contentTypes, Restangular ) {
+  function SectionModel ( CompanyManagerModel, CompanyEmployeeModel, contentTypes, Restangular ) {
     var Model = {
       initialize: initialize,
       addEmployee: addEmployee,
@@ -24,10 +24,14 @@
 
       _.forEach(section.managers, function ( manager ) {
         Restangular.restangularizeElement(null, manager, 'clientmanagers');
+        angular.extend(manager, CompanyManagerModel);
+        manager.initialize();
       });
 
-      _.forEach(section.employees, function ( manager ) {
-        Restangular.restangularizeElement(null, manager, 'clientemployees');
+      _.forEach(section.employees, function ( employee ) {
+        Restangular.restangularizeElement(null, employee, 'clientemployees');
+        angular.extend(employee, CompanyEmployeeModel);
+        employee.initialize();
       });
     }
 

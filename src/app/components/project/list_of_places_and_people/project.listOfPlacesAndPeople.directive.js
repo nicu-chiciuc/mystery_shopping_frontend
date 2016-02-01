@@ -49,7 +49,7 @@
             children: [
               {
                 itemsProp: 'managers',
-                itemLabelProp: 'name',
+                itemLabelProp: 'fullName',
                 itemValueProp: 'id',
                 type: 'ignored',
                 contentType: 'clientmanager',
@@ -65,7 +65,7 @@
                 children: [
                   {
                     itemsProp: 'managers',
-                    itemLabelProp: 'name',
+                    itemLabelProp: 'fullName',
                     itemValueProp: 'id',
                     type: 'person',
                     contentType: 'clientmanager',
@@ -73,7 +73,7 @@
                   },
                   {
                     itemsProp: 'employees',
-                    itemLabelProp: 'name',
+                    itemLabelProp: 'fullName',
                     itemValueProp: 'id',
                     type: 'person',
                     contentType: 'clientemployee',
@@ -89,7 +89,7 @@
                     children: [
                       {
                         itemsProp: 'managers',
-                        itemLabelProp: 'name',
+                        itemLabelProp: 'fullName',
                         itemValueProp: 'id',
                         type: 'person',
                         contentType: 'clientmanager',
@@ -97,7 +97,7 @@
                       },
                       {
                         itemsProp: 'employees',
-                        itemLabelProp: 'name',
+                        itemLabelProp: 'fullName',
                         itemValueProp: 'id',
                         type: 'person',
                         contentType: 'clientemployee',

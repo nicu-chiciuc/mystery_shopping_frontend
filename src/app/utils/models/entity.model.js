@@ -7,7 +7,7 @@
     .factory('EntityModel', EntityModel);
 
   /** @ngInject */
-  function EntityModel ( SectionModel, contentTypes, Restangular ) {
+  function EntityModel ( SectionModel, CompanyManagerModel, CompanyEmployeeModel, contentTypes, Restangular ) {
     var defaultZoomCoefficient = 14;  // Default zoom coefficient that has the rigth distance to see streets and understand where the entity is locates.
 
     var Model = {
@@ -35,10 +35,14 @@
 
       _.forEach(entity.managers, function ( manager ) {
         Restangular.restangularizeElement(null, manager, 'clientmanagers');
+        angular.extend(manager, CompanyManagerModel);
+        manager.initialize();
       });
 
-      _.forEach(entity.employees, function ( manager ) {
-        Restangular.restangularizeElement(null, manager, 'clientemployees');
+      _.forEach(entity.employees, function ( employee ) {
+        Restangular.restangularizeElement(null, employee, 'clientemployees');
+        angular.extend(employee, CompanyEmployeeModel);
+        employee.initialize();
       });
     }
 
