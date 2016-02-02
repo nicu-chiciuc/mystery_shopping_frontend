@@ -53,6 +53,7 @@
         LATITUDE: 'Latitude',
         LONGITUDE: 'Longitude',
         GENDER: {
+          HEADING: 'Gender',
           MALE: 'Male',
           FEMALE: 'Female'
         },
@@ -62,10 +63,15 @@
         }
       },
       ACCOUNT: {
+        USERNAME: 'Username',
+        EMAIL: 'Email',
+        PASSWORD: 'Password',
+        CONFIRM_PASSWORD: 'Confirm password',
         FIRST_NAME: 'First name',
         LAST_NAME: 'Last name',
         JOB_TITLE: 'Job title',
-        BIRTH_DATE: 'Birth date'
+        BIRTH_DATE: 'Birth date',
+        DETAILS: 'Details'
       },
       SHOPPER: {
         HAS_DRIVERS_LICENSE: 'Has drivers license'
@@ -149,7 +155,14 @@
         GENERIC: {
           FIELD_IS_REQUIRED: 'This field is required.'
         },
-        SPECIFIC_FIELD_IS_REQUIRED: '{FIELD_NAME} is required.'
+        SPECIFIC_FIELD_IS_REQUIRED: '{FIELD_NAME} is required.',
+        PASSWORD: {
+          MIN_LENGTH: 'Password should be longer than 8 characters',
+          PASSWORDS_DO_NOT_MATCH: 'Passwords do not match'
+        },
+        USER: {
+          USERNAME_EXISTS: 'A user with that username already exists.'
+        }
       }
     });
 
