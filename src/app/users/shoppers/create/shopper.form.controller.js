@@ -35,7 +35,9 @@
       }
 
       function saveShopperSuccessFn ( response ) {
+        vm.passwordRequired = false;
         vm.shopper = response;
+        vm.isNewShopper = false;
 
         // TODO add translation for toast. Have different messages for CREATE/EDIT success
         $mdToast.show(
