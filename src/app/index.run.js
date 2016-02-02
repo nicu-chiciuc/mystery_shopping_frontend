@@ -70,14 +70,21 @@
     });
 
     Restangular.extendModel('sections', function (obj) {
-      angular.extend(obj, modelManager.SectionModel
-      );
+      angular.extend(obj, modelManager.SectionModel);
       obj.initialize();
       return obj;
     });
 
     Restangular.extendModel('questionnaires', function (obj) {
-      return angular.extend(obj, modelManager.QuestionnaireModel);
+      angular.extend(obj, modelManager.QuestionnaireModel);
+      obj.initialize();
+      return obj;
+    });
+
+    Restangular.extendModel('shoppers', function (obj) {
+      angular.extend(obj, modelManager.ShopperModel);
+      obj.initialize();
+      return obj;
     });
 
     $log.debug('runBlock end');

@@ -35,7 +35,7 @@
       vm.shoppersCheckboxListOptions = {
         showLegend: true,
         legendTitle: $filter('translate')('PROJECT.SHOPPERS'),
-        labelProp: 'name',
+        labelProp: 'fullName',
         valueProp: 'id'
       };
     }

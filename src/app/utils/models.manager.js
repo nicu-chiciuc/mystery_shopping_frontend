@@ -19,7 +19,8 @@
     TemplateQuestionnaireQuestionModel,
     TemplateQuestionnaireBlockModel,
     CompanyManagerModel,
-    CompanyEmployeeModel
+    CompanyEmployeeModel,
+    ShopperModel
   ) {
     var manager = {
       ProjectModel: ProjectModel,
@@ -34,7 +35,8 @@
       TemplateQuestionnaireQuestionModel: TemplateQuestionnaireQuestionModel,
       TemplateQuestionnaireBlockModel: TemplateQuestionnaireBlockModel,
       CompanyManagerModel: CompanyManagerModel,
-      CompanyEmployeeModel: CompanyEmployeeModel
+      CompanyEmployeeModel: CompanyEmployeeModel,
+      ShopperModel: ShopperModel
     };
 
     return manager;
