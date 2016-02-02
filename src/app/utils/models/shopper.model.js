@@ -20,8 +20,6 @@
 
       angular.extend(shopper.user, AbstractAccountModel);
       shopper.user.initializeAbstract();
-
-      shopper.fullName = shopper.user.fullName;
     }
   }
 })();
