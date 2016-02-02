@@ -76,7 +76,7 @@
         <label>{{ 'PROJECT.PROJECT_MANAGER' | translate }}</label>
         <md-select ng-model="vm.project.project_manager" name="project_manager" required>
           <md-option ng-repeat="projectManager in vm.projectManagers" value="{{ projectManager.id }}">
-            {{ projectManager.displayName }}
+            {{ projectManager.user.fullName }}
           </md-option>
         </md-select>
 

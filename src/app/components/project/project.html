@@ -4,16 +4,18 @@
                        companies="vm.companies">
 </ms-project-basic-info>
 
-<ms-project-methodology project="vm.project"
+<ms-project-methodology ng-show="vm.project.state > 1"
+                        project="vm.project"
                         questionnaire-templates="vm.questionnaireTemplates"
                         scripts="vm.scripts">
 </ms-project-methodology>
 
-<ms-project-list-of-places-and-people ng-if="vm.project.company_repr"
+<ms-project-list-of-places-and-people ng-show="vm.project.state > 2"
                                       project="vm.project"
                                       companies="vm.companies">
 </ms-project-list-of-places-and-people>
 
-<ms-project-shoppers project="vm.project"
+<ms-project-shoppers ng-show="vm.project.state > 3"
+                     project="vm.project"
                      shoppers="vm.shoppers">
 </ms-project-shoppers>

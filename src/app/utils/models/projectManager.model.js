@@ -7,7 +7,7 @@
     .factory('ProjectManagerModel', ProjectManagerModel);
 
   /** @ngInject */
-  function ProjectManagerModel () {
+  function ProjectManagerModel ( AbstractAccountModel ) {
     var Model = {
       initialize: initialize
     };
@@ -18,7 +18,8 @@
     function initialize () {
       var projectManager = this;
 
-      projectManager.displayName = projectManager.name;
+      angular.extend(projectManager.user, AbstractAccountModel);
+      projectManager.user.initializeAbstract();
     }
   }
 })();
