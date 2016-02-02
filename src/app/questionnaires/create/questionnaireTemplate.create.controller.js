@@ -126,7 +126,7 @@
               "tree_id": 1,
               "level": 1,
               "title": "Bert",
-              "weight": "1.0000",
+              "weight": 20,
               "parent_block": 2,
               "template_blocks": []
             },
@@ -139,7 +139,7 @@
               "tree_id": 1,
               "level": 1,
               "title": "Chuck",
-              "weight": "1.0000",
+              "weight": 25,
               "parent_block": 2,
               template_blocks: [
                 {
@@ -151,7 +151,7 @@
                   "tree_id": 1,
                   "level": 2,
                   "title": "Donna",
-                  "weight": "1.0000",
+                  "weight": 5,
                   "parent_block": 4,
                   "template_blocks": []
                 },
@@ -164,7 +164,7 @@
                   "tree_id": 1,
                   "level": 2,
                   "title": "Eddie",
-                  "weight": "1.0000",
+                  "weight": 5,
                   "parent_block": 4,
                   "template_blocks": []
                 },
@@ -177,7 +177,7 @@
                   "tree_id": 1,
                   "level": 2,
                   "title": "Fred",
-                  "weight": "1.0000",
+                  "weight": 5,
                   "parent_block": 4,
                   "template_blocks": []
                 }

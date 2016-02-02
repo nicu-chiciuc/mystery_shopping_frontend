@@ -19,6 +19,10 @@
     function initialize () {
       var questionnaire = this;
 
+      // Set weight of questionnaire to 100 so that child blocks can compute
+      // available weight based on this weight.
+      questionnaire.weight = 100;
+
       angular.extend(questionnaire, AbstractParentBlockModel);
       questionnaire.initializeAbstract('template_blocks');
 
@@ -76,6 +80,8 @@
       if ( parentBlock ) parentBlock.latestPosition = block.rght;
 
       flattenedBlocksList.push(block);
+
+      delete block.template_blocks;
     }
   }
 })();

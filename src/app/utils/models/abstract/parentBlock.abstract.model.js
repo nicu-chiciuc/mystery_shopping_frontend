@@ -10,9 +10,14 @@
   function AbstractParentBlockModel () {
     var Model = {
       initializeAbstract: initializeAbstract,
+      setWeight: setWeight,
       updateAvailableWeight: updateAvailableWeight,
       computeAvailableWeight: computeAvailableWeight,
-      setAvailableWeight: setAvailableWeight
+      setAvailableWeight: setAvailableWeight,
+      removeExceededWeightsTooltips: removeExceededWeightsTooltips,
+      setInitialWeights: setInitialWeights,
+      resetInitialWeights: resetInitialWeights,
+      updateChildWeights: updateChildWeights
     };
 
     var childBlocksKey = '';
@@ -25,9 +30,17 @@
       this.updateAvailableWeight();
     }
 
+    function setWeight ( weight ) {
+      var block = this;
+      block.previousWeight = block.weight;
+      block.weight = weight;
+
+      block.updateChildWeights();
+    }
+
     function updateAvailableWeight () {
       var block = this;
-      block.availableWeight = block.computeAvailableWeight();
+      block.setAvailableWeight(block.computeAvailableWeight());
     }
 
     function setAvailableWeight ( availableWeight ) {
@@ -37,12 +50,47 @@
 
     function computeAvailableWeight () {
       var block = this;
-      var availableWeight = 100;
+
+      // Take the block's weight and set it as available weight for child blocks.
+      var availableWeight = block.weight;
+
       _.forEach(block[childBlocksKey], function (childBlock) {
-        availableWeight -= childBlock.weight;
+        availableWeight -= childBlock.newWeight ? childBlock.newWeight : childBlock.weight;
       });
 
       return availableWeight;
+    }
+
+    function removeExceededWeightsTooltips () {
+      var block = this;
+
+      _.forEach(block[childBlocksKey], function (childBlock) {
+        childBlock.showTooltip = false;
+      });
+    }
+
+    function setInitialWeights () {
+      var block = this;
+
+      _.forEach(block[childBlocksKey], function (childBlock) {
+        childBlock.initialWeight = childBlock.weight;
+      });
+    }
+
+    function resetInitialWeights () {
+      var block = this;
+
+      _.forEach(block[childBlocksKey], function (childBlock) {
+        childBlock.setWeight(childBlock.initialWeight);
+      });
+    }
+
+    function updateChildWeights () {
+      var block = this;
+
+      _.forEach(block[childBlocksKey], function (childBlock) {
+        childBlock.setWeight(childBlock.weight * block.weight / block.previousWeight);
+      });
     }
 
   }

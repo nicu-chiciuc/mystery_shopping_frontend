@@ -126,6 +126,7 @@
       },
       QUESTIONNAIRE: {
         SAME_LEVEL_BLOCKS: 'Same level blocks',
+        AVAILABLE_WEIGHT_EXCEEDED: 'Weight cannot be greater than {ACCEPTABLE_WEIGHT}',
         BLOCK: {
           WEIGHT: 'Weight'
         },

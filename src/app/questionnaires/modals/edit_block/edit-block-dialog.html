@@ -1,5 +1,5 @@
 <md-dialog aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK' | translate }}" ng-cloak>
-  <form>
+  <form name="blockForm" ng-submit="saveBlockChanges(block, blockForm.$valid, blockForm)" novalidate>
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>
@@ -14,10 +14,6 @@
     <md-dialog-content>
       <div class="md-dialog-content">
 
-        <form name="hzFOrm" ng-submit="saveBlockChanges(block, hzFOrm.$valid, hzFOrm)" novalidate>
-
-          {{ availableWeight }}
-          {{ hzFOrm | json }}
           <h2>Available weight: {{ parentBlock.availableWeight + block.weight }}</h2>
 
           <div layout="row">
@@ -31,16 +27,18 @@
             <div>
               <md-input-container class="md-block">
                 <label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>
-                <input ng-model="block.weight"
-                       ng-change="updateAvailableWeight(hzFOrm)"
-                       available-weight="availableWeight"
+                <input ng-model="block.newWeight"
+                       ng-change="updateAvailableWeight(block)"
                        name="weight"
                        type="number"/>
 
+                <md-tooltip ng-if="block.showTooltip" md-visible="block.showTooltip" md-direction="top">
+                  {{ block.tooltip }}
+                </md-tooltip>
+
                 <!-- Validation messages -->
-                <div ng-messages="hzFOrm.weight.$error">
+                <div ng-messages="blockForm.weight.$error">
                   <div ng-message="required">Weight is REQUIRED!</div>
-                  <div ng-message="availableWeight">Weight cannot be more than!</div>
                 </div>
               </md-input-container>
 
@@ -60,22 +58,22 @@
 
                   <md-input-container>
                     <label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>
-                    <input ng-model="templateBlock.weight" ng-change="updateAvailableWeight()" type="number"/>
+                    <input ng-model="templateBlock.newWeight" ng-change="updateAvailableWeight(templateBlock)" type="number"/>
+                    <md-tooltip ng-if="templateBlock.showTooltip" md-visible="templateBlock.showTooltip" md-direction="top">
+                      {{ templateBlock.tooltip }}
+                    </md-tooltip>
                   </md-input-container>
                 </div>
               </md-list-item>
             </md-list>
           </div>
-          <md-button type="submit">
-            {{ 'BUTTON.SET' | translate }}
-          </md-button>
-        </form>
+
       </div>
 
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
-      <md-button>
+      <md-button type="submit">
         {{ 'BUTTON.SET' | translate }}
       </md-button>
       <md-button ng-click="cancel()" style="margin-right:20px;">
