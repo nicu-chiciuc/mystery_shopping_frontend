@@ -12,6 +12,7 @@
       'ngMaterial',
       'md.data.table',
       'angular-medium-editor',
+      'validation.match',
       'ngMdIcons',
       'LocalStorageModule',
       'pascalprecht.translate',

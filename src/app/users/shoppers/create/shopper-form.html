@@ -3,6 +3,33 @@
   <div ng-cloak flex>
     <form name="shopperForm" ng-submit="vm.saveShopper(vm.shopper, shopperForm.$valid)" novalidate>
 
+      <!--
+      Username
+      -->
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>{{ 'ACCOUNT.USERNAME' | translate }}</label>
+        <input ng-model="vm.shopper.user.username" name="username" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.username.$error">
+          <div ng-message="required">Username is REQUIRED!</div>
+        </div>
+      </md-input-container>
+
+      <!--
+      Email
+      -->
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>{{ 'ACCOUNT.EMAIL' | translate }}</label>
+        <input ng-model="vm.shopper.user.email" name="email" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.email.$error">
+          <div ng-message="required">Email is REQUIRED!</div>
+        </div>
+      </md-input-container>
+
+      <!-- First and Last names block -->
       <div layout-gt-sm="row">
 
         <!--
@@ -10,7 +37,7 @@
         -->
         <md-input-container class="md-block" flex-gt-sm>
           <label>{{ 'ACCOUNT.FIRST_NAME' | translate }}</label>
-          <input ng-model="vm.shopper.first_name" name="first_name" type="text" ng-required="true">
+          <input ng-model="vm.shopper.user.first_name" name="first_name" type="text" ng-required="true">
 
           <!-- Validation messages -->
           <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.first_name.$error">
@@ -18,13 +45,12 @@
           </div>
         </md-input-container>
 
-
         <!--
         Last Name
         -->
         <md-input-container class="md-block" flex-gt-sm>
           <label>{{ 'ACCOUNT.LAST_NAME' | translate }}</label>
-          <input ng-model="vm.shopper.last_name" name="last_name" type="text" ng-required="true">
+          <input ng-model="vm.shopper.user.last_name" name="last_name" type="text" ng-required="true">
 
           <!-- Validation messages -->
           <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.last_name.$error">
@@ -32,33 +58,93 @@
           </div>
         </md-input-container>
 
+      </div>
+
+      <!-- Password and Confirm password block -->
+      <div layout-gt-sm="row">
+
+        <!--
+        Password
+        -->
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>{{ 'ACCOUNT.PASSWORD' | translate }}</label>
+          <input ng-model="vm.shopper.user.password"
+                 ng-minlength="8"
+                 name="password"
+                 type="password"
+                 ng-required="vm.passwordRequired">
+
+          <!-- Validation messages -->
+          <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.password.$error">
+            <div ng-message="required">Password is REQUIRED!</div>
+            <div ng-message="minlength">{{ 'VALIDATION_MESSAGE.PASSWORD.MIN_LENGTH' | translate }}</div>
+          </div>
+        </md-input-container>
+
+        <!--
+        Confirm password
+        -->
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>{{ 'ACCOUNT.CONFIRM_PASSWORD' | translate }}</label>
+          <input ng-model="vm.shopper.user.confirm_password"
+                 ng-minlength="8"
+                 match="vm.shopper.user.password"
+                 name="confirm_password"
+                 type="password"
+                 ng-required="vm.passwordRequired">
+
+          <!-- Validation messages -->
+          <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.confirm_password.$error">
+            <div ng-message="required">Confirm password is REQUIRED!</div>
+            <div ng-message="minlength">{{ 'VALIDATION_MESSAGE.PASSWORD.MIN_LENGTH' | translate }}</div>
+            <div ng-message="match">{{ 'VALIDATION_MESSAGE.PASSWORD.PASSWORDS_DO_NOT_MATCH' | translate }}</div>
+          </div>
+        </md-input-container>
+
+      </div>
+      {{ vm.shopper | json }}
+      <div layout="row" layout-padding>
+
+        <!--
+        Gender
+        -->
+        <div>
+          <md-subheader>{{ 'COMMON.GENDER.HEADING' | translate }}</md-subheader>
+
+          <md-radio-group ng-model="vm.shopper.gender">
+            <md-radio-button class="md-primary" value="m">{{ 'COMMON.GENDER.MALE' | translate }}</md-radio-button>
+            <md-radio-button class="md-primary" value="f">{{ 'COMMON.GENDER.FEMALE' | translate }}</md-radio-button>
+          </md-radio-group>
+        </div>
+
         <!--
         Birth date
         -->
-        <div class="datepicker-container">
-          <md-datepicker id="birthDate"
-                         name="date_of_birth"
-                         ng-model="vm.shopper.date_of_birth"
-                         md-placeholder="{{ 'ACCOUNT.BIRTH_DATE' | translate }}"
-                         ng-required="true">
-          </md-datepicker>
+        <div>
+          <md-subheader>{{ 'ACCOUNT.BIRTH_DATE' | translate }}</md-subheader>
 
-          <!-- Validation messages -->
-          <div ng-show="shopperForm.$submitted" class="validation-messages" ng-messages="shopperForm.date_of_birth.$error">
-            <div class="datepicker-validation-error-message" ng-message="valid">The entered value is not a date!</div>
-            <div class="datepicker-validation-error-message" ng-message="required">This date is required!</div>
+          <div>
+            <md-datepicker id="birthDate"
+                           name="date_of_birth"
+                           ng-model="vm.shopper.birth_date"
+                           md-placeholder="{{ 'ACCOUNT.BIRTH_DATE' | translate }}"
+                           ng-required="true">
+            </md-datepicker>
+
+            <!-- Validation messages -->
+            <div ng-show="shopperForm.$submitted" class="validation-messages" ng-messages="shopperForm.date_of_birth.$error">
+              <div class="datepicker-validation-error-message" ng-message="valid">The entered value is not a date!</div>
+              <div class="datepicker-validation-error-message" ng-message="required">This date is required!</div>
+            </div>
           </div>
         </div>
 
       </div>
 
       <!--
-      Gender
+      Details
       -->
-      <md-radio-group ng-model="vm.shopper.gender">
-        <md-radio-button class="md-primary" value="m">{{ 'COMMON.GENDER.MALE' | translate }}</md-radio-button>
-        <md-radio-button class="md-primary" value="f">{{ 'COMMON.GENDER.FEMALE' | translate }}</md-radio-button>
-      </md-radio-group>
+      <md-subheader>{{ 'ACCOUNT.DETAILS' | translate }}</md-subheader>
 
       <!--
       Has drivers license
@@ -69,6 +155,8 @@
           {{ 'SHOPPER.HAS_DRIVERS_LICENSE' | translate }}
         </md-checkbox>
       </div>
+
+      {{ vm.shopper | json }}
 
 
       <md-button type="submit" class="md-primary">
