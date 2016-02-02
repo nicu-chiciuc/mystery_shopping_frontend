@@ -39,7 +39,7 @@
       vm.questionnaireTemplatesCheckboxListOptions = {
         showLegend: true,
         legendTitle: $filter('translate')('PROJECT.METHODOLOGY.QUESTIONNAIRES'),
-        labelProp: 'name',
+        labelProp: 'title',
         valueProp: 'id'
       };
       vm.scriptsCheckboxListOptions = {
