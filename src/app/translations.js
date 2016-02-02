@@ -18,6 +18,7 @@
         CREATE: 'Create',
         CANCEL: 'Cancel',
         DELETE: 'Delete',
+        SET: 'Set',
         LOGIN: 'Login',
         LOGOUT: 'Logout'
       },
@@ -124,6 +125,7 @@
         DESCRIPTION: 'Description'
       },
       QUESTIONNAIRE: {
+        SAME_LEVEL_BLOCKS: 'Same level blocks',
         BLOCK: {
           WEIGHT: 'Weight'
         },
@@ -144,10 +146,8 @@
           ADD_CHOICE: 'Add choice'
         },
         DIALOG: {
-          EDIT_BLOCK_TITLE: 'Edit block title',
-          DEFINE_BLOCK_TITLE: 'Define block title',
+          EDIT_BLOCK: 'Edit block',
           BLOCK_TITLE: 'Block title',
-          SET_TITLE: 'Set title',
           ADD_QUESTION: 'Add question'
         }
       },

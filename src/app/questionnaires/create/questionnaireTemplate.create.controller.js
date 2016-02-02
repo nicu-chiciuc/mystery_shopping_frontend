@@ -81,7 +81,7 @@
           "tree_id": 1,
           "level": 0,
           "title": "Albert",
-          "weight": "0.9000",
+          "weight": 50,
           "parent_block": null,
           template_blocks: [
             {
@@ -194,7 +194,7 @@
           "tree_id": 1,
           "level": 0,
           "title": "Petea",
-          "weight": "0.9000",
+          "weight": 50,
           "parent_block": null,
           template_blocks: []
         }
@@ -244,21 +244,23 @@
       parentBlock.template_blocks.push(block);
     }
 
-    function showEditBlockTitleDialog ( ev, block ) {
+    function showEditBlockTitleDialog ( ev, block, parentBlock ) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
       $mdDialog.show({
-        controller: 'EditBlockTitleDialogController as vm',
-        templateUrl: 'app/questionnaires/modals/edit_block_title/edit-block-title-dialog.html',
+        controller: 'EditBlockDialogController as vm',
+        templateUrl: 'app/questionnaires/modals/edit_block/edit-block-dialog.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
         fullscreen: useFullScreen,
         locals: {
-          title: block.title
+          block: block,
+          parentBlock: parentBlock
         }
       })
-        .then(function(newTitle) {
-          block.title = newTitle;
+        .then(function(updatedBlock) {
+          block.title = updatedBlock.title;
+          block.weight = updatedBlock.weight;
         });
     }
 

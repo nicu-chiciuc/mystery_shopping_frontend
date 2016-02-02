@@ -7,7 +7,7 @@
     .factory('TemplateQuestionnaireModel', TemplateQuestionnaireModel);
 
   /** @ngInject */
-  function TemplateQuestionnaireModel ( TemplateQuestionnaireBlockModel ) {
+  function TemplateQuestionnaireModel ( TemplateQuestionnaireBlockModel, AbstractParentBlockModel ) {
     var Model = {
       initialize: initialize,
       postProcess: postProcess
@@ -18,6 +18,9 @@
 
     function initialize () {
       var questionnaire = this;
+
+      angular.extend(questionnaire, AbstractParentBlockModel);
+      questionnaire.initializeAbstract('template_blocks');
 
       _.forEach(questionnaire.template_blocks, function (block) {
         angular.extend(block, TemplateQuestionnaireBlockModel);

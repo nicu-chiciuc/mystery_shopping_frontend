@@ -1,0 +1,87 @@
+<md-dialog aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK' | translate }}" ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          {{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK' | translate }}
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <ng-md-icon icon="close" aria-label="{{ 'COMMON.ACTIONS.CLOSE_DIALOG' | translate }}"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <form name="hzFOrm" ng-submit="saveBlockChanges(block, hzFOrm.$valid, hzFOrm)" novalidate>
+
+          {{ availableWeight }}
+          {{ hzFOrm | json }}
+          <h2>Available weight: {{ parentBlock.availableWeight + block.weight }}</h2>
+
+          <div layout="row">
+            <!-- Block title -->
+            <md-input-container>
+              <label>{{ 'QUESTIONNAIRE.DIALOG.BLOCK_TITLE' | translate }}</label>
+              <input ng-model="block.title" md-autofocus type="text"/>
+            </md-input-container>
+
+            <!-- Block weight -->
+            <div>
+              <md-input-container class="md-block">
+                <label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>
+                <input ng-model="block.weight"
+                       ng-change="updateAvailableWeight(hzFOrm)"
+                       available-weight="availableWeight"
+                       name="weight"
+                       type="number"/>
+
+                <!-- Validation messages -->
+                <div ng-messages="hzFOrm.weight.$error">
+                  <div ng-message="required">Weight is REQUIRED!</div>
+                  <div ng-message="availableWeight">Weight cannot be more than!</div>
+                </div>
+              </md-input-container>
+
+            </div>
+          </div>
+
+          <md-subheader>{{ 'QUESTIONNAIRE.SAME_LEVEL_BLOCKS' | translate }}</md-subheader>
+          <div layout="column">
+            <md-list>
+              <md-list-item ng-repeat="templateBlock in otherBlocks" layout="row">
+
+                <div>
+                  <md-input-container>
+                    <label>{{ 'QUESTIONNAIRE.DIALOG.BLOCK_TITLE' | translate }}</label>
+                    <input type="text" ng-model="templateBlock.title" disabled/>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>
+                    <input ng-model="templateBlock.weight" ng-change="updateAvailableWeight()" type="number"/>
+                  </md-input-container>
+                </div>
+              </md-list-item>
+            </md-list>
+          </div>
+          <md-button type="submit">
+            {{ 'BUTTON.SET' | translate }}
+          </md-button>
+        </form>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button>
+        {{ 'BUTTON.SET' | translate }}
+      </md-button>
+      <md-button ng-click="cancel()" style="margin-right:20px;">
+        {{ 'BUTTON.CANCEL' | translate }}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+

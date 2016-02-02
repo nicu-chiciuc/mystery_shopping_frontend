@@ -30,7 +30,7 @@
             </span>
 
             <!-- Edit button -->
-            <md-button ng-click="vm.showEditBlockTitleDialog($event, block_1)"
+            <md-button ng-click="vm.showEditBlockTitleDialog($event, block_1, questionnaire)"
                        class="md-icon-button">
               <ng-md-icon icon="edit" size="18"
                           aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
@@ -79,7 +79,7 @@
                   </span>
 
                   <!-- Edit button -->
-                  <md-button ng-click="vm.showEditBlockTitleDialog($event, block_2)"
+                  <md-button ng-click="vm.showEditBlockTitleDialog($event, block_2, block_1)"
                              class="md-icon-button">
                     <ng-md-icon icon="edit" size="18"
                                 aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
@@ -128,7 +128,7 @@
                         </span>
 
                         <!-- Edit button -->
-                        <md-button ng-click="vm.showEditBlockTitleDialog($event, block_3)"
+                        <md-button ng-click="vm.showEditBlockTitleDialog($event, block_3, block_2)"
                                    class="md-icon-button">
                           <ng-md-icon icon="edit" size="18"
                                       aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
