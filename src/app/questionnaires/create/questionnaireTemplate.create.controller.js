@@ -92,7 +92,7 @@
                   "questionnaire_template": 2,
                   "template_block": 3,
                   "question_body": "Question#1",
-                  "type": "sYes [::] 5 || No [::] 0 || NA [::] -1",
+                  "type": "s",
                   "max_score": 2
                 },
                 {
@@ -100,7 +100,7 @@
                   "questionnaire_template": 2,
                   "template_block": 3,
                   "question_body": "Question#2",
-                  "type": "mYes [::] 5 || No [::] 0 || NA [::] -1",
+                  "type": "m",
                   "max_score": 5
                 },
                 {

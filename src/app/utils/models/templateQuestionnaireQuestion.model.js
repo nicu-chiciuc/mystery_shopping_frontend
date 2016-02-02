@@ -14,7 +14,8 @@
       removeChoice: removeChoice,
       updateQuestionType: updateQuestionType,
       preProcess: preProcess,
-      postProcess: postProcess
+      postProcess: postProcess,
+      recomputeChoiceWeights: recomputeChoiceWeights
     };
 
     var postProcessManager = {
@@ -31,9 +32,6 @@
       d: preProcessDateQuestion
     };
 
-    var choicesDelimiter = ' || ';
-    var choiceBodyWeightDelimiter = ' [::] ';
-
     return Model;
 
 
@@ -45,11 +43,12 @@
     }
 
     function addChoice () {
-      this.choices.push({});
+      this.template_question_choices.push({});
+      this.recomputeChoiceWeights();
     }
 
     function removeChoice ( index ) {
-      this.choices.splice(index, 1);
+      this.template_question_choices.splice(index, 1);
     }
 
     function updateQuestionType ( type ) {
@@ -59,23 +58,17 @@
         question.type = type;
       }
 
-      question.typeIdentifier = question.type[0];
-      question.isChoiceQuestion = question.typeIdentifier === 's' || question.typeIdentifier === 'm';
-      question.isTextQuestion = question.typeIdentifier === 't';
-      question.isDateQuestion = question.typeIdentifier === 'd';
+      question.isChoiceQuestion = question.type === 's' || question.type === 'm';
+      question.isTextQuestion = question.type === 't';
+      question.isDateQuestion = question.type === 'd';
     }
 
     function postProcess () {
       var question = this;
-      postProcessManager[question.typeIdentifier](question);
+      postProcessManager[question.type](question);
     }
 
     function postProcessSingleChoiceQuestion ( question ) {
-      question.type = question.typeIdentifier;
-
-      question.type += question.choices.map(function (choice) {
-        return [choice.body, choiceBodyWeightDelimiter, choice.weight].join('');
-      }).join(choicesDelimiter);
     }
 
     function postProcessMultipleChoiceQuestion ( question ) {
@@ -92,28 +85,28 @@
 
     function preProcess () {
       var question = this;
-      preProcessManager[question.typeIdentifier](question);
+      preProcessManager[question.type](question);
     }
 
     function preProcessSingleChoiceQuestion ( question ) {
-      question.choices = question.type.substring(1).split(choicesDelimiter).filter(function (el) { return el.length !== 0; });
-      question.choices = question.choices.map(function (choice) {
-        var bodyWeightPair = choice.split(choiceBodyWeightDelimiter);
-        return {
-          body: bodyWeightPair[0],
-          weight: bodyWeightPair[1]
-        };
-      });
     }
 
     function preProcessMultipleChoiceQuestion ( question ) {
-      preProcessSingleChoiceQuestion(question);
     }
 
     function preProcessTextQuestion ( question ) {
     }
 
     function preProcessDateQuestion ( question ) {
+    }
+
+    function recomputeChoiceWeights () {
+      var question = this;
+      var numberOfChoices = question.template_question_choices.length;
+
+      _.forEach(question.template_question_choices, function (choice) {
+        choice.weight = 1 / numberOfChoices;
+      });
     }
 
   }

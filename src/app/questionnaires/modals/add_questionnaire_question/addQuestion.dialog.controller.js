@@ -11,7 +11,7 @@
 
     $scope.question = {
       type: 's',
-      choices: []
+      template_question_choices: []
     };
 
     angular.extend($scope.question, models.manager.TemplateQuestionnaireQuestionModel);

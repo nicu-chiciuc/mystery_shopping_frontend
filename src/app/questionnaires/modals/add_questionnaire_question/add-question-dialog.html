@@ -32,14 +32,14 @@
 
             <!-- Question choices list -->
             <md-list>
-              <md-list-item ng-repeat="choice in question.choices" layout="row">
+              <md-list-item ng-repeat="choice in question.template_question_choices" layout="row">
 
                 <md-input-container md-no-float flex class="no-errors-spacer">
                   <input ng-model="choice.body" type="text" placeholder="Choice body"/>
                 </md-input-container>
 
                 <md-input-container md-no-float flex="20" class="no-errors-spacer">
-                  <input ng-model="choice.weight" type="text" placeholder="Choice weight"/>
+                  <input ng-model="choice.score" type="text" placeholder="Choice score"/>
                 </md-input-container>
 
                 <span flex="none">
@@ -74,14 +74,14 @@
 
             <!-- Question choices list -->
             <md-list>
-              <md-list-item ng-repeat="choice in question.choices" layout="row">
+              <md-list-item ng-repeat="choice in question.template_question_choices" layout="row">
 
                 <md-input-container md-no-float flex class="no-errors-spacer">
-                  <input ng-model="choice.body" type="text" placeholder="Choice body"/>
+                  <input ng-model="choice.text" type="text" placeholder="Choice body"/>
                 </md-input-container>
 
                 <md-input-container md-no-float flex="20" class="no-errors-spacer">
-                  <input ng-model="choice.weight" type="text" placeholder="Choice weight"/>
+                  <input ng-model="choice.score" type="text" placeholder="Choice score"/>
                 </md-input-container>
 
                 <span flex="none">
@@ -135,7 +135,7 @@
             <md-divider></md-divider>
 
             <div>
-              <md-datepicker md-placeholder="{{ 'COMMON.ACTIONS.ENTER_DATE' | translate }}" disabled></md-datepicker>
+              <md-datepicker ng-model="date" md-placeholder="{{ 'COMMON.ACTIONS.ENTER_DATE' | translate }}" disabled></md-datepicker>
             </div>
 
           </md-content>
