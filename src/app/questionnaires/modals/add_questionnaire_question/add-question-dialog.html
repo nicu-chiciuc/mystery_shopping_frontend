@@ -19,47 +19,11 @@
         <md-tab ng-click="updateQuestionType('s')" label="{{ 'QUESTIONNAIRE.QUESTION.TYPE.SINGLE_CHOICE' | translate }}">
           <md-content class="md-padding" layout="column">
 
-            <md-input-container flex>
-              <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
-              <textarea ng-model="question.question_body" md-autofocus columns="1" rows="3"></textarea>
-            </md-input-container>
-
-            <md-subheader class="md-no-sticky">
-              {{ 'QUESTIONNAIRE.QUESTION.CHOICES' | translate }}
-            </md-subheader>
-
-            <md-divider></md-divider>
-
-            <!-- Question choices list -->
-            <md-list>
-              <md-list-item ng-repeat="choice in question.template_question_choices" layout="row">
-
-                <md-input-container md-no-float flex class="no-errors-spacer">
-                  <input ng-model="choice.body" type="text" placeholder="Choice body"/>
-                </md-input-container>
-
-                <md-input-container md-no-float flex="20" class="no-errors-spacer">
-                  <input ng-model="choice.score" type="text" placeholder="Choice score"/>
-                </md-input-container>
-
-                <span flex="none">
-                  <md-button ng-click="removeChoice($index)" class="md-icon-button" aria-label="{{ 'BUTTON.REMOVE' | translate }}">
-                    <ng-md-icon icon="close"></ng-md-icon>
-                  </md-button>
-                </span>
-              </md-list-item>
-            </md-list>
-
-            <md-button ng-click="addChoice()">
-              {{ 'QUESTIONNAIRE.ACTIONS.ADD_CHOICE' | translate }}
-            </md-button>
-
-          </md-content>
-        </md-tab>
-
-        <!-- Multiple choice tab -->
-        <md-tab ng-click="updateQuestionType('m')" label="{{ 'QUESTIONNAIRE.QUESTION.TYPE.MULTIPLE_CHOICE' | translate }}">
-          <md-content class="md-padding" layout="column">
+            <!-- Max score row -->
+            <div layout="row">
+              <span flex></span>
+              <span>{{ 'QUESTIONNAIRE.QUESTION.MAX_SCORE' | translate : {MAX_SCORE: question.max_score} }}</span>
+            </div>
 
             <md-input-container flex>
               <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
@@ -81,7 +45,55 @@
                 </md-input-container>
 
                 <md-input-container md-no-float flex="20" class="no-errors-spacer">
-                  <input ng-model="choice.score" type="text" placeholder="Choice score"/>
+                  <input ng-model="choice.score" ng-change="question.updateMaxScore()" type="number" placeholder="Choice score"/>
+                </md-input-container>
+
+                <span flex="none">
+                  <md-button ng-click="removeChoice($index)" class="md-icon-button" aria-label="{{ 'BUTTON.REMOVE' | translate }}">
+                    <ng-md-icon icon="close"></ng-md-icon>
+                  </md-button>
+                </span>
+              </md-list-item>
+            </md-list>
+
+            <md-button ng-click="addChoice()">
+              {{ 'QUESTIONNAIRE.ACTIONS.ADD_CHOICE' | translate }}
+            </md-button>
+
+          </md-content>
+        </md-tab>
+
+        <!-- Multiple choice tab -->
+        <md-tab ng-click="updateQuestionType('m')" label="{{ 'QUESTIONNAIRE.QUESTION.TYPE.MULTIPLE_CHOICE' | translate }}">
+          <md-content class="md-padding" layout="column">
+
+            <!-- Max score row -->
+            <div layout="row">
+              <span flex></span>
+              <span>{{ 'QUESTIONNAIRE.QUESTION.MAX_SCORE' | translate : {MAX_SCORE: question.max_score} }}</span>
+            </div>
+
+            <md-input-container flex>
+              <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
+              <textarea ng-model="question.question_body" md-autofocus columns="1" rows="3"></textarea>
+            </md-input-container>
+
+            <md-subheader class="md-no-sticky">
+              {{ 'QUESTIONNAIRE.QUESTION.CHOICES' | translate }}
+            </md-subheader>
+
+            <md-divider></md-divider>
+
+            <!-- Question choices list -->
+            <md-list>
+              <md-list-item ng-repeat="choice in question.template_question_choices" layout="row">
+
+                <md-input-container md-no-float flex class="no-errors-spacer">
+                  <input ng-model="choice.text" type="text" placeholder="Choice body"/>
+                </md-input-container>
+
+                <md-input-container md-no-float flex="20" class="no-errors-spacer">
+                  <input ng-model="choice.score" ng-change="question.updateMaxScore()" type="number" placeholder="Choice score"/>
                 </md-input-container>
 
                 <span flex="none">

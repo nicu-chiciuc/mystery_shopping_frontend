@@ -139,7 +139,8 @@
           },
           QUESTION_BODY: 'Question body',
           CHOICES: 'Choices',
-          ANSWER: 'Answer'
+          ANSWER: 'Answer',
+          MAX_SCORE: 'Max score {MAX_SCORE}'
         },
         ACTIONS: {
           ADD_BLOCK: 'Add block',
