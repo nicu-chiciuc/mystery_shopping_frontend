@@ -4,10 +4,10 @@
 
   angular
     .module('spark')
-    .factory('TemplateQuestionnaireQuestionModel', TemplateQuestionnaireQuestionModel);
+    .factory('QuestionnaireQuestionModel', QuestionnaireQuestionModel);
 
   /** @ngInject */
-  function TemplateQuestionnaireQuestionModel () {
+  function QuestionnaireQuestionModel () {
     var Model = {
       initialize: initialize,
       addChoice: addChoice,

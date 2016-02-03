@@ -81,6 +81,12 @@
       return obj;
     });
 
+    Restangular.extendModel('templatequestionnaires', function (obj) {
+      angular.extend(obj, modelManager.TemplateQuestionnaireModel);
+      obj.initialize();
+      return obj;
+    });
+
     Restangular.extendModel('shoppers', function (obj) {
       angular.extend(obj, modelManager.ShopperModel);
       obj.initialize();

@@ -68,12 +68,12 @@
           pages: [
             {
               name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
-              state: 'questionnaires.create',
+              state: 'questionnaires.templates.create',
               type: 'link'
             },
             {
               name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
-              state: 'questionnaires.list',
+              state: 'questionnaires.templates.list',
               type: 'link'
             }
           ]

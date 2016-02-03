@@ -26,7 +26,7 @@
         childBlock.initialize();
       });
 
-      _.forEach(block.template_block_questions, function ( question ) {
+      _.forEach(block.template_questions, function ( question ) {
         angular.extend(question, TemplateQuestionnaireQuestionModel);
         question.initialize();
       });

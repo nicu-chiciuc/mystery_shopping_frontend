@@ -1,0 +1,32 @@
+<md-whiteframe class="md-whiteframe-2dp">
+
+  <!-- Block header -->
+  <md-toolbar flex="100" class="ms-height-sm">
+
+    <!-- Block title -->
+    <h2 class="md-toolbar-tools">
+      {{ block.title }}
+    </h2>
+  </md-toolbar>
+
+  <!-- Block content container -->
+  <md-content flex="100" layout-padding>
+
+    <!-- Block questions -->
+    <div ng-repeat="question in block[questionnaire.childQuestionsProp]">
+      <ms-questionnaire-question-wrapper question="question"
+                                         questionnaire="questionnaire"
+                                         question-checkbox-list-options="questionCheckboxListOptions">
+      </ms-questionnaire-question-wrapper>
+      <md-divider></md-divider>
+    </div>
+
+    <ms-nested-questionnaire-block ng-repeat="childBlock in block[questionnaire.childBlocksProp]"
+                                   block="childBlock"
+                                   questionnaire="questionnaire"
+                                   question-checkbox-list-options="questionCheckboxListOptions">
+    </ms-nested-questionnaire-block>
+
+  </md-content>
+
+</md-whiteframe>

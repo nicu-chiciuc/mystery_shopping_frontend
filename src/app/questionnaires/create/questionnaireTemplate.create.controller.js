@@ -26,7 +26,7 @@
       {
 
         "id": 2,
-        "template_block_questions": [],
+        "template_questions": [],
         "questionnaire_template": 2,
         "lft": 1,
         "rght": 12,
@@ -38,7 +38,7 @@
       },
       {
         "id": 3,
-        "template_block_questions": [
+        "template_questions": [
           {
             "id": 1,
             "questionnaire_template": 2,
@@ -74,7 +74,7 @@
       "template_blocks": [
         {
           "id": 2,
-          "template_block_questions": [],
+          "template_questions": [],
           "questionnaire_template": 2,
           "lft": 1,
           "rght": 12,
@@ -86,7 +86,7 @@
           template_blocks: [
             {
               "id": 3,
-              "template_block_questions": [
+              "template_questions": [
                 {
                   "id": 1,
                   "questionnaire_template": 2,
@@ -132,7 +132,7 @@
             },
             {
               "id": 4,
-              "template_block_questions": [],
+              "template_questions": [],
               "questionnaire_template": 2,
               "lft": 4,
               "rght": 11,
@@ -144,7 +144,7 @@
               template_blocks: [
                 {
                   "id": 5,
-                  "template_block_questions": [],
+                  "template_questions": [],
                   "questionnaire_template": 2,
                   "lft": 5,
                   "rght": 6,
@@ -157,7 +157,7 @@
                 },
                 {
                   "id": 6,
-                  "template_block_questions": [],
+                  "template_questions": [],
                   "questionnaire_template": 2,
                   "lft": 7,
                   "rght": 8,
@@ -170,7 +170,7 @@
                 },
                 {
                   "id": 7,
-                  "template_block_questions": [],
+                  "template_questions": [],
                   "questionnaire_template": 2,
                   "lft": 9,
                   "rght": 10,
@@ -187,7 +187,7 @@
         },
         {
           "id": 8,
-          "template_block_questions": [],
+          "template_questions": [],
           "questionnaire_template": 2,
           "lft": 1,
           "rght": 12,
@@ -238,7 +238,7 @@
     function addBlock ( parentBlock ) {
       var block = {};
       block.template_blocks = [];
-      block.template_block_questions = [];
+      block.template_questions = [];
       block.title = $filter('translate')('QUESTIONNAIRE.DIALOG.BLOCK_TITLE');
 
       parentBlock.template_blocks.push(block);
@@ -274,7 +274,7 @@
         fullscreen: useFullScreen
       })
         .then(function(question) {
-          block.template_block_questions.push(question);
+          block.template_questions.push(question);
         });
     }
   }

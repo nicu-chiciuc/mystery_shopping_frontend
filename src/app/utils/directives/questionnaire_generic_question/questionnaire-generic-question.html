@@ -5,9 +5,9 @@
 
 <!-- If it is a choice question, display a list with available choices. -->
 <md-list ng-if="vm.question.isChoiceQuestion">
-  <md-list-item ng-repeat="choice in vm.question.choices">
-    <ng-md-icon ng-if="vm.question.typeIdentifier === 'm'" icon="check_box"></ng-md-icon>
-    <ng-md-icon ng-if="vm.question.typeIdentifier === 's'" icon="radio_button_on"></ng-md-icon>
+  <md-list-item ng-repeat="choice in vm.question.template_question_choices">
+    <ng-md-icon ng-if="vm.question.type === 'm'" icon="check_box"></ng-md-icon>
+    <ng-md-icon ng-if="vm.question.type === 's'" icon="radio_button_on"></ng-md-icon>
     <span flex>
       {{ choice.body }}  (weight - {{ choice.weight }})
     </span>

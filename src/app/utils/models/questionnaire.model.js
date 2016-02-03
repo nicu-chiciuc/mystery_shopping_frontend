@@ -70,8 +70,8 @@
       // has this position on the rght, which means that the lft value should be ++'d.
       block.lft = parentBlock
         ? (parentBlock.latestPosition
-          ? parentBlock.latestPosition + 1
-          : parentBlock.lft + 1)
+        ? parentBlock.latestPosition + 1
+        : parentBlock.lft + 1)
         : 1;
 
       // Dive recursively into child blocks.
