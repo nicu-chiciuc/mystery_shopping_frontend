@@ -251,7 +251,6 @@
         templateUrl: 'app/questionnaires/modals/edit_block/edit-block-dialog.html',
         parent: angular.element(document.body),
         targetEvent: ev,
-        clickOutsideToClose:true,
         fullscreen: useFullScreen,
         locals: {
           block: block,
