@@ -19,6 +19,7 @@
       industries: industries,
       countries: countries,
       cities: cities,
+      evaluations: evaluations,
       companyManagers: companyManagers,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
@@ -58,6 +59,10 @@
 
     function cities () {
       return Restangular.service('cities');
+    }
+
+    function evaluations () {
+      return Restangular.service('plannedevaluations');
     }
 
     function questionnaireTemplates () {

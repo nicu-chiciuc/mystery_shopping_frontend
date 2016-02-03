@@ -25,7 +25,8 @@
       MENU: {
         PROJECT_MANAGEMENT: {
           HEADING: 'Project Management',
-          PROJECTS: 'Projects'
+          PROJECTS: 'Projects',
+          EVALUATIONS: 'Evaluations'
         },
         CLIENT_MANAGEMENT: {
           HEADING: 'Client Management',
@@ -151,6 +152,20 @@
           EDIT_BLOCK: 'Edit block',
           BLOCK_TITLE: 'Block title',
           ADD_QUESTION: 'Add question'
+        }
+      },
+      EVALUATION: {
+        TABLE: {
+          HEADER: {
+            VISIT_ID: 'Visit ID',
+            SHOPPER: 'Shopper',
+            SUBJECT_OF_EVALUATION: 'Subject of evaluation',
+            EVALUATION_TYPE: 'Evaluation type',
+            SCRIPT: 'Script',
+            QUESTIONNAIRE_TEMPLATE: 'Questionnaire template',
+            DATE: 'Date',
+            TIME: 'Time period'
+          }
         }
       },
       VALIDATION_MESSAGE: {

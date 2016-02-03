@@ -53,6 +53,17 @@
               type: 'link'
             }
           ]
+        },
+        {
+          name: $filter('translate')('MENU.PROJECT_MANAGEMENT.EVALUATIONS'),
+          type: 'toggle',
+          pages: [
+            {
+              name: 'Planned evaluations',
+              state: 'evaluations.list',
+              type: 'link'
+            }
+          ]
         }
       ]
     });

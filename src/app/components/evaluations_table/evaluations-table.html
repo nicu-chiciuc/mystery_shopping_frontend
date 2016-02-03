@@ -1,0 +1,44 @@
+<md-table-container>
+  <table md-table md-row-select ng-model="selected">
+    <thead md-head>
+    <tr md-row>
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.VISIT_ID' | translate }}
+      </th>
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.SHOPPER' | translate }}
+      </th>
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.SUBJECT_OF_EVALUATION' | translate }}
+      </th>
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.EVALUATION_TYPE' | translate }}
+      </th>
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.SCRIPT' | translate }}
+      </th>
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.QUESTIONNAIRE_TEMPLATE' | translate }}
+      </th>
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.DATE' | translate }}
+      </th>
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.TIME' | translate }}
+      </th>
+    </tr>
+    </thead>
+    <tbody md-body>
+    <tr md-row md-select="evaluation" md-select-id="{{evaluation.id}}" ng-model="selectedRow" md-auto-select ng-repeat="evaluation in vm.evaluations">
+      <td md-cell>{{ evaluation.visit_id }}</td>
+      <td md-cell>{{ evaluation.shopper_repr.fullName }}</td>
+      <td md-cell>{{ evaluation.subjectOfEvaluation.displayName }}</td>
+      <td md-cell>{{ evaluation.visit_type }}</td>
+      <td md-cell>{{ evaluation.questionnaire_script_repr.title }}</td>
+      <td md-cell>{{ evaluation.questionnaire_template_repr.title }}</td>
+      <td md-cell>{{ evaluation.suggested_start_date }}</td>
+      <td md-cell>{{ evaluation.suggested_end_date }}</td>
+    </tr>
+    </tbody>
+  </table>
+</md-table-container>
