@@ -34,17 +34,36 @@
 
     function convertFlatToNestedStructure () {
       var questionnaire = this;
+      var parentBlocksPerTreeIdPerLevel = {};
+
+      _.forEach(questionnaire[questionnaire.childBlocksProp], function ( block ) {
+        block[questionnaire.childBlocksProp] = block[questionnaire.childBlocksProp] || [];
+
+        if ( angular.isUndefined(parentBlocksPerTreeIdPerLevel[block.tree_id]) ) {
+          parentBlocksPerTreeIdPerLevel[block.tree_id] = {};
+        }
+
+        if ( block.parent_block ) {
+          parentBlocksPerTreeIdPerLevel[block.tree_id][block.level - 1][questionnaire.childBlocksProp].push(block);
+        }
+
+        parentBlocksPerTreeIdPerLevel[block.tree_id][block.level] = block;
+      });
+
+      _.remove(questionnaire[questionnaire.childBlocksProp], function (block) {
+        return block.parent_block !== null;
+      });
     }
 
     function postProcess () {
       var questionnaire = this;
       var processedQuestionnaire = _.cloneDeep(questionnaire);
 
-      processedQuestionnaire[questionnaire.childBlocksProp] = flattenQuestionnaireBlocks(questionnaire, questionnaire[questionnaire.childBlocksProp]);
+      processedQuestionnaire[questionnaire.childBlocksProp] = convertNestedToFlatStructure(questionnaire, questionnaire[questionnaire.childBlocksProp]);
       return processedQuestionnaire;
     }
 
-    function flattenQuestionnaireBlocks ( questionnaire, blocks ) {
+    function convertNestedToFlatStructure ( questionnaire, blocks ) {
       var flattenedBlocks = [];
 
       _.forEach(blocks, function ( block ) {
