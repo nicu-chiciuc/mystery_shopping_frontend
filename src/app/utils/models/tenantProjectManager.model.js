@@ -4,10 +4,10 @@
 
   angular
     .module('spark')
-    .factory('ProjectManagerModel', ProjectManagerModel);
+    .factory('TenantProjectManagerModel', TenantProjectManagerModel);
 
   /** @ngInject */
-  function ProjectManagerModel ( AbstractAccountModel ) {
+  function TenantProjectManagerModel ( AbstractAccountModel, contentTypes ) {
     var Model = {
       initialize: initialize
     };
@@ -17,6 +17,8 @@
 
     function initialize () {
       var projectManager = this;
+
+      projectManager.contentTypeId = contentTypes.tenantprojectmanager;
 
       angular.extend(projectManager.user, AbstractAccountModel);
       projectManager.user.initializeAbstract();

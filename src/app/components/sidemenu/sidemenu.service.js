@@ -49,7 +49,7 @@
             },
             {
               name : 'List projects',
-              state: 'projects',
+              state: 'projects.list',
               type: 'link'
             }
           ]

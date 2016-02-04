@@ -1,18 +1,4 @@
-<!--<md-content>-->
-  <!--<md-list>-->
-    <!--<md-subheader class="md-no-sticky">3 line item</md-subheader>-->
-    <!--<md-list-item class="md-3-line" ng-repeat="project in vm.projects">-->
-      <!--<div class="md-list-item-text" layout="column">-->
-        <!--<h3>-->
-          <!--<md-button class="md-primary" ui-sref="projects.edit({id: project.id})">-->
-            <!--{{ project.company }}-->
-          <!--</md-button>-->
-        <!--</h3>-->
-        <!--<h4>{{ project.project_manager }}</h4>-->
-        <!--<p>{{ project.consultants }}</p>-->
-      <!--</div>-->
-    <!--</md-list-item>-->
-  <!--</md-list>-->
-<!--</md-content>-->
-List of companies here.
-<div ui-view></div>
+<md-button ng-repeat="project in vm.projects"
+           ui-sref="projects.detail.edit({projectId: project.id})">
+  {{ project.company_repr.name }}
+</md-button>

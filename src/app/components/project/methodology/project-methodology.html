@@ -10,7 +10,7 @@
       -->
       <md-input-container class="md-block" flex-gt-xs>
         <label>{{ 'PROJECT.METHODOLOGY.NUMBER_OF_EVALUATIONS' | translate}}</label>
-        <input ng-model="vm.project.methodology.number_of_evaluations" name="number_of_evaluations" required>
+        <input ng-model="vm.project.research_methodology.number_of_evaluations" name="number_of_evaluations" required>
 
         <!-- Validation messages -->
         <div ng-show="methodologyForm.$submitted" ng-messages="methodologyForm.number_of_evaluations.$error">
@@ -28,7 +28,7 @@
           -->
           <ms-checkbox-list checkbox-list-elements="vm.questionnaireTemplates"
                             checkbox-list-options="vm.questionnaireTemplatesCheckboxListOptions"
-                            target-list="vm.project.methodology.questionnaires">
+                            target-list="vm.project.research_methodology.questionnaires">
           </ms-checkbox-list>
         </div><!-- End of layout="column" -->
 
@@ -38,7 +38,7 @@
         <div layout="column" flex="100" flex-gt-sm="50">
           <ms-checkbox-list checkbox-list-elements="vm.scripts"
                             checkbox-list-options="vm.scriptsCheckboxListOptions"
-                            target-list="vm.project.methodology.scripts">
+                            target-list="vm.project.research_methodology.scripts">
           </ms-checkbox-list>
         </div><!-- End of layout="column" -->
       </div><!-- End of layout="row" -->

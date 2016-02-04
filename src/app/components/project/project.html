@@ -1,21 +1,23 @@
 <ms-project-basic-info project="vm.project"
                        project-managers="vm.projectManagers"
                        project-workers="vm.projectWorkers"
-                       companies="vm.companies">
+                       tenant-consultants="vm.tenantConsultants"
+                       companies="vm.companies"
+                       save-project-method="vm.saveProject(project, isValid)">
 </ms-project-basic-info>
 
-<ms-project-methodology ng-show="vm.project.state > 1"
+<ms-project-methodology ng-if="vm.project.state > 0"
                         project="vm.project"
                         questionnaire-templates="vm.questionnaireTemplates"
                         scripts="vm.scripts">
 </ms-project-methodology>
 
-<ms-project-list-of-places-and-people ng-show="vm.project.state > 2"
+<ms-project-list-of-places-and-people ng-if="vm.project.state > 1"
                                       project="vm.project"
                                       companies="vm.companies">
 </ms-project-list-of-places-and-people>
 
-<ms-project-shoppers ng-show="vm.project.state > 3"
+<ms-project-shoppers ng-if="vm.project.state > 2"
                      project="vm.project"
                      shoppers="vm.shoppers">
 </ms-project-shoppers>

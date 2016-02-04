@@ -14,7 +14,9 @@
         project: '=',
         companies: '=',
         projectManagers: '=',
-        projectWorkers: '='
+        projectWorkers: '=',
+        tenantConsultants: "=",
+        saveProjectMethod: '&'
       },
       controller: ProjectBasicInfoController,
       controllerAs: 'vm',
@@ -28,15 +30,26 @@
       $log.debug('Entered ProjectBasicInfoController');
       var vm = this;
 
-      // If it's a new project, it doesn't have any consultants list, so create one.
-      vm.project.consultants = vm.project.consultants || [];
+      vm.project.project_workers_repr = vm.project.project_workers_repr || [];
+
+      vm.selectProjectManager = selectProjectManager;
 
       vm.projectWorkersCheckboxListOptions = {
         showLegend: true,
         legendTitle: $filter('translate')('PROJECT.CONSULTANTS'),
-        labelProp: 'displayName',
-        valueProp: 'id'
+        labelProp: 'user.fullName',
+        valueProp: function ( item ) {
+          return {
+            project_worker_id: item.id,
+            project_worker_type: item.contentTypeId
+          };
+        }
       };
+
+      function selectProjectManager ( project, projectManager ) {
+        project.project_manager_id = projectManager.id;
+        project.project_manager_type = projectManager.contentTypeId;
+      }
     }
   }
 

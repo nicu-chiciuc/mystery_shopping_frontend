@@ -13,6 +13,7 @@
       companies: companies,
       projectManagers: projectManagers,
       projectWorkers: projectWorkers,
+      tenantConsultants: tenantConsultants,
       questionnaireTemplates: questionnaireTemplates ,
       scripts: scripts,
       shoppers: shoppers,
@@ -47,6 +48,10 @@
 
     function projectWorkers () {
       return Restangular.service('projectworkers');
+    }
+
+    function tenantConsultants () {
+      return Restangular.service('tenantconsultants');
     }
 
     function industries () {

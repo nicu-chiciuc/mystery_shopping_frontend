@@ -19,7 +19,7 @@
       //$log.debug(authObject);
 
       if (authObject && authObject.token) {
-        console.log(authObject);
+        //console.log(authObject);
         config.headers = config.headers || {};
         config.headers.Authorization = 'JWT ' + authObject.token;
       }

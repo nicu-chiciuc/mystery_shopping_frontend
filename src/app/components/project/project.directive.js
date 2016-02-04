@@ -6,7 +6,7 @@
     .directive('msProject', msProject);
 
   /** @ngInject */
-  function msProject() {
+  function msProject () {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/project/project.html',
@@ -15,9 +15,11 @@
         companies: '=',
         projectManagers: '=',
         projectWorkers: '=',
+        tenantConsultants: '=',
         questionnaireTemplates: '=',
         scripts: '=',
-        shoppers: '='
+        shoppers: '=',
+        user: '='
       },
       controller: ProjectController,
       controllerAs: 'vm',
@@ -27,9 +29,46 @@
     return directive;
 
     /** @ngInject */
-    function ProjectController ( $log ) {
-      $log.debug('Entered Project1Controller');
+    function ProjectController ( $log, $state, moment, models ) {
+      $log.debug('Entered msProjectController');
       var vm = this;
+
+      vm.isNewProject = !vm.project.id;
+
+      vm.saveProject = saveProject;
+
+      function saveProject ( project, isValid ) {
+        project.period_start = moment(project.start_date).format('YYYY-MM-DD');
+        project.period_end = moment(project.end_date).format('YYYY-MM-DD');
+        project.project_workers = project.project_workers_repr;
+        if (isValid) {
+          if ( vm.isNewProject ) {
+            project.tenant = vm.user.tenantId;
+            project = models.restangularizeElement(null, project, 'projects');
+            project.post().then(saveProjectSuccessFn, saveProjectErrorFn);
+          } else {
+            project.put().then(saveProjectSuccessFn, saveProjectErrorFn);
+          }
+        }
+
+        function saveProjectSuccessFn ( response ) {
+          angular.extend(response, models.manager.ProjectModel);
+          response.initialize();
+          vm.project = response;
+
+          if ( vm.project.state === 4 ) {
+            goToProjectDetailViewState();
+          }
+        }
+        function saveProjectErrorFn () {
+          // TODO deal with the error
+        }
+      }
+
+      function goToProjectDetailViewState () {
+        var projectDetailViewState = $state.current.name.replace(/(create|detail\.edit)/g, 'detail.view');
+        $state.go(projectDetailViewState, {projectId: vm.project.id});
+      }
 
     }
   }

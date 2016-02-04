@@ -31,9 +31,9 @@
       console.log(vm.questionnaireTemplates);
       console.log(vm.scripts);
       // If it's a new project, it doesn't have any consultants list, so create one.
-      vm.project.methodology = vm.project.methodology || {};
-      vm.project.methodology.scripts = vm.project.methodology.scripts || [];
-      vm.project.methodology.questionnaires = vm.project.methodology.questionnaires || [];
+      vm.project.research_methodology = vm.project.research_methodology || {};
+      vm.project.research_methodology.scripts = vm.project.research_methodology.scripts || [];
+      vm.project.research_methodology.questionnaires = vm.project.research_methodology.questionnaires || [];
       vm.saveMethodology = function () {};
 
       vm.questionnaireTemplatesCheckboxListOptions = {

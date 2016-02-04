@@ -1,17 +1,15 @@
 <md-content layout="row" layout-padding>
 
   <div ng-cloak flex>
-    <form name="projectForm" ng-submit="vm.saveProject(vm.project, projectForm.$valid, 'projects.create.methodology')">
-      <!--<div layout-gt-xs="row">-->
-
+    <form name="projectForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: projectForm.$valid})">
 
       <!--
       Company select
       -->
       <md-input-container class="md-block" flex-gt-xs>
         <label>{{ 'PROJECT.CLIENT' | translate}}</label>
-        <md-select ng-model="vm.project.company_repr" name="company" ng-required="true">
-          <md-option ng-repeat="company in vm.companies" ng-value="company">
+        <md-select ng-model="vm.project.company" name="company" ng-required="true">
+          <md-option ng-repeat="company in vm.companies" ng-value="company.id">
             {{ company.name }}
           </md-option>
         </md-select>
@@ -34,7 +32,7 @@
           <div>
             <md-datepicker id="projectStartDate"
                            name="period_start"
-                           ng-model="vm.project.period_start"
+                           ng-model="vm.project.start_date"
                            md-placeholder="{{ 'PROJECT.PLACEHOLDER.START_DATE' | translate }}"
                            ng-required="true">
             </md-datepicker>
@@ -55,7 +53,7 @@
           <div>
             <md-datepicker id="projectEndDate"
                            name="period_end"
-                           ng-model="vm.project.period_end"
+                           ng-model="vm.project.end_date"
                            md-placeholder="{{ 'PROJECT.PLACEHOLDER.END_DATE' | translate }}"
                            ng-required="true">
             </md-datepicker>
@@ -74,8 +72,8 @@
       -->
       <md-input-container class="md-block" flex-gt-sm>
         <label>{{ 'PROJECT.PROJECT_MANAGER' | translate }}</label>
-        <md-select ng-model="vm.project.project_manager" name="project_manager" required>
-          <md-option ng-repeat="projectManager in vm.projectManagers" value="{{ projectManager.id }}">
+        <md-select ng-model="vm.project.project_manager_repr" ng-change="vm.selectProjectManager(vm.project, vm.project.project_manager_repr)" name="project_manager" required>
+          <md-option ng-repeat="projectManager in vm.projectManagers" ng-value="projectManager">
             {{ projectManager.user.fullName }}
           </md-option>
         </md-select>
@@ -91,13 +89,15 @@
       List of Project Workers
       -->
       <div class="md-block" flex-gt-sm>
-        <ms-checkbox-list checkbox-list-elements="vm.projectWorkers"
+        <ms-checkbox-list checkbox-list-elements="vm.tenantConsultants"
                           checkbox-list-options="vm.projectWorkersCheckboxListOptions"
-                          target-list="vm.project.consultants">
+                          target-list="vm.project.project_workers_repr">
         </ms-checkbox-list>
       </div>
 
-      <md-button type="submit" class="md-primary">Submit</md-button>
+      <md-button type="submit" class="md-primary" ng-show="vm.project.state === 0">
+        {{ vm.project.id ? ('BUTTON.SAVE' | translate) : ('BUTTON.CREATE' | translate) }}
+      </md-button>
     </form>
   </div>
 </md-content>

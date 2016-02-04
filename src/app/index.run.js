@@ -36,7 +36,9 @@
 
     // Extending Restangular endpoints with corresponding models
     Restangular.extendModel('projects', function (obj) {
-      return angular.extend(obj, modelManager.ProjectModel);
+      angular.extend(obj, modelManager.ProjectModel);
+      obj.initialize();
+      return obj;
     });
 
     Restangular.extendModel('projectworkers', function (obj) {
@@ -46,7 +48,13 @@
     });
 
     Restangular.extendModel('tenantprojectmanagers', function (obj) {
-      angular.extend(obj, modelManager.ProjectManagerModel);
+      angular.extend(obj, modelManager.TenantProjectManagerModel);
+      obj.initialize();
+      return obj;
+    });
+
+    Restangular.extendModel('tenantconsultants', function (obj) {
+      angular.extend(obj, modelManager.TenantConsultantModel);
       obj.initialize();
       return obj;
     });
