@@ -9,7 +9,8 @@
 <ms-project-methodology ng-if="vm.project.state > 0"
                         project="vm.project"
                         questionnaire-templates="vm.questionnaireTemplates"
-                        scripts="vm.scripts">
+                        scripts="vm.scripts"
+                        save-project-method="vm.saveProject(project, isValid)">
 </ms-project-methodology>
 
 <ms-project-list-of-places-and-people ng-if="vm.project.state > 1"

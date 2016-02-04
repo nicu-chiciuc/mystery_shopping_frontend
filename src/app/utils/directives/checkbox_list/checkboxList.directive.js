@@ -40,10 +40,27 @@
         if ( angular.isObject(itemKey) ) {
           value = itemKey;
           itemExists = _.find(list, function (listItem) {
-            return angular.equals(value, listItem);
+            var selectionCondition = true;
+            _.forOwn(itemKey, function (value, key) {
+              if ( value !== listItem[key] ) {
+                selectionCondition = false;
+              }
+            });
+            return selectionCondition;
           });
-          if ( itemExists ) _.remove(list, function (listItem) { return angular.equals(itemExists, listItem); })
-          else list.push(value);
+          if ( itemExists ) {
+            _.remove(list, function (listItem) {
+              var selectionCondition = true;
+              _.forOwn(itemKey, function (value, key) {
+                if ( value !== listItem[key] ) {
+                  selectionCondition = false;
+                }
+              });
+              return selectionCondition;
+            });
+          } else {
+            list.push(value);
+          }
 
         } else {
           value = itemKey ? item[itemKey] : item;
@@ -59,7 +76,13 @@
         if ( angular.isObject(itemKey) ) {
           value = itemKey;
           return _.find(list, function (listItem) {
-            return angular.equals(value, listItem);
+            var selectionCondition = true;
+            _.forOwn(itemKey, function (value, key) {
+              if ( value !== listItem[key] ) {
+                selectionCondition = false;
+              }
+            });
+            return selectionCondition;
           });
         } else {
           value = itemKey ? item[itemKey] : item;
@@ -84,7 +107,7 @@
         if ( typeof valueProp === 'function' ) {
           return valueProp(item);
         } else {
-          return item[valueProp];
+          return valueProp;
         }
       }
 

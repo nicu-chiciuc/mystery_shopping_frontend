@@ -1,7 +1,7 @@
 <md-content layout="row" layout-padding>
 
   <div ng-cloak flex>
-    <form name="projectForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: projectForm.$valid})">
+    <form name="projectForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: projectForm.$valid})" novalidate>
 
       <!--
       Company select
@@ -101,5 +101,3 @@
     </form>
   </div>
 </md-content>
-
-<div ui-view></div>

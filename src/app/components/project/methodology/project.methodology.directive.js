@@ -13,7 +13,8 @@
       scope: {
         project: '=',
         scripts: '=',
-        questionnaireTemplates: '='
+        questionnaireTemplates: '=',
+        saveProjectMethod: '&'
       },
       controller: ProjectMethodologyController,
       controllerAs: 'vm',
@@ -34,7 +35,7 @@
       vm.project.research_methodology = vm.project.research_methodology || {};
       vm.project.research_methodology.scripts = vm.project.research_methodology.scripts || [];
       vm.project.research_methodology.questionnaires = vm.project.research_methodology.questionnaires || [];
-      vm.saveMethodology = function () {};
+      vm.project.research_methodology.project_id = vm.project.id;
 
       vm.questionnaireTemplatesCheckboxListOptions = {
         showLegend: true,
