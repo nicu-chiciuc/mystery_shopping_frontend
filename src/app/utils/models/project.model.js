@@ -37,6 +37,8 @@
         project.end_date = new Date(project.period_end);
       }
 
+      project.shoppers = project.shoppers || [];
+
       // For usage in recursive checkbox list on project create/update page for selecting
       // people and places to assess.
       project.listOfSpecificType = {};

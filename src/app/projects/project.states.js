@@ -62,7 +62,7 @@
       })
       .state('projects.detail.view', {
         url: '/view',
-        templateUrl: 'app/projects/new/project-view.html',
+        templateUrl: 'app/projects/view/project-view.html',
         controller: 'ProjectController as vm'
       })
 

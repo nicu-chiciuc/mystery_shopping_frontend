@@ -12,7 +12,8 @@
       templateUrl: 'app/components/project/shoppers/project-shoppers.html',
       scope: {
         project: '=',
-        shoppers: '='
+        shoppers: '=',
+        saveProjectMethod: '&'
       },
       controller: ProjectShoppersController,
       controllerAs: 'vm',
@@ -26,16 +27,10 @@
       $log.debug('Entered ProjectShoppersController');
       var vm = this;
 
-      console.log(vm.project);
-      console.log(vm.questionnaireTemplates);
-      console.log(vm.scripts);
-      // If it's a new project, it doesn't have any consultants list, so create one.
-      vm.project.shoppers = vm.project.shoppers || [];
-
       vm.shoppersCheckboxListOptions = {
         showLegend: true,
         legendTitle: $filter('translate')('PROJECT.SHOPPERS'),
-        labelProp: 'fullName',
+        labelProp: 'user.fullName',
         valueProp: 'id'
       };
     }

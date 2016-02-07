@@ -1,7 +1,7 @@
 <md-content layout="row" layout-padding>
 
   <div ng-cloak flex>
-    <form name="shoppersForm">
+    <form name="shoppersForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: shoppersForm.$valid})" novalidate>
 
       <!--
       Shoppers
@@ -11,9 +11,9 @@
                         target-list="vm.project.shoppers">
       </ms-checkbox-list>
 
-      <md-button type="submit" class="md-primary">Submit</md-button>
+      <md-button type="submit" class="md-primary" ng-show="vm.project.state >= 3">
+        {{ 'BUTTON.SAVE' | translate }}
+      </md-button>
     </form>
   </div>
 </md-content>
-
-<div ui-view></div>
