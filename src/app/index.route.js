@@ -23,7 +23,8 @@
         resolve: {
           user: function ( authorization ) {
             return authorization.authorize();
-          }
+          }//,
+          //companies: function ( models ) { return models.companies().getList({simple: true}); }
         },
         controller: 'SideMenuController as vm'
         //onEnter: function ($log, user) {
@@ -34,6 +35,30 @@
           //onExit: function (user) {
           //  user.close();
           //}
+      })
+      .state('companySelected', {
+        parent: 'authenticated',
+        template: '<div ui-view></div>',
+        abstract: true,
+        resolve: {
+          company: function ( managementFlow ) {
+            return managementFlow.authorizeCompany();
+          }
+        },
+        controller: 'SideMenuController as vm'
+      })
+      .state('chooseCompany', {
+        parent: 'authenticated',
+        template: 'Choose a company to manage',
+        resolve: {
+          companies: function ( models ) { return models.companies().getList({simple: true}); }
+        },
+        controller: function ( sideMenu, companies, $state ) {
+          sideMenu.setCompanyList(companies);
+        },
+        data: {
+          roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
+        }
       })
       .state('accessdenied', {
         parent: 'authenticated',

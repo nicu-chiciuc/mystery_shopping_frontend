@@ -2,6 +2,12 @@
             md-component-id="left"
             md-is-locked-open="$mdMedia('gt-sm')">
 
+  <header ng-show="company" class="nav-header">
+    <a ng-href="/" class="docs-logo">
+      {{ company.name }}
+    </a>
+  </header>
+
   <md-content flex role="navigation">
     <ul class="docs-menu">
       <li ng-repeat="section in sideMenu.sections" class="parent-list-item {{section.className || ''}}" ng-class="{'parentActive' : isSectionSelected(section)}">
@@ -10,11 +16,15 @@
         </h2>
         <menu-link section="section" ng-if="section.type === 'link' && !section.hidden"></menu-link>
 
+        <menu-action section="section" ng-if="section.type === 'action' && !section.hidden"></menu-action>
+
         <menu-toggle section="section" ng-if="section.type === 'toggle' && !section.hidden"></menu-toggle>
 
         <ul ng-if="section.children" class="menu-nested-list">
           <li ng-repeat="child in section.children" ng-class="{'childActive' : isSectionSelected(child)}">
             <menu-link section="child" ng-if="child.type === 'link'"></menu-link>
+
+            <menu-action section="child" ng-if="child.type === 'action'"></menu-action>
 
             <menu-toggle section="child" ng-if="child.type === 'toggle'"></menu-toggle>
           </li>

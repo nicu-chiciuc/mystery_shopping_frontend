@@ -9,7 +9,9 @@
   /** @ngInject */
   function principal( $q, localStorageService, models ) {
     var _identity = undefined,
-      _authenticated = false;
+      _authenticated = false,
+      _tenantRoles = ['tenantproductmanager', 'tenantprojectmanager', 'tenantconsultant'],
+      _clientRoles = ['clientmanager', 'clientemployee', 'clientproductmanager'];
 
     var principal = {
       isIdentityResolved: isIdentityResolved,
@@ -17,7 +19,9 @@
       isInRole: isInRole,
       isInAnyRole: isInAnyRole,
       authenticate: authenticate,
-      identity: identity
+      identity: identity,
+      isInTenantRole: isInTenantRole,
+      isInClientRole: isInClientRole
     };
 
     return principal;
@@ -44,6 +48,14 @@
       }
 
       return false;
+    }
+
+    function isInTenantRole () {
+      return this.isAuthenticated() ? this.isInAnyRole(_tenantRoles) : false;
+    }
+
+    function isInClientRole () {
+      return this.isAuthenticated() ? this.isInAnyRole(_clientRoles) : false;
     }
 
     function authenticate ( identity ) {

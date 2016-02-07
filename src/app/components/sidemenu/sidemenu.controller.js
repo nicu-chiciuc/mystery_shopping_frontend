@@ -12,9 +12,10 @@
 
     vm.isOpen = sideMenu.isSectionSelected;
     vm.isSelected = sideMenu.isPageSelected;
+    vm.setCompany = sideMenu.setCompany;
     vm.toggleOpen = sideMenu.toggleSelectSection;
-    vm.autoFocusContent = false;
 
+    vm.autoFocusContent = false;
     $scope.sideMenu = sideMenu;
     $scope.isSelected = sideMenu.isPageSelected;
     $scope.isOpen = sideMenu.isSectionSelected;

@@ -10,7 +10,7 @@
     $stateProvider
       .state('scripts', {
         abstract: true,
-        parent: 'authenticated',
+        parent: 'companySelected',
         url: '/scripts',
         template: '<div ui-view></div>',
         data: {

@@ -17,6 +17,14 @@
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         }
       })
+      .state('evaluations.create', {
+        url: '/list',
+        templateUrl: 'app/evaluations/create/evaluation-create.html',
+        controller: 'EvaluationCreateController as vm',
+        resolve: {
+          evaluations: function ( models ) { return models.evaluations().getList(); }
+        }
+      })
       .state('evaluations.list', {
         url: '/list',
         templateUrl: 'app/evaluations/list/evaluation-list.html',
