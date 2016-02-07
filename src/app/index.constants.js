@@ -15,16 +15,16 @@
   };
 
   var contentTypes = {
-    department: 24,
-    entity: 25,
-    section: 26,
-    tenantproductmanager: 13,
-    tenantprojectmanager: 14,
-    tenantconsultant: 15,
-    clientprojectmanager: 16,
-    clientmanager: 17,
-    clientemployee: 18,
-    shopper: 19
+    department: 25,
+    entity: 26,
+    section: 27,
+    tenantproductmanager: 14,
+    tenantprojectmanager: 15,
+    tenantconsultant: 16,
+    clientprojectmanager: 17,
+    clientmanager: 18,
+    clientemployee: 19,
+    shopper: 20
   };
 
   angular

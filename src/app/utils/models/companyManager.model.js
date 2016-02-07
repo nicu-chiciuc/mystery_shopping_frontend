@@ -7,7 +7,7 @@
     .factory('CompanyManagerModel', CompanyManagerModel);
 
   /** @ngInject */
-  function CompanyManagerModel ( AbstractAccountModel ) {
+  function CompanyManagerModel ( AbstractAccountModel, contentTypes ) {
     var Model = {
       initialize: initialize
     };
@@ -17,6 +17,8 @@
 
     function initialize () {
       var companyManager = this;
+
+      companyManager.contentTypeId = contentTypes.clientmanager;
 
       angular.extend(companyManager, AbstractAccountModel);
       companyManager.initializeAbstract();

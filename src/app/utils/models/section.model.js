@@ -21,6 +21,7 @@
       var section = this;
 
       section.contentType = contentTypes.section;
+      section.contentTypeId = contentTypes.section;
 
       _.forEach(section.managers, function ( manager ) {
         Restangular.restangularizeElement(null, manager, 'clientmanagers');

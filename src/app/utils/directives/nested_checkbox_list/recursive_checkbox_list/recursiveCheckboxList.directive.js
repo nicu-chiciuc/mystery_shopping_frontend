@@ -13,7 +13,7 @@
       scope: {
         recursiveCheckboxItem: '=',
         recursiveCheckboxListOptions: '=',
-        targetLists: '='
+        project: '='
       },
       controller: RecursiveCheckboxListController,
       controllerAs: 'vm',
@@ -39,29 +39,34 @@
       vm.checkboxToggle = checkboxToggle;
       vm.checkboxState = checkboxState;
 
-      function getCheckboxListObjectForTargetList ( item, itemOptions ) {
-        var obj = {};
-        obj[itemOptions.type + '_type'] = contentTypes[itemOptions.contentType];
-        obj[itemOptions.type + '_id'] = item.id;
+      vm.getCheckboxLabel = getCheckboxLabel;
+      vm.checkboxItemValue = checkboxItemValue;
 
-        return obj;
-      }
 
-      function checkboxToggle ( targetLists, item, itemOptions ) {
-        var obj = getCheckboxListObjectForTargetList(item, itemOptions);
-        var selectedObj = _.find(targetLists[itemOptions.type], function (listObj) {
-          return angular.equals(obj, listObj);
+      function checkboxToggle ( project, item, itemOptions, itemValue ) {
+        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], function (listItem) {
+          var selectionCondition = true;
+          _.forOwn(itemValue, function (value, key) {
+            if ( value !== listItem[key] ) {
+              selectionCondition = false;
+            }
+          });
+          return selectionCondition;
         });
 
-        toggleItem(targetLists, item, itemOptions, !selectedObj);
+        toggleItem(project, item, itemOptions, itemValue, !selectedObj);
       }
 
-      function checkboxState ( targetLists, item, itemOptions ) {
-        var obj = getCheckboxListObjectForTargetList(item, itemOptions);
-        var selectedObj = _.find(targetLists[itemOptions.type], function (listObj) {
-          return angular.equals(obj, listObj);
+      function checkboxState ( project, item, itemOptions, itemValue ) {
+        return _.find(project.listOfSpecificType[itemOptions.type], function (listItem) {
+          var selectionCondition = true;
+          _.forOwn(itemValue, function (value, key) {
+            if ( value !== listItem[key] ) {
+              selectionCondition = false;
+            }
+          });
+          return selectionCondition;
         });
-        return !!selectedObj;
       }
 
       /**
@@ -77,34 +82,59 @@
        * After dealing with the passed item, recursively call itself for each child
        * item that the current item contains.
        *
-       * @param {Object} targetLists The object that contains all the target lists
+       * @param {Object} project The Project object that contains all the target lists
        *     that items in the nested checkbox list should go.
        * @param {Object} item The item that has been clicked on in the nested checkbox list.
        * @param {Object} itemOptions The options for the given item.
+       * @param {Object} itemValue The value that should be inserted into the target list.
        * @param {boolean} isSelectAction The type of action that should be executed with the
        *     current and child items. If it is true, then new items should be added to the
        *     target list and existing items in the list shouldn't be removed, otherwise,
        *     if false, items that are not in the list are not added and those that are in
        *     the target list are removed.
        */
-      function toggleItem (targetLists, item, itemOptions, isSelectAction) {
-        var obj = getCheckboxListObjectForTargetList(item, itemOptions);
-        var selectedObj = _.find(targetLists[itemOptions.type], function (listObj) {
-          return angular.equals(obj, listObj);
+      function toggleItem (project, item, itemOptions, itemValue, isSelectAction) {
+
+        // Find out which is the clicked object.
+        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], function (listItem) {
+
+          // Because list of places and people is more detailed when it is returned from
+          // the server (it contains more info besides type and id), the selection condition
+          // resides in checking whether the keys from itemValue (which are [place|person]_type
+          // and [place|person]_id) have the same values with the same keys in the list of
+          // items that are already selected.
+          var selectionCondition = true;
+          _.forOwn(itemValue, function (value, key) {
+
+            // In case at least one item is found that has the same keys not equal, this means
+            // that the current item in the _.find loop is different than the itemValue.
+            if ( value !== listItem[key] ) {
+              selectionCondition = false;
+            }
+          });
+          return selectionCondition;
         });
 
+        // If the item is not selected AND the action to execute is to select child items, do this.
         if ( !selectedObj && isSelectAction ) {
 
           // If item is not already selected and the action is to select items,
           // add it to the corresponding target list.
-          targetLists[itemOptions.type].push(obj);
+          project.listOfSpecificType[itemOptions.type].push(itemValue);
 
+        // In case that the item is already selected and the action is to deselect, do this.
         } else if ( selectedObj && !isSelectAction ) {
 
           // If the item is already selected and the action is to not select items,
           // remove the item from the corresponding target list.
-          _.remove(targetLists[itemOptions.type], function (targetListItem) {
-            return angular.equals(targetListItem, obj);
+          _.remove(project.listOfSpecificType[itemOptions.type], function (targetListItem) {
+            var selectionCondition = true;
+            _.forOwn(itemValue, function (value, key) {
+              if ( value !== targetListItem[key] ) {
+                selectionCondition = false;
+              }
+            });
+            return selectionCondition;
           });
 
         }
@@ -113,9 +143,31 @@
         // of item's children items.
         _.forEach(itemOptions.children, function (childOption) {
           _.forEach(item[childOption.itemsProp], function (childItem) {
-            toggleItem(targetLists, childItem, childOption, isSelectAction);
+            var childItemValue = checkboxItemValue(childItem, childOption.itemValueProp(childItem));
+            toggleItem(project, childItem, childOption, childItemValue, isSelectAction);
           });
         });
+      }
+
+      function checkboxItemValue ( item, valueProp ) {
+        if ( typeof valueProp === 'function' ) {
+          return valueProp(item);
+        } else {
+          return valueProp;
+        }
+      }
+
+      function getCheckboxLabel ( element, labelProp ) {
+        var returnValue = element,
+          labels = _.filter(labelProp.split('.'), function (prop) {
+            return prop !== '';
+          });
+
+        _.forEach(labels, function (label) {
+          returnValue = returnValue[label];
+        });
+
+        return returnValue;
       }
     }
   }

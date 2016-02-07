@@ -21,6 +21,7 @@
       var department = this;
 
       department.contentType = contentTypes.department;
+      department.contentTypeId = contentTypes.department;
 
       _.forEach(department.entities, function ( entity ) {
         Restangular.restangularizeElement(null, entity, 'entities');

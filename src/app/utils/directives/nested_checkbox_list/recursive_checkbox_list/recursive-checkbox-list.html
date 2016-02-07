@@ -1,7 +1,7 @@
 <div layout="column">
-  <md-checkbox ng-checked="vm.checkboxState(vm.targetLists, currentItem, rclo)"
-               ng-click="vm.checkboxToggle(vm.targetLists, currentItem, rclo)">
-    {{ rclo.itemLabelProp ? vm.recursiveCheckboxItem[rclo.itemLabelProp] : vm.recursiveCheckboxItem }}
+  <md-checkbox ng-checked="vm.checkboxState(vm.project, currentItem, rclo, vm.checkboxItemValue(currentItem, rclo.itemValueProp))"
+               ng-click="vm.checkboxToggle(vm.project, currentItem, rclo, vm.checkboxItemValue(currentItem, rclo.itemValueProp))">
+      {{ rclo.itemLabelProp ? vm.getCheckboxLabel(currentItem, rclo.itemLabelProp) : vm.recursiveCheckboxItem }}
     <!--({{ rclo.itemsProp }})-->
   </md-checkbox>
 </div>
@@ -10,6 +10,6 @@
   <ms-recursive-checkbox-list ng-repeat="item in vm.recursiveCheckboxItem[childOptions.itemsProp]"
                               recursive-checkbox-item="item"
                               recursive-checkbox-list-options="childOptions"
-                              target-lists="vm.targetLists">
+                              project="vm.project">
   </ms-recursive-checkbox-list>
 </div>

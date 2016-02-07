@@ -1,25 +1,25 @@
 <md-content layout="row" layout-padding>
 
   <div ng-cloak flex>
-    <form name="methodologyForm">
-      <!--<div layout-gt-xs="row">-->
-
+    <form name="methodologyForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: methodologyForm.$valid})" novalidate>
 
       <!--
       List of places and people
       -->
       <ms-nested-checkbox-list nested-checkbox-list-items="vm.project.company_repr"
                                nested-checkbox-list-options="vm.listOfPlacesAndPeopleNestedCheckboxListOptions"
-                               target-lists="vm.listOfPlacesAndPeopleLists">
+                               project="vm.project">
       </ms-nested-checkbox-list>
 
-      {{ vm.listOfPlacesAndPeopleLists.place | json }}
+      {{ vm.project.listOfSpecificType.place | json }}
       <hr/>
-      {{ vm.listOfPlacesAndPeopleLists.person | json }}
+      {{ vm.project.listOfSpecificType.person | json }}
       <hr/>
-      {{ vm.listOfPlacesAndPeopleLists.ignored | json }}
+      {{ vm.project.listOfSpecificType.ignored | json }}
 
-      <md-button type="submit" class="md-primary">Submit</md-button>
+      <md-button type="submit" class="md-primary">
+        {{ 'BUTTON.SAVE' | translate  }}
+      </md-button>
     </form>
   </div>
 </md-content>

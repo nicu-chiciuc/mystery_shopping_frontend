@@ -12,7 +12,8 @@
       templateUrl: 'app/components/project/list_of_places_and_people/project-list-of-places-and-people.html',
       scope: {
         project: '=',
-        companies: '='
+        companies: '=',
+        saveProjectMethod: '&'
       },
       controller: ProjectListOfPlacesAndPeopleController,
       controllerAs: 'vm',
@@ -26,13 +27,21 @@
       $log.debug('Entered ProjectListOfPlacesAndPeopleController');
       var vm = this;
 
-      vm.project.list_of_places = vm.project.list_of_places || [];
-      vm.project.list_of_people = vm.project.list_of_people || [];
+      vm.project.research_methodology.places_to_assess_repr = vm.project.research_methodology.places_to_assess_repr || [];
+      vm.project.research_methodology.people_to_assess_repr = vm.project.research_methodology.people_to_assess_repr || [];
 
-      vm.listOfPlacesAndPeopleLists = {
-        place: vm.project.list_of_places,
-        person: vm.project.list_of_people,
-        ignored: []
+      var personItemValuePropFn = function ( item ) {
+        return {
+          person_id: item.id,
+          person_type: item.contentTypeId
+        };
+      };
+
+      var placeItemValuePropFn = function ( item ) {
+        return {
+          place_id: item.id,
+          place_type: item.contentTypeId
+        };
       };
 
       vm.listOfPlacesAndPeopleNestedCheckboxListOptions = {
@@ -42,7 +51,7 @@
           {
             itemsProp: 'departments_repr',
             itemLabelProp: 'name',
-            itemValueProp: 'id',
+            itemValueProp: placeItemValuePropFn,
             type: 'ignored',
             contentType: 'department',
             includeInList: false,
@@ -50,7 +59,7 @@
               {
                 itemsProp: 'managers',
                 itemLabelProp: 'fullName',
-                itemValueProp: 'id',
+                itemValueProp: personItemValuePropFn,
                 type: 'ignored',
                 contentType: 'clientmanager',
                 includeInList: false
@@ -58,7 +67,7 @@
               {
                 itemsProp: 'entities',
                 itemLabelProp: 'name',
-                itemValueProp: 'id',
+                itemValueProp: placeItemValuePropFn,
                 type: 'place',
                 contentType: 'entity',
                 includeInList: true,
@@ -66,7 +75,7 @@
                   {
                     itemsProp: 'managers',
                     itemLabelProp: 'fullName',
-                    itemValueProp: 'id',
+                    itemValueProp: personItemValuePropFn,
                     type: 'person',
                     contentType: 'clientmanager',
                     includeInList: true
@@ -74,7 +83,7 @@
                   {
                     itemsProp: 'employees',
                     itemLabelProp: 'fullName',
-                    itemValueProp: 'id',
+                    itemValueProp: personItemValuePropFn,
                     type: 'person',
                     contentType: 'clientemployee',
                     includeInList: true
@@ -82,7 +91,7 @@
                   {
                     itemsProp: 'sections',
                     itemLabelProp: 'name',
-                    itemValueProp: 'id',
+                    itemValueProp: placeItemValuePropFn,
                     type: 'place',
                     contentType: 'section',
                     includeInList: true,
@@ -90,7 +99,7 @@
                       {
                         itemsProp: 'managers',
                         itemLabelProp: 'fullName',
-                        itemValueProp: 'id',
+                        itemValueProp: personItemValuePropFn,
                         type: 'person',
                         contentType: 'clientmanager',
                         includeInList: true
@@ -98,7 +107,7 @@
                       {
                         itemsProp: 'employees',
                         itemLabelProp: 'fullName',
-                        itemValueProp: 'id',
+                        itemValueProp: personItemValuePropFn,
                         type: 'person',
                         contentType: 'clientemployee',
                         includeInList: true

@@ -13,7 +13,7 @@
       scope: {
         nestedCheckboxListItems: '=',
         nestedCheckboxListOptions: '=',
-        targetLists: '='
+        project: '='
       },
       controller: NestedCheckboxListController,
       controllerAs: 'vm',

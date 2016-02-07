@@ -29,6 +29,7 @@
                             target-list="vm.project.research_methodology.questionnaires">
           </ms-checkbox-list>
         </div><!-- End of layout="column" -->
+        {{ vm.project.research_methodology.questionnaires | json }}
 
         <!--
         Scripts
@@ -39,6 +40,7 @@
                             target-list="vm.project.research_methodology.scripts">
           </ms-checkbox-list>
         </div><!-- End of layout="column" -->
+        {{ vm.project.research_methodology.scripts | json }}
       </div><!-- End of layout="row" -->
 
       <md-button type="submit" class="md-primary" ng-show="vm.project.state === 1">

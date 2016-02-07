@@ -7,7 +7,7 @@
     .factory('CompanyEmployeeModel', CompanyEmployeeModel);
 
   /** @ngInject */
-  function CompanyEmployeeModel ( AbstractAccountModel ) {
+  function CompanyEmployeeModel ( AbstractAccountModel, contentTypes ) {
     var Model = {
       initialize: initialize
     };
@@ -17,6 +17,8 @@
 
     function initialize () {
       var companyEmployee = this;
+
+      companyEmployee.contentTypeId = contentTypes.clientemployee;
 
       angular.extend(companyEmployee, AbstractAccountModel);
       companyEmployee.initializeAbstract();

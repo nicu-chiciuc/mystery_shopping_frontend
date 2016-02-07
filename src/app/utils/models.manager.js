@@ -8,6 +8,7 @@
   /** @ngInject */
   function modelManager (
     ProjectModel,
+    ResearchMethodologyModel,
     TemplateQuestionnaireModel,
     ProjectWorkerModel,
     TenantProductManagerModel,
@@ -26,6 +27,7 @@
   ) {
     var manager = {
       ProjectModel: ProjectModel,
+      ResearchMethodologyModel: ResearchMethodologyModel,
       TemplateQuestionnaireModel: TemplateQuestionnaireModel,
       ProjectWorkerModel: ProjectWorkerModel,
       TenantProductManagerModel: TenantProductManagerModel,

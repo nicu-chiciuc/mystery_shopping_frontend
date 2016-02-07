@@ -15,7 +15,8 @@
 
 <ms-project-list-of-places-and-people ng-if="vm.project.state > 1"
                                       project="vm.project"
-                                      companies="vm.companies">
+                                      companies="vm.companies"
+                                      save-project-method="vm.saveProject(project, isValid)">
 </ms-project-list-of-places-and-people>
 
 <ms-project-shoppers ng-if="vm.project.state > 2"
