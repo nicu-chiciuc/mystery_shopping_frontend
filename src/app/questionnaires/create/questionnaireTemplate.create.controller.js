@@ -207,7 +207,7 @@
       template_blocks: []
     };
 
-    $scope.questionnaire = vm.nestedQuestionnaireTemplate;
+    //$scope.questionnaire = vm.nestedQuestionnaireTemplate;
     angular.extend($scope.questionnaire, models.manager.TemplateQuestionnaireModel);
     $scope.questionnaire.initialize();
 
@@ -232,7 +232,21 @@
     }
 
     function saveQuestionnaireTemplate ( questionnaireTemplate, isValid, nextState ) {
-      questionnaireTemplate.tenant = user.tenantId;
+      if ( !questionnaireTemplate.id ) {
+        questionnaireTemplate.tenant = user.tenantId;
+        questionnaireTemplate = models.restangularizeElement(null, questionnaireTemplate, 'templatequestionnaires');
+        questionnaireTemplate.post().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
+      } else {
+        questionnaireTemplate.put().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
+      }
+
+      function saveQuestionnaireTemplateSuccessFn ( response ) {
+        console.log(response);
+        vm.questionnaireTemplate = response;
+      }
+      function saveQuestionnaireTemplateErrorFn () {
+        // TODO deal with the error
+      }
     }
 
     function addBlock ( parentBlock ) {
