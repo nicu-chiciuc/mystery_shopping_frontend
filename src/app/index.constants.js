@@ -27,10 +27,23 @@
     shopper: 20
   };
 
+  var contentTypesWork = {
+    department: 24,
+    entity: 25,
+    section: 26,
+    tenantproductmanager: 13,
+    tenantprojectmanager: 14,
+    tenantconsultant: 15,
+    clientprojectmanager: 16,
+    clientmanager: 17,
+    clientemployee: 18,
+    shopper: 19
+  };
+
   angular
     .module('spark')
     .constant('moment', moment)
     .constant('urls', urls)
-    .constant('contentTypes', contentTypes);
+    .constant('contentTypes', contentTypesWork);
 
 })();

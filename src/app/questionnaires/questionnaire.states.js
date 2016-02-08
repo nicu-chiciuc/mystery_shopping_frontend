@@ -10,7 +10,7 @@
     $stateProvider
       .state('questionnaires', {
         abstract: true,
-        parent: 'authenticated',
+        parent: 'companySelected',
         url: '/questionnaires',
         template: '<div ui-view></div>',
         data: {

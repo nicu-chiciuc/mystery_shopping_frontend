@@ -25,7 +25,7 @@
       questionnaire.childQuestionsProp = 'template_questions';
 
       // Question choices property name
-      questionnaire.questionChoicesProp = 'template_question_choices_repr';
+      questionnaire.questionChoicesProp = 'template_question_choices';
 
       angular.extend(questionnaire, AbstractQuestionnaireModel);
       questionnaire.initializeAbstractQuestionnaire();
