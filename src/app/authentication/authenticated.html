@@ -2,11 +2,22 @@
             md-component-id="left"
             md-is-locked-open="$mdMedia('gt-sm')">
 
-  <header ng-show="company" class="nav-header">
-    <a ng-href="/" class="docs-logo">
-      {{ company.name }}
-    </a>
-  </header>
+  <!--<header style="background-color: white;" ng-show="sideMenu.isCompanySelected()" class="nav-header">-->
+    <!--<div layout="row" layout-align="space-between center">-->
+      <!--<md-subheader>-->
+        <!--Managed company-->
+      <!--</md-subheader>-->
+
+      <!--<md-button>-->
+        <!--Change-->
+      <!--</md-button>-->
+    <!--</div>-->
+    <!--<h3 layout="row" layout-align="center center">-->
+      <!--<span>-->
+        <!--{{ sideMenu.getCompany().name }}-->
+      <!--</span>-->
+    <!--</h3>-->
+  <!--</header>-->
 
   <md-content flex role="navigation">
     <ul class="docs-menu">

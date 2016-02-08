@@ -6,7 +6,7 @@
     .controller('CompanyCreateController', CompanyCreateController);
 
   /** @ngInject */
-  function CompanyCreateController ( $log, $state, models, industries, countries, company, user ) {
+  function CompanyCreateController ( $log, $state, managementFlow, sideMenu, models, industries, countries, company, user ) {
     $log.debug('Entered CompanyCreateController');
     var vm = this;
 
@@ -36,6 +36,10 @@
       }
 
       function saveCompanySuccessFn ( response ) {
+        if ( vm.isNewCompany ) {
+          managementFlow.addCompanyToCompaniesList(response);
+          sideMenu.setCompany(response);
+        }
         $state.go(nextState, {companyId: response.id});
       }
       function saveCompanyErrorFn () {

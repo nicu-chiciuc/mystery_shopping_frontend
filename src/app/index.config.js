@@ -25,6 +25,17 @@
       .accentPalette('orange')
       .warnPalette('red');
 
+    // Configure angular-material page toolbar theme
+    $mdThemingProvider.theme('toolbar')
+      .primaryPalette('grey', {
+        'default': '50',
+        'hue-1': '300',
+        'hue-2': '600',
+        'hue-3': '900'
+      })
+      .accentPalette('deep-orange')
+      .warnPalette('red');
+
     $mdThemingProvider.theme('success-toast');
     $mdThemingProvider.theme('fail-toast');
 

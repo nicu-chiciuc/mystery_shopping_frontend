@@ -33,9 +33,11 @@
         return self.currentPage === page;
       },
 
-      setSelectCompanySideMenuData: selectCompanySideMenuData,
+      unsetCurrentCompany: selectCompanySideMenuData,
       setNormalMenuData: normalMenuData,
       setCompany: setCompany,
+      getCompany: managementFlow.getCompany,
+      isCompanySelected: managementFlow.isCompanySelected,
       setCompanyList: setCompanyList
     };
 
@@ -81,12 +83,14 @@
 
     function setCompanyList ( companies ) {
       managementFlow.setCompanyList(companies);
-      self.setSelectCompanySideMenuData();
+      self.unsetCurrentCompany();
     }
 
     function selectCompanySideMenuData () {
       var companiesMenuLinks = [],
         sections;
+
+      managementFlow.unsetCompany();
 
       _.forEach(managementFlow.getCompanyList(), function (company) {
         companiesMenuLinks.push({
@@ -97,6 +101,11 @@
       });
 
       sections = [
+        {
+          name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CREATE'),
+          type: 'link',
+          state: 'companies.create'
+        },
         {
           name: $filter('translate')('MENU.CLIENT_MANAGEMENT.HEADING'),
           type: 'heading',
@@ -109,30 +118,6 @@
 
     function normalMenuData () {
       var sections = [];
-
-      // Client Management section
-      sections.push({
-        name: $filter('translate')('MENU.CLIENT_MANAGEMENT.HEADING'),
-        type: 'heading',
-        children: [
-          {
-            name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CLIENTS'),
-            type: 'toggle',
-            pages: [
-              {
-                name: 'New client',
-                state: 'companies.create',
-                type: 'link'
-              },
-              {
-                name: 'List clients',
-                state: 'companies.list',
-                type: 'link'
-              }
-            ]
-          }
-        ]
-      });
 
       // Project Management section
       sections.push({
@@ -155,30 +140,6 @@
               }
             ]
           },
-          {
-            name: $filter('translate')('MENU.PROJECT_MANAGEMENT.EVALUATIONS'),
-            type: 'toggle',
-            pages: [
-              {
-                name: 'Plan evaluations',
-                state: 'evaluations.plan',
-                type: 'link'
-              },
-              {
-                name: 'Planned evaluations',
-                state: 'evaluations.list',
-                type: 'link'
-              }
-            ]
-          }
-        ]
-      });
-
-      // Questionnaires section
-      sections.push({
-        name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.HEADING'),
-        type: 'heading',
-        children: [
           {
             name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
             type: 'toggle',
@@ -214,20 +175,68 @@
         ]
       });
 
-      // Shoppers section
+      // Planning section
       sections.push({
-        name: $filter('translate')('MENU.SHOPPERS_MANAGEMENT.HEADING'),
+        name: $filter('translate')('MENU.PROJECT_PLANNING.HEADING'),
         type: 'heading',
         children: [
           {
-            name: $filter('translate')('MENU.SHOPPERS_MANAGEMENT.CREATE_SHOPPER'),
+            name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
+            type: 'toggle',
+            pages: [
+              {
+                name: 'Plan evaluations',
+                state: 'evaluations.plan',
+                type: 'link'
+              },
+              {
+                name: 'Planned evaluations',
+                state: 'evaluations.list',
+                type: 'link'
+              }
+            ]
+          }
+        ]
+      });
+
+      // User Management section
+      sections.push({
+        name: $filter('translate')('MENU.USER_MANAGEMENT.HEADING'),
+        type: 'heading',
+        children: [
+          {
+            name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.HEADING'),
             state: 'shoppers.create',
-            type: 'link'
+            type: 'toggle',
+            pages: [
+              {
+                name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.CREATE'),
+                state: 'shoppers.create',
+                type: 'link'
+              },
+              {
+                name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.LIST'),
+                state: 'shoppers.list',
+                type: 'link'
+              }
+            ]
           },
           {
-            name: $filter('translate')('MENU.SHOPPERS_MANAGEMENT.LIST_SHOPPERS'),
+            name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.HEADING'),
             state: 'shoppers.list',
-            type: 'link'
+            type: 'toggle',
+            pages: [
+              {
+                name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.CREATE'),
+                state: 'shoppers.create',
+                type: 'link'
+              },
+              {
+                name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.LIST'),
+                state: 'shoppers.list',
+                type: 'link'
+              }
+            ]
           }
         ]
       });

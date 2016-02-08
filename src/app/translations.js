@@ -26,11 +26,15 @@
         PROJECT_MANAGEMENT: {
           HEADING: 'Project Management',
           PROJECTS: 'Projects',
+        },
+        PROJECT_PLANNING: {
+          HEADING: 'Project Planning',
           EVALUATIONS: 'Evaluations'
         },
         CLIENT_MANAGEMENT: {
           HEADING: 'Client Management',
-          CLIENTS: 'Clients'
+          CLIENTS: 'Clients',
+          CREATE: 'Create company'
         },
         QUESTIONNAIRE_MANAGEMENT: {
           HEADING: 'Questionnaire Management',
@@ -41,10 +45,18 @@
           CREATE_SCRIPT: 'Create scripts',
           LIST_SCRIPTS: 'List scripts'
         },
-        SHOPPERS_MANAGEMENT: {
-          HEADING: 'Shoppers Management',
-          CREATE_SHOPPER: 'Create shopper',
-          LIST_SHOPPERS: 'List shoppers'
+        USER_MANAGEMENT: {
+          HEADING: 'User Management',
+          SHOPPERS: {
+            HEADING: 'Shoppers',
+            CREATE: 'Create shopper',
+            LIST: 'List shoppers'
+          },
+          CONSULTANTS: {
+            HEADING: 'Consultants',
+            CREATE: 'Create consultant',
+            LIST: 'List consultants'
+          }
         }
       },
       COMMON: {

@@ -21,8 +21,11 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController( $state, principal ) {
+    function NavbarController( $state, principal, managementFlow, sideMenu ) {
       var vm = this;
+
+      vm.managementFlow = managementFlow;
+      vm.sideMenu = sideMenu;
 
       vm.logout = logout;
 

@@ -38,6 +38,9 @@
       unsetCompany: function () {
         self.company = undefined;
       },
+      addCompanyToCompaniesList: function ( company ) {
+        self.companies.push(company);
+      },
       authorizeCompany: function () {
         self.getCompanyPromise()
           .then(function( company ) {
