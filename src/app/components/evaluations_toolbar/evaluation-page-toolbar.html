@@ -1,0 +1,28 @@
+<md-toolbar class="md-accent">
+  <div class="md-toolbar-tools">
+    <h2>
+      <span>
+        {{ 'EVALUATION.HEADING' | translate }}
+      </span>
+
+      <span>
+        {{ 'EVALUATION.TOTAL' | translate : {NR: vm.project.research_methodology.nr_of_evaluations} }}
+      </span>
+
+      <span>
+        {{ 'EVALUATION.NOT_PLANNED' | translate : {NR: vm.nrOfNotPlannedEvaluations} }}
+      </span>
+
+      <span>
+        {{ 'COMMON.DEADLINE' | translate }}: {{ vm.project.end_date | date }}
+      </span>
+
+    </h2>
+
+    <span flex></span>
+
+    <md-button ng-click="vm.showMethodologyDialog()" class="md-primary">
+      {{ 'PROJECT.VIEW_METHODOLOGY' | translate }}
+    </md-button>
+  </div>
+</md-toolbar>

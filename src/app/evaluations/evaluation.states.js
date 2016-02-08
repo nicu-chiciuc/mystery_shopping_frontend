@@ -10,27 +10,40 @@
     $stateProvider
       .state('evaluations', {
         abstract: true,
-        parent: 'authenticated',
+        parent: 'companySelected',
         url: '/evaluations',
-        template: '<div ui-view></div>',
+        templateUrl: 'app/evaluations/evaluation-wrapper-page.html',
+        resolve: {
+          evaluations: function ( models ) { return models.evaluations().getList(); }
+        },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         }
       })
-      .state('evaluations.create', {
-        url: '/list',
-        templateUrl: 'app/evaluations/create/evaluation-create.html',
-        controller: 'EvaluationCreateController as vm',
-        resolve: {
-          evaluations: function ( models ) { return models.evaluations().getList(); }
-        }
-      })
       .state('evaluations.list', {
         url: '/list',
-        templateUrl: 'app/evaluations/list/evaluation-list.html',
-        controller: 'EvaluationListController as vm',
-        resolve: {
-          evaluations: function ( models ) { return models.evaluations().getList(); }
+        views: {
+          evaluationList: {
+            templateUrl: 'app/evaluations/list/evaluation-list.html',
+            controller: 'EvaluationListController as vm'
+          }
+        }
+      })
+      .state('evaluations.plan', {
+        url: '/plan',
+        views: {
+          'planToolbar': {
+            templateUrl: 'app/components/evaluations_planning/evaluation-plan-toolbar.html',
+            controller: 'EvaluationPlanToolbarController as vm'
+          },
+          'evaluationList': {
+            templateUrl: 'app/evaluations/list/evaluation-list.html',
+            controller: 'EvaluationListController as vm'
+          },
+          'evaluationToolbar': {
+            templateUrl: 'app/components/evaluations_toolbar/evaluation-page-toolbar.html',
+            controller: 'EvaluationToolbarController as vm'
+          }
         }
       })
       .state('evaluations.detail', {

@@ -161,7 +161,7 @@
             pages: [
               {
                 name: 'Plan evaluations',
-                state: 'evaluations.create',
+                state: 'evaluations.plan',
                 type: 'link'
               },
               {

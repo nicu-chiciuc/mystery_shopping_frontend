@@ -54,6 +54,7 @@
         GEOGRAPHICAL_COORDINATES: 'Geographical coordinates',
         LATITUDE: 'Latitude',
         LONGITUDE: 'Longitude',
+        DEADLINE: 'Deadline',
         GENDER: {
           HEADING: 'Gender',
           MALE: 'Male',
@@ -105,6 +106,7 @@
         PROJECT_MANAGER: 'Project manager',
         CONSULTANTS: 'Consultants',
         SHOPPERS: 'Shoppers',
+        VIEW_METHODOLOGY: 'View methodology',
         METHODOLOGY: {
           NUMBER_OF_EVALUATIONS: 'Number of evaluations',
           QUESTIONNAIRES: 'Questionnaires',
@@ -166,7 +168,10 @@
             DATE: 'Date',
             TIME: 'Time period'
           }
-        }
+        },
+        HEADING: 'Evaluations',
+        TOTAL: 'Total: {NR}',
+        NOT_PLANNED: 'Not planned: {NR}'
       },
       VALIDATION_MESSAGE: {
         GENERIC: {
