@@ -45,6 +45,8 @@
           if ( vm.isNewProject ) {
             project.tenant = vm.user.tenantId;
             project = models.restangularizeElement(null, project, 'projects');
+            if ( project.state === 0 )
+              delete project['research_methodology'];
             project.post().then(saveProjectSuccessFn, saveProjectErrorFn);
           } else {
             project.put().then(saveProjectSuccessFn, saveProjectErrorFn);

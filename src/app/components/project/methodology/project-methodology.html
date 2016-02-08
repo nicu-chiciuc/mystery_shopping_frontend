@@ -3,6 +3,10 @@
   <div ng-cloak flex>
     <form name="methodologyForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: methodologyForm.$valid})" novalidate>
 
+      <h2>
+        {{ 'PROJECT.RESEARCH_METHODOLOGY' | translate }}
+      </h2>
+
       <!--
       Number of evaluations
       -->
@@ -19,28 +23,28 @@
       <!--
       Questionnaire Templates and Scripts
       -->
-      <div layout="row">
-        <div layout="column" flex="100" flex-gt-sm="50">
+      <div layout="column" layout-gt-sm="row">
+        <!--<div layout="row" flex="100" flex-gt-sm="50">-->
           <!--
           Questionnaire Templates
           -->
-          <ms-checkbox-list checkbox-list-elements="vm.questionnaireTemplates"
+          <ms-checkbox-list flex="50"
+                            checkbox-list-elements="vm.questionnaireTemplates"
                             checkbox-list-options="vm.questionnaireTemplatesCheckboxListOptions"
                             target-list="vm.project.research_methodology.questionnaires">
           </ms-checkbox-list>
-        </div><!-- End of layout="column" -->
-        {{ vm.project.research_methodology.questionnaires | json }}
+        <!--</div>&lt;!&ndash; End of layout="column" &ndash;&gt;-->
 
         <!--
         Scripts
         -->
-        <div layout="column" flex="100" flex-gt-sm="50">
-          <ms-checkbox-list checkbox-list-elements="vm.scripts"
+        <!--<div layout="row" flex="100" flex-gt-sm="50">-->
+          <ms-checkbox-list flex="50"
+                            checkbox-list-elements="vm.scripts"
                             checkbox-list-options="vm.scriptsCheckboxListOptions"
                             target-list="vm.project.research_methodology.scripts">
           </ms-checkbox-list>
-        </div><!-- End of layout="column" -->
-        {{ vm.project.research_methodology.scripts | json }}
+        <!--</div>&lt;!&ndash; End of layout="column" &ndash;&gt;-->
       </div><!-- End of layout="row" -->
 
       <md-button type="submit" class="md-primary" ng-show="vm.project.state === 1">
