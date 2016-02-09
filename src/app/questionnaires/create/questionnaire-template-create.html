@@ -1,251 +1,258 @@
 <md-content layout-padding>
+  <form name="questionnaireForm" ng-submit="vm.saveQuestionnaireTemplate(questionnaire, questionnaireForm.$valid)" novalidate>
+    <md-input-container class="md-block">
+      <label>{{ 'QUESTIONNAIRE.TITLE' | translate }}</label>
+      <input ng-model="questionnaire.title" name="title" type="text" ng-required="true">
 
-  <h2>{{ questionnaire.title }}</h2>
-  <md-content layout-padding>
-    {{ questionnaire.description }}
-  </md-content>
+      <!-- Validation messages -->
+      <div ng-show="questionnaireForm.$submitted" ng-messages="questionnaireForm.title.$error">
+        <div ng-message="required">Title is REQUIRED!</div>
+      </div>
+    </md-input-container>
 
-  <div class="questionnaire" layout-padding>
+    <p medium-editor
+       ng-model="questionnaire.description"
+       bind-options="{'toolbar': {'buttons': ['bold', 'italic', 'underline']}}"
+       data-placeholder="{{ 'QUESTIONNAIRE.DESCRIPTION' | translate }}"></p>
 
-    <!--
-    Level 1 blocks
-    -->
-    <md-whiteframe dragula="'block-1'"
-                   dragula-model="questionnaire.template_blocks"
-                   class="md-whiteframe-2dp">
+    <div class="questionnaire" layout-padding>
 
-      <!-- Content container for each top level block -->
-      <md-content ng-repeat="block_1 in questionnaire.template_blocks"
-                  flex="100">
+      <!--
+      Level 1 blocks
+      -->
+      <md-whiteframe dragula="'block-1'"
+                     dragula-model="questionnaire.template_blocks"
+                     class="md-whiteframe-2dp">
 
-        <!-- Block header -->
-        <md-toolbar flex="100" class="ms-height-md">
+        <!-- Content container for each top level block -->
+        <md-content ng-repeat="block_1 in questionnaire.template_blocks"
+                    flex="100">
 
-          <!-- Header wrapper -->
-          <h2 class="md-toolbar-tools handle-1" layout-align="left center" layout="row">
+          <!-- Block header -->
+          <md-toolbar flex="100" class="ms-height-md">
 
-            <!-- Block title -->
-            <span>
-              {{ block_1.title }}
-            </span>
+            <!-- Header wrapper -->
+            <h2 class="md-toolbar-tools handle-1" layout-align="left center" layout="row">
 
-            <!-- Edit button -->
-            <md-button ng-click="vm.showBlockTitleDialog($event, block_1, questionnaire)"
-                       class="md-icon-button">
-              <ng-md-icon icon="edit" size="18"
-                          aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
-              </ng-md-icon>
-            </md-button>
+              <!-- Block title -->
+              <span>
+                {{ block_1.title }}
+              </span>
 
-            <!-- Empty span element to fill in the width of block header -->
-            <span flex></span>
+              <!-- Edit button -->
+              <md-button ng-click="vm.showBlockTitleDialog($event, block_1, questionnaire)"
+                         class="md-icon-button">
+                <ng-md-icon icon="edit" size="18"
+                            aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
+                </ng-md-icon>
+              </md-button>
 
-            <!-- Block weight -->
-            <span>
-              {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_1.weight }}
-            </span>
-          </h2>
-        </md-toolbar>
+              <!-- Empty span element to fill in the width of block header -->
+              <span flex></span>
 
-        <!-- Block content container -->
-        <md-content flex="100" layout="column" layout-padding>
+              <!-- Block weight -->
+              <span>
+                {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_1.weight }}
+              </span>
+            </h2>
+          </md-toolbar>
 
-          <!-- Block questions -->
-          <div ng-repeat="question in block_1.template_questions">
-            <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
-            <md-divider></md-divider>
-          </div>
+          <!-- Block content container -->
+          <md-content flex="100" layout="column" layout-padding>
 
-          <!--
-          Level 2 blocks
-          -->
-          <md-whiteframe dragula="'block-2'"
-                         dragula-model="block_1.template_blocks"
-                         class="md-whiteframe-2dp">
+            <!-- Block questions -->
+            <div ng-repeat="question in block_1.template_questions">
+              <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
+              <md-divider></md-divider>
+            </div>
 
-            <!-- Content container for each top level block -->
-            <md-content ng-repeat="block_2 in block_1.template_blocks"
-                        flex="100">
+            <!--
+            Level 2 blocks
+            -->
+            <md-whiteframe dragula="'block-2'"
+                           dragula-model="block_1.template_blocks"
+                           class="md-whiteframe-2dp">
 
-              <!-- Block header -->
-              <md-toolbar flex="100" class="ms-height-sm">
+              <!-- Content container for each top level block -->
+              <md-content ng-repeat="block_2 in block_1.template_blocks"
+                          flex="100">
 
-                <!-- Header wrapper -->
-                <h2 class="md-toolbar-tools handle-2">
+                <!-- Block header -->
+                <md-toolbar flex="100" class="ms-height-sm">
 
-                  <!-- Block title -->
-                  <span>
-                    {{ block_2.title }}
-                  </span>
+                  <!-- Header wrapper -->
+                  <h2 class="md-toolbar-tools handle-2">
 
-                  <!-- Edit button -->
-                  <md-button ng-click="vm.showBlockTitleDialog($event, block_2, block_1)"
-                             class="md-icon-button">
-                    <ng-md-icon icon="edit" size="18"
-                                aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
-                    </ng-md-icon>
-                  </md-button>
+                    <!-- Block title -->
+                    <span>
+                      {{ block_2.title }}
+                    </span>
 
-                  <!-- Empty span element to fill in the width of block header -->
-                  <span flex></span>
+                    <!-- Edit button -->
+                    <md-button ng-click="vm.showBlockTitleDialog($event, block_2, block_1)"
+                               class="md-icon-button">
+                      <ng-md-icon icon="edit" size="18"
+                                  aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
+                      </ng-md-icon>
+                    </md-button>
 
-                  <!-- Block weight -->
-                  <span>
-                    {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_2.weight }}
-                  </span>
-                </h2>
-              </md-toolbar>
+                    <!-- Empty span element to fill in the width of block header -->
+                    <span flex></span>
 
-              <!-- Block content container -->
-              <md-content flex="100" layout="column" layout-padding>
+                    <!-- Block weight -->
+                    <span>
+                      {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_2.weight }}
+                    </span>
+                  </h2>
+                </md-toolbar>
 
-                <!-- Block questions -->
-                <div ng-repeat="question in block_2.template_questions">
-                  <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
-                  <md-divider></md-divider>
-                </div>
+                <!-- Block content container -->
+                <md-content flex="100" layout="column" layout-padding>
 
-                <!--
-                Level 3 blocks
-                -->
-                <md-whiteframe dragula="'block-3'"
-                               dragula-model="block_2.template_blocks"
-                               class="md-whiteframe-2dp">
+                  <!-- Block questions -->
+                  <div ng-repeat="question in block_2.template_questions">
+                    <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
+                    <md-divider></md-divider>
+                  </div>
 
-                  <!-- Content container for each top level block -->
-                  <md-content ng-repeat="block_3 in block_2.template_blocks"
-                              flex="100">
+                  <!--
+                  Level 3 blocks
+                  -->
+                  <md-whiteframe dragula="'block-3'"
+                                 dragula-model="block_2.template_blocks"
+                                 class="md-whiteframe-2dp">
 
-                    <!-- Block header -->
-                    <md-toolbar flex="100" class="ms-height-sm">
+                    <!-- Content container for each top level block -->
+                    <md-content ng-repeat="block_3 in block_2.template_blocks"
+                                flex="100">
 
-                      <!-- Header wrapper -->
-                      <h2 class="md-toolbar-tools handle-3">
+                      <!-- Block header -->
+                      <md-toolbar flex="100" class="ms-height-sm">
 
-                        <!-- Block title -->
-                        <span>
-                          {{ block_3.title }}
-                        </span>
+                        <!-- Header wrapper -->
+                        <h2 class="md-toolbar-tools handle-3">
 
-                        <!-- Edit button -->
-                        <md-button ng-click="vm.showBlockTitleDialog($event, block_3, block_2)"
-                                   class="md-icon-button">
-                          <ng-md-icon icon="edit" size="18"
-                                      aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
-                          </ng-md-icon>
-                        </md-button>
+                          <!-- Block title -->
+                          <span>
+                            {{ block_3.title }}
+                          </span>
 
-                        <!-- Empty span element to fill in the width of block header -->
+                          <!-- Edit button -->
+                          <md-button ng-click="vm.showBlockTitleDialog($event, block_3, block_2)"
+                                     class="md-icon-button">
+                            <ng-md-icon icon="edit" size="18"
+                                        aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
+                            </ng-md-icon>
+                          </md-button>
+
+                          <!-- Empty span element to fill in the width of block header -->
+                          <span flex></span>
+
+                          <!-- Block weight -->
+                          <span>
+                            {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_3.weight }}
+                          </span>
+                        </h2>
+                      </md-toolbar>
+
+                      <!-- Block content container -->
+                      <md-content flex="100" layout-padding>
+
+                        <!-- Block questions -->
+                        <div ng-repeat="question in block_3.template_questions">
+                          <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
+                          <md-divider></md-divider>
+                        </div>
+
+                      </md-content>
+
+                      <section layout="row">
                         <span flex></span>
+                        <md-button ng-click="vm.showAddQuestionDialog($event, block_3)"
+                                   class="md-fab md-mini md-primary"
+                                   aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
+                          <ng-md-icon icon="playlist_add"></ng-md-icon>
 
-                        <!-- Block weight -->
-                        <span>
-                          {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_3.weight }}
-                        </span>
-                      </h2>
-                    </md-toolbar>
-
-                    <!-- Block content container -->
-                    <md-content flex="100" layout-padding>
-
-                      <!-- Block questions -->
-                      <div ng-repeat="question in block_3.template_questions">
-                        <ms-questionnaire-generic-question question="question"></ms-questionnaire-generic-question>
-                        <md-divider></md-divider>
-                      </div>
+                          <!-- Tooltip -->
+                          <md-tooltip md-direction="top">
+                            {{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}
+                          </md-tooltip>
+                        </md-button>
+                      </section>
 
                     </md-content>
 
-                    <section layout="row">
-                      <span flex></span>
-                      <md-button ng-click="vm.showAddQuestionDialog($event, block_3)"
-                                 class="md-fab md-mini md-primary"
-                                 aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
-                        <ng-md-icon icon="playlist_add"></ng-md-icon>
+                  </md-whiteframe>
 
-                        <!-- Tooltip -->
-                        <md-tooltip md-direction="top">
-                          {{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}
-                        </md-tooltip>
-                      </md-button>
-                    </section>
+                </md-content>
 
-                  </md-content>
+                <section layout="row">
+                  <span flex></span>
+                  <md-button ng-click="vm.showAddQuestionDialog($event, block_2)"
+                             class="md-fab md-mini md-primary"
+                             aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
+                    <ng-md-icon icon="playlist_add"></ng-md-icon>
 
-                </md-whiteframe>
+                    <!-- Tooltip -->
+                    <md-tooltip md-direction="top">
+                      {{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}
+                    </md-tooltip>
+                  </md-button>
+                  <md-button ng-click="vm.addBlock($event, block_2)"
+                             class="md-fab md-mini md-primary"
+                             aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}">
+                    <ng-md-icon icon="my_library_add"></ng-md-icon>
+
+                    <!-- Tooltip -->
+                    <md-tooltip md-direction="top">
+                      {{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}
+                    </md-tooltip>
+                  </md-button>
+                </section>
 
               </md-content>
 
-              <section layout="row">
-                <span flex></span>
-                <md-button ng-click="vm.showAddQuestionDialog($event, block_2)"
-                           class="md-fab md-mini md-primary"
-                           aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
-                  <ng-md-icon icon="playlist_add"></ng-md-icon>
+            </md-whiteframe>
 
-                  <!-- Tooltip -->
-                  <md-tooltip md-direction="top">
-                    {{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}
-                  </md-tooltip>
-                </md-button>
-                <md-button ng-click="vm.addBlock($event, block_2)"
-                           class="md-fab md-mini md-primary"
-                           aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}">
-                  <ng-md-icon icon="my_library_add"></ng-md-icon>
+          </md-content>
 
-                  <!-- Tooltip -->
-                  <md-tooltip md-direction="top">
-                    {{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}
-                  </md-tooltip>
-                </md-button>
-              </section>
+          <section layout="row">
+            <span flex></span>
+            <md-button ng-click="vm.showAddQuestionDialog($event, block_1)"
+                       class="md-fab md-mini md-primary"
+                       aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
+              <ng-md-icon icon="playlist_add"></ng-md-icon>
 
-            </md-content>
+              <!-- Tooltip -->
+              <md-tooltip md-direction="top">
+                {{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}
+              </md-tooltip>
+            </md-button>
+            <md-button ng-click="vm.addBlock($event, block_1)"
+                       class="md-fab md-mini md-primary"
+                       aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}">
+              <ng-md-icon icon="my_library_add"></ng-md-icon>
 
-          </md-whiteframe>
+              <!-- Tooltip -->
+              <md-tooltip md-direction="top">
+                {{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}
+              </md-tooltip>
+            </md-button>
+          </section>
 
         </md-content>
 
-        <section layout="row">
-          <span flex></span>
-          <md-button ng-click="vm.showAddQuestionDialog($event, block_1)"
-                     class="md-fab md-mini md-primary"
-                     aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
-            <ng-md-icon icon="playlist_add"></ng-md-icon>
+      </md-whiteframe>
 
-            <!-- Tooltip -->
-            <md-tooltip md-direction="top">
-              {{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}
-            </md-tooltip>
-          </md-button>
-          <md-button ng-click="vm.addBlock($event, block_1)"
-                     class="md-fab md-mini md-primary"
-                     aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}">
-            <ng-md-icon icon="my_library_add"></ng-md-icon>
+    </div>
 
-            <!-- Tooltip -->
-            <md-tooltip md-direction="top">
-              {{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}
-            </md-tooltip>
-          </md-button>
-        </section>
+    <md-button ng-click="vm.addBlock($event, questionnaire)" class="md-primary">
+      Add block
+    </md-button>
 
-      </md-content>
+    <md-button type="submit">
+      Save
+    </md-button>
 
-    </md-whiteframe>
-
-  </div>
-
-  <md-button ng-click="vm.addBlock($event, questionnaire)" class="md-primary">
-    Add block
-  </md-button>
-
-  <md-button ng-click="vm.saveQuestionnaireTemplate(questionnaire)">
-    Save
-  </md-button>
-
+  </form>
 </md-content>
-
-{{ questionnaire | json }}
-
-<div ui-view></div>

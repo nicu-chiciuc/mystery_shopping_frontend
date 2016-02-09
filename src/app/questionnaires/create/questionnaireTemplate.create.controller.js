@@ -283,8 +283,6 @@
     };
 
     $scope.questionnaire = {
-      title: 'Title',
-      description: 'Description here',
       template_blocks: []
     };
 
@@ -314,14 +312,16 @@
     }
 
     function saveQuestionnaireTemplate ( questionnaireTemplate, isValid, nextState ) {
-      $scope.questionnaire = _.cloneDeep(questionnaireTemplate);
-      questionnaireTemplate.postProcess();
-      if ( !questionnaireTemplate.id ) {
-        questionnaireTemplate.tenant = user.tenantId;
-        //questionnaireTemplate = models.restangularizeElement(null, questionnaireTemplate, 'templatequestionnaires');
-        questionnaireTemplate.post().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
-      } else {
-        questionnaireTemplate.put().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
+      if ( isValid ) {
+        $scope.questionnaire = _.cloneDeep(questionnaireTemplate);
+        questionnaireTemplate.postProcess();
+        if ( !questionnaireTemplate.id ) {
+          questionnaireTemplate.tenant = user.tenantId;
+          //questionnaireTemplate = models.restangularizeElement(null, questionnaireTemplate, 'templatequestionnaires');
+          questionnaireTemplate.post().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
+        } else {
+          questionnaireTemplate.put().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
+        }
       }
 
       function saveQuestionnaireTemplateSuccessFn ( response ) {
