@@ -76,8 +76,8 @@
       -->
       <md-input-container class="md-block" flex-gt-sm>
         <label>{{ 'PROJECT.PROJECT_MANAGER' | translate }}</label>
-        <md-select ng-model="vm.project.project_manager_repr" ng-change="vm.selectProjectManager(vm.project, vm.project.project_manager_repr)" name="project_manager" required>
-          <md-option ng-repeat="projectManager in vm.projectManagers" ng-value="projectManager">
+        <md-select ng-model="vm.project.project_manager" name="project_manager" required>
+          <md-option ng-repeat="projectManager in vm.projectManagers" ng-value="projectManager.id">
             {{ projectManager.user.fullName }}
           </md-option>
         </md-select>
@@ -94,11 +94,10 @@
       -->
       <div class="md-block" flex-gt-sm>
         <ms-checkbox-list checkbox-list-elements="vm.tenantConsultants"
-                          checkbox-list-options="vm.projectWorkersCheckboxListOptions"
-                          target-list="vm.project.project_workers_repr">
+                          checkbox-list-options="vm.consultantsCheckboxListOptions"
+                          target-list="vm.project.consultants">
         </ms-checkbox-list>
       </div>
-      {{ vm.project.project_workers_repr | json }}
 
       <md-button type="submit" class="md-primary" ng-show="vm.project.state === 0">
         {{ vm.project.id ? ('BUTTON.SAVE' | translate) : ('BUTTON.CREATE' | translate) }}

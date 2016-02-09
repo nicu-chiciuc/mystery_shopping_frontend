@@ -24,7 +24,6 @@
         resolve: {
           companies: function ( models ) { return models.companies().getList(); },
           projectManagers: function ( models ) { return models.projectManagers().getList(); },
-          projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
           tenantConsultants: function ( models ) { return models.tenantConsultants().getList(); },
           questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
           scripts: function ( models ) { return models.scripts().getList(); },
@@ -47,7 +46,6 @@
         resolve: {
           companies: function ( models ) { return models.companies().getList(); },
           projectManagers: function ( models ) { return models.projectManagers().getList(); },
-          projectWorkers: function ( models ) { return models.projectWorkers().getList(); },
           tenantConsultants: function ( models ) { return models.tenantConsultants().getList(); },
           questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
           scripts: function ( models ) { return models.scripts().getList(); },

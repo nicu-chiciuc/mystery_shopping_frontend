@@ -6,7 +6,7 @@
     .controller('ProjectFormController', ProjectFormController);
 
   /** @ngInject */
-  function ProjectFormController ( $scope, $log, $filter, $state, models, project, companies, projectManagers, projectWorkers, questionnaireTemplates, scripts, shoppers, tenantConsultants, user ) {
+  function ProjectFormController ( $scope, $log, $filter, $state, models, project, companies, projectManagers, questionnaireTemplates, scripts, shoppers, tenantConsultants, user ) {
     $log.debug('Entered ProjectFormController');
     $log.debug('Project object equals to:');
     $log.debug(project);
@@ -14,7 +14,6 @@
 
     vm.companies = companies;
     vm.projectManagers = projectManagers;
-    vm.projectWorkers = projectWorkers;
     vm.tenantConsultants = tenantConsultants;
     vm.questionnaireTemplates = questionnaireTemplates;
     vm.scripts = scripts;

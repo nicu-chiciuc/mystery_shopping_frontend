@@ -11,12 +11,6 @@
                                project="vm.project">
       </ms-nested-checkbox-list>
 
-      {{ vm.project.listOfSpecificType.place | json }}
-      <hr/>
-      {{ vm.project.listOfSpecificType.person | json }}
-      <hr/>
-      {{ vm.project.listOfSpecificType.ignored | json }}
-
       <md-button type="submit" class="md-primary" ng-show="vm.project.state === 2">
         {{ 'BUTTON.SAVE' | translate  }}
       </md-button>

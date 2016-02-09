@@ -58,6 +58,8 @@
           response.initialize();
           vm.project = response;
 
+          vm.isNewProject = false;
+
           if ( vm.project.state === 4 ) {
             goToProjectDetailViewState();
           }

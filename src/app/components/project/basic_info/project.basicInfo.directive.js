@@ -14,7 +14,6 @@
         project: '=',
         companies: '=',
         projectManagers: '=',
-        projectWorkers: '=',
         tenantConsultants: "=",
         saveProjectMethod: '&'
       },
@@ -33,24 +32,25 @@
       vm.project.project_workers_repr = vm.project.project_workers_repr || [];
       vm.project.company = managementFlow.getCompany().id;
 
-      vm.selectProjectManager = selectProjectManager;
+      //vm.selectProjectManager = selectProjectManager;
 
-      vm.projectWorkersCheckboxListOptions = {
+      vm.consultantsCheckboxListOptions = {
         showLegend: true,
         legendTitle: $filter('translate')('PROJECT.CONSULTANTS'),
         labelProp: 'user.fullName',
-        valueProp: function ( item ) {
-          return {
-            project_worker_id: item.id,
-            project_worker_type: item.contentTypeId
-          };
-        }
+        valueProp: 'id'
+        //valueProp: function ( item ) {
+        //  return {
+        //    project_worker_id: item.id,
+        //    project_worker_type: item.contentTypeId
+        //  };
+        //}
       };
 
-      function selectProjectManager ( project, projectManager ) {
-        project.project_manager_id = projectManager.id;
-        project.project_manager_type = projectManager.contentTypeId;
-      }
+      //function selectProjectManager ( project, projectManager ) {
+      //  project.project_manager_id = projectManager.id;
+      //  project.project_manager_type = projectManager.contentTypeId;
+      //}
     }
   }
 
