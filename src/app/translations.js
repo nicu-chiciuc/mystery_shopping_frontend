@@ -23,9 +23,14 @@
         LOGOUT: 'Logout'
       },
       MENU: {
+        MANAGEMENT: {
+          CHANGE_COMPANY: 'Change company',
+          EDIT_COMPANY: 'Edit company'
+        },
         PROJECT_MANAGEMENT: {
           HEADING: 'Project Management',
           PROJECTS: 'Projects',
+          MANAGE_PROJECTS: 'Manage projects'
         },
         PROJECT_PLANNING: {
           HEADING: 'Project Planning',
@@ -44,6 +49,9 @@
           SCRIPTS: 'Scripts',
           CREATE_SCRIPT: 'Create scripts',
           LIST_SCRIPTS: 'List scripts'
+        },
+        METHODOLOGY_TOOLS: {
+          HEADING: 'Methodology'
         },
         USER_MANAGEMENT: {
           HEADING: 'User Management',

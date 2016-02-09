@@ -6,7 +6,7 @@
     .factory('sideMenu', sideMenu);
 
   /** @ngInject */
-  function sideMenu ( $rootScope, $state, $filter, managementFlow ) {
+  function sideMenu ( $rootScope, $state, $filter, managementFlow, models ) {
 
     var self;
 
@@ -35,8 +35,10 @@
 
       unsetCurrentCompany: selectCompanySideMenuData,
       setNormalMenuData: normalMenuData,
+      setProjectPlanningMenuData: projectPlanningMenuData,
       setCompany: setCompany,
       getCompany: managementFlow.getCompany,
+      setProject: setProject,
       isCompanySelected: managementFlow.isCompanySelected,
       setCompanyList: setCompanyList
     };
@@ -73,6 +75,10 @@
       });
     }
 
+    function setProject ( project ) {
+      managementFlow.setProject(project);
+    }
+
     function setCompany ( company ) {
       managementFlow.setCompany(company);
       self.setNormalMenuData();
@@ -96,7 +102,8 @@
         companiesMenuLinks.push({
           name: company.name,
           value: company,
-          type: 'action'
+          type: 'action',
+          contentType: 'company'
         });
       });
 
@@ -118,86 +125,6 @@
 
     function normalMenuData () {
       var sections = [];
-
-      // Project Management section
-      sections.push({
-        name: $filter('translate')('MENU.PROJECT_MANAGEMENT.HEADING'),
-        type: 'heading',
-        children: [
-          {
-            name: $filter('translate')('MENU.PROJECT_MANAGEMENT.PROJECTS'),
-            type: 'toggle',
-            pages: [
-              {
-                name: 'New project',
-                state: 'projects.create',
-                type: 'link'
-              },
-              {
-                name : 'List projects',
-                state: 'projects.list',
-                type: 'link'
-              }
-            ]
-          },
-          {
-            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
-            type: 'toggle',
-            pages: [
-              {
-                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
-                state: 'questionnaires.templates.create',
-                type: 'link'
-              },
-              {
-                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
-                state: 'questionnaires.templates.list',
-                type: 'link'
-              }
-            ]
-          },
-          {
-            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.SCRIPTS'),
-            type: 'toggle',
-            pages: [
-              {
-                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_SCRIPT'),
-                state: 'scripts.create',
-                type: 'link'
-              },
-              {
-                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_SCRIPTS'),
-                state: 'scripts.list',
-                type: 'link'
-              }
-            ]
-          }
-        ]
-      });
-
-      // Planning section
-      sections.push({
-        name: $filter('translate')('MENU.PROJECT_PLANNING.HEADING'),
-        type: 'heading',
-        children: [
-          {
-            name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
-            type: 'toggle',
-            pages: [
-              {
-                name: 'Plan evaluations',
-                state: 'evaluations.plan',
-                type: 'link'
-              },
-              {
-                name: 'Planned evaluations',
-                state: 'evaluations.list',
-                type: 'link'
-              }
-            ]
-          }
-        ]
-      });
 
       // User Management section
       sections.push({
@@ -241,7 +168,109 @@
         ]
       });
 
+      // Project Management section
+      sections.push({
+        name: $filter('translate')('MENU.METHODOLOGY_TOOLS.HEADING'),
+        type: 'heading',
+        children: [
+          {
+            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
+            type: 'toggle',
+            pages: [
+              {
+                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
+                state: 'questionnaires.templates.create',
+                type: 'link'
+              },
+              {
+                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
+                state: 'questionnaires.templates.list',
+                type: 'link'
+              }
+            ]
+          },
+          {
+            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.SCRIPTS'),
+            type: 'toggle',
+            pages: [
+              {
+                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_SCRIPT'),
+                state: 'scripts.create',
+                type: 'link'
+              },
+              {
+                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_SCRIPTS'),
+                state: 'scripts.list',
+                type: 'link'
+              }
+            ]
+          }
+        ]
+      });
+
       self.sections = sections;
+
+      self.setProjectPlanningMenuData();
+    }
+
+
+    function projectPlanningMenuData () {
+
+      var projectList = [];
+
+
+
+      //managementFlow.getCompany().getList('projects').then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
+      models.projects().getList().then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
+
+      function getCompanyProjectsSuccessFn ( response ) {
+        _.forEach(response, function (project) {
+          projectList.push({
+            name: project.period_start + ' - ' + project.period_end,
+            value: project,
+            type: 'action',
+            contentType: 'project'
+          });
+        });
+
+        // Planning section
+        self.sections.push({
+          name: $filter('translate')('MENU.PROJECT_MANAGEMENT.HEADING'),
+          type: 'heading',
+          children: [
+            {
+              name: 'New project',
+              state: 'projects.create',
+              type: 'link'
+            },
+            {
+              name: $filter('translate')('MENU.PROJECT_MANAGEMENT.MANAGE_PROJECTS'),
+              type: 'toggle',
+              pages: projectList
+            },
+            {
+              name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
+              type: 'toggle',
+              pages: [
+                {
+                  name: 'Plan evaluations',
+                  state: 'evaluations.plan',
+                  type: 'link'
+                },
+                {
+                  name: 'Planned evaluations',
+                  state: 'evaluations.list',
+                  type: 'link'
+                }
+              ]
+            }
+          ]
+        });
+      }
+      function getCompanyProjectsErrorFn () {
+        // TODO deal with the error
+      }
+
     }
   }
 

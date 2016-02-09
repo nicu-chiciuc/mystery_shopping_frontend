@@ -1,21 +1,48 @@
 <div md-theme="toolbar">
   <md-toolbar layout="row" layout-align="end center" class="md-whiteframe-glow-z1">
     <div ng-show="vm.managementFlow.isCompanySelected()" layout="row" class="md-toolbar-tools">
-      <h3>
+      <h3 layout-padding>
         <strong>
           {{ vm.managementFlow.getCompany().name }}
         </strong>
+
+        <span ng-show="vm.managementFlow.isProjectSelected()">
+          &gt;
+        </span>
+
+        <strong ng-show="vm.managementFlow.isProjectSelected()">
+          {{ vm.managementFlow.getProject().displayName }}
+        </strong>
+
       </h3>
 
-      <md-button ui-sref="chooseCompany"
-                 class="md-icon-button"
-                 aria-label="{{ 'MANAGEMENT.CHANGE_COMPANY' | translate }}">
-        <!-- ng-click="vm.sideMenu.unsetCurrentCompany()" -->
-        <ng-md-icon icon="swap_horiz"></ng-md-icon>
-      </md-button>
     </div>
 
     <span flex></span>
+
+    <md-menu ng-show="vm.managementFlow.isCompanySelected()">
+      <md-button aria-label="Open company management menu"
+                 class="md-icon-button"
+                 ng-click="vm.openMenu($mdOpenMenu, $event)">
+        <ng-md-icon icon="menu"></ng-md-icon>
+      </md-button>
+      <md-menu-content width="4">
+
+        <md-menu-item>
+          <md-button ui-sref="chooseCompany">
+            <ng-md-icon icon="swap_horiz"></ng-md-icon>
+            {{ 'MENU.MANAGEMENT.CHANGE_COMPANY' | translate }}
+          </md-button>
+        </md-menu-item>
+
+        <md-menu-item>
+          <md-button ui-sref="companies.detail.edit({companyId: vm.managementFlow.getCompany().id})">
+            <ng-md-icon icon="edit"></ng-md-icon>
+            {{ 'MENU.MANAGEMENT.EDIT_COMPANY' | translate }}
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
 
     <md-button ng-click="vm.logout()" class="md-primary">{{ 'BUTTON.LOGOUT' | translate }}</md-button>
   </md-toolbar>

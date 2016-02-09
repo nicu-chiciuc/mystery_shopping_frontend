@@ -69,14 +69,18 @@
       var flattenedBlocks = [];
 
       _.forEach(blocks, function ( block ) {
-        flattenQuestionnaireBlock(null, block, 0, questionnaire.childBlocksProp, flattenedBlocks);
+        flattenQuestionnaireBlock(null, block, 0, 1, questionnaire.childBlocksProp, flattenedBlocks);
       });
 
       return flattenedBlocks;
     }
 
-    function flattenQuestionnaireBlock ( parentBlock, block, level, childBlocksProp, flattenedBlocksList ) {
+    function flattenQuestionnaireBlock ( parentBlock, block, level, orderNumber, childBlocksProp, flattenedBlocksList ) {
       block.level = level;
+      block.order_number = orderNumber;
+      orderNumber += 1;
+
+      block.parent_order_number = (parentBlock ? parentBlock.order_number : null);
 
       flattenedBlocksList.push(block);
 
@@ -94,7 +98,7 @@
 
       // Dive recursively into child blocks.
       _.forEach(block[childBlocksProp], function ( childBlock ) {
-        flattenQuestionnaireBlock(block, childBlock, level + 1, childBlocksProp, flattenedBlocksList);
+        flattenQuestionnaireBlock(block, childBlock, level + 1, orderNumber, childBlocksProp, flattenedBlocksList);
       });
 
       // After dealing with child blocks, set rght key.

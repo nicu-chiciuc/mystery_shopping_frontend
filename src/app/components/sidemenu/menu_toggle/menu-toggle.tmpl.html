@@ -17,6 +17,8 @@
 
 <ul id="docs-menu-{{section.name}}" class="menu-toggle-list">
   <li ng-repeat="page in section.pages">
-    <menu-link section="page"></menu-link>
+    <menu-link section="page" ng-if="page.type === 'link'"></menu-link>
+
+    <menu-action section="page" ng-if="page.type === 'action'"></menu-action>
   </li>
 </ul>

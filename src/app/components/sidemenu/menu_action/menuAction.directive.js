@@ -19,8 +19,12 @@
           return controller.isSelected($scope.section);
         };
 
-        $scope.selectCompany = function(company) {
-          controller.setCompany(company);
+        $scope.selectItem = function(item, contentType) {
+          if ( contentType === 'company' ) {
+            controller.setCompany(item);
+          } else if ( contentType === 'project' ) {
+            controller.setProject(item);
+          }
         };
       }
     };

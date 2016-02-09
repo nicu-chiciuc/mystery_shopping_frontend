@@ -13,6 +13,7 @@
     vm.isOpen = sideMenu.isSectionSelected;
     vm.isSelected = sideMenu.isPageSelected;
     vm.setCompany = sideMenu.setCompany;
+    vm.setProject = sideMenu.setProject;
     vm.toggleOpen = sideMenu.toggleSelectSection;
 
     vm.autoFocusContent = false;

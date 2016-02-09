@@ -60,6 +60,16 @@
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         }
       })
+      .state('chooseProject', {
+        parent: 'authenticated',
+        template: 'Choose a project to manage',
+        controller: function ( sideMenu, companies, $state ) {
+          sideMenu.setCompanyList(companies);
+        },
+        data: {
+          roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
+        }
+      })
       .state('accessdenied', {
         parent: 'authenticated',
         url: '/denied',

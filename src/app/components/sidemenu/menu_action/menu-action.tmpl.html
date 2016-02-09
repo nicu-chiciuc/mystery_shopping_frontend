@@ -1,5 +1,5 @@
 <md-button ng-class="{'active' : isSelected()}"
-           ng-click="selectCompany(section.value)">
+           ng-click="selectItem(section.value, section.contentType)">
   {{ section.name }}
   <span class="md-visually-hidden"
         ng-if="isSelected()">

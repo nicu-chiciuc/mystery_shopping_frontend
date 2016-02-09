@@ -23,11 +23,16 @@
     /** @ngInject */
     function NavbarController( $state, principal, managementFlow, sideMenu ) {
       var vm = this;
+      var originatorEv;
 
       vm.managementFlow = managementFlow;
       vm.sideMenu = sideMenu;
 
       vm.logout = logout;
+      vm.openMenu = function($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
+      };
 
       function logout () {
         principal.authenticate(null);

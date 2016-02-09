@@ -23,6 +23,8 @@
     function initialize () {
       var project = this;
 
+      project.displayName = project.period_start + ' - ' + project.period_end;
+
       project.research_methodology = project.research_methodology || {};
       angular.extend(project.research_methodology, ResearchMethodologyModel);
       project.research_methodology.initialize();
