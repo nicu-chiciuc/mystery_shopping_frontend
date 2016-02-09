@@ -6,7 +6,7 @@
     .controller('EditBlockDialogController', EditBlockDialogController);
 
   /** @ngInject */
-  function EditBlockDialogController ( $log, $scope, $mdDialog, $filter, block, parentBlock ) {
+  function EditBlockDialogController ( $log, $scope, $mdDialog, $filter, block, parentBlock, isNewBlock ) {
     $log.debug('Entered EditBlockDialogController');
     $log.debug(block);
 
@@ -18,9 +18,12 @@
     activate();
 
     function activate () {
+      console.log(parentBlock);
       // Before changing any weight, save current weights so that on close of dialog
       // window without saving, there is a possibility to reset initial weights.
       $scope.parentBlock.setInitialWeights();
+
+      $scope.parentBlock.updateAvailableWeight();
 
       $scope.availableWeight = $scope.parentBlock.availableWeight + $scope.block.weight;
       $scope.otherBlocks = _.filter($scope.parentBlock.template_blocks, function (templateBlock) {
@@ -31,6 +34,10 @@
 
         return templateBlock.title !== block.title;
       });
+
+      if ( !$scope.block.weight ) {
+        $scope.block.weight = 0;
+      }
     }
 
     function updateAvailableWeight ( block ) {
@@ -51,6 +58,11 @@
     }
 
     $scope.cancel = function() {
+      if ( isNewBlock ) {
+        _.remove($scope.parentBlock.template_blocks, function (templateBlock) {
+          return angular.equals(templateBlock, block);
+        });
+      }
       $scope.parentBlock.resetInitialWeights();
       $mdDialog.cancel();
     };

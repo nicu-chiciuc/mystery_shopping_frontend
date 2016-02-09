@@ -76,6 +76,9 @@
     }
 
     function postProcessSingleChoiceQuestion ( question ) {
+      _.forEach(question.template_question_choices, function (choice) {
+        choice.weight = parseFloat(choice.weight.toFixed(4));
+      });
     }
 
     function postProcessMultipleChoiceQuestion ( question ) {

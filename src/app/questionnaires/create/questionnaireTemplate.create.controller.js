@@ -17,7 +17,7 @@
     vm.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
     vm.addBlock = addBlock;
-    vm.showEditBlockTitleDialog = showEditBlockTitleDialog;
+    vm.showBlockTitleDialog = showBlockTitleDialog;
     vm.showAddQuestionDialog = showAddQuestionDialog;
 
     vm.saveQuestionnaireTemplate = saveQuestionnaireTemplate;
@@ -201,6 +201,87 @@
       ]
     };
 
+    var json = {
+      availableWeight: 0,
+      childBlocksProp: "template_blocks",
+      childQuestionsProp: "template_questions",
+      description: "Description here",
+      questionChoicesProp: "template_question_choices",
+      template_blocks: [
+        {
+          level: 1,
+          lft: 2,
+          newWeight: 90,
+          previousWeight: 9,
+          rght: 3,
+          showTooltip: false,
+          template_questions: [
+            {
+              answer_choices: [],
+              isChoiceQuestion: true,
+              isDateQuestion: false,
+              isTextQuestion: false,
+              max_score: 5,
+              question_body: "Like?",
+              template_question_choices: [
+                {
+                  score: 5,
+                  text: "Da",
+                  weight: 0.5
+                },
+                {
+                  weight: 0.5,
+                  text: "Nu",
+                  score: 0
+                }],
+              type: "s"
+            }
+          ],
+          title: "1.1",
+          weight: 0.9
+        },
+        {
+          availableWeight: 0,
+          initialWeight: 90,
+          latestPosition: 3,
+          level: 0,
+          lft: 1,
+          newWeight: 90,
+          previousWeight: 9,
+          rght: 4,
+          showTooltip: false,
+          template_questions: [],
+          title: "1",
+          weight: 0.9
+        },
+        {
+          level: 0,
+          lft: 1,
+          newWeight: 10,
+          previousWeight: 1,
+          rght: 2,
+          showTooltip: false,
+          template_questions: [
+            {
+              answer_choices: [],
+              isChoiceQuestion: false,
+              isDateQuestion: false,
+              isTextQuestion: true,
+              max_score: 0,
+              question_body: "Compunere",
+              template_question_choices: [],
+              type: "t"
+            }
+          ],
+          title: "2",
+          weight: 0.1
+        }
+      ],
+      tenant: 1,
+      title: "Title",
+      weight: 100
+    };
+
     $scope.questionnaire = {
       title: 'Title',
       description: 'Description here',
@@ -208,8 +289,9 @@
     };
 
     //$scope.questionnaire = vm.nestedQuestionnaireTemplate;
-    angular.extend($scope.questionnaire, models.manager.TemplateQuestionnaireModel);
-    $scope.questionnaire.initialize();
+    //angular.extend($scope.questionnaire, models.manager.TemplateQuestionnaireModel);
+    //$scope.questionnaire.initialize();
+    $scope.questionnaire = models.restangularizeElement(null, $scope.questionnaire, 'templatequestionnaires');
 
     activate();
 
@@ -232,9 +314,11 @@
     }
 
     function saveQuestionnaireTemplate ( questionnaireTemplate, isValid, nextState ) {
+      $scope.questionnaire = _.cloneDeep(questionnaireTemplate);
+      questionnaireTemplate.postProcess();
       if ( !questionnaireTemplate.id ) {
         questionnaireTemplate.tenant = user.tenantId;
-        questionnaireTemplate = models.restangularizeElement(null, questionnaireTemplate, 'templatequestionnaires');
+        //questionnaireTemplate = models.restangularizeElement(null, questionnaireTemplate, 'templatequestionnaires');
         questionnaireTemplate.post().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
       } else {
         questionnaireTemplate.put().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
@@ -249,16 +333,20 @@
       }
     }
 
-    function addBlock ( parentBlock ) {
+    function addBlock ( ev, parentBlock ) {
       var block = {};
       block.template_blocks = [];
       block.template_questions = [];
-      block.title = $filter('translate')('QUESTIONNAIRE.DIALOG.BLOCK_TITLE');
+      //block.title = $filter('translate')('QUESTIONNAIRE.DIALOG.BLOCK_TITLE');
+
+      angular.extend(block, models.manager.TemplateQuestionnaireBlockModel);
+      block.initialize();
 
       parentBlock.template_blocks.push(block);
+      showBlockTitleDialog(ev, block, parentBlock, true);
     }
 
-    function showEditBlockTitleDialog ( ev, block, parentBlock ) {
+    function showBlockTitleDialog ( ev, block, parentBlock, isNewBlock ) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
       $mdDialog.show({
         controller: 'EditBlockDialogController as vm',
@@ -268,12 +356,13 @@
         fullscreen: useFullScreen,
         locals: {
           block: block,
-          parentBlock: parentBlock
+          parentBlock: parentBlock,
+          isNewBlock: isNewBlock
         }
       })
-        .then(function(updatedBlock) {
-          block.title = updatedBlock.title;
-          block.weight = updatedBlock.weight;
+        .then(function(returnedBlock) {
+          block.title = returnedBlock.title;
+          block.weight = returnedBlock.weight;
         });
     }
 

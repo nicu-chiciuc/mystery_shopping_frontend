@@ -20,7 +20,12 @@
             <!-- Block title -->
             <md-input-container>
               <label>{{ 'QUESTIONNAIRE.DIALOG.BLOCK_TITLE' | translate }}</label>
-              <input ng-model="block.title" md-autofocus type="text"/>
+              <input ng-model="block.title" md-autofocus name="title" type="text" ng-required="true"/>
+
+              <!-- Validation messages -->
+              <div ng-messages="blockForm.title.$error">
+                <div ng-message="required">Title is REQUIRED!</div>
+              </div>
             </md-input-container>
 
             <!-- Block weight -->
@@ -30,7 +35,8 @@
                 <input ng-model="block.newWeight"
                        ng-change="updateAvailableWeight(block)"
                        name="weight"
-                       type="number"/>
+                       type="number"
+                       ng-required="true"/>
 
                 <md-tooltip ng-if="block.showTooltip" md-visible="block.showTooltip" md-direction="top">
                   {{ block.tooltip }}

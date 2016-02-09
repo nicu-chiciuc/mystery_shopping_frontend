@@ -19,7 +19,7 @@
       var block = this;
 
       angular.extend(block, AbstractParentBlockModel);
-      block.initializeAbstract('template_blocks');
+      block.initializeAbstract('template_blocks', 'template_questions');
 
       _.forEach(block.template_blocks, function (childBlock) {
         angular.extend(childBlock, Model);

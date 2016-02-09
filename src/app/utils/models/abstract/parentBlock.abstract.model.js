@@ -17,16 +17,19 @@
       removeExceededWeightsTooltips: removeExceededWeightsTooltips,
       setInitialWeights: setInitialWeights,
       resetInitialWeights: resetInitialWeights,
-      updateChildWeights: updateChildWeights
+      updateChildWeights: updateChildWeights,
+      processBeforeSave: processBeforeSave
     };
 
     var childBlocksKey = '';
+    var questionsPropKey = '';
 
     return Model;
 
 
-    function initializeAbstract ( childBlocksProp ) {
+    function initializeAbstract ( childBlocksProp, questionsProp ) {
       childBlocksKey = childBlocksProp;
+      questionsPropKey = questionsProp;
       this.updateAvailableWeight();
     }
 
@@ -55,7 +58,7 @@
       var availableWeight = block.weight;
 
       _.forEach(block[childBlocksKey], function (childBlock) {
-        availableWeight -= childBlock.newWeight ? childBlock.newWeight : childBlock.weight;
+        availableWeight -= childBlock.newWeight ? childBlock.newWeight : (childBlock.weight ? childBlock.weight : 0);
       });
 
       return availableWeight;
@@ -91,6 +94,14 @@
       _.forEach(block[childBlocksKey], function (childBlock) {
         childBlock.setWeight(childBlock.weight * block.weight / block.previousWeight);
       });
+    }
+
+    function processBeforeSave () {
+      var block = this;
+
+      _.forEach(block[questionsPropKey], function (question) {
+        question.postProcess();
+      })
     }
 
   }

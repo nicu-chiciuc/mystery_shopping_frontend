@@ -9,7 +9,7 @@
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
-        parent: 'authenticated',
+        parent: 'companySelected',
         url: '/',
         templateUrl: 'app/main/main.html',
         data: {

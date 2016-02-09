@@ -9,7 +9,7 @@
     <ng-md-icon ng-if="vm.question.type === 'm'" icon="check_box"></ng-md-icon>
     <ng-md-icon ng-if="vm.question.type === 's'" icon="radio_button_on"></ng-md-icon>
     <span flex>
-      {{ choice.body }}  (weight - {{ choice.weight }})
+      {{ choice.text }}  (score - {{ choice.score }} | weight - {{ choice.weight }})
     </span>
   </md-list-item>
 </md-list>

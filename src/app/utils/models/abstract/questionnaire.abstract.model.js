@@ -37,6 +37,10 @@
       var parentBlocksPerTreeIdPerLevel = {};
 
       _.forEach(questionnaire[questionnaire.childBlocksProp], function ( block ) {
+
+        // Convert weights from units to percentage (from 0.45 to 45)
+        block.weight *= 100;
+
         block[questionnaire.childBlocksProp] = block[questionnaire.childBlocksProp] || [];
 
         if ( angular.isUndefined(parentBlocksPerTreeIdPerLevel[block.tree_id]) ) {
@@ -57,23 +61,25 @@
 
     function postProcess () {
       var questionnaire = this;
-      var processedQuestionnaire = _.cloneDeep(questionnaire);
+      //var processedQuestionnaire = _.cloneDeep(questionnaire);
 
-      processedQuestionnaire[questionnaire.childBlocksProp] = convertNestedToFlatStructure(questionnaire, questionnaire[questionnaire.childBlocksProp]);
-      return processedQuestionnaire;
+      questionnaire[questionnaire.childBlocksProp] = convertNestedToFlatStructure(questionnaire, questionnaire[questionnaire.childBlocksProp]);
+      questionnaire[questionnaire.childBlocksProp] = convertWeightsFromPercentageToUnits(questionnaire, questionnaire[questionnaire.childBlocksProp]);
+
+      return questionnaire;
     }
 
     function convertNestedToFlatStructure ( questionnaire, blocks ) {
       var flattenedBlocks = [];
 
       _.forEach(blocks, function ( block ) {
-        flattenQuestionnaireBlock(questionnaire, null, block, 0, flattenedBlocks);
+        flattenQuestionnaireBlock(null, block, 0, questionnaire.childBlocksProp, flattenedBlocks);
       });
 
       return flattenedBlocks;
     }
 
-    function flattenQuestionnaireBlock ( questionnaire, parentBlock, block, level, flattenedBlocksList ) {
+    function flattenQuestionnaireBlock ( parentBlock, block, level, childBlocksProp, flattenedBlocksList ) {
       block.level = level;
 
       // If parent block doesn't exist, this means this is a top level block,
@@ -89,8 +95,8 @@
         : 1;
 
       // Dive recursively into child blocks.
-      _.forEach(block[questionnaire.childBlocksProp], function ( childBlock ) {
-        flattenQuestionnaireBlock(block, childBlock, level + 1, flattenedBlocksList);
+      _.forEach(block[childBlocksProp], function ( childBlock ) {
+        flattenQuestionnaireBlock(block, childBlock, level + 1, childBlocksProp, flattenedBlocksList);
       });
 
       // After dealing with child blocks, set rght key.
@@ -104,7 +110,17 @@
 
       flattenedBlocksList.push(block);
 
-      delete block[questionnaire.childBlocksProp];
+      block.processBeforeSave();
+
+      delete block[childBlocksProp];
+    }
+
+    function convertWeightsFromPercentageToUnits ( questionnaire, blocks ) {
+      _.forEach(blocks, function (block) {
+        block.weight /= questionnaire.weight;
+      });
+
+      return blocks;
     }
 
   }
