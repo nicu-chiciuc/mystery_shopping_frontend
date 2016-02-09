@@ -11,10 +11,118 @@
     var self,
       sections = [];
 
+    // User Management section
+    sections.push({
+      name: $filter('translate')('MENU.USER_MANAGEMENT.HEADING'),
+      type: 'heading',
+      accessLvl: 0,
+      hidden: false,
+      children: [
+        {
+          name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.HEADING'),
+          state: 'shoppers.create',
+          type: 'toggle',
+          pages: [
+            {
+              name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.CREATE'),
+              state: 'shoppers.create',
+              type: 'link'
+            },
+            {
+              name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.LIST'),
+              state: 'shoppers.list',
+              type: 'link'
+            }
+          ]
+        }
+      ]
+    });
+
+    // Company List section
+    sections.push(getCompaniesListMenuData());
+
+    // Project Management section
+    sections.push({
+      name: $filter('translate')('MENU.METHODOLOGY_TOOLS.HEADING'),
+      type: 'heading',
+      accessLvl: 1,
+      hidden: true,
+      children: [
+        {
+          name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
+          type: 'toggle',
+          pages: [
+            {
+              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
+              state: 'questionnaires.templates.create',
+              type: 'link'
+            },
+            {
+              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
+              state: 'questionnaires.templates.list',
+              type: 'link'
+            }
+          ]
+        },
+        {
+          name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.SCRIPTS'),
+          type: 'toggle',
+          pages: [
+            {
+              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_SCRIPT'),
+              state: 'scripts.create',
+              type: 'link'
+            },
+            {
+              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_SCRIPTS'),
+              state: 'scripts.list',
+              type: 'link'
+            }
+          ]
+        }
+      ]
+    });
+
+    // Planning section
+    sections.push({
+      name: $filter('translate')('MENU.PROJECT_MANAGEMENT.HEADING'),
+      type: 'heading',
+      accessLvl: 1,
+      hidden: true,
+      children: [
+        {
+          name: 'New project',
+          state: 'projects.create',
+          type: 'link'
+        },
+        {
+          name: $filter('translate')('MENU.PROJECT_MANAGEMENT.MANAGE_PROJECTS'),
+          type: 'toggle',
+          pages: []
+        },
+        {
+          name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
+          type: 'toggle',
+          pages: [
+            {
+              name: 'Plan evaluations',
+              state: 'evaluations.plan',
+              type: 'link'
+            },
+            {
+              name: 'Planned evaluations',
+              state: 'evaluations.list',
+              type: 'link'
+            }
+          ]
+        }
+      ]
+    });
+
     $rootScope.$on('$stateChangeSuccess', onStateChange);
 
     if ( principal.isInAnyRole(['tenantproductmanager', 'tenantprojectmanager', 'tenantconsultant']) ) {
-      sections = getDefaultMenuDataForTenantUser();
+      //sections = getDefaultMenuDataForTenantUser();
     }
 
     return self = {
@@ -39,13 +147,14 @@
       },
 
       unsetCurrentCompany: selectCompanySideMenuData,
-      companySelectedMenuData: companySelectedMenuData,
+      //companySelectedMenuData: companySelectedMenuData,
       setProjectPlanningMenuData: projectPlanningMenuData,
       setCompany: setCompany,
       getCompany: managementFlow.getCompany,
       setProject: setProject,
       isCompanySelected: managementFlow.isCompanySelected,
-      setCompanyList: setCompanyList
+      setCompanyList: setCompanyList,
+      setCompanyNotChosenMenuState: setCompanyNotChosenMenuState
     };
 
     function onStateChange() {
@@ -80,6 +189,29 @@
       });
     }
 
+    function setCompanyNotChosenMenuState () {
+      _.forEach(self.sections, function (section) {
+        if ( section.companySelectionSection ) {
+          section.children = getCompanyChildrenList();
+          section.hidden = false;
+        } else if ( section.accessLvl < 1 ) {
+          section.hidden = false;
+        } else {
+          section.hidden = true;
+        }
+      });
+    }
+
+    function setCompanyChosenMenuState () {
+      _.forEach(self.sections, function (section) {
+        if ( section.companySelectionSection ) {
+          section.hidden = true;
+        } else if ( section.accessLvl < 2 ) {
+          section.hidden = false;
+        }
+      });
+    }
+
     function setProject ( project ) {
       managementFlow.setProject(project);
     }
@@ -87,8 +219,10 @@
     function setCompany ( company ) {
       managementFlow.setCompany(company);
 
-      var sections = companySelectedMenuData();
-      self.sections = sections;
+      setCompanyChosenMenuState();
+
+      //var sections = companySelectedMenuData();
+      //self.sections = sections;
 
       if ( $rootScope.returnToState ) {
         $state.go($rootScope.returnToState, $rootScope.returnToStateParams);
@@ -103,62 +237,63 @@
     function selectCompanySideMenuData () {
       managementFlow.unsetCompany();
 
-      self.sections = getDefaultMenuDataForTenantUser();
+      setCompanyNotChosenMenuState();
     }
 
-    function companySelectedMenuData () {
-      var generalMenuData = getGeneralMenuDataForTenantUser();
-      var companySelectedMenuData = getCompanySelectedMenuData();
-      var projectManagementMenuData = projectPlanningMenuData();
-      var result = generalMenuData.concat(companySelectedMenuData, projectManagementMenuData);
-
-      return result;
-    }
-
-    function getCompanySelectedMenuData () {
-      var sections = [];
-
-      // Project Management section
-      sections.push({
-        name: $filter('translate')('MENU.METHODOLOGY_TOOLS.HEADING'),
-        type: 'heading',
-        children: [
-          {
-            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
-            type: 'toggle',
-            pages: [
-              {
-                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
-                state: 'questionnaires.templates.create',
-                type: 'link'
-              },
-              {
-                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
-                state: 'questionnaires.templates.list',
-                type: 'link'
-              }
-            ]
-          },
-          {
-            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.SCRIPTS'),
-            type: 'toggle',
-            pages: [
-              {
-                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_SCRIPT'),
-                state: 'scripts.create',
-                type: 'link'
-              },
-              {
-                name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_SCRIPTS'),
-                state: 'scripts.list',
-                type: 'link'
-              }
-            ]
-          }
-        ]
-      });
-      return sections;
-    }
+    //function companySelectedMenuData () {
+    //  var generalMenuData = getGeneralMenuDataForTenantUser();
+    //  var companySelectedMenuData = getCompanySelectedMenuData();
+    //  var projectManagementMenuData = projectPlanningMenuData();
+    //  var result = generalMenuData.concat(companySelectedMenuData, projectManagementMenuData);
+    //
+    //  return result;
+    //}
+    //
+    //function getCompanySelectedMenuData () {
+    //  var sections = [];
+    //
+    //  // Project Management section
+    //  sections.push({
+    //    name: $filter('translate')('MENU.METHODOLOGY_TOOLS.HEADING'),
+    //    type: 'heading',
+    //    hidden: true,
+    //    children: [
+    //      {
+    //        name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
+    //        type: 'toggle',
+    //        pages: [
+    //          {
+    //            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
+    //            state: 'questionnaires.templates.create',
+    //            type: 'link'
+    //          },
+    //          {
+    //            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
+    //            state: 'questionnaires.templates.list',
+    //            type: 'link'
+    //          }
+    //        ]
+    //      },
+    //      {
+    //        name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.SCRIPTS'),
+    //        type: 'toggle',
+    //        pages: [
+    //          {
+    //            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_SCRIPT'),
+    //            state: 'scripts.create',
+    //            type: 'link'
+    //          },
+    //          {
+    //            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_SCRIPTS'),
+    //            state: 'scripts.list',
+    //            type: 'link'
+    //          }
+    //        ]
+    //      }
+    //    ]
+    //  });
+    //  return sections;
+    //}
 
 
     function projectPlanningMenuData () {
@@ -169,6 +304,7 @@
       sections.push({
         name: $filter('translate')('MENU.PROJECT_MANAGEMENT.HEADING'),
         type: 'heading',
+        hidden: true,
         children: [
           {
             name: 'New project',
@@ -220,60 +356,61 @@
       return sections;
     }
 
-    function getDefaultMenuDataForTenantUser () {
-      var generalData = getGeneralMenuDataForTenantUser();
-      var companyList = getCompaniesListMenuData();
-
-      return generalData.concat(companyList);
-    }
-
-    function getGeneralMenuDataForTenantUser () {
-      var sections = [];
-
-      // User Management section
-      sections.push({
-        name: $filter('translate')('MENU.USER_MANAGEMENT.HEADING'),
-        type: 'heading',
-        children: [
-          {
-            name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.HEADING'),
-            state: 'shoppers.create',
-            type: 'toggle',
-            pages: [
-              {
-                name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.CREATE'),
-                state: 'shoppers.create',
-                type: 'link'
-              },
-              {
-                name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.LIST'),
-                state: 'shoppers.list',
-                type: 'link'
-              }
-            ]
-          }//,
-          //{
-          //  name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.HEADING'),
-          //  state: 'shoppers.list',
-          //  type: 'toggle',
-          //  pages: [
-          //    {
-          //      name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.CREATE'),
-          //      state: 'shoppers.create',
-          //      type: 'link'
-          //    },
-          //    {
-          //      name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.LIST'),
-          //      state: 'shoppers.list',
-          //      type: 'link'
-          //    }
-          //  ]
-          //}
-        ]
-      });
-
-      return sections;
-    }
+    //function getDefaultMenuDataForTenantUser () {
+    //  var generalData = getGeneralMenuDataForTenantUser();
+    //  var companyList = getCompaniesListMenuData();
+    //
+    //  return generalData.concat(companyList);
+    //}
+    //
+    //function getGeneralMenuDataForTenantUser () {
+    //  var sections = [];
+    //
+    //  // User Management section
+    //  sections.push({
+    //    name: $filter('translate')('MENU.USER_MANAGEMENT.HEADING'),
+    //    type: 'heading',
+    //    hidden: false,
+    //    children: [
+    //      {
+    //        name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.HEADING'),
+    //        state: 'shoppers.create',
+    //        type: 'toggle',
+    //        pages: [
+    //          {
+    //            name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.CREATE'),
+    //            state: 'shoppers.create',
+    //            type: 'link'
+    //          },
+    //          {
+    //            name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.LIST'),
+    //            state: 'shoppers.list',
+    //            type: 'link'
+    //          }
+    //        ]
+    //      }//,
+    //      //{
+    //      //  name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.HEADING'),
+    //      //  state: 'shoppers.list',
+    //      //  type: 'toggle',
+    //      //  pages: [
+    //      //    {
+    //      //      name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.CREATE'),
+    //      //      state: 'shoppers.create',
+    //      //      type: 'link'
+    //      //    },
+    //      //    {
+    //      //      name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.LIST'),
+    //      //      state: 'shoppers.list',
+    //      //      type: 'link'
+    //      //    }
+    //      //  ]
+    //      //}
+    //    ]
+    //  });
+    //
+    //  return sections;
+    //}
 
     function getCompaniesListMenuData () {
       var companiesMenuLinks = [],
@@ -294,15 +431,29 @@
         });
       });
 
-      sections = [
-        {
+      sections = {
           name: $filter('translate')('MENU.CLIENT_MANAGEMENT.HEADING'),
           type: 'heading',
+          hidden: true,
+          accessLvl: 0,
+          companySelectionSection: true,
           children: companiesMenuLinks
-        }
-      ];
+        };
 
       return sections;
+    }
+
+    function getCompanyChildrenList () {
+      var children = [];
+      _.forEach(managementFlow.getCompanyList(), function (company) {
+        children.push({
+          name: company.name,
+          value: company,
+          type: 'action',
+          contentType: 'company'
+        });
+      });
+      return children;
     }
   }
 

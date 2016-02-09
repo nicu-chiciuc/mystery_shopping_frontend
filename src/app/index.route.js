@@ -59,8 +59,8 @@
         resolve: {
           companies: function ( models ) { return models.companies().getList({simple: true}); }
         },
-        controller: function ( sideMenu, companies, $state ) {
-          sideMenu.setCompanyList(companies);
+        controller: function ( sideMenu ) {
+          sideMenu.setCompanyNotChosenMenuState();
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']

@@ -21,7 +21,7 @@
 
   <md-content flex role="navigation">
     <ul class="docs-menu">
-      <li ng-repeat="section in sideMenu.sections" class="parent-list-item {{section.className || ''}}" ng-class="{'parentActive' : isSectionSelected(section)}">
+      <li ng-if="!section.hidden" ng-repeat="section in sideMenu.sections" class="parent-list-item {{section.className || ''}}" ng-class="{'parentActive' : isSectionSelected(section)}">
         <h2 class="menu-heading md-subhead" ng-if="section.type === 'heading'" id="heading_{{ section.name }}">
           {{section.name}}
         </h2>
