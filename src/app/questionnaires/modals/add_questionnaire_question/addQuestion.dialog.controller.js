@@ -12,7 +12,8 @@
     $scope.question = {
       type: 's',
       template_question_choices: [],
-      max_score: 0
+      max_score: 0,
+      weight: 0
     };
 
     angular.extend($scope.question, models.manager.TemplateQuestionnaireQuestionModel);

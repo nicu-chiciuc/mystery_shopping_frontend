@@ -9,7 +9,9 @@
   /** @ngInject */
   function TemplateQuestionnaireBlockModel ( TemplateQuestionnaireQuestionModel, AbstractParentBlockModel ) {
     var Model = {
-      initialize: initialize
+      initialize: initialize,
+      addQuestion: addQuestion,
+      updateQuestionWeights: updateQuestionWeights
     };
 
     return Model;
@@ -31,5 +33,23 @@
         question.initialize();
       });
     }
+
+    function addQuestion ( question ) {
+      var block = this;
+
+      block.template_questions.push(question);
+      block.updateQuestionWeights();
+    }
+
+    function updateQuestionWeights () {
+      var block = this;
+      var weightAverage = parseFloat((block.weight / block.template_questions.length).toFixed(2));
+
+      _.forEach(block.template_questions, function (question) {
+        question.weight = weightAverage;
+      });
+    }
+
+
   }
 })();

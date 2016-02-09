@@ -38,9 +38,6 @@
 
       _.forEach(questionnaire[questionnaire.childBlocksProp], function ( block ) {
 
-        // Convert weights from units to percentage (from 0.45 to 45)
-        block.weight *= 100;
-
         block[questionnaire.childBlocksProp] = block[questionnaire.childBlocksProp] || [];
 
         if ( angular.isUndefined(parentBlocksPerTreeIdPerLevel[block.tree_id]) ) {
@@ -64,7 +61,6 @@
       //var processedQuestionnaire = _.cloneDeep(questionnaire);
 
       questionnaire[questionnaire.childBlocksProp] = convertNestedToFlatStructure(questionnaire, questionnaire[questionnaire.childBlocksProp]);
-      questionnaire[questionnaire.childBlocksProp] = convertWeightsFromPercentageToUnits(questionnaire, questionnaire[questionnaire.childBlocksProp]);
 
       return questionnaire;
     }
@@ -81,6 +77,8 @@
 
     function flattenQuestionnaireBlock ( parentBlock, block, level, childBlocksProp, flattenedBlocksList ) {
       block.level = level;
+
+      flattenedBlocksList.push(block);
 
       // If parent block doesn't exist, this means this is a top level block,
       // thus set lft = 1.
@@ -108,19 +106,9 @@
       // the rght value so it can use it for next blocks in the tree.
       if ( parentBlock ) parentBlock.latestPosition = block.rght;
 
-      flattenedBlocksList.push(block);
-
       block.processBeforeSave();
 
       delete block[childBlocksProp];
-    }
-
-    function convertWeightsFromPercentageToUnits ( questionnaire, blocks ) {
-      _.forEach(blocks, function (block) {
-        block.weight /= questionnaire.weight;
-      });
-
-      return blocks;
     }
 
   }

@@ -92,7 +92,7 @@
       var block = this;
 
       _.forEach(block[childBlocksKey], function (childBlock) {
-        childBlock.setWeight(childBlock.weight * block.weight / block.previousWeight);
+        childBlock.setWeight(parseFloat(childBlock.weight * block.weight / block.previousWeight).toFixed(2));
       });
     }
 

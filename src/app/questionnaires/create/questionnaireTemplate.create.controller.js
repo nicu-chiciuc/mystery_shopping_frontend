@@ -377,7 +377,7 @@
         fullscreen: useFullScreen
       })
         .then(function(question) {
-          block.template_questions.push(question);
+          block.addQuestion(question);
         });
     }
   }
