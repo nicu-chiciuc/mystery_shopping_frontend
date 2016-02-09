@@ -6,7 +6,7 @@
     .controller('SideMenuController', SideMenuController);
 
   /** @ngInject */
-  function SideMenuController ( $scope, $log, $state, user, sideMenu ) {
+  function SideMenuController ( $scope, $log, $state, user, sideMenu, companies ) {
     $log.debug('Entered SideMenuController');
     var vm = this;
 
@@ -24,6 +24,9 @@
     activate();
 
     function activate() {
+      if ( companies.length ) {
+        $scope.sideMenu.setCompanyList(companies);
+      }
     }
 
   }

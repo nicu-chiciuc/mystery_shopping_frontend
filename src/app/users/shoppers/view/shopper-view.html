@@ -2,7 +2,7 @@
 
   <div layout="row" layout-align="none center">
     <h2 flex>{{ vm.shopper.user.username }}</h2>
-    <md-button ui-sref="shoppers.detail.edit({id: vm.shopper.id})" class="md-primary">
+    <md-button ui-sref="shoppers.detail.edit({shopperId: vm.shopper.id})" class="md-primary">
       {{ 'BUTTON.EDIT' | translate }}
     </md-button>
   </div>

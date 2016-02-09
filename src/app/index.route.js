@@ -21,10 +21,16 @@
         templateUrl: 'app/authentication/authenticated.html',
         abstract: true,
         resolve: {
-          user: function ( authorization ) {
+          user: function (authorization) {
             return authorization.authorize();
-          }//,
-          //companies: function ( models ) { return models.companies().getList({simple: true}); }
+          },
+          companies: function (models, principal) {
+            if (principal.isInAnyRole(['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant'])) {
+              return models.companies().getList({simple: true});
+            } else {
+              return [];
+            }
+          }
         },
         controller: 'SideMenuController as vm'
         //onEnter: function ($log, user) {

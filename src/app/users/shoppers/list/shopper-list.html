@@ -2,9 +2,9 @@
 
   <md-list>
 
-    <md-list-item ng-repeat="script in vm.scripts">
-      <md-button ui-sref="scripts.detail.view({scriptId: script.id})">
-        {{ script.title }}
+    <md-list-item ng-repeat="shopper in vm.shoppers">
+      <md-button ui-sref="shoppers.detail.view({shopperId: shopper.id})">
+        {{ shopper.user.fullName }}
       </md-button>
     </md-list-item>
 
