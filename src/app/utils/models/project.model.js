@@ -7,7 +7,7 @@
     .factory('ProjectModel', ProjectModel);
 
   /** @ngInject */
-  function ProjectModel ( CompanyModel, TenantProjectManagerModel, TenantProductManagerModel, ResearchMethodologyModel ) {
+  function ProjectModel ( CompanyModel, TenantProjectManagerModel, TenantProductManagerModel, ResearchMethodologyModel, ShopperModel ) {
     var Model = {
       initialize: initialize
     };
@@ -42,6 +42,7 @@
       }
 
       project.shoppers = project.shoppers || [];
+      project.shoppers_repr = project.shoppers_repr || [];
 
       // For usage in recursive checkbox list on project create/update page for selecting
       // people and places to assess.
@@ -59,6 +60,11 @@
         angular.extend(project.company_repr, CompanyModel);
         project.company_repr.initialize();
       }
+
+      _.forEach(project.shoppers_repr, function (shopper) {
+        angular.extend(shopper, ShopperModel);
+        shopper.initialize();
+      });
 
       project.state = getProjectState(project);
     }

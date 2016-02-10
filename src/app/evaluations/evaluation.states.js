@@ -14,10 +14,14 @@
         url: '/evaluations',
         templateUrl: 'app/evaluations/evaluation-wrapper-page.html',
         resolve: {
-          evaluations: function ( models ) { return models.evaluations().getList(); }
+          evaluations: function ( models ) { return models.evaluations().getList(); },
+          project: function ( models ) { return models.projects().one(11).get(); }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
+        },
+        controller: function ( models, managementFlow, project ) {
+            managementFlow.setProject(project);
         }
       })
       .state('evaluations.list', {

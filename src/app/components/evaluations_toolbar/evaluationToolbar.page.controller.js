@@ -6,11 +6,12 @@
     .controller('EvaluationToolbarController', EvaluationToolbarController);
 
   /** @ngInject */
-  function EvaluationToolbarController ( $log, evaluations ) {
+  function EvaluationToolbarController ( $log, evaluations, evaluationPlanning ) {
     $log.debug('Entered EvaluationToolbarController');
     var vm = this;
 
     vm.evaluations = evaluations;
+    vm.evaluationPlanning = evaluationPlanning;
 
     activate();
 

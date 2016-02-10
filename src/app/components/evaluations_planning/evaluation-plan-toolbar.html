@@ -1,14 +1,134 @@
 <!-- Evaluation planning sidenav -->
-<section flex="100" flex-gt-sm="10" class="md-whiteframe-3dp">
-  <md-toolbar>
-    Planning
-  </md-toolbar>
+<md-content class="md-whiteframe-3dp" layout="column">
+  <form name="evaluationPlanningForm" ng-submit="vm.createEvaluations(vm.evaluationSkeleton, evaluationPlanningForm.$valid)" novalidate>
+    <md-toolbar flex="100">
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>Planning</span>
+        </h2>
+      </div>
+    </md-toolbar>
 
-  <md-subheader>
-    Shoppers
-  </md-subheader>
+    <div layout-padding>
+      <div layout="column">
+        <md-subheader flex="100">
+          Shoppers
+        </md-subheader>
 
-  <ms-checkbox-list>
+        <md-radio-group ng-model="vm.evaluationSkeleton.shopper">
+          <md-radio-button ng-repeat="shopper in vm.project.shoppers_repr"
+                           ng-value="shopper.id"
+                           class="md-primary">
+            {{ shopper.user.fullName }}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
 
-  </ms-checkbox-list>
-</section>
+      <div layout="column">
+        <md-subheader flex="100">
+          Subject of evaluation
+        </md-subheader>
+
+        <md-radio-group ng-model="vm.evaluationSkeleton.shopper">
+          <md-radio-button ng-repeat="shopper in vm.project.shoppers_repr"
+                           ng-value="shopper.id"
+                           class="md-primary">
+            {{ shopper.user.fullName }}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+
+      <div layout="column">
+        <md-subheader flex="100">
+          Evaluation type
+        </md-subheader>
+
+        <md-radio-group ng-model="vm.evaluationSkeleton.visit_type">
+          <md-radio-button value="call" class="md-primary">
+            Call
+          </md-radio-button>
+          <md-radio-button value="visit" class="md-primary">
+            Visit
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+
+      <div layout="column">
+        <md-subheader flex="100">
+          Script
+        </md-subheader>
+
+        <md-radio-group ng-model="vm.evaluationSkeleton.script">
+          <md-radio-button ng-repeat="script in vm.project.research_methodology.scripts_repr"
+                           ng-value="script.id"
+                           class="md-primary">
+            {{ script.title }}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+
+      <div layout="column">
+        <md-subheader flex="100">
+          Questionnaire template
+        </md-subheader>
+
+        <md-radio-group ng-model="vm.evaluationSkeleton.questionnaire">
+          <md-radio-button ng-repeat="questionnaire in vm.project.research_methodology.questionnaires_repr"
+                           ng-value="questionnaire.id"
+                           class="md-primary">
+            {{ questionnaire.title }}
+          </md-radio-button>
+        </md-radio-group>
+      </div>
+
+      <div layout="row">
+        <div layout="column">
+          <!--
+          Start date datepicker
+          -->
+          <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="suggested_start_date">
+            {{ 'PROJECT.START_DATE' | translate }}
+          </label>
+          <div>
+            <md-datepicker id="suggested_start_date"
+                           name="suggested_start_date"
+                           ng-model="vm.evaluationSkeleton.suggested_start_date"
+                           md-placeholder="{{ 'PROJECT.PLACEHOLDER.START_DATE' | translate }}"
+                           ng-required="true">
+            </md-datepicker>
+
+            <!-- Validation messages -->
+            <div ng-show="evaluationPlanningForm.$submitted" class="validation-messages" ng-messages="evaluationPlanningForm.suggested_start_date.$error">
+              <div ng-message="valid">The entered value is not a date!</div>
+              <div ng-message="required">This date is required!</div>
+            </div>
+          </div>
+        </div><!-- End of layout="column" -->
+
+        <!--
+        End date datepicker
+        -->
+        <div layout="column" class="margin-left-md">
+          <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="suggested_end_date">
+            {{ 'PROJECT.END_DATE' | translate }}
+          </label>
+          <div>
+            <md-datepicker id="suggested_end_date"
+                           name="suggested_end_date"
+                           ng-model="vm.evaluationSkeleton.suggested_end_date"
+                           md-placeholder="{{ 'PROJECT.PLACEHOLDER.END_DATE' | translate }}"
+                           ng-required="true">
+            </md-datepicker>
+
+            <!-- Validation messages -->
+            <div ng-show="evaluationPlanningForm.$submitted" class="validation-messages" ng-messages="evaluationPlanningForm.period_end.$error">
+              <div ng-message="valid">The entered value is not a date!</div>
+              <div ng-message="required">This date is required!</div>
+            </div>
+          </div>
+        </div><!-- End of layout="column" -->
+      </div><!-- End of layout="row" -->
+
+    </div>
+  </form>
+</md-content>
