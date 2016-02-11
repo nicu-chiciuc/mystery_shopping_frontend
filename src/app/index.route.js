@@ -50,8 +50,8 @@
           company: function ( managementFlow ) {
             return managementFlow.authorizeCompany();
           }
-        },
-        controller: 'SideMenuController as vm'
+        }//,
+        //controller: 'SideMenuController as vm'
       })
       .state('chooseCompany', {
         parent: 'authenticated',
@@ -60,7 +60,8 @@
           companies: function ( models ) { return models.companies().getList({simple: true}); }
         },
         controller: function ( sideMenu ) {
-          sideMenu.setCompanyNotChosenMenuState();
+          //sideMenu.setCompanyNotChosenMenuState();
+          sideMenu.unsetCurrentCompany();
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']

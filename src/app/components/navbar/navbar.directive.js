@@ -21,7 +21,7 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController( $state, principal, managementFlow, sideMenu ) {
+    function NavbarController( $rootScope, $state, principal, managementFlow, sideMenu ) {
       var vm = this;
       var originatorEv;
 
@@ -29,6 +29,8 @@
       vm.sideMenu = sideMenu;
 
       vm.logout = logout;
+      vm.unsetCompany = unsetCompany;
+
       vm.openMenu = function($mdOpenMenu, ev) {
         originatorEv = ev;
         $mdOpenMenu(ev);
@@ -37,6 +39,13 @@
       function logout () {
         principal.authenticate(null);
         $state.go('login');
+      }
+
+      function unsetCompany () {
+        //managementFlow.unsetCompany();
+        $rootScope.returnToState = $rootScope.toState;
+        $rootScope.returnToStateParams = $rootScope.toStateParams;
+        $state.go('chooseCompany');
       }
     }
   }

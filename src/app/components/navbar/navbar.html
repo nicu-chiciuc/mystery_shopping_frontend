@@ -29,7 +29,7 @@
       <md-menu-content width="4">
 
         <md-menu-item>
-          <md-button ui-sref="chooseCompany">
+          <md-button ng-click="vm.unsetCompany()">
             <ng-md-icon icon="swap_horiz"></ng-md-icon>
             {{ 'MENU.MANAGEMENT.CHANGE_COMPANY' | translate }}
           </md-button>
