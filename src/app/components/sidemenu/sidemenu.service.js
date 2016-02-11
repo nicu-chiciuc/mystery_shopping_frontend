@@ -226,6 +226,7 @@
     }
 
     function setCompany ( company ) {
+
       function isNotNeutralState ( state ) {
         var notNeutralStates = ['companies', 'projects'];
         var stateFound = false;
@@ -245,6 +246,7 @@
       setCompanyChosenMenuState();
 
       // TODO check here whether a state depends on previous company or not (e.g. prev company edit page) and redirect to a neutral page
+      // TODO on page load for the first time, check the same thing
       // For instance, if the previous state was /companies/1/edit, but the user has chosen
       // the company with id = 2, then redirect either to /companies/2/edit, or to some other $state
       if ( $rootScope.returnToState ) {
@@ -273,6 +275,12 @@
       //models.projects().getList().then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
 
       function getCompanyProjectsSuccessFn ( response ) {
+        // Set projects list to the service
+        managementFlow.setProjectList(response);
+
+        // Reset the side menu project list
+        projectList.length = 0;
+
         _.forEach(response, function (project) {
           projectList.push({
             name: project.period_start + ' - ' + project.period_end,

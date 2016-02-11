@@ -60,6 +60,16 @@
           });
       },
 
+      setProjectList: function(projects) {
+        self.projects = projects;
+      },
+      getProjectList: function() {
+        return self.projects || [];
+      },
+      isSetProjectList: function() {
+        return !!self.projects;
+      },
+
       setProject: function(project) {
         self.project = project;
       },
