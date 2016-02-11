@@ -163,6 +163,10 @@ fieldset {
   border-bottom: 1px solid #267ED5;
 }
 
+.docs-menu .stand-alone {
+  border-top: 1px solid #267ED5;
+}
+
 .docs-menu .md-button {
   border-radius: 0;
   color: white;

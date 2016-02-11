@@ -9,7 +9,9 @@
   function sideMenu ( $rootScope, $state, $filter, principal, managementFlow, models ) {
 
     var self,
-      sections = [];
+      sections = [],
+      projectList = [],
+      companyList = [];
 
     // User Management section
     sections.push({
@@ -39,7 +41,14 @@
     });
 
     // Company List section
-    sections.push(getCompaniesListMenuData());
+    sections.push({
+      name: $filter('translate')('MENU.CLIENT_MANAGEMENT.HEADING'),
+      type: 'heading',
+      hidden: true,
+      accessLvl: 0,
+      companySelectionSection: true,
+      children: companyList
+    });
 
     // Project Management section
     sections.push({
@@ -98,7 +107,7 @@
         {
           name: $filter('translate')('MENU.PROJECT_MANAGEMENT.MANAGE_PROJECTS'),
           type: 'toggle',
-          pages: []
+          pages: projectList
         },
         {
           name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
@@ -148,7 +157,7 @@
 
       unsetCurrentCompany: selectCompanySideMenuData,
       //companySelectedMenuData: companySelectedMenuData,
-      setProjectPlanningMenuData: projectPlanningMenuData,
+      setProjectPlanningMenuData: setProjectPagesDependingOnSelectedCompany,
       setCompany: setCompany,
       getCompany: managementFlow.getCompany,
       setProject: setProject,
@@ -192,7 +201,7 @@
     function setCompanyNotChosenMenuState () {
       _.forEach(self.sections, function (section) {
         if ( section.companySelectionSection ) {
-          section.children = getCompanyChildrenList();
+          section.children = getCompanyListForMenu();
           section.hidden = false;
         } else if ( section.accessLvl < 1 ) {
           section.hidden = false;
@@ -217,15 +226,33 @@
     }
 
     function setCompany ( company ) {
+      function isNotNeutralState ( state ) {
+        var notNeutralStates = ['companies', 'projects'];
+        var stateFound = false;
+
+        _.forEach(notNeutralStates, function (notNeutralState) {
+          stateFound = stateFound || state.indexOf(notNeutralState) > -1;
+        });
+
+        return stateFound;
+      }
       managementFlow.setCompany(company);
 
+      // After selecting a company, populate the menu with that company's Projects.
+      setProjectPagesDependingOnSelectedCompany();
+
+      // Show/Hide menu items when a company is selected.
       setCompanyChosenMenuState();
 
-      //var sections = companySelectedMenuData();
-      //self.sections = sections;
-
+      // TODO check here whether a state depends on previous company or not (e.g. prev company edit page) and redirect to a neutral page
+      // For instance, if the previous state was /companies/1/edit, but the user has chosen
+      // the company with id = 2, then redirect either to /companies/2/edit, or to some other $state
       if ( $rootScope.returnToState ) {
-        $state.go($rootScope.returnToState, $rootScope.returnToStateParams);
+        if ( isNotNeutralState($rootScope.returnToState.name) ) {
+          $state.go('companies.detail.view', {companyId: company.id});
+        } else {
+          $state.go($rootScope.returnToState, $rootScope.returnToStateParams);
+        }
       }
     }
 
@@ -240,103 +267,10 @@
       setCompanyNotChosenMenuState();
     }
 
-    //function companySelectedMenuData () {
-    //  var generalMenuData = getGeneralMenuDataForTenantUser();
-    //  var companySelectedMenuData = getCompanySelectedMenuData();
-    //  var projectManagementMenuData = projectPlanningMenuData();
-    //  var result = generalMenuData.concat(companySelectedMenuData, projectManagementMenuData);
-    //
-    //  return result;
-    //}
-    //
-    //function getCompanySelectedMenuData () {
-    //  var sections = [];
-    //
-    //  // Project Management section
-    //  sections.push({
-    //    name: $filter('translate')('MENU.METHODOLOGY_TOOLS.HEADING'),
-    //    type: 'heading',
-    //    hidden: true,
-    //    children: [
-    //      {
-    //        name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
-    //        type: 'toggle',
-    //        pages: [
-    //          {
-    //            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
-    //            state: 'questionnaires.templates.create',
-    //            type: 'link'
-    //          },
-    //          {
-    //            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
-    //            state: 'questionnaires.templates.list',
-    //            type: 'link'
-    //          }
-    //        ]
-    //      },
-    //      {
-    //        name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.SCRIPTS'),
-    //        type: 'toggle',
-    //        pages: [
-    //          {
-    //            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_SCRIPT'),
-    //            state: 'scripts.create',
-    //            type: 'link'
-    //          },
-    //          {
-    //            name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_SCRIPTS'),
-    //            state: 'scripts.list',
-    //            type: 'link'
-    //          }
-    //        ]
-    //      }
-    //    ]
-    //  });
-    //  return sections;
-    //}
+    function setProjectPagesDependingOnSelectedCompany () {
 
-
-    function projectPlanningMenuData () {
-
-      var projectList = [], sections = [];
-
-      // Planning section
-      sections.push({
-        name: $filter('translate')('MENU.PROJECT_MANAGEMENT.HEADING'),
-        type: 'heading',
-        hidden: true,
-        children: [
-          {
-            name: 'New project',
-            state: 'projects.create',
-            type: 'link'
-          },
-          {
-            name: $filter('translate')('MENU.PROJECT_MANAGEMENT.MANAGE_PROJECTS'),
-            type: 'toggle',
-            pages: projectList
-          },
-          {
-            name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
-            type: 'toggle',
-            pages: [
-              {
-                name: 'Plan evaluations',
-                state: 'evaluations.plan',
-                type: 'link'
-              },
-              {
-                name: 'Planned evaluations',
-                state: 'evaluations.list',
-                type: 'link'
-              }
-            ]
-          }
-        ]
-      });
-
-      //managementFlow.getCompany().getList('projects').then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
-      models.projects().getList().then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
+      managementFlow.getCompany().getList('projects').then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
+      //models.projects().getList().then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
 
       function getCompanyProjectsSuccessFn ( response ) {
         _.forEach(response, function (project) {
@@ -347,7 +281,6 @@
             contentType: 'project'
           });
         });
-
       }
       function getCompanyProjectsErrorFn () {
         // TODO deal with the error
@@ -356,94 +289,7 @@
       return sections;
     }
 
-    //function getDefaultMenuDataForTenantUser () {
-    //  var generalData = getGeneralMenuDataForTenantUser();
-    //  var companyList = getCompaniesListMenuData();
-    //
-    //  return generalData.concat(companyList);
-    //}
-    //
-    //function getGeneralMenuDataForTenantUser () {
-    //  var sections = [];
-    //
-    //  // User Management section
-    //  sections.push({
-    //    name: $filter('translate')('MENU.USER_MANAGEMENT.HEADING'),
-    //    type: 'heading',
-    //    hidden: false,
-    //    children: [
-    //      {
-    //        name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.HEADING'),
-    //        state: 'shoppers.create',
-    //        type: 'toggle',
-    //        pages: [
-    //          {
-    //            name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.CREATE'),
-    //            state: 'shoppers.create',
-    //            type: 'link'
-    //          },
-    //          {
-    //            name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.LIST'),
-    //            state: 'shoppers.list',
-    //            type: 'link'
-    //          }
-    //        ]
-    //      }//,
-    //      //{
-    //      //  name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.HEADING'),
-    //      //  state: 'shoppers.list',
-    //      //  type: 'toggle',
-    //      //  pages: [
-    //      //    {
-    //      //      name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.CREATE'),
-    //      //      state: 'shoppers.create',
-    //      //      type: 'link'
-    //      //    },
-    //      //    {
-    //      //      name: $filter('translate')('MENU.USER_MANAGEMENT.CONSULTANTS.LIST'),
-    //      //      state: 'shoppers.list',
-    //      //      type: 'link'
-    //      //    }
-    //      //  ]
-    //      //}
-    //    ]
-    //  });
-    //
-    //  return sections;
-    //}
-
-    function getCompaniesListMenuData () {
-      var companiesMenuLinks = [],
-        sections;
-
-      companiesMenuLinks.push({
-        name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CREATE'),
-        type: 'link',
-        state: 'companies.create'
-      });
-
-      _.forEach(managementFlow.getCompanyList(), function (company) {
-        companiesMenuLinks.push({
-          name: company.name,
-          value: company,
-          type: 'action',
-          contentType: 'company'
-        });
-      });
-
-      sections = {
-          name: $filter('translate')('MENU.CLIENT_MANAGEMENT.HEADING'),
-          type: 'heading',
-          hidden: true,
-          accessLvl: 0,
-          companySelectionSection: true,
-          children: companiesMenuLinks
-        };
-
-      return sections;
-    }
-
-    function getCompanyChildrenList () {
+    function getCompanyListForMenu () {
       var children = [];
       _.forEach(managementFlow.getCompanyList(), function (company) {
         children.push({
@@ -453,6 +299,15 @@
           contentType: 'company'
         });
       });
+
+      // Add the Add company menu item to add a new company
+      children.push({
+        name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CREATE'),
+        type: 'link',
+        state: 'companies.create',
+        showTopBorder: true
+      });
+
       return children;
     }
   }
