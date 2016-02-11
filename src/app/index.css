@@ -164,7 +164,10 @@ fieldset {
 }
 
 .docs-menu .stand-alone {
-  border-top: 1px solid #267ED5;
+  border-top: 1px dotted #267ED5;
+}
+.docs-menu .last-stand-alone {
+  border-top: 1px dotted #267ED5;
 }
 
 .docs-menu .md-button {

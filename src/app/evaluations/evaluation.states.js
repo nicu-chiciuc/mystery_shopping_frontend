@@ -10,18 +10,15 @@
     $stateProvider
       .state('evaluations', {
         abstract: true,
-        parent: 'companySelected',
+        parent: 'projectSelected',
         url: '/evaluations',
         templateUrl: 'app/evaluations/evaluation-wrapper-page.html',
         resolve: {
           evaluations: function ( models ) { return models.evaluations().getList(); },
-          project: function ( models ) { return models.projects().one(11).get(); }
+          project: function ( managementFlow ) { return managementFlow.getProject(); }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
-        },
-        controller: function ( models, managementFlow, project ) {
-            managementFlow.setProject(project);
         }
       })
       .state('evaluations.list', {

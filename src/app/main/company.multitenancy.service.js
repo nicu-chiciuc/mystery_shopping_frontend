@@ -91,10 +91,10 @@
 
       authorizeProject: function () {
         self.getProjectPromise()
-          .then(function( company ) {
-            var isCompanySelected = self.isProjectSelected();
+          .then(function( project ) {
+            var isProjectSelected = self.isProjectSelected();
 
-            if (!isCompanySelected) {
+            if (!isProjectSelected) {
               // user is not authenticated. stow the state they wanted before you
               // send them to the signin state, so you can return them when you're done
               $rootScope.returnToState = $rootScope.toState;
@@ -103,7 +103,7 @@
               $state.go('chooseProject');
             }
 
-            return company;
+            return project;
           });
       }
     };

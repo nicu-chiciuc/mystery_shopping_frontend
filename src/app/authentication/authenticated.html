@@ -15,12 +15,12 @@
         <menu-toggle section="section" ng-if="section.type === 'toggle' && !section.hidden"></menu-toggle>
 
         <ul ng-if="section.children" class="menu-nested-list">
-          <li ng-repeat="child in section.children" ng-class="{'childActive' : isSectionSelected(child), 'stand-alone': child.showTopBorder}">
-            <menu-link section="child" ng-if="child.type === 'link'"></menu-link>
+          <li ng-repeat="child in section.children" ng-class="{'childActive' : isSectionSelected(child), 'stand-alone': child.showTopBorder, 'last-stand-alone': child.showTopBorder}">
+            <menu-link section="child" ng-if="child.type === 'link' && !child.hidden"></menu-link>
 
-            <menu-action section="child" ng-if="child.type === 'action'"></menu-action>
+            <menu-action section="child" ng-if="child.type === 'action' && !child.hidden"></menu-action>
 
-            <menu-toggle section="child" ng-if="child.type === 'toggle'"></menu-toggle>
+            <menu-toggle section="child" ng-if="child.type === 'toggle' && !child.hidden"></menu-toggle>
           </li>
         </ul>
       </li>

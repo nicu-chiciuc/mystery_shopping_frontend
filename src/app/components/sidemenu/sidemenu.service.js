@@ -92,6 +92,33 @@
       ]
     });
 
+    // Evaluation section child object
+    var evaluationChildObject = {
+      name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
+      type: 'toggle',
+      hidden: true,
+      pages: [
+        {
+          name: 'Plan evaluations',
+          state: 'evaluations.plan',
+          type: 'link'
+        },
+        {
+          name: 'Planned evaluations',
+          state: 'evaluations.list',
+          type: 'link'
+        }
+      ]
+    };
+
+    // Project creation child object
+    var projectCreateChildObject = {
+      name: 'New project',
+      state: 'projects.create',
+      type: 'link',
+      showTopBorder: false
+    };
+
     // Planning section
     sections.push({
       name: $filter('translate')('MENU.PROJECT_MANAGEMENT.HEADING'),
@@ -99,31 +126,12 @@
       accessLvl: 1,
       hidden: true,
       children: [
-        {
-          name: 'New project',
-          state: 'projects.create',
-          type: 'link'
-        },
+        evaluationChildObject,
+        projectCreateChildObject,
         {
           name: $filter('translate')('MENU.PROJECT_MANAGEMENT.MANAGE_PROJECTS'),
           type: 'toggle',
           pages: projectList
-        },
-        {
-          name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
-          type: 'toggle',
-          pages: [
-            {
-              name: 'Plan evaluations',
-              state: 'evaluations.plan',
-              type: 'link'
-            },
-            {
-              name: 'Planned evaluations',
-              state: 'evaluations.list',
-              type: 'link'
-            }
-          ]
         }
       ]
     });
@@ -156,6 +164,7 @@
       },
 
       unsetCurrentCompany: selectCompanySideMenuData,
+      unsetCurrentProject: unsetCurrentProject,
       //companySelectedMenuData: companySelectedMenuData,
       setProjectPlanningMenuData: setProjectPagesDependingOnSelectedCompany,
       setCompany: setCompany,
@@ -221,14 +230,25 @@
       });
     }
 
+    function setProjectChosenMenuState () {
+      evaluationChildObject.hidden = false;
+      projectCreateChildObject.showTopBorder = true;
+    }
+
     function setProject ( project ) {
       managementFlow.setProject(project);
+
+      setProjectChosenMenuState();
+
+      if ( $rootScope.returnToState ) {
+        $state.go($rootScope.returnToState, $rootScope.returnToStateParams);
+      }
     }
 
     function setCompany ( company ) {
 
       function isNotNeutralState ( state ) {
-        var notNeutralStates = ['companies', 'projects'];
+        var notNeutralStates = ['companies', 'projects', 'evaluations'];
         var stateFound = false;
 
         _.forEach(notNeutralStates, function (notNeutralState) {
@@ -269,6 +289,10 @@
       managementFlow.unsetCompany();
 
       setCompanyNotChosenMenuState();
+    }
+
+    function unsetCurrentProject () {
+      managementFlow.unsetProject();
     }
 
     function setProjectPagesDependingOnSelectedCompany () {

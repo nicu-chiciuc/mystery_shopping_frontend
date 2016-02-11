@@ -56,11 +56,7 @@
       .state('chooseCompany', {
         parent: 'authenticated',
         template: 'Choose a company to manage',
-        resolve: {
-          companies: function ( models ) { return models.companies().getList({simple: true}); }
-        },
         controller: function ( sideMenu ) {
-          //sideMenu.setCompanyNotChosenMenuState();
           sideMenu.unsetCurrentCompany();
         },
         data: {
@@ -68,13 +64,24 @@
         }
       })
       .state('chooseProject', {
-        parent: 'authenticated',
+        parent: 'companySelected',
         template: 'Choose a project to manage',
-        controller: function ( sideMenu, companies, $state ) {
-          sideMenu.setCompanyList(companies);
+        controller: function ( sideMenu ) {
+          sideMenu.unsetCurrentProject();
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
+        }
+      })
+      .state('projectSelected', {
+        abstract: true,
+        parent: 'companySelected',
+        template: '<div ui-view></div>',
+        //template: 'Choose a project to manage',
+        resolve:  {
+          project: function ( managementFlow ) {
+            return managementFlow.authorizeProject();
+          }
         }
       })
       .state('accessdenied', {
