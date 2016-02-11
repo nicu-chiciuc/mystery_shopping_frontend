@@ -30,6 +30,9 @@
 
       vm.logout = logout;
       vm.unsetCompany = unsetCompany;
+      vm.goToCompanyDetailsPage = function () {
+        $state.go('companies.detail.edit', {companyId: vm.managementFlow.getCompany().id});
+      };
 
       vm.openMenu = function($mdOpenMenu, ev) {
         originatorEv = ev;
