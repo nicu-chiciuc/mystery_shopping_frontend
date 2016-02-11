@@ -255,6 +255,8 @@
         } else {
           $state.go($rootScope.returnToState, $rootScope.returnToStateParams);
         }
+      } else {
+        $state.go('companies.detail.view', {companyId: company.id});
       }
     }
 
