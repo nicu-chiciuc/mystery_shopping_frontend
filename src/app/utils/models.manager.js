@@ -23,7 +23,8 @@
     TemplateQuestionnaireBlockModel,
     CompanyManagerModel,
     CompanyEmployeeModel,
-    ShopperModel
+    ShopperModel,
+    PlannedEvaluationModel
   ) {
     var manager = {
       ProjectModel: ProjectModel,
@@ -42,7 +43,8 @@
       TemplateQuestionnaireBlockModel: TemplateQuestionnaireBlockModel,
       CompanyManagerModel: CompanyManagerModel,
       CompanyEmployeeModel: CompanyEmployeeModel,
-      ShopperModel: ShopperModel
+      ShopperModel: ShopperModel,
+      PlannedEvaluationModel: PlannedEvaluationModel
     };
 
     return manager;

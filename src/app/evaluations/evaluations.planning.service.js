@@ -6,7 +6,7 @@
     .factory('evaluationPlanning', evaluationPlanning);
 
   /** @ngInject */
-  function evaluationPlanning ( $rootScope, $q, $state, managementFlow ) {
+  function evaluationPlanning ( $rootScope, $q, $state, managementFlow, models ) {
     var self;
 
     self = {
@@ -15,7 +15,8 @@
       totalEvaluationNumber: totalEvaluationNumber,
       leftToPlanEvaluationNumber: leftToPlanEvaluationNumber,
       setPlannedEvaluations: setPlannedEvaluations,
-      getPlannedEvaluations: getPlannedEvaluations
+      getPlannedEvaluations: getPlannedEvaluations,
+      savePlannedEvaluations: savePlannedEvaluations
     };
 
     return self;
@@ -23,7 +24,16 @@
 
     function createPlannedEvaluations ( evaluations ) {
       var evaluationsCopy = _.cloneDeep(evaluations);
-      self.plannedEvaluations = self.plannedEvaluations.concat(evaluationsCopy);
+      evaluationsCopy = models.restangularizeCollection(null, evaluationsCopy, 'plannedevaluations');
+
+      evaluationsCopy.post().then(savePlannedEvaluationsSuccessFn, savePlannedEvaluationsErrorFn);
+
+      function savePlannedEvaluationsSuccessFn ( response ) {
+        self.plannedEvaluations = self.plannedEvaluations.concat(response);
+      }
+      function savePlannedEvaluationsErrorFn () {
+        // TODO deal with the error
+      }
     }
 
     function totalEvaluationNumber () {
@@ -40,6 +50,9 @@
 
     function getPlannedEvaluations () {
       return self.plannedEvaluations;
+    }
+
+    function savePlannedEvaluations ( evaluations ) {
     }
   }
 

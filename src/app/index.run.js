@@ -101,6 +101,12 @@
       return obj;
     });
 
+    Restangular.extendModel('plannedevaluations', function (obj) {
+      angular.extend(obj, modelManager.PlannedEvaluationModel);
+      obj.initialize();
+      return obj;
+    });
+
     $log.debug('runBlock end');
   }
 

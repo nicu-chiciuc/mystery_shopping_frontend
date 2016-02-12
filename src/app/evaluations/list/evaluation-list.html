@@ -1,6 +1,8 @@
 <md-content>
-  bla bla evaluation list
 
   <ms-evaluations-table evaluations="vm.evaluationPlanning.getPlannedEvaluations()"></ms-evaluations-table>
 
+  <md-button ng-click="vm.savePlannedEvaluations()">
+    {{ 'BUTTON.SAVE' | translate }}
+  </md-button>
 </md-content>

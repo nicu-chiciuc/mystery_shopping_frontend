@@ -6,7 +6,7 @@
     .controller('EvaluationPlanToolbarController', EvaluationPlanToolbarController);
 
   /** @ngInject */
-  function EvaluationPlanToolbarController ( $log, contentTypes, company, evaluations, project, evaluationPlanning ) {
+  function EvaluationPlanToolbarController ( $log, contentTypes, models, company, evaluations, project, evaluationPlanning ) {
     $log.debug('Entered EvaluationPlanToolbarController');
     var vm = this;
 
@@ -26,8 +26,9 @@
       var evaluationsToCreate = [];
       var itemToAssess = evaluationSkeleton.itemToAssess;
 
-      evaluationSkeleton.script = evaluationSkeleton.questionnaire_script_repr.id;
-      evaluationSkeleton.questionnaire = evaluationSkeleton.questionnaire_template_repr.id;
+      evaluationSkeleton.project = vm.project.id;
+      evaluationSkeleton.questionnaire_script = evaluationSkeleton.questionnaire_script_repr.id;
+      evaluationSkeleton.questionnaire_template = evaluationSkeleton.questionnaire_template_repr.id;
       evaluationSkeleton.shopper = evaluationSkeleton.shopper_repr.id;
 
       if ( isValid ) {
@@ -41,6 +42,7 @@
         } else {
           evaluationSkeleton.employee_id = itemToAssess.person_id;
           evaluationSkeleton.employee_type = itemToAssess.person_type;
+          evaluationSkeleton.employee_repr = itemToAssess.person_repr;
 
           // The itemToAssess is a manager.
           if ( itemToAssess.person_type === contentTypes.clientmanager ) {
@@ -60,6 +62,10 @@
           }
         }
       }
+
+      angular.extend(evaluationSkeleton, models.manager.PlannedEvaluationModel);
+      evaluationSkeleton.initialize();
+
       for ( var i = 0; i < evaluationSkeleton.nrOfEvaluations; i++ ) {
         evaluationsToCreate.push(evaluationSkeleton);
       }

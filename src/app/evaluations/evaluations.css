@@ -2,3 +2,8 @@
     font-size: 12px;
     color: #aaaaaa;
 }
+
+table.md-table:not(.md-row-select) td.md-cell.small-padding:nth-child(n+2):nth-last-child(n+2),
+table.md-table:not(.md-row-select) th.md-column.small-padding:nth-child(n+2):nth-last-child(n+2){
+    padding: 0 7px 0 0;
+}

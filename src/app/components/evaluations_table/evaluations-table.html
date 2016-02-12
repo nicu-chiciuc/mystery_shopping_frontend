@@ -8,6 +8,7 @@
       <th md-column>
         {{ 'EVALUATION.TABLE.HEADER.SHOPPER' | translate }}
       </th>
+      <th md-column class="small-padding"></th>
       <th md-column>
         {{ 'EVALUATION.TABLE.HEADER.SUBJECT_OF_EVALUATION' | translate }}
       </th>
@@ -34,11 +35,15 @@
         md-select-id="{{evaluation.id}}"
         ng-model="selectedRow"
         md-auto-select
-        ng-repeat="evaluation in vm.evaluations track by $index">
+        ng-repeat="evaluation in vm.evaluations track by $index"
+        class="md-accent">
       <td md-cell>{{ evaluation.visit_id }}</td>
       <td md-cell>{{ evaluation.shopper_repr.user.fullName }}</td>
+      <td md-cell class="small-padding">
+        <ng-md-icon icon="{{ evaluation.subjectOfEvaluation.icon }}" size="16"></ng-md-icon>
+      </td>
       <td md-cell>{{ evaluation.subjectOfEvaluation.displayName }}</td>
-      <td md-cell>{{ evaluation.visit_type }}</td>
+      <td md-cell>{{ evaluation.evaluation_type }}</td>
       <td md-cell>{{ evaluation.questionnaire_script_repr.title }}</td>
       <td md-cell>{{ evaluation.questionnaire_template_repr.title }}</td>
       <td md-cell>{{ evaluation.suggested_start_date }}</td>
