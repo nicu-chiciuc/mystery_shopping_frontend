@@ -7,10 +7,16 @@
     .factory('ResearchMethodologyModel', ResearchMethodologyModel);
 
   /** @ngInject */
-  function ResearchMethodologyModel () {
+  function ResearchMethodologyModel ( contentTypes, EntityModel, SectionModel, CompanyEmployeeModel, CompanyManagerModel ) {
     var Model = {
       initialize: initialize
     };
+
+    var modelContentTypeDispatcher = {};
+    modelContentTypeDispatcher[contentTypes.clientemployee] = CompanyEmployeeModel;
+    modelContentTypeDispatcher[contentTypes.clientmanager] = CompanyManagerModel;
+    modelContentTypeDispatcher[contentTypes.entity] = EntityModel;
+    modelContentTypeDispatcher[contentTypes.section] = SectionModel;
 
     return Model;
 
@@ -22,6 +28,11 @@
       researchMethodology.questionnaires = researchMethodology.questionnaires || [];
       researchMethodology.places_to_assess_repr = researchMethodology.places_to_assess_repr || [];
       researchMethodology.people_to_assess_repr = researchMethodology.people_to_assess_repr || [];
+
+      _.forEach(researchMethodology.people_to_assess_repr, function (person) {
+        angular.extend(person.person_repr, modelContentTypeDispatcher[person.person_type]);
+        person.person_repr.initialize();
+      })
     }
 
   }

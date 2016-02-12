@@ -10,7 +10,9 @@
   function CompanyModel ( DepartmentModel ) {
     var Model = {
       initialize: initialize,
-      addDepartment: addDepartment
+      addDepartment: addDepartment,
+      getEntityOfASection: getEntityOfASection,
+      getEntityRepr: getEntityRepr
     };
 
     return Model;
@@ -28,6 +30,28 @@
     function addDepartment ( department ) {
       var company = this;
       company.departments_repr.push(department);
+    }
+
+    function getEntityOfASection ( sectionId ) {
+      var company = this;
+      var foundEntity = undefined;
+
+      _.forEach(company.departments_repr, function (department) {
+        foundEntity = foundEntity || department.getEntityOfASection(sectionId);
+      });
+
+      return foundEntity;
+    }
+
+    function getEntityRepr ( entityId ) {
+      var company = this;
+      var foundEntity = undefined;
+
+      _.forEach(company.departments_repr, function (department) {
+        foundEntity = foundEntity || department.getEntityRepr(entityId);
+      });
+
+      return foundEntity;
     }
   }
 })();

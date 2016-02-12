@@ -12,6 +12,15 @@
         RO: 'Rom',
         RU: 'Rus'
       },
+      CONTENT_TYPE: {
+        24: 'Department',
+        25: 'Entity',
+        26: 'Section',
+        16: 'Client project manager',
+        17: 'Manager',
+        18: 'Employee',
+        19: 'Shopper'
+      },
       BUTTON: {
         EDIT: 'Edit',
         SAVE: 'Save',
@@ -193,6 +202,10 @@
             DATE: 'Date',
             TIME: 'Time period'
           }
+        },
+        PLANNING: {
+          NUMBER_OF_EVALUATIONS: 'Number of evaluations',
+          CREATE_EVALUATIONS: 'Create evaluations'
         },
         HEADING: 'Evaluations',
         TOTAL: 'Total: {NR}',

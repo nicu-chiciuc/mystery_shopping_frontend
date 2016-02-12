@@ -15,7 +15,8 @@
         templateUrl: 'app/evaluations/evaluation-wrapper-page.html',
         resolve: {
           evaluations: function ( models ) { return models.evaluations().getList(); },
-          project: function ( managementFlow ) { return managementFlow.getProject(); }
+          project: function ( managementFlow ) { return managementFlow.getProject(); },
+          company: function ( managementFlow ) { return managementFlow.getCompany(); }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']

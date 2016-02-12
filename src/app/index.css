@@ -104,6 +104,9 @@ fieldset {
 .margin-left-md {
   margin-left: 24px;
 }
+.margin-left-lg {
+  margin-left: 48px;
+}
 
 /************
  * SITE CONTENT TOOLBAR

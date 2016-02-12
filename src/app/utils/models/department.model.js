@@ -11,7 +11,9 @@
     var Model = {
       initialize: initialize,
       addEntity: addEntity,
-      addManager: addManager
+      addManager: addManager,
+      getEntityOfASection: getEntityOfASection,
+      getEntityRepr: getEntityRepr
     };
 
     return Model;
@@ -44,6 +46,26 @@
     function addManager ( manager ) {
       var department = this;
       department.managers.push(manager);
+    }
+
+    function getEntityOfASection ( sectionId ) {
+      var department = this;
+      var foundEntity = undefined;
+
+      _.forEach(department.entities, function (entity) {
+        foundEntity = foundEntity || entity.containsSection(sectionId);
+      });
+
+      return foundEntity;
+    }
+
+    function getEntityRepr ( entityId ) {
+      var department = this;
+      var foundEntity = _.find(department.entities, function (departmentEntity) {
+        return departmentEntity.id === entityId;
+      });
+
+      return foundEntity;
     }
 
   }

@@ -8,19 +8,22 @@
   /** @ngInject */
   function evaluationPlanning ( $rootScope, $q, $state, managementFlow ) {
     var self;
-    var plannedEvaluations = [];
 
     self = {
+      plannedEvaluations: [],
       createPlannedEvaluations: createPlannedEvaluations,
       totalEvaluationNumber: totalEvaluationNumber,
-      leftToPlanEvaluationNumber: leftToPlanEvaluationNumber
+      leftToPlanEvaluationNumber: leftToPlanEvaluationNumber,
+      setPlannedEvaluations: setPlannedEvaluations,
+      getPlannedEvaluations: getPlannedEvaluations
     };
 
     return self;
 
 
     function createPlannedEvaluations ( evaluations ) {
-      plannedEvaluations = plannedEvaluations.concat(evaluations);
+      var evaluationsCopy = _.cloneDeep(evaluations);
+      self.plannedEvaluations = self.plannedEvaluations.concat(evaluationsCopy);
     }
 
     function totalEvaluationNumber () {
@@ -28,7 +31,15 @@
     }
 
     function leftToPlanEvaluationNumber () {
-      return totalEvaluationNumber() - plannedEvaluations.length;
+      return totalEvaluationNumber() - self.plannedEvaluations.length;
+    }
+
+    function setPlannedEvaluations ( evaluations ) {
+      self.plannedEvaluations = evaluations;
+    }
+
+    function getPlannedEvaluations () {
+      return self.plannedEvaluations;
     }
   }
 

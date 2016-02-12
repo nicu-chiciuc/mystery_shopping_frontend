@@ -6,7 +6,7 @@
     .directive('menuAction', menuAction);
 
   /** @ngInject */
-  function menuAction () {
+  function menuAction ( models ) {
     return {
       scope: {
         section: '='
@@ -21,10 +21,18 @@
 
         $scope.selectItem = function(item, contentType) {
           if ( contentType === 'company' ) {
-            controller.setCompany(item);
+            models.companies().one(item.id).get().then(getCompanySuccessFn, getCompanyErrorFn);
           } else if ( contentType === 'project' ) {
             controller.setProject(item);
           }
+
+          function getCompanySuccessFn ( response ) {
+            controller.setCompany(response);
+          }
+          function getCompanyErrorFn () {
+            // TODO deal with the error
+          }
+
         };
       }
     };

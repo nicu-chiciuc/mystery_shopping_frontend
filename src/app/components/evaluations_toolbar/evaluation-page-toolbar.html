@@ -5,16 +5,16 @@
         {{ 'EVALUATION.HEADING' | translate }}
       </span>
 
-      <span>
-        {{ 'EVALUATION.TOTAL' | translate : {NR: vm.project.research_methodology.nr_of_evaluations} }}
+      <span class="margin-left-lg">
+        {{ 'EVALUATION.TOTAL' | translate : {NR: vm.evaluationPlanning.totalEvaluationNumber()} }}
       </span>
 
-      <span>
-        {{ 'EVALUATION.NOT_PLANNED' | translate : {NR: vm.nrOfNotPlannedEvaluations} }}
+      <span class="margin-left-lg">
+        {{ 'EVALUATION.NOT_PLANNED' | translate : {NR: vm.evaluationPlanning.leftToPlanEvaluationNumber() } }}
       </span>
 
-      <span>
-        {{ 'COMMON.DEADLINE' | translate }}: {{ vm.project.suggested_end_date | date }}
+      <span class="margin-left-lg">
+        {{ 'COMMON.DEADLINE' | translate }}: {{ vm.project.end_date | date }}
       </span>
 
     </h2>

@@ -16,7 +16,9 @@
       addEmployee: addEmployee,
       addManager: addManager,
       mergeCoordinates: mergeCoordinates,
-      splitCoordinates: splitCoordinates
+      splitCoordinates: splitCoordinates,
+      containsSection: containsSection,
+      getSection: getSection
     };
 
     return Model;
@@ -81,6 +83,27 @@
         entity.longitude = coordinates[1];
         entity.zoomCoefficient = +coordinates[2];
       }
+    }
+
+    function containsSection ( sectionId ) {
+      var entity = this;
+      var searchedSection;
+
+      searchedSection = _.find(entity.sections, function (entitySection) {
+        return entitySection.id === sectionId;
+      });
+
+      if ( searchedSection ) return entity;
+      else return undefined;
+    }
+
+    function getSection ( sectionId ) {
+      var entity = this;
+      var section = _.find(entity.sections, function (entitySection) {
+        return entitySection.id === sectionId;
+      });
+
+      return section;
     }
 
   }
