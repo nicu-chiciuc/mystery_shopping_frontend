@@ -43,12 +43,17 @@
         },
         PROJECT_PLANNING: {
           HEADING: 'Project Planning',
-          EVALUATIONS: 'Evaluations'
+          EVALUATIONS: 'Evaluations',
+          NO_PROJECTS: 'No projects to manage',
+          PROJECTS_TO_MANAGE: 'Choose a project to manage',
+          PLAN_EVALUATIONS: 'Plan evaluations',
+          ASSESS_EVALUATIONS: 'Assess evaluations'
         },
         CLIENT_MANAGEMENT: {
           HEADING: 'Client Management',
           CLIENTS: 'Clients',
-          CREATE: 'Create company'
+          CREATE: 'Create company',
+          CLIENTS_TO_MANAGE: 'Choose a company to manage'
         },
         QUESTIONNAIRE_MANAGEMENT: {
           HEADING: 'Questionnaire Management',

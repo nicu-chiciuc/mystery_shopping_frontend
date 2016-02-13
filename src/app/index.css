@@ -166,10 +166,10 @@ fieldset {
   border-bottom: 1px solid #267ED5;
 }
 
-.docs-menu .stand-alone {
-  border-top: 1px dotted #267ED5;
+.docs-menu .top-border {
+  border-bottom: 1px dotted #267ED5;
 }
-.docs-menu .last-stand-alone {
+.docs-menu .bottom-border {
   border-top: 1px dotted #267ED5;
 }
 
@@ -234,6 +234,11 @@ fieldset {
   text-align: left;
   width: 100%;
   color: rgba(255, 255, 255, 0.54)
+}
+.menu-sub-heading {
+  line-height: 24px;
+  font-size: 12px;
+  padding: 4px 16px;
 }
 .docs-menu li.parentActive,
 .docs-menu li.parentActive .menu-toggle-list {

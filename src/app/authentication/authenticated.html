@@ -4,7 +4,7 @@
 
   <md-content flex role="navigation">
     <ul class="docs-menu">
-      <li ng-if="!section.hidden" ng-repeat="section in sideMenu.sections" class="parent-list-item {{section.className || ''}}" ng-class="{'parentActive' : isSectionSelected(section), 'stand-alone': section.showTopBorder}">
+      <li ng-if="!section.hidden" ng-repeat="section in sideMenu.sections" class="parent-list-item {{section.className || ''}}" ng-class="{'parentActive' : isSectionSelected(section), 'top-border': section.showTopBorder}">
         <h2 class="menu-heading md-subhead" ng-if="section.type === 'heading'" id="heading_{{ section.name }}">
           {{section.name}}
         </h2>
@@ -15,7 +15,12 @@
         <menu-toggle section="section" ng-if="section.type === 'toggle' && !section.hidden"></menu-toggle>
 
         <ul ng-if="section.children" class="menu-nested-list">
-          <li ng-repeat="child in section.children" ng-class="{'childActive' : isSectionSelected(child), 'stand-alone': child.showTopBorder, 'last-stand-alone': child.showTopBorder}">
+          <li ng-repeat="child in section.children" ng-class="{'childActive' : isSectionSelected(child), 'top-border': child.showTopBorder, 'bottom-border': child.showBottomBorder}">
+
+            <h5 class="menu-heading menu-sub-heading md-subhead" ng-if="child.type === 'sub-header' && !child.hidden">
+              {{ child.name }}
+            </h5>
+
             <menu-link section="child" ng-if="child.type === 'link' && !child.hidden"></menu-link>
 
             <menu-action section="child" ng-if="child.type === 'action' && !child.hidden"></menu-action>

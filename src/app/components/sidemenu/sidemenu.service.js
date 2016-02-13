@@ -6,135 +6,23 @@
     .factory('sideMenu', sideMenu);
 
   /** @ngInject */
-  function sideMenu ( $rootScope, $state, $filter, principal, managementFlow, models ) {
+  function sideMenu ( $rootScope, $state, principal, managementFlow, sideMenuData ) {
 
     var self,
-      sections = [],
-      projectList = [],
-      companyList = [];
+      sections = [];
 
     // User Management section
-    sections.push({
-      name: $filter('translate')('MENU.USER_MANAGEMENT.HEADING'),
-      type: 'heading',
-      accessLvl: 0,
-      hidden: false,
-      children: [
-        {
-          name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.HEADING'),
-          state: 'shoppers.create',
-          type: 'toggle',
-          pages: [
-            {
-              name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.CREATE'),
-              state: 'shoppers.create',
-              type: 'link'
-            },
-            {
-              name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.LIST'),
-              state: 'shoppers.list',
-              type: 'link'
-            }
-          ]
-        }
-      ]
-    });
+    sections.push(sideMenuData.userManagementSection);
 
     // Company List section
-    sections.push({
-      name: $filter('translate')('MENU.CLIENT_MANAGEMENT.HEADING'),
-      type: 'heading',
-      hidden: true,
-      accessLvl: 0,
-      companySelectionSection: true,
-      children: companyList
-    });
+    sections.push(sideMenuData.companyListSection);
 
-    // Project Management section
-    sections.push({
-      name: $filter('translate')('MENU.METHODOLOGY_TOOLS.HEADING'),
-      type: 'heading',
-      accessLvl: 1,
-      hidden: true,
-      children: [
-        {
-          name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.QUESTIONNAIRES'),
-          type: 'toggle',
-          pages: [
-            {
-              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_QUESTIONNAIRE'),
-              state: 'questionnaires.templates.create',
-              type: 'link'
-            },
-            {
-              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_QUESTIONNAIRES'),
-              state: 'questionnaires.templates.list',
-              type: 'link'
-            }
-          ]
-        },
-        {
-          name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.SCRIPTS'),
-          type: 'toggle',
-          pages: [
-            {
-              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.CREATE_SCRIPT'),
-              state: 'scripts.create',
-              type: 'link'
-            },
-            {
-              name: $filter('translate')('MENU.QUESTIONNAIRE_MANAGEMENT.LIST_SCRIPTS'),
-              state: 'scripts.list',
-              type: 'link'
-            }
-          ]
-        }
-      ]
-    });
+    // Methodology section
+    sections.push(sideMenuData.methodologySection);
 
-    // Evaluation section child object
-    var evaluationChildObject = {
-      name: $filter('translate')('MENU.PROJECT_PLANNING.EVALUATIONS'),
-      type: 'toggle',
-      hidden: true,
-      pages: [
-        {
-          name: 'Plan evaluations',
-          state: 'evaluations.plan',
-          type: 'link'
-        },
-        {
-          name: 'Planned evaluations',
-          state: 'evaluations.list',
-          type: 'link'
-        }
-      ]
-    };
+    // Project Planning section
+    sections.push(sideMenuData.projectPlanningSection);
 
-    // Project creation child object
-    var projectCreateChildObject = {
-      name: 'New project',
-      state: 'projects.create',
-      type: 'link',
-      showTopBorder: false
-    };
-
-    // Planning section
-    sections.push({
-      name: $filter('translate')('MENU.PROJECT_MANAGEMENT.HEADING'),
-      type: 'heading',
-      accessLvl: 1,
-      hidden: true,
-      children: [
-        evaluationChildObject,
-        projectCreateChildObject,
-        {
-          name: $filter('translate')('MENU.PROJECT_MANAGEMENT.MANAGE_PROJECTS'),
-          type: 'toggle',
-          pages: projectList
-        }
-      ]
-    });
 
     $rootScope.$on('$stateChangeSuccess', onStateChange);
 
@@ -165,7 +53,6 @@
 
       unsetCurrentCompany: selectCompanySideMenuData,
       unsetCurrentProject: unsetCurrentProject,
-      //companySelectedMenuData: companySelectedMenuData,
       setProjectPlanningMenuData: setProjectPagesDependingOnSelectedCompany,
       setCompany: setCompany,
       getCompany: managementFlow.getCompany,
@@ -210,7 +97,7 @@
     function setCompanyNotChosenMenuState () {
       _.forEach(self.sections, function (section) {
         if ( section.companySelectionSection ) {
-          section.children = getCompanyListForMenu();
+          section.children = sideMenuData.methods.getCompanyListForMenu();
           section.hidden = false;
         } else if ( section.accessLvl < 1 ) {
           section.hidden = false;
@@ -231,8 +118,7 @@
     }
 
     function setProjectChosenMenuState () {
-      evaluationChildObject.hidden = false;
-      projectCreateChildObject.showTopBorder = true;
+      sideMenuData.methods.setChosenProjectMenuState();
     }
 
     function setProject ( project ) {
@@ -287,7 +173,6 @@
 
     function selectCompanySideMenuData () {
       managementFlow.unsetCompany();
-
       setCompanyNotChosenMenuState();
     }
 
@@ -298,23 +183,13 @@
     function setProjectPagesDependingOnSelectedCompany () {
 
       managementFlow.getCompany().getList('projects').then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
-      //models.projects().getList().then(getCompanyProjectsSuccessFn, getCompanyProjectsErrorFn);
 
       function getCompanyProjectsSuccessFn ( response ) {
         // Set projects list to the service
         managementFlow.setProjectList(response);
 
-        // Reset the side menu project list
-        projectList.length = 0;
-
-        _.forEach(response, function (project) {
-          projectList.push({
-            name: project.period_start + ' - ' + project.period_end,
-            value: project,
-            type: 'action',
-            contentType: 'project'
-          });
-        });
+        // Update project list in menu
+        sideMenuData.methods.updateProjectList(response);
       }
       function getCompanyProjectsErrorFn () {
         // TODO deal with the error
@@ -323,27 +198,7 @@
       return sections;
     }
 
-    function getCompanyListForMenu () {
-      var children = [];
-      _.forEach(managementFlow.getCompanyList(), function (company) {
-        children.push({
-          name: company.name,
-          value: company,
-          type: 'action',
-          contentType: 'company'
-        });
-      });
 
-      // Add the Add company menu item to add a new company
-      children.push({
-        name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CREATE'),
-        type: 'link',
-        state: 'companies.create',
-        showTopBorder: true
-      });
-
-      return children;
-    }
   }
 
 })();
