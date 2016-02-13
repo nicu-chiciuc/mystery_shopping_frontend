@@ -41,6 +41,16 @@
             {{ 'MENU.MANAGEMENT.EDIT_COMPANY' | translate }}
           </md-button>
         </md-menu-item>
+
+        <md-menu-divider></md-menu-divider>
+
+        <md-menu-item>
+          <md-button ng-click="vm.unsetProject()">
+            <ng-md-icon icon="swap_horiz"></ng-md-icon>
+            {{ 'MENU.MANAGEMENT.CHANGE_PROJECT' | translate }}
+          </md-button>
+        </md-menu-item>
+
       </md-menu-content>
     </md-menu>
 

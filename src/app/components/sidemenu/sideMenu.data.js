@@ -176,6 +176,8 @@
         // Set the message that there are no projects to manage
         self.childObjects.projectsToManageSubHeader.name = $filter('translate')('MENU.PROJECT_PLANNING.NO_PROJECTS');
       }
+
+      toggleChosenProjectMenuState(false);
     }
 
     function getCompanyListForMenu () {
@@ -205,17 +207,19 @@
       return children;
     }
 
-    function setChosenProjectMenuState () {
-      self.projectPlanningSection.children = getProjectPlanningBaseChildren();
-
+    function toggleChosenProjectMenuState ( state ) {
       // Hide sub-header and project create items
-      self.childObjects.projectsToManageSubHeader.hidden = true;
-      self.childObjects.projectCreateChildObject.hidden = true;
+      self.childObjects.projectsToManageSubHeader.hidden = state;
+      self.childObjects.projectCreateChildObject.hidden = state;
 
       // Show evaluation menu items
-      self.childObjects.planEvaluationsChildObject.hidden = false;
-      self.childObjects.assessEvaluationsChildObject.hidden = false;
+      self.childObjects.planEvaluationsChildObject.hidden = !state;
+      self.childObjects.assessEvaluationsChildObject.hidden = !state;
+    }
 
+    function setChosenProjectMenuState () {
+      self.projectPlanningSection.children = getProjectPlanningBaseChildren();
+      toggleChosenProjectMenuState(true);
     }
 
   }

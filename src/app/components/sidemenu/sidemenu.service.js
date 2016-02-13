@@ -178,6 +178,7 @@
 
     function unsetCurrentProject () {
       managementFlow.unsetProject();
+      sideMenuData.methods.updateProjectList(managementFlow.getProjectList());
     }
 
     function setProjectPagesDependingOnSelectedCompany () {

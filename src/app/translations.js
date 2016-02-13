@@ -34,7 +34,8 @@
       MENU: {
         MANAGEMENT: {
           CHANGE_COMPANY: 'Change company',
-          EDIT_COMPANY: 'Edit company'
+          EDIT_COMPANY: 'Edit company',
+          CHANGE_PROJECT: 'Change project'
         },
         PROJECT_MANAGEMENT: {
           HEADING: 'Project Management',

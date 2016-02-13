@@ -30,6 +30,7 @@
 
       vm.logout = logout;
       vm.unsetCompany = unsetCompany;
+      vm.unsetProject = unsetProject;
       vm.goToCompanyDetailsPage = function () {
         $state.go('companies.detail.edit', {companyId: vm.managementFlow.getCompany().id});
       };
@@ -49,6 +50,13 @@
         $rootScope.returnToState = $rootScope.toState;
         $rootScope.returnToStateParams = $rootScope.toStateParams;
         $state.go('chooseCompany');
+      }
+
+      function unsetProject () {
+        //managementFlow.unsetCompany();
+        $rootScope.returnToState = $rootScope.toState;
+        $rootScope.returnToStateParams = $rootScope.toStateParams;
+        $state.go('chooseProject');
       }
     }
   }
