@@ -14,7 +14,9 @@
         url: '/evaluations',
         templateUrl: 'app/evaluations/evaluation-wrapper-page.html',
         resolve: {
-          evaluations: function ( models ) { return models.evaluations().getList(); },
+          evaluations: function ( models, $state, $rootScope ) {
+            return models.evaluations().getList();
+          },
           project: function ( managementFlow ) { return managementFlow.getProject(); },
           company: function ( managementFlow ) { return managementFlow.getCompany(); }
         },

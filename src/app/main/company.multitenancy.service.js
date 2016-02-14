@@ -46,12 +46,19 @@
         self.getCompanyPromise()
           .then(function( company ) {
             var isCompanySelected = self.isCompanySelected();
+            var prevReturnToState, prevReturnToStateParams;
 
             if (!isCompanySelected) {
               // user is not authenticated. stow the state they wanted before you
               // send them to the signin state, so you can return them when you're done
+              if ( $rootScope.returnToState ) {
+                prevReturnToState = $rootScope.returnToState;
+                prevReturnToStateParams = $rootScope.returnToStateParams;
+              }
               $rootScope.returnToState = $rootScope.toState;
               $rootScope.returnToStateParams = $rootScope.toStateParams;
+              $rootScope.toState.nextToState = prevReturnToState;
+              $rootScope.toState.nextToStateParams = prevReturnToStateParams;
 
               $state.go('chooseCompany');
             }
@@ -93,12 +100,19 @@
         self.getProjectPromise()
           .then(function( project ) {
             var isProjectSelected = self.isProjectSelected();
+            var prevReturnToState, prevReturnToStateParams;
 
             if (!isProjectSelected) {
               // user is not authenticated. stow the state they wanted before you
               // send them to the signin state, so you can return them when you're done
+              if ( $rootScope.returnToState ) {
+                prevReturnToState = $rootScope.returnToState;
+                prevReturnToStateParams = $rootScope.returnToStateParams;
+              }
               $rootScope.returnToState = $rootScope.toState;
               $rootScope.returnToStateParams = $rootScope.toStateParams;
+              $rootScope.toState.nextToState = prevReturnToState;
+              $rootScope.toState.nextToStateParams = prevReturnToStateParams;
 
               $state.go('chooseProject');
             }

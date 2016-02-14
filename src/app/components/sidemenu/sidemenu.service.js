@@ -122,16 +122,24 @@
     }
 
     function setProject ( project ) {
+      var toState, toStateParams;
       managementFlow.setProject(project);
 
       setProjectChosenMenuState();
 
       if ( $rootScope.returnToState ) {
-        $state.go($rootScope.returnToState, $rootScope.returnToStateParams);
+        toState = $rootScope.returnToState;
+        toStateParams = $rootScope.returnToStateParams;
+        if ( toState.nextToState ) {
+          $rootScope.returnToStateParams = $rootScope.returnToState.nextToStateParams;
+          $rootScope.returnToState = $rootScope.returnToState.nextToState;
+        }
+        $state.go(toState, toStateParams);
       }
     }
 
     function setCompany ( company ) {
+      var toState, toStateParams;
 
       function isNotNeutralState ( state ) {
         var notNeutralStates = ['companies', 'projects', 'evaluations'];
@@ -159,7 +167,13 @@
         if ( isNotNeutralState($rootScope.returnToState.name) ) {
           $state.go('companies.detail.view', {companyId: company.id});
         } else {
-          $state.go($rootScope.returnToState, $rootScope.returnToStateParams);
+          toState = $rootScope.returnToState;
+          toStateParams = $rootScope.returnToStateParams;
+          if ( toState.nextToState ) {
+            $rootScope.returnToStateParams = $rootScope.returnToState.nextToStateParams;
+            $rootScope.returnToState = $rootScope.returnToState.nextToState;
+          }
+          $state.go(toState, toStateParams);
         }
       } else {
         $state.go('companies.detail.view', {companyId: company.id});

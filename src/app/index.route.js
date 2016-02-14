@@ -75,11 +75,11 @@
       })
       .state('projectSelected', {
         abstract: true,
-        parent: 'companySelected',
+        parent: 'authenticated',
         template: '<div ui-view></div>',
         //template: 'Choose a project to manage',
         resolve:  {
-          project: function ( managementFlow ) {
+          project: function ( managementFlow, $state, $rootScope ) {
             return managementFlow.authorizeProject();
           }
         }
