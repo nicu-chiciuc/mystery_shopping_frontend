@@ -43,7 +43,7 @@
         self.companies.push(company);
       },
       authorizeCompany: function () {
-        self.getCompanyPromise()
+        return self.getCompanyPromise()
           .then(function( company ) {
             var isCompanySelected = self.isCompanySelected();
             var prevReturnToState, prevReturnToStateParams;
@@ -97,7 +97,7 @@
       },
 
       authorizeProject: function () {
-        self.getProjectPromise()
+        return self.getProjectPromise()
           .then(function( project ) {
             var isProjectSelected = self.isProjectSelected();
             var prevReturnToState, prevReturnToStateParams;

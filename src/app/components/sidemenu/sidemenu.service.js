@@ -166,6 +166,8 @@
       if ( $rootScope.returnToState ) {
         if ( isNotNeutralState($rootScope.returnToState.name) ) {
           $state.go('companies.detail.view', {companyId: company.id});
+          $rootScope.returnToState = undefined;
+          $rootScope.returnToStateParams = undefined;
         } else {
           toState = $rootScope.returnToState;
           toStateParams = $rootScope.returnToStateParams;

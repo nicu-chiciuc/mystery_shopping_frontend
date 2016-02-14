@@ -6,7 +6,7 @@
     .config(routerConfig);
 
   /** @ngInject */
-  function routerConfig($stateProvider, $urlRouterProvider) {
+  function routerConfig( $stateProvider ) {
     $stateProvider
       .state('companies', {
         abstract: true,
@@ -46,7 +46,10 @@
         url: '/{companyId:int}',
         template: '<div ui-view></div>',
         resolve: {
-          company: function ( $stateParams, models ) { return models.companies().one($stateParams.companyId).get(); }
+          //company: function ( $stateParams, models ) { return models.companies().one($stateParams.companyId).get(); }
+          company: function ( managementFlow ) {
+            return managementFlow.authorizeCompany();
+          }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
