@@ -30,24 +30,31 @@
 
         <md-menu-item>
           <md-button ng-click="vm.unsetCompany()">
-            <ng-md-icon icon="swap_horiz"></ng-md-icon>
+            <!--<ng-md-icon icon="swap_horiz"></ng-md-icon>-->
             {{ 'MENU.MANAGEMENT.CHANGE_COMPANY' | translate }}
           </md-button>
         </md-menu-item>
 
         <md-menu-item>
           <md-button ng-click="vm.goToCompanyDetailsPage()">
-            <ng-md-icon icon="edit"></ng-md-icon>
+            <!--<ng-md-icon icon="edit"></ng-md-icon>-->
             {{ 'MENU.MANAGEMENT.EDIT_COMPANY' | translate }}
           </md-button>
         </md-menu-item>
 
-        <md-menu-divider></md-menu-divider>
+        <md-menu-divider ng-show="vm.managementFlow.isProjectSelected()"></md-menu-divider>
 
-        <md-menu-item>
+        <md-menu-item ng-show="vm.managementFlow.isProjectSelected()">
           <md-button ng-click="vm.unsetProject()">
-            <ng-md-icon icon="swap_horiz"></ng-md-icon>
+            <!--<ng-md-icon icon="swap_horiz"></ng-md-icon>-->
             {{ 'MENU.MANAGEMENT.CHANGE_PROJECT' | translate }}
+          </md-button>
+        </md-menu-item>
+
+        <md-menu-item ng-show="vm.managementFlow.isProjectSelected()">
+          <md-button ng-click="vm.goToProjectDetailsPage()">
+            <!--<ng-md-icon icon="edit"></ng-md-icon>-->
+            {{ 'MENU.MANAGEMENT.EDIT_PROJECT' | translate }}
           </md-button>
         </md-menu-item>
 

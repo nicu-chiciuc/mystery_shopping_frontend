@@ -35,7 +35,8 @@
         MANAGEMENT: {
           CHANGE_COMPANY: 'Change company',
           EDIT_COMPANY: 'Edit company',
-          CHANGE_PROJECT: 'Change project'
+          CHANGE_PROJECT: 'Change project',
+          EDIT_PROJECT: 'Edit project'
         },
         PROJECT_MANAGEMENT: {
           HEADING: 'Project Management',

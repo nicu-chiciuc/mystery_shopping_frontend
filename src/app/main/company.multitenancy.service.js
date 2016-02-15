@@ -95,6 +95,9 @@
       unsetProject: function () {
         self.project = undefined;
       },
+      updateProject: function ( project ) {
+        self.setProject(project);
+      },
 
       authorizeProject: function () {
         return self.getProjectPromise()

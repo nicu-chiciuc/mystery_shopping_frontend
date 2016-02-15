@@ -29,7 +29,7 @@
     return directive;
 
     /** @ngInject */
-    function ProjectController ( $log, $state, moment, models ) {
+    function ProjectController ( $log, $state, moment, models, managementFlow ) {
       $log.debug('Entered msProjectController');
       var vm = this;
 
@@ -57,6 +57,8 @@
           angular.extend(response, models.manager.ProjectModel);
           response.initialize();
           vm.project = response;
+
+          managementFlow.updateProject(response);
 
           vm.isNewProject = false;
 
