@@ -22,8 +22,8 @@
     return self;
 
 
-    function createPlannedEvaluations ( evaluations ) {
-      var evaluationsCopy = _.cloneDeep(evaluations);
+    function createPlannedEvaluations ( evaluationsCopy ) {
+      //var evaluationsCopy = _.cloneDeep(evaluations);
       evaluationsCopy = models.restangularizeCollection(null, evaluationsCopy, 'plannedevaluations');
 
       evaluationsCopy.post().then(savePlannedEvaluationsSuccessFn, savePlannedEvaluationsErrorFn);
@@ -31,8 +31,9 @@
       function savePlannedEvaluationsSuccessFn ( response ) {
         self.plannedEvaluations = self.plannedEvaluations.concat(response);
       }
-      function savePlannedEvaluationsErrorFn () {
+      function savePlannedEvaluationsErrorFn ( error ) {
         // TODO deal with the error
+        console.log(error);
       }
     }
 

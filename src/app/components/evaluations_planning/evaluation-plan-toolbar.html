@@ -136,10 +136,12 @@
         </div><!-- End of layout="column" -->
       </div><!-- End of layout="row" -->
 
-      <md-input-container flex>
-        <label>{{ 'EVALUATION.PLANNING.NUMBER_OF_EVALUATIONS' | translate }}</label>
-        <input ng-model="vm.evaluationSkeleton.nrOfEvaluations" type="number" />
-      </md-input-container>
+      <div layout="row">
+        <md-input-container flex="100">
+          <label>{{ 'EVALUATION.PLANNING.NUMBER_OF_EVALUATIONS' | translate }}</label>
+          <input ng-model="vm.evaluationSkeleton.nrOfEvaluations" type="number" />
+        </md-input-container>
+      </div>
 
       <md-button type="submit">
         {{ 'EVALUATION.PLANNING.CREATE_EVALUATIONS' | translate }}

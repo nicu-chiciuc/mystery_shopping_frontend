@@ -63,11 +63,11 @@
         }
       }
 
-      angular.extend(evaluationSkeleton, models.manager.PlannedEvaluationModel);
-      evaluationSkeleton.initialize();
+      //angular.extend(evaluationSkeleton, models.manager.PlannedEvaluationModel);
+      //evaluationSkeleton.initialize();
 
       for ( var i = 0; i < evaluationSkeleton.nrOfEvaluations; i++ ) {
-        evaluationsToCreate.push(evaluationSkeleton);
+        evaluationsToCreate.push(_.cloneDeep(evaluationSkeleton));
       }
       evaluationPlanning.createPlannedEvaluations(evaluationsToCreate);
     }
