@@ -104,6 +104,8 @@
             <md-datepicker id="suggested_start_date"
                            name="suggested_start_date"
                            ng-model="vm.evaluationSkeleton.suggested_start_date"
+                           md-min-date="vm.project.start_date"
+                           md-max-date="vm.project.end_date"
                            md-placeholder="{{ 'PROJECT.PLACEHOLDER.START_DATE' | translate }}">
             </md-datepicker>
 
@@ -125,6 +127,8 @@
             <md-datepicker id="suggested_end_date"
                            name="suggested_end_date"
                            ng-model="vm.evaluationSkeleton.suggested_end_date"
+                           md-min-date="vm.project.start_date"
+                           md-max-date="vm.project.end_date"
                            md-placeholder="{{ 'PROJECT.PLACEHOLDER.END_DATE' | translate }}">
             </md-datepicker>
 
