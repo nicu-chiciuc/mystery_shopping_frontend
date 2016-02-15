@@ -140,15 +140,34 @@
         </div><!-- End of layout="column" -->
       </div><!-- End of layout="row" -->
 
-      <div layout="row">
-        <md-input-container flex="100">
+      <div layout="column" ng-show="vm.evaluationPlanning.leftToPlanEvaluationNumber() > 0">
+        <md-input-container class="md-block" flex="100">
           <label>{{ 'EVALUATION.PLANNING.NUMBER_OF_EVALUATIONS' | translate }}</label>
-          <input ng-model="vm.evaluationSkeleton.nrOfEvaluations" type="number" />
+          <input ng-model="vm.evaluationSkeleton.nrOfEvaluations"
+                 max="{{ vm.evaluationPlanning.leftToPlanEvaluationNumber() }}"
+                 name="nrOfEvaluations"
+                 type="number"
+                 ng-required="true" />
+
+          <!-- Validation messages -->
+          <div ng-show="evaluationPlanningForm.$submitted" ng-messages="evaluationPlanningForm.nrOfEvaluations.$error">
+            <div ng-message="required">Number of evaluations is REQUIRED!</div>
+            <div ng-message="max">Only {{ vm.evaluationPlanning.leftToPlanEvaluationNumber() }} evaluations are left.</div>
+          </div>
         </md-input-container>
       </div>
 
-      <md-button type="submit">
+      <md-button ng-show="vm.evaluationPlanning.leftToPlanEvaluationNumber() > 0"
+                 class="md-raised"
+                 type="submit">
         {{ 'EVALUATION.PLANNING.CREATE_EVALUATIONS' | translate }}
+      </md-button>
+
+      <md-button ng-show="vm.evaluationPlanning.leftToPlanEvaluationNumber() <= 0"
+                 ng-disabled="true"
+                 class="md-raised"
+                 type="submit">
+        {{ 'EVALUATION.PLANNING.ALL_EVALUATIONS_WERE_PLANNED' | translate }}
       </md-button>
 
     </div>

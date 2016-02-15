@@ -212,7 +212,8 @@
         },
         PLANNING: {
           NUMBER_OF_EVALUATIONS: 'Number of evaluations',
-          CREATE_EVALUATIONS: 'Create evaluations'
+          CREATE_EVALUATIONS: 'Create evaluations',
+          ALL_EVALUATIONS_WERE_PLANNED: 'No evaluations left to plan'
         },
         HEADING: 'Evaluations',
         TOTAL: 'Total: {NR}',

@@ -12,6 +12,7 @@
 
     vm.evaluations = evaluations;
     vm.project = project;
+    vm.evaluationPlanning = evaluationPlanning;
 
     vm.evaluationSkeleton = {};
 
@@ -61,15 +62,12 @@
             }
           }
         }
-      }
 
-      //angular.extend(evaluationSkeleton, models.manager.PlannedEvaluationModel);
-      //evaluationSkeleton.initialize();
-
-      for ( var i = 0; i < evaluationSkeleton.nrOfEvaluations; i++ ) {
-        evaluationsToCreate.push(_.cloneDeep(evaluationSkeleton));
+        for ( var i = 0; i < evaluationSkeleton.nrOfEvaluations; i++ ) {
+          evaluationsToCreate.push(_.cloneDeep(evaluationSkeleton));
+        }
+        evaluationPlanning.createPlannedEvaluations(evaluationsToCreate);
       }
-      evaluationPlanning.createPlannedEvaluations(evaluationsToCreate);
     }
 
     function itemToAssessIsAPlace ( item ) {
