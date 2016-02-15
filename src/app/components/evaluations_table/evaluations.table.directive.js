@@ -21,9 +21,11 @@
     return directive;
 
     /** @ngInject */
-    function EvaluationsTableController ( $log, $state ) {
+    function EvaluationsTableController ( $log, $scope ) {
       $log.debug('Entered EvaluationsTableController');
-      var vm = this;
+
+      $scope.selectedRows = [];
+      $scope.selected = [];
 
     }
   }

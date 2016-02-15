@@ -3,7 +3,11 @@
     color: #aaaaaa;
 }
 
-table.md-table:not(.md-row-select) td.md-cell.small-padding:nth-child(n+2):nth-last-child(n+2),
-table.md-table:not(.md-row-select) th.md-column.small-padding:nth-child(n+2):nth-last-child(n+2){
+table.md-table.md-row-select td.md-cell.small-padding:nth-child(n+3):nth-last-child(n+2),
+table.md-table.md-row-select th.md-column.small-padding:nth-child(n+3):nth-last-child(n+2){
     padding: 0 7px 0 0;
+}
+
+table.md-table th.md-column {
+  white-space: inherit;
 }
