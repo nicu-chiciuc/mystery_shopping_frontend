@@ -211,9 +211,21 @@
           }
         },
         PLANNING: {
+          HEADING: 'Planning',
           NUMBER_OF_EVALUATIONS: 'Number of evaluations',
           CREATE_EVALUATIONS: 'Create evaluations',
-          ALL_EVALUATIONS_WERE_PLANNED: 'No evaluations left to plan'
+          ALL_EVALUATIONS_WERE_PLANNED: 'No evaluations left to plan',
+          SHOPPER: 'Shopper',
+          SUBJECT_OF_EVALUATION: 'Subject of evaluation',
+          SCRIPT: 'Script',
+          QUESTIONNAIRE_TEMPLATE: 'Questionnaire template',
+          SUGGESTED_START_DATE: 'Suggested start date',
+          SUGGESTED_END_DATE: 'Suggested end date'
+        },
+        TYPE: {
+          HEADING: 'Evaluation type',
+          CALL: 'Call',
+          VISIT: 'Visit'
         },
         HEADING: 'Evaluations',
         TOTAL: 'Total: {NR}',
@@ -223,10 +235,13 @@
         GENERIC: {
           FIELD_IS_REQUIRED: 'This field is required.'
         },
-        SPECIFIC_FIELD_IS_REQUIRED: '{FIELD_NAME} is required.',
+        SPECIFIC_FIELD_IS_REQUIRED: 'Field "{FIELD_NAME}" is required.',
+        DATE: {
+          INVALID: 'The entered value is not a date.'
+        },
         PASSWORD: {
-          MIN_LENGTH: 'Password should be longer than 8 characters',
-          PASSWORDS_DO_NOT_MATCH: 'Passwords do not match'
+          MIN_LENGTH: 'Password should be longer than 8 characters.',
+          PASSWORDS_DO_NOT_MATCH: 'Passwords do not match.'
         },
         USER: {
           USERNAME_EXISTS: 'A user with that username already exists.'
