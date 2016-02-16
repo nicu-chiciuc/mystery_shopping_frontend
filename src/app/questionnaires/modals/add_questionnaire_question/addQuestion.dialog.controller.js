@@ -6,8 +6,10 @@
     .controller('AddQuestionnaireQuestionDialogController', AddQuestionnaireQuestionDialogController);
 
   /** @ngInject */
-  function AddQuestionnaireQuestionDialogController ( $log, $scope, $mdDialog, models, question, isNewQuestion ) {
+  function AddQuestionnaireQuestionDialogController ( $log, $scope, $mdDialog, msUtils, models, question, isNewQuestion ) {
     $log.debug('Entered AddQuestionnaireQuestionDialogController');
+
+    $scope.msUtils = msUtils;
 
     $scope.question = question || {
       type: 's',
@@ -19,7 +21,7 @@
 
     switch ($scope.question.type) {
       case 's':
-            $scope.selectedIndex = 1;
+            $scope.selectedIndex = 0;
             break;
       case 'm':
             $scope.selectedIndex = 1;
@@ -34,10 +36,12 @@
 
     angular.extend($scope.question, models.manager.TemplateQuestionnaireQuestionModel);
     $scope.question.initialize();
+    $scope.question.backupInitialQuestion();
 
     $scope.updateQuestionType = updateQuestionType;
     $scope.addChoice = addChoice;
     $scope.addQuestion = addQuestion;
+    $scope.saveQuestion = saveQuestion;
     $scope.removeChoice = removeChoice;
 
 
@@ -58,7 +62,17 @@
       $mdDialog.hide(question);
     }
 
+    function saveQuestion ( question, isValid ) {
+      if ( isValid ) {
+        question.postProcess();
+        $mdDialog.hide(question);
+      }
+    }
+
     $scope.cancel = function() {
+      $scope.question.restoreInitialQuestion();
+      question.postProcess();
+      //$scope.$apply();
       $mdDialog.cancel();
     };
 

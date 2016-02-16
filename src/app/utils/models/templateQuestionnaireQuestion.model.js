@@ -16,7 +16,9 @@
       updateMaxScore: updateMaxScore,
       preProcess: preProcess,
       postProcess: postProcess,
-      recomputeChoiceWeights: recomputeChoiceWeights
+      recomputeChoiceWeights: recomputeChoiceWeights,
+      backupInitialQuestion: backupInitialQuestion,
+      restoreInitialQuestion: restoreInitialQuestion
     };
 
     var postProcessManager = {
@@ -67,6 +69,17 @@
       question.isChoiceQuestion = question.type === 's' || question.type === 'm';
       question.isTextQuestion = question.type === 't';
       question.isDateQuestion = question.type === 'd';
+
+      if ( question.isTextQuestion || question.isDateQuestion ) {
+        if ( question.template_question_choices ) {
+          question.temporary_question_choices = question.template_question_choices;
+          question.template_question_choices = undefined;
+        }
+      } else {
+        if ( question.temporary_question_choices ) {
+          question.template_question_choices = question.temporary_question_choices;
+        }
+      }
 
       question.updateMaxScore();
     }
@@ -140,6 +153,25 @@
           question.max_score += (choice.score > 0 ? choice.score : 0);
         });
       }
+    }
+
+    function backupInitialQuestion () {
+      var question = this;
+      question.initial_type = question.type;
+      question.initial_question_choices = _.cloneDeep(question.template_question_choices);
+      question.initial_weight = question.weight;
+      question.initial_max_score = question.max_score;
+      question.initial_question_body = question.question_body;
+    }
+
+    function restoreInitialQuestion () {
+      var question = this;
+      question.type = question.initial_type;
+      question.template_question_choices = question.initial_question_choices;
+      question.weight = question.initial_weight;
+      question.max_score = question.initial_max_score;
+      question.question_body = question.initial_question_body;
+      question.updateQuestionType(question.type);
     }
 
   }

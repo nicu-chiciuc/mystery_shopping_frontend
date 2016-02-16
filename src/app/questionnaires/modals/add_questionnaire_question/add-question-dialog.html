@@ -1,5 +1,5 @@
 <md-dialog aria-label="{{ 'QUESTIONNAIRE.DIALOG.ADD_QUESTION' | translate }}">
-  <form>
+  <form name="questionForm" ng-submit="saveQuestion(question, questionForm.$valid)" novalidate>
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>
@@ -27,7 +27,17 @@
 
             <md-input-container flex>
               <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
-              <textarea ng-model="question.question_body" md-autofocus columns="1" rows="3"></textarea>
+              <textarea ng-model="question.question_body"
+                        name="question_body"
+                        md-autofocus
+                        columns="1"
+                        rows="3"
+                        ng-required="true"></textarea>
+
+              <!-- Validation messages -->
+              <div ng-messages="questionForm.question_body.$error">
+                <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.QUESTION_BODY') }}</div>
+              </div>
             </md-input-container>
 
             <md-subheader class="md-no-sticky">
@@ -38,21 +48,38 @@
 
             <!-- Question choices list -->
             <md-list>
-              <md-list-item ng-repeat="choice in question.template_question_choices" layout="row">
+              <md-list-item ng-repeat="choice in question.template_question_choices">
 
-                <md-input-container md-no-float flex class="no-errors-spacer">
-                  <input ng-model="choice.text" type="text" placeholder="Choice body"/>
-                </md-input-container>
+                <ng-form name="questionChoiceForm" layout="row" flex="100">
 
-                <md-input-container md-no-float flex="20" class="no-errors-spacer">
-                  <input ng-model="choice.score" ng-change="question.updateMaxScore()" type="number" placeholder="Choice score"/>
-                </md-input-container>
+                  <!-- Choice text -->
+                  <md-input-container md-no-float flex class="no-errors-spacer">
+                    <input ng-model="choice.text" name="choiceText" type="text" placeholder="{{ 'QUESTIONNAIRE.QUESTION.CHOICE.BODY' | translate }}" ng-required="true" />
 
-                <span flex="none">
-                  <md-button ng-click="removeChoice($index)" class="md-icon-button" aria-label="{{ 'BUTTON.REMOVE' | translate }}">
-                    <ng-md-icon icon="close"></ng-md-icon>
-                  </md-button>
-                </span>
+                    <!-- Validation messages -->
+                    <div ng-messages="questionChoiceForm.choiceText.$error">
+                      <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.CHOICE.BODY') }}</div>
+                    </div>
+                  </md-input-container>
+
+                  <!-- Choice score -->
+                  <md-input-container md-no-float flex="20" class="no-errors-spacer">
+                    <input ng-model="choice.score" name="choiceScore" ng-change="question.updateMaxScore()" type="number" placeholder="{{ 'QUESTIONNAIRE.QUESTION.CHOICE.SCORE' | translate }}" ng-required="true" />
+
+                    <!-- Validation messages -->
+                    <div ng-messages="questionChoiceForm.choiceScore.$error">
+                      <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.CHOICE.SCORE') }}</div>
+                    </div>
+                  </md-input-container>
+
+                  <!-- Delete choice button -->
+                  <span flex="none">
+                    <md-button ng-click="removeChoice($index)" class="md-icon-button" aria-label="{{ 'BUTTON.REMOVE' | translate }}">
+                      <ng-md-icon icon="close"></ng-md-icon>
+                    </md-button>
+                  </span>
+
+                </ng-form>
               </md-list-item>
             </md-list>
 
@@ -75,7 +102,17 @@
 
             <md-input-container flex>
               <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
-              <textarea ng-model="question.question_body" md-autofocus columns="1" rows="3"></textarea>
+              <textarea ng-model="question.question_body"
+                        name="question_body"
+                        md-autofocus
+                        columns="1"
+                        rows="3"
+                        ng-required="true"></textarea>
+
+              <!-- Validation messages -->
+              <div ng-messages="questionForm.question_body.$error">
+                <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.QUESTION_BODY') }}</div>
+              </div>
             </md-input-container>
 
             <md-subheader class="md-no-sticky">
@@ -86,21 +123,38 @@
 
             <!-- Question choices list -->
             <md-list>
-              <md-list-item ng-repeat="choice in question.template_question_choices" layout="row">
+              <md-list-item ng-repeat="choice in question.template_question_choices">
 
-                <md-input-container md-no-float flex class="no-errors-spacer">
-                  <input ng-model="choice.text" type="text" placeholder="Choice body"/>
-                </md-input-container>
+                <ng-form name="questionChoiceForm" layout="row" flex="100">
 
-                <md-input-container md-no-float flex="20" class="no-errors-spacer">
-                  <input ng-model="choice.score" ng-change="question.updateMaxScore()" type="number" placeholder="Choice score"/>
-                </md-input-container>
+                  <!-- Choice text -->
+                  <md-input-container md-no-float flex class="no-errors-spacer">
+                    <input ng-model="choice.text" name="choiceText" type="text" placeholder="{{ 'QUESTIONNAIRE.QUESTION.CHOICE.BODY' | translate }}" ng-required="true" />
 
-                <span flex="none">
-                  <md-button ng-click="removeChoice($index)" class="md-icon-button" aria-label="{{ 'BUTTON.REMOVE' | translate }}">
-                    <ng-md-icon icon="close"></ng-md-icon>
-                  </md-button>
-                </span>
+                    <!-- Validation messages -->
+                    <div ng-messages="questionChoiceForm.choiceText.$error">
+                      <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.CHOICE.BODY') }}</div>
+                    </div>
+                  </md-input-container>
+
+                  <!-- Choice score -->
+                  <md-input-container md-no-float flex="20" class="no-errors-spacer">
+                    <input ng-model="choice.score" name="choiceScore" ng-change="question.updateMaxScore()" type="number" placeholder="{{ 'QUESTIONNAIRE.QUESTION.CHOICE.SCORE' | translate }}" ng-required="true" />
+
+                    <!-- Validation messages -->
+                    <div ng-messages="questionChoiceForm.choiceScore.$error">
+                      <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.CHOICE.SCORE') }}</div>
+                    </div>
+                  </md-input-container>
+
+                  <!-- Delete choice button -->
+                  <span flex="none">
+                    <md-button ng-click="removeChoice($index)" class="md-icon-button" aria-label="{{ 'BUTTON.REMOVE' | translate }}">
+                      <ng-md-icon icon="close"></ng-md-icon>
+                    </md-button>
+                  </span>
+
+                </ng-form>
               </md-list-item>
             </md-list>
 
@@ -116,7 +170,17 @@
           <md-content class="md-padding" layout="column">
             <md-input-container flex>
               <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
-              <textarea ng-model="question.question_body" md-autofocus columns="1" rows="3"></textarea>
+              <textarea ng-model="question.question_body"
+                        name="question_body"
+                        md-autofocus
+                        columns="1"
+                        rows="3"
+                        ng-required="true"></textarea>
+
+              <!-- Validation messages -->
+              <div ng-messages="questionForm.question_body.$error">
+                <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.QUESTION_BODY') }}</div>
+              </div>
             </md-input-container>
 
             <md-subheader class="md-no-sticky">
@@ -137,7 +201,17 @@
           <md-content class="md-padding" layout="column">
             <md-input-container flex>
               <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
-              <textarea ng-model="question.question_body" md-autofocus columns="1" rows="3"></textarea>
+              <textarea ng-model="question.question_body"
+                        name="question_body"
+                        md-autofocus
+                        columns="1"
+                        rows="3"
+                        ng-required="true"></textarea>
+
+              <!-- Validation messages -->
+              <div ng-messages="questionForm.question_body.$error">
+                <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.QUESTION_BODY') }}</div>
+              </div>
             </md-input-container>
 
             <md-subheader class="md-no-sticky">
@@ -159,10 +233,10 @@
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="answer('not useful')" md-autofocus>
+      <md-button ng-click="cancel()" md-autofocus>
         Cancel
       </md-button>
-      <md-button ng-click="addQuestion(question)" style="margin-right:20px;">
+      <md-button type="submit" style="margin-right:20px;">
         Add
       </md-button>
     </md-dialog-actions>

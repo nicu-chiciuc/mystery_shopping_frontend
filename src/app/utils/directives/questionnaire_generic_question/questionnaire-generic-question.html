@@ -12,10 +12,11 @@
     </md-button>
   </p>
 
-
   <span flex></span>
 
-  <p>Max score: {{ vm.question.max_score }}</p>
+  <p ng-show="vm.question.isChoiceQuestion">
+    {{ 'QUESTIONNAIRE.QUESTION.MAX_SCORE' | translate : {MAX_SCORE: vm.question.max_score} }}
+  </p>
 </div>
 
 <!-- If it is a choice question, display a list with available choices. -->
@@ -24,18 +25,20 @@
     <ng-md-icon ng-if="vm.question.type === 'm'" icon="check_box"></ng-md-icon>
     <ng-md-icon ng-if="vm.question.type === 's'" icon="radio_button_on"></ng-md-icon>
     <span flex>
-      {{ choice.text }}  (score - {{ choice.score }} | weight - {{ choice.weight }})
+      {{ choice.text }}  {{ 'QUESTIONNAIRE.QUESTION.SCORE_AND_WEIGHT' | translate : {SCORE: choice.score, WEIGHT: choice.weight} }}
     </span>
   </md-list-item>
 </md-list>
 
 <!-- If it is a text question, display a textarea. -->
 <md-input-container ng-if="vm.question.isTextQuestion" class="md-block">
-  <label>Answer</label>
+  <label>{{ 'QUESTIONNAIRE.QUESTION.ANSWER' | translate }}</label>
   <textarea ng-model="vm.question.answer" columns="1" rows="5" disabled></textarea>
 </md-input-container>
 
 <!-- If it is a date question, display a datepicker widget. -->
 <div ng-if="vm.question.isDateQuestion">
-  <md-datepicker ng-model="vm.question.answer" md-placeholder="Enter date" disabled></md-datepicker>
+  <md-datepicker ng-model="vm.question.answer"
+                 md-placeholder="{{ 'COMMON.ACTIONS.ENTER_DATE' | translate }}"
+                 disabled></md-datepicker>
 </div>

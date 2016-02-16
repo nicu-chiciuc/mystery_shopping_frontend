@@ -183,8 +183,13 @@
           },
           QUESTION_BODY: 'Question body',
           CHOICES: 'Choices',
+          CHOICE: {
+            BODY: 'Choice body',
+            SCORE: 'Choice score'
+          },
           ANSWER: 'Answer',
-          MAX_SCORE: 'Max score {MAX_SCORE}'
+          MAX_SCORE: 'Max score: {MAX_SCORE}',
+          SCORE_AND_WEIGHT: '(score - {SCORE}, weight - {WEIGHT})'
         },
         ACTIONS: {
           ADD_BLOCK: 'Add block',
