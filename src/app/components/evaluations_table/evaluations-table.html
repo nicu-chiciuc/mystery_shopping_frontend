@@ -27,6 +27,9 @@
       <th md-column>
         {{ 'EVALUATION.TABLE.HEADER.TIME' | translate }}
       </th>
+
+      <!-- View details button column -->
+      <th md-column></th>
     </tr>
     </thead>
     <tbody md-body>
@@ -48,6 +51,11 @@
       <td md-cell>{{ evaluation.questionnaire_template_repr.title }}</td>
       <td md-cell>{{ evaluation.suggested_start_date }}</td>
       <td md-cell>{{ evaluation.suggested_end_date }}</td>
+      <td md-cell>
+        <md-button class="md-primary md-icon-button" ng-click="vm.viewEvaluationDetails(evaluation)">
+          <ng-md-icon icon="my_library_books"></ng-md-icon>
+        </md-button>
+      </td>
     </tr>
     </tbody>
   </table>

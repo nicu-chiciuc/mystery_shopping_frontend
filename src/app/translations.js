@@ -29,7 +29,8 @@
         DELETE: 'Delete',
         SET: 'Set',
         LOGIN: 'Login',
-        LOGOUT: 'Logout'
+        LOGOUT: 'Logout',
+        DETAILS: 'Details'
       },
       MENU: {
         MANAGEMENT: {

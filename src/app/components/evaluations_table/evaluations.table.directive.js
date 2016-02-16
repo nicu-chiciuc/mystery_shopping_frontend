@@ -24,9 +24,17 @@
     function EvaluationsTableController ( $log, $scope ) {
       $log.debug('Entered EvaluationsTableController');
 
+      var vm = this;
+
       $scope.selectedRows = [];
       $scope.selected = [];
 
+      vm.viewEvaluationDetails = viewEvaluationDetails;
+
+
+      function viewEvaluationDetails ( evaluation ) {
+
+      }
     }
   }
 
