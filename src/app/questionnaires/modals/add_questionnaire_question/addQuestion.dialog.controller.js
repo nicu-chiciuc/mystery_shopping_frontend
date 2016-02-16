@@ -6,15 +6,31 @@
     .controller('AddQuestionnaireQuestionDialogController', AddQuestionnaireQuestionDialogController);
 
   /** @ngInject */
-  function AddQuestionnaireQuestionDialogController ( $log, $scope, $mdDialog, models ) {
+  function AddQuestionnaireQuestionDialogController ( $log, $scope, $mdDialog, models, question, isNewQuestion ) {
     $log.debug('Entered AddQuestionnaireQuestionDialogController');
 
-    $scope.question = {
+    $scope.question = question || {
       type: 's',
       template_question_choices: [],
       max_score: 0,
       weight: 0
     };
+    console.log($scope.question);
+
+    switch ($scope.question.type) {
+      case 's':
+            $scope.selectedIndex = 1;
+            break;
+      case 'm':
+            $scope.selectedIndex = 1;
+            break;
+      case 't':
+            $scope.selectedIndex = 2;
+            break;
+      case 'd':
+            $scope.selectedIndex = 3;
+            break;
+    }
 
     angular.extend($scope.question, models.manager.TemplateQuestionnaireQuestionModel);
     $scope.question.initialize();

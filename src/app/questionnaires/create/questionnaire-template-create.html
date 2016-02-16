@@ -1,8 +1,8 @@
 <md-content layout-padding>
-  <form name="questionnaireForm" ng-submit="vm.saveQuestionnaireTemplate(questionnaire, questionnaireForm.$valid)" novalidate>
+  <form name="questionnaireForm" ng-submit="vm.saveQuestionnaireTemplate(vm.questionnaireTemplate, questionnaireForm.$valid)" novalidate>
     <md-input-container class="md-block">
       <label>{{ 'QUESTIONNAIRE.TITLE' | translate }}</label>
-      <input ng-model="questionnaire.title" name="title" type="text" ng-required="true">
+      <input ng-model="vm.questionnaireTemplate.title" name="title" type="text" ng-required="true">
 
       <!-- Validation messages -->
       <div ng-show="questionnaireForm.$submitted" ng-messages="questionnaireForm.title.$error">
@@ -11,7 +11,7 @@
     </md-input-container>
 
     <p medium-editor
-       ng-model="questionnaire.description"
+       ng-model="vm.questionnaireTemplate.description"
        bind-options="{'toolbar': {'buttons': ['bold', 'italic', 'underline']}}"
        data-placeholder="{{ 'QUESTIONNAIRE.DESCRIPTION' | translate }}"></p>
 
@@ -21,11 +21,11 @@
       Level 1 blocks
       -->
       <md-whiteframe dragula="'block-1'"
-                     dragula-model="questionnaire.template_blocks"
+                     dragula-model="vm.questionnaireTemplate.template_blocks"
                      class="md-whiteframe-2dp">
 
         <!-- Content container for each top level block -->
-        <md-content ng-repeat="block_1 in questionnaire.template_blocks"
+        <md-content ng-repeat="block_1 in vm.questionnaireTemplate.template_blocks"
                     flex="100">
 
           <!-- Block header -->
@@ -39,10 +39,11 @@
                 {{ block_1.title }}
               </span>
 
-              <!-- Edit button -->
-              <md-button ng-click="vm.showBlockTitleDialog($event, block_1, questionnaire)"
+              <!-- Edit block button -->
+              <md-button ng-click="vm.showBlockTitleDialog($event, block_1, vm.questionnaireTemplate)"
                          class="md-icon-button">
                 <ng-md-icon icon="edit" size="18"
+                            class="md-icon-button-sm"
                             aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
                 </ng-md-icon>
               </md-button>
@@ -92,6 +93,7 @@
                     <md-button ng-click="vm.showBlockTitleDialog($event, block_2, block_1)"
                                class="md-icon-button">
                       <ng-md-icon icon="edit" size="18"
+                                  class="md-icon-button-sm"
                                   aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
                       </ng-md-icon>
                     </md-button>
@@ -141,6 +143,7 @@
                           <md-button ng-click="vm.showBlockTitleDialog($event, block_3, block_2)"
                                      class="md-icon-button">
                             <ng-md-icon icon="edit" size="18"
+                                        class="md-icon-button-sm"
                                         aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
                             </ng-md-icon>
                           </md-button>
@@ -168,7 +171,7 @@
 
                       <section layout="row">
                         <span flex></span>
-                        <md-button ng-click="vm.showAddQuestionDialog($event, block_3)"
+                        <md-button ng-click="vm.showAddQuestionDialog($event, block_3, true)"
                                    class="md-fab md-mini md-primary"
                                    aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
                           <ng-md-icon icon="playlist_add"></ng-md-icon>
@@ -188,7 +191,7 @@
 
                 <section layout="row">
                   <span flex></span>
-                  <md-button ng-click="vm.showAddQuestionDialog($event, block_2)"
+                  <md-button ng-click="vm.showAddQuestionDialog($event, block_2, true)"
                              class="md-fab md-mini md-primary"
                              aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
                     <ng-md-icon icon="playlist_add"></ng-md-icon>
@@ -218,7 +221,7 @@
 
           <section layout="row">
             <span flex></span>
-            <md-button ng-click="vm.showAddQuestionDialog($event, block_1)"
+            <md-button ng-click="vm.showAddQuestionDialog($event, block_1, true)"
                        class="md-fab md-mini md-primary"
                        aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
               <ng-md-icon icon="playlist_add"></ng-md-icon>
@@ -246,7 +249,7 @@
 
     </div>
 
-    <md-button ng-click="vm.addBlock($event, questionnaire)" class="md-primary">
+    <md-button ng-click="vm.addBlock($event, vm.questionnaireTemplate)" class="md-primary">
       Add block
     </md-button>
 

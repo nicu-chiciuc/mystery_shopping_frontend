@@ -20,6 +20,8 @@
     function initialize () {
       var block = this;
 
+      block.weight = parseFloat(this.weight);
+
       angular.extend(block, AbstractParentBlockModel);
       block.initializeAbstract('template_blocks', 'template_questions');
 

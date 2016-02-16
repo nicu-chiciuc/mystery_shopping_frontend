@@ -1,5 +1,20 @@
 <div layout="row">
-  <p flex>{{ vm.question.question_body }}</p>
+  <p>
+    {{ vm.question.question_body }}
+
+    <!-- Edit button -->
+    <md-button ng-click="vm.showEditQuestionDialog($event, vm.question, false)"
+               class="md-icon-button">
+      <ng-md-icon icon="edit" size="18"
+                  class="md-icon-button-sm"
+                  aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
+      </ng-md-icon>
+    </md-button>
+  </p>
+
+
+  <span flex></span>
+
   <p>Max score: {{ vm.question.max_score }}</p>
 </div>
 

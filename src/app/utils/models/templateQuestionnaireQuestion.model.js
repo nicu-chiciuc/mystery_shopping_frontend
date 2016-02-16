@@ -40,6 +40,7 @@
       var question = this;
 
       question.answer_choices = question.answer_choices || [];
+      question.weight = parseFloat(question.weight);
 
       question.updateQuestionType();
       question.preProcess();
@@ -86,11 +87,15 @@
     }
 
     function postProcessTextQuestion ( question ) {
-
+      if ( angular.isDefined(question.template_question_choices) ) {
+        delete question.template_question_choices;
+      }
     }
 
     function postProcessDateQuestion ( question ) {
-
+      if ( angular.isDefined(question.template_question_choices) ) {
+        delete question.template_question_choices;
+      }
     }
 
     function preProcess () {
@@ -99,9 +104,14 @@
     }
 
     function preProcessSingleChoiceQuestion ( question ) {
+      _.forEach(question.template_question_choices, function (choice) {
+        choice.score = parseFloat(choice.score);
+        choice.weight = parseFloat(choice.weight);
+      });
     }
 
     function preProcessMultipleChoiceQuestion ( question ) {
+      preProcessSingleChoiceQuestion(question);
     }
 
     function preProcessTextQuestion ( question ) {

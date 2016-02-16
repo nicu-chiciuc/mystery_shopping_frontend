@@ -21,9 +21,32 @@
     return directive;
 
     /** @ngInject */
-    function QuestionnaireGenericQuestionController ( $scope, $compile ) {
+    function QuestionnaireGenericQuestionController ( $mdMedia, $mdDialog ) {
       var vm = this;
 
+      vm.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+
+      vm.showEditQuestionDialog = showEditQuestionDialog;
+
+
+      function showEditQuestionDialog ( ev, question, isNewQuestion ) {
+        var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
+        $mdDialog.show({
+          controller: 'AddQuestionnaireQuestionDialogController as vm',
+          templateUrl: 'app/questionnaires/modals/add_questionnaire_question/add-question-dialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          fullscreen: useFullScreen,
+          locals: {
+            question: question,
+            isNewQuestion: isNewQuestion
+          }
+        })
+          .then(function(returnedBlock) {
+            block.title = returnedBlock.title;
+            block.weight = returnedBlock.weight;
+          });
+      }
     }
   }
 

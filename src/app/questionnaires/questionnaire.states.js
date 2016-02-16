@@ -60,7 +60,7 @@
         url: '/{templateQuestionnaireId:int}',
         template: '<div ui-view></div>',
         resolve: {
-          questionnaire: function ( $stateParams, models ) { return models.questionnaireTemplates().one($stateParams.templateQuestionnaireId).get(); }
+          questionnaireTemplate: function ( $stateParams, models ) { return models.questionnaireTemplates().one($stateParams.templateQuestionnaireId).get(); }
         }
       })
       .state('questionnaires.templates.detail.view', {
@@ -70,8 +70,8 @@
       })
       .state('questionnaires.templates.detail.edit', {
         url: '/edit',
-        templateUrl: 'app/questionnaires/create/company-create.html',
-        controller: 'CompanyCreateController as vm',
+        templateUrl: 'app/questionnaires/create/questionnaire-template-create.html',
+        controller: 'QuestionnaireTemplateCreateController as vm',
         resolve: {
           industries: function ( models ) { return models.industries().getList(); },
           countries: function ( models ) { return models.countries().getList(); }

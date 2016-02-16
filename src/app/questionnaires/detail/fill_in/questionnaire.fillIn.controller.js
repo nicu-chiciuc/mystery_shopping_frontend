@@ -6,11 +6,11 @@
     .controller('QuestionnaireFillInController', QuestionnaireFillInController);
 
   /** @ngInject */
-  function QuestionnaireFillInController ( $log, questionnaire ) {
+  function QuestionnaireFillInController ( $log, questionnaireTemplate ) {
     $log.debug('Entered QuestionnaireFillInController');
     var vm = this;
 
-    vm.questionnaire = questionnaire;
+    vm.questionnaire = questionnaireTemplate;
 
     vm.questionCheckboxListOptions = {
       labelProp: 'text',

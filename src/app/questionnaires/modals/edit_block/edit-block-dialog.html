@@ -54,9 +54,9 @@
           <md-subheader>{{ 'QUESTIONNAIRE.SAME_LEVEL_BLOCKS' | translate }}</md-subheader>
           <div layout="column">
             <md-list>
-              <md-list-item ng-repeat="templateBlock in otherBlocks" layout="row">
+              <md-list-item ng-repeat="templateBlock in otherBlocks" layout="column">
 
-                <div>
+                <div layout="row">
                   <md-input-container>
                     <label>{{ 'QUESTIONNAIRE.DIALOG.BLOCK_TITLE' | translate }}</label>
                     <input type="text" ng-model="templateBlock.title" disabled/>

@@ -108,6 +108,10 @@ fieldset {
   margin-left: 48px;
 }
 
+.md-icon-button-sm {
+  padding: 3px;
+}
+
 /************
  * SITE CONTENT TOOLBAR
  ************/
