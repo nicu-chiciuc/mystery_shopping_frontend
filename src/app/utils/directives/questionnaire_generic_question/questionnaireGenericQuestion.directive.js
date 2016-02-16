@@ -36,6 +36,7 @@
           templateUrl: 'app/questionnaires/modals/add_questionnaire_question/add-question-dialog.html',
           parent: angular.element(document.body),
           targetEvent: ev,
+          escapeToClose: false,
           fullscreen: useFullScreen,
           locals: {
             question: question,

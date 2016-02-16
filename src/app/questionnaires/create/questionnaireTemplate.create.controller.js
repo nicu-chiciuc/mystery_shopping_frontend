@@ -91,6 +91,7 @@
         parent: angular.element(document.body),
         targetEvent: ev,
         fullscreen: useFullScreen,
+        escapeToClose: false,
         locals: {
           block: block,
           parentBlock: parentBlock,
@@ -110,7 +111,7 @@
         templateUrl: 'app/questionnaires/modals/add_questionnaire_question/add-question-dialog.html',
         parent: angular.element(document.body),
         targetEvent: ev,
-        clickOutsideToClose:true,
+        escapeToClose: false,
         fullscreen: useFullScreen,
         locals: {
           question: {},
