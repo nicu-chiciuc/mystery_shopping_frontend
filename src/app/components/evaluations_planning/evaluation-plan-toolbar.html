@@ -155,53 +155,51 @@
         </md-input-container>
       </div>
 
-      <div layout="row">
-        <div layout="column">
-          <!--
-          Start date datepicker
-          -->
-          <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="suggested_start_date">
-            {{ 'EVALUATION.PLANNING.SUGGESTED_START_DATE' | translate }}
-          </label>
-          <div>
-            <md-datepicker id="suggested_start_date"
-                           name="suggested_start_date"
-                           ng-model="vm.evaluationSkeleton.suggested_start_date"
-                           md-min-date="vm.project.start_date"
-                           md-max-date="vm.project.end_date"
-                           md-placeholder="{{ 'EVALUATION.PLANNING.SUGGESTED_START_DATE' | translate }}">
-            </md-datepicker>
-
-            <!-- Validation messages -->
-            <div ng-show="evaluationPlanningForm.$submitted" class="validation-messages" ng-messages="evaluationPlanningForm.suggested_start_date.$error">
-              <div ng-message="valid">{{ 'VALIDATION_MESSAGE.DATE.INVALID' | translate }}</div>
-            </div>
-          </div>
-        </div><!-- End of layout="column" -->
-
+      <div layout="column">
         <!--
-        End date datepicker
+        Start date datepicker
         -->
-        <div layout="column" class="margin-left-md">
-          <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="suggested_end_date">
-            {{ 'EVALUATION.PLANNING.SUGGESTED_END_DATE' | translate }}
-          </label>
-          <div>
-            <md-datepicker id="suggested_end_date"
-                           name="suggested_end_date"
-                           ng-model="vm.evaluationSkeleton.suggested_end_date"
-                           md-min-date="vm.project.start_date"
-                           md-max-date="vm.project.end_date"
-                           md-placeholder="{{ 'EVALUATION.PLANNING.SUGGESTED_END_DATE' | translate }}">
-            </md-datepicker>
+        <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="suggested_start_date">
+          {{ 'EVALUATION.PLANNING.SUGGESTED_START_DATE' | translate }}
+        </label>
+        <div>
+          <md-datepicker id="suggested_start_date"
+                         name="suggested_start_date"
+                         ng-model="vm.evaluationSkeleton.suggested_start_date"
+                         md-min-date="vm.project.start_date"
+                         md-max-date="vm.project.end_date"
+                         md-placeholder="{{ 'COMMON.ACTIONS.ENTER_DATE' | translate }}">
+          </md-datepicker>
 
-            <!-- Validation messages -->
-            <div ng-show="evaluationPlanningForm.$submitted" class="validation-messages" ng-messages="evaluationPlanningForm.period_end.$error">
-              <div ng-message="valid">{{ 'VALIDATION_MESSAGE.DATE.INVALID' | translate }}</div>
-            </div>
+          <!-- Validation messages -->
+          <div ng-show="evaluationPlanningForm.$submitted" class="validation-messages" ng-messages="evaluationPlanningForm.suggested_start_date.$error">
+            <div ng-message="valid">{{ 'VALIDATION_MESSAGE.DATE.INVALID' | translate }}</div>
           </div>
-        </div><!-- End of layout="column" -->
-      </div><!-- End of layout="row" -->
+        </div>
+      </div><!-- End of layout="column" -->
+
+      <!--
+      End date datepicker
+      -->
+      <div layout="column">
+        <label ng-style="{'font-size':'12px', 'color': 'rgb(117, 117, 117)'}" for="suggested_end_date">
+          {{ 'EVALUATION.PLANNING.SUGGESTED_END_DATE' | translate }}
+        </label>
+        <div>
+          <md-datepicker id="suggested_end_date"
+                         name="suggested_end_date"
+                         ng-model="vm.evaluationSkeleton.suggested_end_date"
+                         md-min-date="vm.project.start_date"
+                         md-max-date="vm.project.end_date"
+                         md-placeholder="{{ 'COMMON.ACTIONS.ENTER_DATE' | translate }}">
+          </md-datepicker>
+
+          <!-- Validation messages -->
+          <div ng-show="evaluationPlanningForm.$submitted" class="validation-messages" ng-messages="evaluationPlanningForm.period_end.$error">
+            <div ng-message="valid">{{ 'VALIDATION_MESSAGE.DATE.INVALID' | translate }}</div>
+          </div>
+        </div>
+      </div><!-- End of layout="column" -->
 
       <div layout="column" ng-show="vm.evaluationPlanning.leftToPlanEvaluationNumber() > 0">
         <md-input-container class="md-block" flex="100">
