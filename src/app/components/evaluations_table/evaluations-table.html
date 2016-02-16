@@ -52,7 +52,9 @@
       <td md-cell>{{ evaluation.suggested_start_date }}</td>
       <td md-cell>{{ evaluation.suggested_end_date }}</td>
       <td md-cell>
-        <md-button class="md-primary md-icon-button" ng-click="vm.viewEvaluationDetails(evaluation)">
+        <md-button ng-click="vm.viewEvaluationDetails(evaluation)"
+                   aria-label="{{ 'BUTTON.DETAILS' | translate }}"
+                   class="md-primary md-icon-button">
           <ng-md-icon icon="my_library_books"></ng-md-icon>
         </md-button>
       </td>
