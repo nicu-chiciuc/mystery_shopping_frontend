@@ -235,7 +235,8 @@
         },
         HEADING: 'Evaluations',
         TOTAL: 'Total: {NR}',
-        NOT_PLANNED: 'Not planned: {NR}'
+        NOT_PLANNED: 'Not planned: {NR}',
+        DETAILS: 'Evaluation details'
       },
       VALIDATION_MESSAGE: {
         GENERIC: {
