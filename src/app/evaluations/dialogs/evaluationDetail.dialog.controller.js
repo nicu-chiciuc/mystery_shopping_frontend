@@ -1,3 +1,25 @@
-/**
- * Created by iulian on 2/16/16.
- */
+(function() {
+  'use strict';
+
+  angular
+    .module('spark')
+    .controller('EvaluationDetailDialogController', EvaluationDetailDialogController);
+
+  /** @ngInject */
+  function EvaluationDetailDialogController ( $log, $scope, $mdDialog, evaluation ) {
+    $log.debug('Entered EvaluationDetailDialogController');
+    $log.debug(evaluation);
+    var vm = this;
+
+    vm.evaluation = evaluation;
+
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+
+    activate();
+
+    function activate() {
+    }
+  }
+})();

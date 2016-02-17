@@ -92,6 +92,8 @@
         LATITUDE: 'Latitude',
         LONGITUDE: 'Longitude',
         DEADLINE: 'Deadline',
+        TYPE: 'Type',
+        NAME: 'Name',
         GENDER: {
           HEADING: 'Gender',
           MALE: 'Male',
@@ -227,6 +229,12 @@
           QUESTIONNAIRE_TEMPLATE: 'Questionnaire template',
           SUGGESTED_START_DATE: 'Suggested start date',
           SUGGESTED_END_DATE: 'Suggested end date'
+        },
+        VIEW: {
+          SECTION_NAME: 'Section name',
+          ENTITY_NAME: 'Entity name',
+          SCRIPT: 'Script',
+          QUESTIONNAIRE: 'Questionnaire'
         },
         TYPE: {
           HEADING: 'Evaluation type',
