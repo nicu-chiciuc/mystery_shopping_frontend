@@ -7,7 +7,7 @@
     .factory('ProjectModel', ProjectModel);
 
   /** @ngInject */
-  function ProjectModel ( CompanyModel, TenantProjectManagerModel, TenantProductManagerModel, ResearchMethodologyModel, ShopperModel ) {
+  function ProjectModel ( CompanyModel, TenantProjectManagerModel, TenantProductManagerModel, TenantConsultantModel, ResearchMethodologyModel, ShopperModel ) {
     var Model = {
       initialize: initialize
     };
@@ -26,6 +26,7 @@
       project.displayName = project.period_start + ' - ' + project.period_end;
 
       project.consultants = project.consultants || [];
+      project.consultants_repr = project.consultants_repr || [];
 
       project.research_methodology = project.research_methodology || {};
       angular.extend(project.research_methodology, ResearchMethodologyModel);
@@ -66,6 +67,12 @@
         shopper.initialize();
       });
 
+      _.forEach(project.consultants_repr, function (consultant) {
+        angular.extend(consultant, TenantConsultantModel);
+        consultant.initialize();
+      });
+
+      project.availableConsultants = _.cloneDeep(project.consultants_repr);  // TODO filter out consultants that are assigned to some evaluation levels
       project.state = getProjectState(project);
     }
 

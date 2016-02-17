@@ -23,3 +23,9 @@
                      shoppers="vm.shoppers"
                      save-project-method="vm.saveProject(project, isValid)">
 </ms-project-shoppers>
+
+<ms-project-evaluation-levels ng-if="vm.project.state > 3"
+                              project="vm.project"
+                              tenant-consultants="vm.tenantConsultants"
+                              save-project-method="vm.saveProject(project, isValid)">
+</ms-project-evaluation-levels>

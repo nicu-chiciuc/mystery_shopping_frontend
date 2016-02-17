@@ -1,0 +1,27 @@
+<md-content layout="row" layout-padding>
+
+  <div ng-cloak flex>
+    <!--<form name="shoppersForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: shoppersForm.$valid})" novalidate>-->
+
+      <h2>
+        {{ 'PROJECT.EVALUATION_LEVELS' | translate }}
+      </h2>
+
+      <!--
+      Available consultants
+      -->
+    <md-list>
+      <md-list-item ng-repeat="consultant in vm.project.availableConsultants"
+                    class="consultants-for-evaluation-levels">
+        <div class="md-whiteframe-z1" flex>
+          {{ consultant.user.fullName }}
+        </div>
+      </md-list-item>
+    </md-list>
+
+      <md-button type="submit" class="md-primary" ng-show="vm.project.state >= 4">
+        {{ 'BUTTON.SAVE' | translate }}
+      </md-button>
+    <!--</form>-->
+  </div>
+</md-content>

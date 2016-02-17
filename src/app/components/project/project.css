@@ -1,0 +1,6 @@
+.consultants-for-evaluation-levels {
+    float: left;
+}
+.consultants-for-evaluation-levels > div {
+    padding: 16px;
+}
