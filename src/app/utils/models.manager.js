@@ -24,7 +24,8 @@
     CompanyManagerModel,
     CompanyEmployeeModel,
     ShopperModel,
-    PlannedEvaluationModel
+    PlannedEvaluationModel,
+    EvaluationAssessmentLevelModel
   ) {
     var manager = {
       ProjectModel: ProjectModel,
@@ -44,7 +45,8 @@
       CompanyManagerModel: CompanyManagerModel,
       CompanyEmployeeModel: CompanyEmployeeModel,
       ShopperModel: ShopperModel,
-      PlannedEvaluationModel: PlannedEvaluationModel
+      PlannedEvaluationModel: PlannedEvaluationModel,
+      EvaluationAssessmentLevelModel: EvaluationAssessmentLevelModel
     };
 
     return manager;

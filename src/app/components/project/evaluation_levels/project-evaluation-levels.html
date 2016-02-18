@@ -1,27 +1,119 @@
 <md-content layout="row" layout-padding>
 
-  <div ng-cloak flex>
+  <div ng-cloak flex layout="column">
     <!--<form name="shoppersForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: shoppersForm.$valid})" novalidate>-->
 
-      <h2>
-        {{ 'PROJECT.EVALUATION_LEVELS' | translate }}
-      </h2>
+    <h2>
+      {{ 'PROJECT.EVALUATION_LEVELS' | translate }}
+    </h2>
 
-      <!--
-      Available consultants
-      -->
-    <md-list>
-      <md-list-item ng-repeat="consultant in vm.project.availableConsultants"
-                    class="consultants-for-evaluation-levels">
-        <div class="md-whiteframe-z1" flex>
-          {{ consultant.user.fullName }}
+    <!--
+    Available consultants
+    -->
+    <div layout="row"
+         dragula="'evaluator-bag'"
+         dragula-model="vm.project.availableConsultants">
+      <div ng-repeat="consultant in vm.project.availableConsultants"
+           class="md-whiteframe-z2 consultants-for-evaluation-levels">
+        {{ consultant.user.fullName }}
+      </div>
+    </div>
+
+    <!--
+    Project levels
+    -->
+    <div layout="row">
+
+      <!-- Level container -->
+      <div ng-repeat="assessmentLevel in vm.project.evaluation_assessment_levels_repr"
+           class="md-whiteframe-z1 evaluation-level">
+        <div layout="column">
+
+          <!-- Level number -->
+         <strong>
+           Level {{ assessmentLevel.level }}
+         </strong>
+
+          <!-- Consultants bag for the given level -->
+          <div dragula="'evaluator-bag'"
+               dragula-model="assessmentLevel.consultants_repr"
+               class="evaluator-container">
+
+            <!-- Consultant box elements -->
+            <div ng-repeat="consultant in assessmentLevel.consultants_repr"
+                 class="md-whiteframe-z2 consultants-for-evaluation-levels">
+              {{ consultant.user.fullName }}
+            </div>
+          </div>
+
+          <!-- Project manager box element -->
+          <div ng-show="assessmentLevel.project_manager_repr"
+               class="md-whiteframe-z2 consultants-for-evaluation-levels">
+            {{ assessmentLevel.project_manager_repr.user.fullName }}
+          </div>
+
+          <!-- Empty bag placeholder -->
+          <div ng-hide="assessmentLevel.consultants_repr.length || assessmentLevel.project_manager"
+               class="evaluator-empty-container">
+              <span>
+                Drag consultants here
+              </span>
+          </div>
+
+          <!-- Buttons -->
+          <div layout="row" layout-align="end center">
+
+            <!-- Add project manager to current level button -->
+            <md-button ng-click="vm.toggleProjectManagerOnLevel(assessmentLevel)"
+                       ng-hide="assessmentLevel.project_manager_repr"
+                       class="md-icon-button">
+              <ng-md-icon icon="person_add"
+                          size="18"
+                          aria-label="{{ 'PROJECT.EVALUATION_LEVEL.ADD_PROJECT_MANAGER' | translate }}"
+                          class="md-icon-button-sm">
+              </ng-md-icon>
+            </md-button>
+
+            <!-- Remove project manager from current level button -->
+            <md-button ng-click="vm.toggleProjectManagerOnLevel(assessmentLevel)"
+                       ng-show="assessmentLevel.project_manager_repr"
+                       class="md-icon-button">
+              <ng-md-icon icon="person_outline"
+                          size="18"
+                          aria-label="{{ 'PROJECT.EVALUATION_LEVEL.ADD_PROJECT_MANAGER' | translate }}"
+                          class="md-icon-button-sm">
+              </ng-md-icon>
+            </md-button>
+
+            <!-- Save level button -->
+            <md-button ng-click="vm.saveEvaluationAssessmentLevel(assessmentLevel)"
+                       ng-show="assessmentLevel.showSaveLevelButton"
+                       class="md-icon-button">
+              <ng-md-icon icon="save"
+                          size="18"
+                          aria-label="{{ 'BUTTON.SAVE' | translate }}"
+                          class="md-icon-button-sm md-accent">
+              </ng-md-icon>
+            </md-button>
+
+          </div>
         </div>
-      </md-list-item>
-    </md-list>
 
-      <md-button type="submit" class="md-primary" ng-show="vm.project.state >= 4">
-        {{ 'BUTTON.SAVE' | translate }}
+      </div>
+
+      <md-button ng-click="vm.addAssessmentLevel()"
+                 ng-hide="vm.project.hideAddAssessmentLevelButton"
+                 layout-fill>
+        Add layer
       </md-button>
+      <span flex></span>
+    </div>
+
+    {{ vm.project.evaluation_assessment_levels_repr | json }}
+
+    <md-button type="submit" class="md-primary" ng-show="vm.project.state >= 4">
+      {{ 'BUTTON.SAVE' | translate }}
+    </md-button>
     <!--</form>-->
   </div>
 </md-content>

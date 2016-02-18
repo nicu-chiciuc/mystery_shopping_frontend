@@ -107,6 +107,12 @@
       return obj;
     });
 
+    Restangular.extendModel('evaluationassessmentlevels', function (obj) {
+      angular.extend(obj, modelManager.EvaluationAssessmentLevelModel);
+      obj.initialize();
+      return obj;
+    });
+
     $log.debug('runBlock end');
   }
 

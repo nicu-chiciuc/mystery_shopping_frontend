@@ -7,7 +7,7 @@
     .factory('ProjectModel', ProjectModel);
 
   /** @ngInject */
-  function ProjectModel ( CompanyModel, TenantProjectManagerModel, TenantProductManagerModel, TenantConsultantModel, ResearchMethodologyModel, ShopperModel ) {
+  function ProjectModel ( CompanyModel, TenantProjectManagerModel, TenantProductManagerModel, TenantConsultantModel, ResearchMethodologyModel, ShopperModel, EvaluationAssessmentLevelModel ) {
     var Model = {
       initialize: initialize
     };
@@ -27,6 +27,7 @@
 
       project.consultants = project.consultants || [];
       project.consultants_repr = project.consultants_repr || [];
+      project.evaluation_assessment_levels_repr = project.evaluation_assessment_levels_repr || [];
 
       project.research_methodology = project.research_methodology || {};
       angular.extend(project.research_methodology, ResearchMethodologyModel);
@@ -72,12 +73,29 @@
         consultant.initialize();
       });
 
-      project.availableConsultants = _.cloneDeep(project.consultants_repr);  // TODO filter out consultants that are assigned to some evaluation levels
+      _.forEach(project.evaluation_assessment_levels_repr, function (assessmentLevel) {
+        angular.extend(assessmentLevel, EvaluationAssessmentLevelModel);
+        assessmentLevel.initialize();
+      });
+
+      // Filter out consultants that are already assigned to an assessment evaluation
+      // level and assign those that are available to a list that will be used to
+      // assign them to other evaluation levels.
+      project.availableConsultants = _.filter(project.consultants_repr, function (consultant) {
+        var consultantIsAssignedToALevel = false;
+        _.forEach(project.evaluation_assessment_levels_repr, function (assessmentLevel) {
+          consultantIsAssignedToALevel = consultantIsAssignedToALevel || assessmentLevel.containsConsultant(consultant.id);
+        });
+        return !consultantIsAssignedToALevel;
+      });
+
       project.state = getProjectState(project);
     }
 
     function getProjectState ( project ) {
-      if ( project.shoppers && project.shoppers.length > 0 ) {
+      if ( project.evaluation_assessment_levels_repr && project.evaluation_assessment_levels_repr.length > 0 ) {
+        return 5;
+      } else if ( project.shoppers && project.shoppers.length > 0 ) {
         return 4;
       } else if ( project.research_methodology.places_to_assess_repr.length > 0
         || project.research_methodology.people_to_assess_repr.length > 0 ) {

@@ -22,6 +22,7 @@
       cities: cities,
       evaluations: evaluations,
       companyManagers: companyManagers,
+      evaluationassessmentlevels: evaluationassessmentlevels,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
       manager: modelManager
@@ -84,6 +85,10 @@
 
     function companyManagers () {
       return Restangular.service('clientmanagers');
+    }
+
+    function evaluationassessmentlevels () {
+      return Restangular.service('evaluationassessmentlevels');
     }
 
     function restangularizeElement ( parent, object, model ) {

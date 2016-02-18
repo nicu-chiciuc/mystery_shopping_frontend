@@ -156,6 +156,9 @@
           SCRIPTS: 'Scripts',
           LIST_OF_PLACES_AND_PEOPLE: 'List of places and people to assess'
         },
+        EVALUATION_LEVEL: {
+          ADD_PROJECT_MANAGER: 'Add project manager'
+        },
         PLACEHOLDER: {
           START_DATE: 'Start date',
           END_DATE: 'End date',
