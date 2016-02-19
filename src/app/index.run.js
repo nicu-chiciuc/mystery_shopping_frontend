@@ -101,8 +101,8 @@
       return obj;
     });
 
-    Restangular.extendModel('plannedevaluations', function (obj) {
-      angular.extend(obj, modelManager.PlannedEvaluationModel);
+    Restangular.extendModel('evaluations', function (obj) {
+      angular.extend(obj, modelManager.EvaluationModel);
       obj.initialize();
       return obj;
     });

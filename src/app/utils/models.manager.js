@@ -24,7 +24,7 @@
     CompanyManagerModel,
     CompanyEmployeeModel,
     ShopperModel,
-    PlannedEvaluationModel,
+    EvaluationModel,
     EvaluationAssessmentLevelModel
   ) {
     var manager = {
@@ -45,7 +45,7 @@
       CompanyManagerModel: CompanyManagerModel,
       CompanyEmployeeModel: CompanyEmployeeModel,
       ShopperModel: ShopperModel,
-      PlannedEvaluationModel: PlannedEvaluationModel,
+      EvaluationModel: EvaluationModel,
       EvaluationAssessmentLevelModel: EvaluationAssessmentLevelModel
     };
 

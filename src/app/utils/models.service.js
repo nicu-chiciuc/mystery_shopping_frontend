@@ -68,7 +68,7 @@
     }
 
     function evaluations () {
-      return Restangular.service('plannedevaluations');
+      return Restangular.service('evaluations');
     }
 
     function questionnaireTemplates () {

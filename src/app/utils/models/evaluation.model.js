@@ -4,10 +4,10 @@
 
   angular
     .module('spark')
-    .factory('PlannedEvaluationModel', PlannedEvaluationModel);
+    .factory('EvaluationModel', EvaluationModel);
 
   /** @ngInject */
-  function PlannedEvaluationModel ( AbstractEvaluationModel ) {
+  function EvaluationModel ( AbstractEvaluationModel ) {
     var Model = {
       initialize: initialize
     };

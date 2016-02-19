@@ -24,7 +24,7 @@
 
     function createPlannedEvaluations ( evaluationsCopy ) {
       //var evaluationsCopy = _.cloneDeep(evaluations);
-      evaluationsCopy = models.restangularizeCollection(null, evaluationsCopy, 'plannedevaluations');
+      evaluationsCopy = models.restangularizeCollection(null, evaluationsCopy, 'evaluations');
 
       evaluationsCopy.post().then(savePlannedEvaluationsSuccessFn, savePlannedEvaluationsErrorFn);
 
