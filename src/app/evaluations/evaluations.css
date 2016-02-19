@@ -11,3 +11,25 @@ table.md-table.md-row-select th.md-column.small-padding:nth-child(n+3):nth-last-
 table.md-table th.md-column {
   white-space: inherit;
 }
+
+.planned, .draft, .submitted, .reviewed, .rejected, .declined, .approved {
+  font-size: 12px;
+}
+.planned {
+  background-color: #CCCCCC;
+}
+.draft {
+  background-color: #aaaaaa;
+}
+.submitted {
+  background-color: #999999;
+}
+.reviewed {
+  background-color: #ffc520;
+}
+.rejected, .declined {
+  background-color: #ff3333;
+}
+.approved {
+  background-color: #346a3f;
+}

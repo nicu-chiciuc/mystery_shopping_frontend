@@ -219,7 +219,8 @@
             SCRIPT: 'Script',
             QUESTIONNAIRE_TEMPLATE: 'Questionnaire template',
             DATE: 'Date',
-            TIME: 'Time period'
+            TIME: 'Time period',
+            STATUS: 'Status'
           }
         },
         PLANNING: {

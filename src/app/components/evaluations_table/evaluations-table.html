@@ -28,6 +28,11 @@
         {{ 'EVALUATION.TABLE.HEADER.TIME' | translate }}
       </th>
 
+      <!-- Evaluation statuses column -->
+      <th md-column>
+        {{ 'EVALUATION.TABLE.HEADER.STATUS' | translate }}
+      </th>
+
       <!-- View details button column -->
       <th md-column></th>
     </tr>
@@ -48,9 +53,20 @@
       <td md-cell>{{ evaluation.subjectOfEvaluation.displayName }}</td>
       <td md-cell>{{ evaluation.evaluation_type }}</td>
       <td md-cell>{{ evaluation.questionnaire_script_repr.title }}</td>
-      <td md-cell>{{ evaluation.questionnaire_template_repr.title }}</td>
+      <td md-cell>{{ evaluation.questionnaire_repr.title }}</td>
       <td md-cell>{{ evaluation.suggested_start_date }}</td>
       <td md-cell>{{ evaluation.suggested_end_date }}</td>
+
+      <!-- Evaluation status badge -->
+      <td md-cell>
+        <md-chips>
+          <md-chip ng-class="evaluation.statusCssClass">
+            {{ evaluation.status }}
+          </md-chip>
+        </md-chips>
+      </td>
+
+      <!-- View details button -->
       <td md-cell>
         <md-button ng-click="vm.viewEvaluationDetails($event, evaluation)"
                    aria-label="{{ 'BUTTON.DETAILS' | translate }}"

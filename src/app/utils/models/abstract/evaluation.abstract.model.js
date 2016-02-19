@@ -19,6 +19,8 @@
       function initializeOneObject ( obj ) {
         obj.subjectOfEvaluation = getSubjectOfEvaluation(obj);
         obj.typeTranslationKey = getSubjectOfEvaluationTranslationKey(obj);
+        obj.statusCssClass = {};
+        obj.statusCssClass[obj.status] = true;
 
         angular.extend(obj.shopper_repr, ShopperModel);
         obj.shopper_repr.initialize();
