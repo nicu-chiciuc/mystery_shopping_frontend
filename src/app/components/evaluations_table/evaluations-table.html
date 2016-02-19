@@ -1,5 +1,5 @@
 <md-table-container>
-  <table md-table md-row-select ng-model="selected">
+  <table md-table md-row-select="tableOptions.rowSelection" ng-model="selected">
     <thead md-head>
     <tr md-row>
       <th md-column>
@@ -42,13 +42,15 @@
         md-select="evaluation"
         md-select-id="{{evaluation.id}}"
         ng-model="selectedRows"
-        md-auto-select
+        md-auto-select="tableOptions.autoSelect"
         ng-repeat="evaluation in vm.evaluations track by $index"
         class="md-accent">
       <td md-cell>{{ evaluation.visit_id }}</td>
       <td md-cell>{{ evaluation.shopper_repr.user.fullName }}</td>
       <td md-cell class="small-padding">
-        <ng-md-icon icon="{{ evaluation.subjectOfEvaluation.icon }}" size="16"></ng-md-icon>
+        <div layout="row" layout-align="center center">
+          <ng-md-icon icon="{{ evaluation.subjectOfEvaluation.icon }}" class="subject-of-evaluation-icon"></ng-md-icon>
+        </div>
       </td>
       <td md-cell>{{ evaluation.subjectOfEvaluation.displayName }}</td>
       <td md-cell>{{ evaluation.evaluation_type }}</td>
@@ -59,7 +61,7 @@
 
       <!-- Evaluation status badge -->
       <td md-cell>
-        <md-chips>
+        <md-chips class="evaluation-status-chips">
           <md-chip ng-class="evaluation.statusCssClass">
             {{ evaluation.status }}
           </md-chip>
@@ -68,11 +70,34 @@
 
       <!-- View details button -->
       <td md-cell>
-        <md-button ng-click="vm.viewEvaluationDetails($event, evaluation)"
-                   aria-label="{{ 'BUTTON.DETAILS' | translate }}"
-                   class="md-primary md-icon-button">
-          <ng-md-icon icon="my_library_books"></ng-md-icon>
-        </md-button>
+        <div layout="row" layout-align="center center">
+          <md-button ng-click="vm.viewEvaluationDetails($event, evaluation)"
+                     aria-label="{{ 'BUTTON.DETAILS' | translate }}"
+                     class="md-primary md-icon-button">
+            <ng-md-icon icon="my_library_books"></ng-md-icon>
+          </md-button>
+
+          <!-- Evaluation menu -->
+          <!-- TODO add a translation to md-button aria-label -->
+          <md-menu>
+            <md-button aria-label="Open evaluation menu"
+                       class="md-icon-button"
+                       ng-click="vm.openMenu($mdOpenMenu, $event)">
+              <ng-md-icon icon="more_vert"></ng-md-icon>
+            </md-button>
+
+            <md-menu-content width="4">
+
+              <md-menu-item>
+                <md-button ng-click="vm.deleteEvaluation($event, evaluation)">
+                  {{ 'EVALUATION.DELETE' | translate }}
+                </md-button>
+              </md-menu-item>
+
+            </md-menu-content>
+          </md-menu>
+
+        </div>
       </td>
     </tr>
     </tbody>

@@ -21,15 +21,28 @@
     return directive;
 
     /** @ngInject */
-    function EvaluationsTableController ( $log, $scope, $filter, $mdMedia, $mdDialog ) {
+    function EvaluationsTableController ( $log, $scope, $filter, $mdMedia, $mdDialog, evaluationPlanning ) {
       $log.debug('Entered EvaluationsTableController');
 
       var vm = this;
+      var originatorEv;
 
       $scope.selectedRows = [];
       $scope.selected = [];
 
+      $scope.tableOptions = {
+        autoSelect: false,
+        largeEditDialog: true,
+        rowSelection: false
+      };
+
       vm.viewEvaluationDetails = viewEvaluationDetails;
+      vm.deleteEvaluation = deleteEvaluation;
+
+      vm.openMenu = function($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
+      };
 
 
       function viewEvaluationDetails ( ev, evaluation ) {
@@ -47,6 +60,20 @@
         })
           .then(function(evaluation) {
           });
+      }
+
+      function deleteEvaluation ( ev, evaluation ) {
+        var confirm = $mdDialog.confirm()
+          .title($filter('translate')('EVALUATION.DELETE_DIALOG.TITLE'))
+          .textContent($filter('translate')('EVALUATION.DELETE_DIALOG.TEXT_CONTENT'))
+          .ariaLabel($filter('translate')('EVALUATION.DELETE_DIALOG.ARIA_LABEL'))
+          .targetEvent(ev)
+          .ok($filter('translate')('BUTTON.DELETE'))
+          .cancel($filter('translate')('BUTTON.CANCEL'));
+
+        $mdDialog.show(confirm).then(function() {
+          evaluationPlanning.removeEvaluation(evaluation);
+        });
       }
     }
   }

@@ -249,7 +249,13 @@
         HEADING: 'Evaluations',
         TOTAL: 'Total: {NR}',
         NOT_PLANNED: 'Not planned: {NR}',
-        DETAILS: 'Evaluation details'
+        DETAILS: 'Evaluation details',
+        DELETE: 'Delete evaluation',
+        DELETE_DIALOG: {
+          TITLE: 'Delete confirmation',
+          TEXT_CONTENT: 'Are you sure you want to delete this evaluation?',
+          ARIA_LABEL: 'Delete evaluation confirmation'
+        }
       },
       VALIDATION_MESSAGE: {
         GENERIC: {

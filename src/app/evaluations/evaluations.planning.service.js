@@ -16,7 +16,8 @@
       leftToPlanEvaluationNumber: leftToPlanEvaluationNumber,
       setPlannedEvaluations: setPlannedEvaluations,
       getPlannedEvaluations: getPlannedEvaluations,
-      savePlannedEvaluations: savePlannedEvaluations
+      savePlannedEvaluations: savePlannedEvaluations,
+      removeEvaluation: removeEvaluation
     };
 
     return self;
@@ -54,6 +55,18 @@
     }
 
     function savePlannedEvaluations ( evaluations ) {
+    }
+
+    function removeEvaluation ( evaluation ) {
+      evaluation.remove().then(deleteEvaluationSuccessFn, deleteEvaluationErrorFn);
+      function deleteEvaluationSuccessFn () {
+        _.remove(self.plannedEvaluations, function (evltn) {
+          return evltn.id === evaluation.id;
+        });
+      }
+      function deleteEvaluationErrorFn () {
+        // TODO deal with the error
+      }
     }
   }
 
