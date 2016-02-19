@@ -93,7 +93,8 @@
         controller: 'CompanyEmployeeFormController as vm',
         resolve: {
           employee: function () { return {}; },
-          section: function () { return {}; }
+          section: function () { return {}; },
+          place: function ( entity ) { return entity; }
         }
       })
       .state('companies.detail.departments.detail.entities.detail.employees.detail', {
@@ -106,7 +107,8 @@
               return employee.id === $stateParams.employeeId;
             });
           },
-          section: function () { return {}; }
+          section: function () { return {}; },
+          place: function ( entity ) { return entity; }
         }
       })
       .state('companies.detail.departments.detail.entities.detail.employees.detail.view', {

@@ -6,28 +6,27 @@
     .controller('CompanyEmployeeFormController', CompanyEmployeeFormController);
 
   /** @ngInject */
-  function CompanyEmployeeFormController ( $log, $state, models, company, entity, section, employee ) {
+  function CompanyEmployeeFormController ( $log, $state, models, msUtils, company, entity, section, place, employee ) {
     $log.debug('Entered CompanyEmployeeFormController');
     var vm = this;
 
     vm.employee = employee;
+    vm.company = company;
     vm.entity = entity;
     vm.section = section;
+    vm.place = place;
 
-    // Place where to add the newly created employee.
-    // In case Section is empty, this means that the place where to add the employee is
-    // the injected `entity`, otherwise add the employee to the injected `section`.
-    vm.place = angular.equals({}, vm.section) ? vm.entity : vm.section;
+    vm.msUtils = msUtils;
+
+    vm.isNewEmployee = !vm.employee.id;
 
     vm.saveEmployee = saveEmployee;
 
     activate();
-
     function activate() {
-      vm.isNewEmployee = _.isEmpty(vm.employee);
-      employee.entity = entity.id;
-      employee.section = angular.equals({}, vm.section) ? null : vm.section.id;
-      employee.company = company.id;
+      vm.employee.entity = vm.entity.id;
+      vm.employee.section = vm.section.id ? vm.section.id : null;
+      vm.employee.company = vm.company.id;
     }
 
     function saveEmployee ( employee, isValid ) {

@@ -138,6 +138,7 @@
         ADD_MANAGER: 'Add manager',
         ADD_EMPLOYEE: 'Add employee',
         MANAGER_OF: 'Manager of "{PLACE_NAME}"',
+        EMPLOYEE_OF: 'Employee of "{PLACE_NAME}"',
         JOB_TITLE: 'Job title: {TITLE}',
         DEPARTMENT: {
           NAME: 'Department name',

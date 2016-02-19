@@ -55,7 +55,8 @@
         templateUrl: 'app/users/companies/employees/create/employee-form.html',
         controller: 'CompanyEmployeeFormController as vm',
         resolve: {
-          employee: function () { return {}; }
+          employee: function () { return {}; },
+          place: function ( section ) { return section; }
         }
       })
       .state('companies.detail.departments.detail.entities.detail.sections.detail.employees.detail', {
@@ -67,7 +68,8 @@
             return _.find(section.employees, function ( employee ) {
               return employee.id === $stateParams.employeeId;
             });
-          }
+          },
+          place: function ( section ) { return section; }
         }
       })
       .state('companies.detail.departments.detail.entities.detail.sections.detail.employees.detail.view', {

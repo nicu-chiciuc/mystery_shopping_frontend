@@ -1,9 +1,10 @@
-HI! this is employee create page.
+<md-content layout="column" layout-padding>
 
-<md-content layout="row" layout-padding>
+  <h2 ng-show="vm.isNewEmployee">{{ 'COMPANY.NEW_EMPLOYEE' | translate }}</h2>
+  <h2 ng-hide="vm.isNewEmployee">{{ 'COMPANY.EDIT_EMPLOYEE' | translate }}</h2>
 
   <div ng-cloak flex>
-    <form name="employeeForm" ng-submit="vm.saveEmployee(vm.employee, employeeForm.$valid)">
+    <form name="employeeForm" ng-submit="vm.saveEmployee(vm.employee, employeeForm.$valid)" novalidate>
 
       <!--
       First Name
@@ -14,7 +15,7 @@ HI! this is employee create page.
 
         <!-- Validation messages -->
         <div ng-show="employeeForm.$submitted" ng-messages="employeeForm.first_name.$error">
-          <div ng-message="required">First name is REQUIRED!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.FIRST_NAME')}}</div>
         </div>
       </md-input-container>
 
@@ -28,7 +29,7 @@ HI! this is employee create page.
 
         <!-- Validation messages -->
         <div ng-show="employeeForm.$submitted" ng-messages="employeeForm.last_name.$error">
-          <div ng-message="required">Last name is REQUIRED!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.LAST_NAME')}}</div>
         </div>
       </md-input-container>
 
@@ -42,7 +43,7 @@ HI! this is employee create page.
       </md-input-container>
 
 
-      <md-button type="submit" class="md-primary">
+      <md-button type="submit" class="md-primary md-raised">
         {{ vm.isNewEmployee ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
       </md-button>
     </form>
