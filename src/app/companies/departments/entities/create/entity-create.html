@@ -1,10 +1,10 @@
-Create Entity here!!!
+<md-content layout="column" layout-padding>
 
-<md-content layout="row" layout-padding>
+  <h2 ng-show="vm.isNewEntity">{{ 'COMPANY.DEPARTMENT.ENTITY.NEW_ENTITY' | translate }}</h2>
+  <h2 ng-hide="vm.isNewEntity">{{ 'COMPANY.DEPARTMENT.ENTITY.EDIT_ENTITY' | translate }}</h2>
 
   <div ng-cloak flex>
-    <form name="entityForm" ng-submit="vm.saveEntity(vm.entity, entityForm.$valid, 'companies.detail.departments.detail.entities.detail.view')">
-
+    <form name="entityForm" ng-submit="vm.saveEntity(vm.entity, entityForm.$valid)" novalidate>
 
       <!--
       Entity name
@@ -15,7 +15,7 @@ Create Entity here!!!
 
         <!-- Validation messages -->
         <div ng-show="entityForm.$submitted" ng-messages="entityForm.name.$error">
-          <div ng-message="required">Entity name is REQUIRED!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMPANY.DEPARTMENT.ENTITY.NAME')}}</div>
         </div>
       </md-input-container>
 
@@ -33,7 +33,7 @@ Create Entity here!!!
 
         <!-- Validation messages -->
         <div ng-show="entityForm.$submitted" ng-messages="entityForm.city.$error">
-          <div ng-message="required">City is required!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMMON.CITY')}}</div>
         </div>
       </md-input-container>
 
@@ -51,7 +51,7 @@ Create Entity here!!!
 
         <!-- Validation messages -->
         <div ng-show="entityForm.$submitted" ng-messages="entityForm.sector.$error">
-          <div ng-message="required">Sector is required!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMMON.SECTOR')}}</div>
         </div>
       </md-input-container>
 
@@ -65,7 +65,7 @@ Create Entity here!!!
 
         <!-- Validation messages -->
         <div ng-show="entityForm.$submitted" ng-messages="entityForm.address.$error">
-          <div ng-message="required">Address is REQUIRED!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMMON.ADDRESS')}}</div>
         </div>
       </md-input-container>
 
@@ -90,14 +90,9 @@ Create Entity here!!!
 
       <!-- TODO add a google map and an input field to set the ZOOM parameter to save for the specific coordinates -->
 
-      <md-button type="submit" class="md-primary">
-        {{ 'BUTTON.CREATE' | translate }}
+      <md-button type="submit" class="md-primary md-raised">
+        {{ 'BUTTON.SAVE' | translate }}
       </md-button>
     </form>
   </div>
 </md-content>
-
-{{ vm.entity | json }}
-{{ vm.sectors | json }}
-
-<div ui-view></div>

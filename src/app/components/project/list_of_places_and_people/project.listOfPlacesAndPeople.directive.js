@@ -56,14 +56,14 @@
             contentType: 'department',
             includeInList: false,
             children: [
-              {
-                itemsProp: 'managers',
-                itemLabelProp: 'fullName',
-                itemValueProp: personItemValuePropFn,
-                type: 'ignored',
-                contentType: 'clientmanager',
-                includeInList: false
-              },
+              //{
+              //  itemsProp: 'managers',
+              //  itemLabelProp: 'fullName',
+              //  itemValueProp: personItemValuePropFn,
+              //  type: 'ignored',
+              //  contentType: 'clientmanager',
+              //  includeInList: false
+              //},
               {
                 itemsProp: 'entities',
                 itemLabelProp: 'name',

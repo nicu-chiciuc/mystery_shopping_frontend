@@ -6,18 +6,18 @@
     .controller('EntityCreateController', EntityCreateController);
 
   /** @ngInject */
-  function EntityCreateController ( $log, $state, models, user, cities, company, department, entity ) {
+  function EntityCreateController ( $log, $state, msUtils, models, user, cities, company, department, entity ) {
     $log.debug('Entered EntityCreateController');
     var vm = this;
 
-    console.log(company);
-    console.log(department);
-    console.log(entity);
-    console.log(cities);
     vm.company = company;
     vm.department = department;
     vm.entity = entity;
     vm.cities = cities;
+
+    vm.msUtils = msUtils;
+
+    vm.isNewEntity = !vm.entity.id;
 
     vm.saveEntity = saveEntity;
     vm.citySelected = citySelected;
@@ -25,22 +25,30 @@
     activate();
 
     function activate() {
-      angular.extend(entity, models.manager.EntityModel);
+      if ( vm.isNewEntity ) {
+        angular.extend(entity, models.manager.EntityModel);
+      }
+      vm.entity.tenant = user.tenantId;
+      vm.entity.department = vm.department.id;
     }
 
-    function saveEntity ( entity, isValid, nextState ) {
-      entity.tenant = user.tenantId;
-      entity.department = department.id;
-      entity.mergeCoordinates();
-
-      entity = models.restangularizeElement(null, entity, 'entities');
+    function saveEntity ( entity, isValid ) {
       if ( isValid ) {
-        entity.save().then(saveEntitySuccessFn, saveEntityErrorFn);
+        entity.mergeCoordinates();
+        entity = models.restangularizeElement(null, entity, 'entities');
+        if ( vm.isNewEntity ) {
+          entity.post().then(saveEntitySuccessFn, saveEntityErrorFn);
+        } else {
+          entity.put().then(saveEntitySuccessFn, saveEntityErrorFn);
+        }
       }
 
       function saveEntitySuccessFn ( response ) {
-        department.addEntity(response);
-        $state.go(nextState, {entityId: response.id});
+        if ( vm.isNewEntity ) {
+          department.addEntity(response);
+          vm.entity = response;
+        }
+        goToEntityDetailViewState();
       }
       function saveEntityErrorFn () {
         // TODO deal with the error
@@ -52,8 +60,12 @@
       var selectedCity = _.find(cities, function ( city ) {
         return city.id == cityId;
       });
-      console.log(selectedCity);
       vm.sectors = selectedCity.sectors || [];
+    }
+
+    function goToEntityDetailViewState () {
+      var entityDetailViewState = $state.current.name.replace(/(create|detail\.edit)/g, 'detail.view');
+      $state.go(entityDetailViewState, {entityId: vm.entity.id, departmentId: vm.entity.department});
     }
 
   }

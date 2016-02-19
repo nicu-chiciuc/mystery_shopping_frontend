@@ -1,23 +1,28 @@
-{{ vm.department | json }}
+<md-content layout="column" layout-padding>
 
-<br/>
-<md-button ng-repeat="entity in vm.department.entities"
-           ui-sref="companies.detail.departments.detail.entities.detail.view({entityId: entity.id})">
-  {{ entity.name }}
-</md-button>
+  <div layout="row" layout-align="none center">
+    <h2 class="md-display-1" flex>{{ vm.department.name }}</h2>
+    <div flex="none">
+      <md-button ui-sref="companies.detail.departments.detail.edit({departmentId: vm.department.id})"
+                 class="md-primary md-raised">
+        {{ 'BUTTON.EDIT' | translate }}
+      </md-button>
+    </div>
+  </div>
 
-<hr/>
+  <h2 class="md-headline">
+    {{ 'COMPANY.DEPARTMENT.STRUCTURE' | translate }}
+  </h2>
 
-<md-button ng-repeat="manager in vm.department.managers"
-           ui-sref="companies.detail.departments.detail.managers.detail.view({managerId: manager.id})">
-  {{ manager.first_name }}
-</md-button>
-<hr/>
+  <ms-department-view-component department="vm.department"></ms-department-view-component>
 
-<md-button ui-sref="companies.detail.departments.detail.entities.create">
-  Add entity
-</md-button>
+  <div>
+    <md-button ui-sref="companies.detail.departments.detail.entities.create" class="md-primary md-raised">
+      {{ 'COMPANY.DEPARTMENT.ADD_ENTITY' | translate }}
+    </md-button>
 
-<md-button ui-sref="companies.detail.departments.detail.managers.create">
-  Add manager
-</md-button>
+    <md-button ui-sref="companies.detail.departments.detail.managers.create" class="md-primary md-raised">
+      {{ 'COMPANY.ADD_MANAGER' | translate }}
+    </md-button>
+  </div>
+</md-content>

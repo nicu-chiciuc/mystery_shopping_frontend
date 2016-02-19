@@ -1,0 +1,36 @@
+<md-content layout="column">
+
+  <!-- Department name -->
+  <div class="company-hierarchy-item" style="padding-left: 0;">
+    <md-button ui-sref="companies.detail.departments.detail.view({departmentId: vm.department.id})">
+      <span>
+        <strong>
+          {{ vm.department.name }}
+        </strong>
+        <span class="subject-of-evaluation-type">
+          ({{('CONTENT_TYPE.' + vm.department.contentTypeId) | translate }})
+        </span>
+      </span>
+    </md-button>
+
+    <!--<md-button class="md-icon-button company-hierarchy-icon-button">-->
+      <!--<ng-md-icon icon="my_library_add" size="20" class="md-icon-button-sm company-hierarchy-icon" aria-label="Add items"></ng-md-icon>-->
+    <!--</md-button>-->
+  </div>
+
+  <!-- Department Managers -->
+  <div class="margin-left-md" layout="column" layout-align="center start">
+    <md-button ng-repeat="manager in vm.department.managers"
+               ui-sref="companies.detail.departments.detail.managers.detail.view({managerId: manager.id, departmentId: vm.department.id})">
+      {{ manager.fullName }}
+      <span class="subject-of-evaluation-type">
+        ({{('CONTENT_TYPE.' + manager.contentTypeId) | translate }})
+      </span>
+    </md-button>
+  </div>
+
+  <!-- Department Entities -->
+  <ms-entity-view-component ng-repeat="entity in vm.department.entities"
+                            entity="entity" class="margin-left-md company-hierarchy-item">
+  </ms-entity-view-component>
+</md-content>

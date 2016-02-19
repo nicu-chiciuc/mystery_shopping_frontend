@@ -1,39 +1,33 @@
-<md-content>
-  {{ vm.entity | json }}
+<md-content layout="column" layout-padding>
 
-  <br/>
+  <div layout="row" layout-align="none center">
+    <h2 class="md-display-1" flex>{{ vm.entity.name }}</h2>
+    <div flex="none">
+      <md-button ui-sref="companies.detail.departments.detail.entities.detail.edit({entityId: vm.entity.id, departmentId: vm.entity.department})"
+                 class="md-primary md-raised">
+        {{ 'BUTTON.EDIT' | translate }}
+      </md-button>
+    </div>
+  </div>
 
-  <md-button ng-repeat="section in vm.entity.sections"
-             ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.view({sectionId: section.id})">
-    {{ section.name }}
-  </md-button>
+  <h2 class="md-headline">
+    {{ 'COMPANY.DEPARTMENT.ENTITY.STRUCTURE' | translate }}
+  </h2>
 
-  <hr/>
+  <ms-entity-view-component entity="vm.entity"></ms-entity-view-component>
 
-  <md-button ng-repeat="manager in vm.entity.managers"
-             ui-sref="companies.detail.departments.detail.entities.detail.managers.detail.view({managerId: manager.id})">
-    {{ manager.first_name }}
-  </md-button>
+  <div>
+    <md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.create" class="md-primary md-raised">
+      {{ 'COMPANY.DEPARTMENT.ENTITY.ADD_SECTION' | translate }}
+    </md-button>
 
-  <hr/>
+    <md-button ui-sref="companies.detail.departments.detail.entities.detail.managers.create" class="md-primary md-raised">
+      {{ 'COMPANY.ADD_MANAGER' | translate }}
+    </md-button>
 
-  <md-button ng-repeat="employee in vm.entity.employees"
-             ui-sref="companies.detail.departments.detail.entities.detail.employees.detail.view({employeeId: employee.id})">
-    {{ employee.first_name }}
-  </md-button>
-
-  <hr/>
-
-  <md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.create">
-    Add section
-  </md-button>
-
-  <md-button ui-sref="companies.detail.departments.detail.entities.detail.managers.create">
-    Add manager
-  </md-button>
-
-  <md-button ui-sref="companies.detail.departments.detail.entities.detail.employees.create">
-    Add employee
-  </md-button>
+    <md-button ui-sref="companies.detail.departments.detail.entities.detail.employees.create" class="md-primary md-raised">
+      {{ 'COMPANY.ADD_EMPLOYEE' | translate }}
+    </md-button>
+  </div>
 
 </md-content>

@@ -1,0 +1,59 @@
+<md-content layout="column">
+
+  <!-- Section name -->
+  <!--<span class="company-hierarchy-item">-->
+    <!--<strong>-->
+      <!--{{ vm.section.name }}-->
+    <!--</strong>-->
+    <!--<span class="subject-of-evaluation-type">-->
+      <!--({{('CONTENT_TYPE.' + vm.section.contentTypeId) | translate }})-->
+    <!--</span>-->
+  <!--</span>-->
+  <div class="company-hierarchy-item">
+    <md-button ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.view({sectionId: vm.section.id, entityId: vm.section.entity, departmentId: vm.departmentId})">
+      <span>
+        <strong>
+          {{ vm.section.name }}
+        </strong>
+        <span class="subject-of-evaluation-type">
+          ({{('CONTENT_TYPE.' + vm.section.contentTypeId) | translate }})
+        </span>
+      </span>
+    </md-button>
+  </div>
+
+  <!-- Section Managers -->
+  <!--<span ng-repeat="manager in vm.section.managers" class="margin-left-md company-hierarchy-item">-->
+    <!--{{ manager.fullName }}-->
+    <!--<span class="subject-of-evaluation-type">-->
+      <!--({{('CONTENT_TYPE.' + manager.contentTypeId) | translate }})-->
+    <!--</span>-->
+  <!--</span>-->
+  <div class="margin-left-md" layout="column" layout-align="center start">
+    <md-button ng-repeat="manager in vm.section.managers"
+               ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.managers.detail.view({managerId: manager.id, sectionId: vm.section.id, entityId: vm.section.entity, departmentId: vm.departmentId})">
+      {{ manager.fullName }}
+      <span class="subject-of-evaluation-type">
+        ({{('CONTENT_TYPE.' + manager.contentTypeId) | translate }})
+      </span>
+    </md-button>
+  </div>
+
+  <!-- Section Employees -->
+  <!--<span ng-repeat="employee in vm.section.employees" class="margin-left-md company-hierarchy-item">-->
+    <!--{{ employee.fullName }}-->
+    <!--<span class="subject-of-evaluation-type">-->
+      <!--({{('CONTENT_TYPE.' + employee.contentTypeId) | translate }})-->
+    <!--</span>-->
+  <!--</span>-->
+  <div class="margin-left-md" layout="column" layout-align="center start">
+    <md-button ng-repeat="employee in vm.section.employees"
+               ui-sref="companies.detail.departments.detail.entities.detail.sections.detail.employees.detail.view({employeeId: employee.id, sectionId: vm.section.id, entityId: vm.section.entity, departmentId: vm.departmentId})">
+      {{ employee.fullName }}
+      <span class="subject-of-evaluation-type">
+        ({{('CONTENT_TYPE.' + employee.contentTypeId) | translate }})
+      </span>
+    </md-button>
+  </div>
+
+</md-content>

@@ -1,9 +1,10 @@
-Create Department here!!!
+<md-content layout="column" layout-padding>
 
-<md-content layout="row" layout-padding>
+  <h2 ng-show="vm.isNewDepartment">{{ 'COMPANY.DEPARTMENT.NEW_DEPARTMENT' | translate }}</h2>
+  <h2 ng-hide="vm.isNewDepartment">{{ 'COMPANY.DEPARTMENT.EDIT_DEPARTMENT' | translate }}</h2>
 
   <div ng-cloak flex>
-    <form name="departmentForm" ng-submit="vm.saveDepartment(vm.department, departmentForm.$valid, 'companies.detail.departments.detail.view')">
+    <form name="departmentForm" ng-submit="vm.saveDepartment(vm.department, departmentForm.$valid)" novalidate>
 
       <!--
       Department name
@@ -14,13 +15,13 @@ Create Department here!!!
 
         <!-- Validation messages -->
         <div ng-show="departmentForm.$submitted" ng-messages="departmentForm.name.$error">
-          <div ng-message="required">Department name is REQUIRED!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMPANY.DEPARTMENT.NAME')}}</div>
         </div>
       </md-input-container>
 
-      <md-button type="submit" class="md-primary">Submit</md-button>
+      <md-button type="submit" class="md-primary md-raised">
+        {{ 'BUTTON.SAVE' | translate }}
+      </md-button>
     </form>
   </div>
 </md-content>
-
-<div ui-view></div>

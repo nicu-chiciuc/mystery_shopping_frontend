@@ -1,0 +1,12 @@
+.company-hierarchy-container div > a {
+  margin: 0 8px;
+}
+.company-hierarchy-item {
+  padding: 0;
+}
+.company-hierarchy-icon {
+  fill: #555;
+}
+.md-button.company-hierarchy-icon-button {
+  margin-top: 3px;
+}

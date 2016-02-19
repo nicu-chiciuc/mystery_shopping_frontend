@@ -1,4 +1,4 @@
-<md-content layout-padding>
+<md-content layout="column" layout-padding>
 
   <!--<md-toolbar>-->
     <!--<div class="md-toolbar-tools">-->
@@ -7,11 +7,13 @@
   <!--</md-toolbar>-->
 
   <div layout="row" layout-align="none center">
-    <h2 flex>{{ vm.company.name }}</h2>
-    <md-button ui-sref="companies.detail.edit({id: vm.company.id})"
-               flex="none">
-      Edit
-    </md-button>
+    <h2 class="md-display-1" flex>{{ vm.company.name }}</h2>
+    <div flex="none">
+      <md-button ui-sref="companies.detail.edit({id: vm.company.id})"
+                 class="md-primary md-raised">
+        {{ 'BUTTON.EDIT' | translate }}
+      </md-button>
+    </div>
   </div>
 
   <div layout="row">
@@ -28,7 +30,7 @@
 
   </div>
 
-  <md-divider></md-divider>
+  <md-divider class="margin-top-lg"></md-divider>
 
   <div layout="row">
 
@@ -47,18 +49,20 @@
       <span>{{ vm.company.contact_email }}</span>
     </div>
 
-
-
   </div>
 
-  <md-button ui-sref="companies.detail.departments.create">
-    Add department
+  <h2 class="md-headline">
+    {{ 'COMPANY.COMPANY_STRUCTURE' | translate }}
+  </h2>
+
+  <div layout="column" class="company-hierarchy-container">
+    <ms-department-view-component ng-repeat="department in vm.company.departments_repr"
+                                  department="department">
+    </ms-department-view-component>
+  </div>
+
+  <md-button ui-sref="companies.detail.departments.create" class="md-primary md-raised">
+    {{ 'COMPANY.ADD_DEPARTMENT' | translate }}
   </md-button>
 
-  <br/>
-
-  <md-button ng-repeat="department in vm.company.departments_repr"
-             ui-sref="companies.detail.departments.detail.view({departmentId: department.id})">
-    {{ department.name }}
-  </md-button>
 </md-content>

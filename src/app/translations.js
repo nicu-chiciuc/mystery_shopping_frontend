@@ -128,10 +128,22 @@
         CONTACT_PHONE: 'Contact phone',
         CONTACT_EMAIL: 'Contact email',
         DOMAIN: 'Domain',
+        COMPANY_STRUCTURE: 'Company structure',
+        ADD_DEPARTMENT: 'Add department',
+        ADD_MANAGER: 'Add manager',
+        ADD_EMPLOYEE: 'Add employee',
         DEPARTMENT: {
           NAME: 'Department name',
+          STRUCTURE: 'Department structure',
+          NEW_DEPARTMENT: 'New department',
+          EDIT_DEPARTMENT: 'Edit department',
+          ADD_ENTITY: 'Add entity',
           ENTITY: {
+            ADD_SECTION: 'Add section',
             NAME: 'Entity name',
+            NEW_ENTITY: 'New entity',
+            EDIT_ENTITY: 'Edit entity',
+            STRUCTURE: 'Entity structure',
             SECTION: {
               NAME: 'Section name'
             }
