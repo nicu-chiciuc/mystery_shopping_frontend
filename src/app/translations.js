@@ -109,6 +109,7 @@
         EMAIL: 'Email',
         PASSWORD: 'Password',
         CONFIRM_PASSWORD: 'Confirm password',
+        NAME: 'Name',
         FIRST_NAME: 'First name',
         LAST_NAME: 'Last name',
         JOB_TITLE: 'Job title',
@@ -119,9 +120,13 @@
         HAS_DRIVERS_LICENSE: 'Has drivers license'
       },
       COMPANY: {
+        NAME: 'Company name',
         NEW_COMPANY: 'New company',
         EDIT_COMPANY: 'Edit company',
-        NAME: 'Company name',
+        NEW_MANAGER: 'New manager',
+        EDIT_MANAGER: 'Edit manager',
+        NEW_EMPLOYEE: 'New employee',
+        EDIT_EMPLOYEE: 'Edit employee',
         INDUSTRY: 'Industry company activates in',
         COUNTRY: 'Country',
         CONTACT_PERSON: 'Contact person',
@@ -132,6 +137,8 @@
         ADD_DEPARTMENT: 'Add department',
         ADD_MANAGER: 'Add manager',
         ADD_EMPLOYEE: 'Add employee',
+        MANAGER_OF: 'Manager of "{PLACE_NAME}"',
+        JOB_TITLE: 'Job title: {TITLE}',
         DEPARTMENT: {
           NAME: 'Department name',
           STRUCTURE: 'Department structure',

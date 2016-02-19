@@ -1,28 +1,26 @@
-<md-content>
-  {{ vm.companyManager | json }}
-
-  <hr/>
+<md-content layout="column" layout-padding>
 
   <div layout="row" layout-align="none center">
-    <h2 flex>
-      Manager of {{ vm.place.name }}
+    <h2 class="md-display-1" flex>
+      {{ 'COMPANY.MANAGER_OF' | translate : {PLACE_NAME: vm.place.name} }}
     </h2>
     <div flex="none">
-      <md-button ng-click="vm.goToManagerDetailViewState()">
-        Edit
+      <md-button ng-click="vm.goToManagerDetailViewState()"
+                 class="md-primary md-raised">
+        {{ 'BUTTON.EDIT' | translate }}
       </md-button>
     </div>
   </div>
 
-  <div layout="row" layout-padding>
+  <div layout="column" layout-padding>
 
-    <div layout="column">
-      {{ vm.manager.first_name + ' ' + vm.manager.last_name }}
-    </div>
+    <span>
+      {{ 'ACCOUNT.NAME' | translate }}: {{ vm.manager.fullName }}
+    </span>
 
-    <div layout="column">
-      {{ vm.manager.job_title }}
-    </div>
+    <span>
+      {{ 'COMPANY.JOB_TITLE' | translate : {TITLE: (vm.manager.job_title || '—')} }}
+    </span>
 
   </div>
 </md-content>

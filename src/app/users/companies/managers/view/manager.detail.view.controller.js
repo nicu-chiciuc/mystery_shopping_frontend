@@ -8,7 +8,6 @@
   /** @ngInject */
   function CompanyManagerDetailViewController ( $log, $state, place, manager ) {
     $log.debug('Entered CompanyManagerDetailViewController');
-    console.log(manager);
     var vm = this;
 
     vm.manager = manager;
@@ -19,8 +18,6 @@
     activate();
 
     function activate() {
-      vm.currentState = $state;
-      console.log($state.current);
     }
 
     function goToManagerDetailViewState() {

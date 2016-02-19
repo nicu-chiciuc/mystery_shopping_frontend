@@ -113,6 +113,18 @@
       return obj;
     });
 
+    Restangular.extendModel('clientmanagers', function (obj) {
+      angular.extend(obj, modelManager.CompanyManagerModel);
+      obj.initialize();
+      return obj;
+    });
+
+    Restangular.extendModel('clientemployees', function (obj) {
+      angular.extend(obj, modelManager.CompanyEmployeeModel);
+      obj.initialize();
+      return obj;
+    });
+
     $log.debug('runBlock end');
   }
 

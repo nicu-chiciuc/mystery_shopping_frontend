@@ -43,6 +43,7 @@
 
     function addManager ( manager ) {
       var section = this;
+      Restangular.restangularizeElement(null, manager, 'clientmanagers');
       section.managers.push(manager);
     }
 

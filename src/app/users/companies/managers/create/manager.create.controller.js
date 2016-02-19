@@ -6,22 +6,27 @@
     .controller('CompanyManagerCreateController', CompanyManagerCreateController);
 
   /** @ngInject */
-  function CompanyManagerCreateController ( $log, $state, models, user, company, place, manager ) {
+  function CompanyManagerCreateController ( $log, $state, msUtils, models, user, company, place, manager ) {
     $log.debug('Entered CompanyManagerCreateController');
-    console.log(place);
+
     var vm = this;
 
+    vm.company = company;
     vm.manager = manager;
+    vm.place = place;
+
+    vm.msUtils = msUtils;
+
+    vm.isNewManager = !vm.manager.id;
 
     vm.saveManager = saveManager;
 
     activate();
 
     function activate() {
-      vm.isNewManager = _.isEmpty(vm.manager);
-      manager.place_id = place.id;
-      manager.place_type = place.contentType;
-      manager.company = company.id;
+      vm.manager.place_id = vm.place.id;
+      vm.manager.place_type = vm.place.contentType;
+      vm.manager.company = vm.company.id;
     }
 
     function saveManager ( manager, isValid ) {
