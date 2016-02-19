@@ -117,7 +117,9 @@
         DETAILS: 'Details'
       },
       SHOPPER: {
-        HAS_DRIVERS_LICENSE: 'Has drivers license'
+        HAS_DRIVERS_LICENSE: 'Has drivers license',
+        NEW_SHOPPER: 'New shopper',
+        EDIT_SHOPPER: 'Edit shopper'
       },
       COMPANY: {
         NAME: 'Company name',

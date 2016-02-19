@@ -1,4 +1,7 @@
-<md-content layout="row" layout-padding>
+<md-content layout="column" layout-padding>
+
+  <h2 ng-show="vm.isNewShopper">{{ 'SHOPPER.NEW_SHOPPER' | translate }}</h2>
+  <h2 ng-hide="vm.isNewShopper">{{ 'SHOPPER.EDIT_SHOPPER' | translate }}</h2>
 
   <div ng-cloak flex>
     <form name="shopperForm" ng-submit="vm.saveShopper(vm.shopper, shopperForm.$valid)" novalidate>
@@ -12,7 +15,7 @@
 
         <!-- Validation messages -->
         <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.username.$error">
-          <div ng-message="required">Username is REQUIRED!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.USERNAME')}}</div>
         </div>
       </md-input-container>
 
@@ -25,7 +28,7 @@
 
         <!-- Validation messages -->
         <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.email.$error">
-          <div ng-message="required">Email is REQUIRED!</div>
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.EMAIL')}}</div>
         </div>
       </md-input-container>
 
@@ -41,7 +44,7 @@
 
           <!-- Validation messages -->
           <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.first_name.$error">
-            <div ng-message="required">First name is REQUIRED!</div>
+            <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.FIRST_NAME')}}</div>
           </div>
         </md-input-container>
 
@@ -54,7 +57,7 @@
 
           <!-- Validation messages -->
           <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.last_name.$error">
-            <div ng-message="required">Last name is REQUIRED!</div>
+            <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.LAST_NAME')}}</div>
           </div>
         </md-input-container>
 
@@ -76,7 +79,7 @@
 
           <!-- Validation messages -->
           <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.password.$error">
-            <div ng-message="required">Password is REQUIRED!</div>
+            <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.PASSWORD')}}</div>
             <div ng-message="minlength">{{ 'VALIDATION_MESSAGE.PASSWORD.MIN_LENGTH' | translate }}</div>
           </div>
         </md-input-container>
@@ -95,7 +98,7 @@
 
           <!-- Validation messages -->
           <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.confirm_password.$error">
-            <div ng-message="required">Confirm password is REQUIRED!</div>
+            <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.CONFIRM_PASSWORD')}}</div>
             <div ng-message="minlength">{{ 'VALIDATION_MESSAGE.PASSWORD.MIN_LENGTH' | translate }}</div>
             <div ng-message="match">{{ 'VALIDATION_MESSAGE.PASSWORD.PASSWORDS_DO_NOT_MATCH' | translate }}</div>
           </div>
@@ -112,10 +115,17 @@
         <div>
           <md-subheader>{{ 'COMMON.GENDER.HEADING' | translate }}</md-subheader>
 
-          <md-radio-group ng-model="vm.shopper.gender">
-            <md-radio-button class="md-primary" value="m">{{ 'COMMON.GENDER.MALE' | translate }}</md-radio-button>
-            <md-radio-button class="md-primary" value="f">{{ 'COMMON.GENDER.FEMALE' | translate }}</md-radio-button>
-          </md-radio-group>
+          <md-input-container class="no-errors-spacer">
+            <md-radio-group ng-model="vm.shopper.gender" name="gender" ng-required="true">
+              <md-radio-button class="md-primary" value="m">{{ 'COMMON.GENDER.MALE' | translate }}</md-radio-button>
+              <md-radio-button class="md-primary" value="f">{{ 'COMMON.GENDER.FEMALE' | translate }}</md-radio-button>
+            </md-radio-group>
+
+            <!-- Validation messages -->
+            <div ng-show="shopperForm.$submitted" ng-messages="shopperForm.gender.$error">
+              <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMMON.GENDER.HEADING') }}</div>
+            </div>
+          </md-input-container>
         </div>
 
         <!--
@@ -134,8 +144,8 @@
 
             <!-- Validation messages -->
             <div ng-show="shopperForm.$submitted" class="validation-messages" ng-messages="shopperForm.date_of_birth.$error">
-              <div class="datepicker-validation-error-message" ng-message="valid">The entered value is not a date!</div>
-              <div class="datepicker-validation-error-message" ng-message="required">This date is required!</div>
+              <div class="datepicker-validation-error-message" ng-message="valid">{{ 'VALIDATION_MESSAGE.DATE.INVALID' | translate }}</div>
+              <div class="datepicker-validation-error-message" ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('ACCOUNT.BIRTH_DATE')}}</div>
             </div>
           </div>
         </div>
@@ -158,7 +168,7 @@
       </div>
 
 
-      <md-button type="submit" class="md-primary">
+      <md-button type="submit" class="md-primary md-raised">
         {{ vm.isNewShopper ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
       </md-button>
     </form>

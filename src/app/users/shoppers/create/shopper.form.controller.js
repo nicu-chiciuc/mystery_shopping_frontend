@@ -6,18 +6,20 @@
     .controller('ShopperFormController', ShopperFormController);
 
   /** @ngInject */
-  function ShopperFormController ( $log, $filter, $state, $mdToast, models, shopper, moment ) {
+  function ShopperFormController ( $log, $filter, $state, $mdToast, msUtils, models, shopper, moment ) {
     $log.debug('Entered ShopperFormController');
     var vm = this;
 
     vm.shopper = shopper;
 
+    vm.msUtils = msUtils;
+
+    vm.isNewShopper = !vm.shopper.id;
+
     vm.saveShopper = saveShopper;
 
     activate();
-
     function activate() {
-      vm.isNewShopper = _.isEmpty(vm.shopper);
       vm.passwordRequired = vm.isNewShopper;
     }
 
