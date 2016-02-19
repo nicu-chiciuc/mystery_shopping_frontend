@@ -6,37 +6,53 @@
     .controller('SectionCreateController', SectionCreateController);
 
   /** @ngInject */
-  function SectionCreateController ( $log, $state, models, user, company, department, entity ) {
+  function SectionCreateController ( $log, $state, msUtils, models, user, company, department, entity, section ) {
     $log.debug('Entered SectionCreateController');
     var vm = this;
 
-    console.log(company);
     vm.company = company;
     vm.department = department;
     vm.entity = entity;
+    vm.section = section;
+
+    vm.msUtils = msUtils;
+
+    vm.isNewSection = !vm.section.id;
 
     vm.saveSection = saveSection;
 
     activate();
 
     function activate() {
+      vm.section.tenant = user.tenantId;
+      vm.section.entity = vm.entity.id;
     }
 
-    function saveSection ( section, isValid, nextState ) {
-      section.tenant = user.tenantId;
-      section.entity = entity.id;
-      section = models.restangularizeElement(null, section, 'sections');
+    function saveSection ( section, isValid ) {
       if ( isValid ) {
-        section.save().then(saveDepartmentSuccessFn, saveDepartmentErrorFn);
+        section = models.restangularizeElement(null, section, 'sections');
+        if ( vm.isNewSection ) {
+          section.post().then(saveDepartmentSuccessFn, saveDepartmentErrorFn);
+        } else {
+          section.put().then(saveDepartmentSuccessFn, saveDepartmentErrorFn);
+        }
       }
 
       function saveDepartmentSuccessFn ( response ) {
-        entity.addSection(response);
-        $state.go(nextState, {sectionId: response.id});
+        if ( vm.isNewSection ) {
+          vm.entity.addSection(response);
+          vm.section.id = response.id;
+        }
+        goToSectionDetailViewState()
       }
       function saveDepartmentErrorFn () {
         // TODO deal with the error
       }
+    }
+
+    function goToSectionDetailViewState () {
+      var sectionDetailViewState = $state.current.name.replace(/(create|detail\.edit)/g, 'detail.view');
+      $state.go(sectionDetailViewState, {sectionId: vm.section.id, entityId: vm.section.entity, departmentId: vm.department.id});
     }
 
   }

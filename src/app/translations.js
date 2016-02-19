@@ -145,7 +145,10 @@
             EDIT_ENTITY: 'Edit entity',
             STRUCTURE: 'Entity structure',
             SECTION: {
-              NAME: 'Section name'
+              NAME: 'Section name',
+              NEW_SECTION: 'New section',
+              EDIT_SECTION: 'Edit section',
+              STRUCTURE: 'Section structure'
             }
           }
         }
