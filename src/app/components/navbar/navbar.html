@@ -2,8 +2,8 @@
   <md-toolbar layout="row" layout-align="end center" class="md-whiteframe-glow-z1">
     <div ng-show="vm.managementFlow.isCompanySelected()" layout="row" class="md-toolbar-tools">
       <h3 layout-padding>
-        <strong>
-          {{ vm.managementFlow.getCompany().name }}
+        <strong ng-click="vm.goToCompanyDetailsPage('view')" class="cursor">
+            {{ vm.managementFlow.getCompany().name }}
         </strong>
 
         <span ng-show="vm.managementFlow.isProjectSelected()">
@@ -36,7 +36,7 @@
         </md-menu-item>
 
         <md-menu-item>
-          <md-button ng-click="vm.goToCompanyDetailsPage()">
+          <md-button ng-click="vm.goToCompanyDetailsPage('edit')">
             <!--<ng-md-icon icon="edit"></ng-md-icon>-->
             {{ 'MENU.MANAGEMENT.EDIT_COMPANY' | translate }}
           </md-button>

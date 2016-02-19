@@ -31,8 +31,8 @@
       vm.logout = logout;
       vm.unsetCompany = unsetCompany;
       vm.unsetProject = unsetProject;
-      vm.goToCompanyDetailsPage = function () {
-        $state.go('companies.detail.edit', {companyId: vm.managementFlow.getCompany().id});
+      vm.goToCompanyDetailsPage = function ( pageType ) {
+        $state.go('companies.detail.' + pageType, {companyId: vm.managementFlow.getCompany().id});
       };
       vm.goToProjectDetailsPage = function () {
         $state.go('projects.detail.edit', {projectId: vm.managementFlow.getProject().id});

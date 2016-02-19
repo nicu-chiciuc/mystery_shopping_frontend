@@ -52,6 +52,10 @@ html {
   padding: 0.2em 0;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 md-toolbar.md-default-theme {
   background-color: black;
 }
