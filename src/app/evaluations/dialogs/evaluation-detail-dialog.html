@@ -56,6 +56,12 @@
                  ng-model="vm.evaluation.questionnaire_script_repr.description"
                  bind-options="{'disableEditing': true}"></div>
           </div>
+
+          <div layout="column">
+            <ms-questionnaire questionnaire="vm.evaluation.questionnaire_repr"
+                              question-checkbox-list-options="vm.questionCheckboxListOptions">
+            </ms-questionnaire>
+          </div>
         </div>
       </div>
     </md-dialog-content>

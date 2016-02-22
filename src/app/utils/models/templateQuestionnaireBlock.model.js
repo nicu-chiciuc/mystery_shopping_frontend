@@ -7,7 +7,7 @@
     .factory('TemplateQuestionnaireBlockModel', TemplateQuestionnaireBlockModel);
 
   /** @ngInject */
-  function TemplateQuestionnaireBlockModel ( TemplateQuestionnaireQuestionModel, AbstractParentBlockModel ) {
+  function TemplateQuestionnaireBlockModel ( TemplateQuestionnaireQuestionModel, AbstractQuestionnaireBlockModel ) {
     var Model = {
       initialize: initialize,
       addQuestion: addQuestion,
@@ -17,20 +17,18 @@
     return Model;
 
 
-    function initialize () {
+    function initialize ( childBlocksProp, childQuestionsProp ) {
       var block = this;
 
-      block.weight = parseFloat(this.weight);
+      angular.extend(block, AbstractQuestionnaireBlockModel);
+      block.initializeAbstract(childBlocksProp, childQuestionsProp);
 
-      angular.extend(block, AbstractParentBlockModel);
-      block.initializeAbstract('template_blocks', 'template_questions');
-
-      _.forEach(block.template_blocks, function (childBlock) {
+      _.forEach(block[childBlocksProp], function (childBlock) {
         angular.extend(childBlock, Model);
         childBlock.initialize();
       });
 
-      _.forEach(block.template_questions, function ( question ) {
+      _.forEach(block[childQuestionsProp], function ( question ) {
         angular.extend(question, TemplateQuestionnaireQuestionModel);
         question.initialize();
       });

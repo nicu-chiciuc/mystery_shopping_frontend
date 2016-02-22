@@ -56,6 +56,10 @@ html {
   cursor: pointer;
 }
 
+.md-dialog-fullscreen {
+  width: 95%;
+}
+
 md-toolbar.md-default-theme {
   background-color: black;
 }

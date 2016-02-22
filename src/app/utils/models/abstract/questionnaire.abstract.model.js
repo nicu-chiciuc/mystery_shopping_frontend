@@ -7,11 +7,16 @@
     .factory('AbstractQuestionnaireModel', AbstractQuestionnaireModel);
 
   /** @ngInject */
-  function AbstractQuestionnaireModel ( TemplateQuestionnaireBlockModel ) {
+  function AbstractQuestionnaireModel ( QuestionnaireBlockModel, TemplateQuestionnaireBlockModel ) {
     var Model = {
       initializeAbstractQuestionnaire: initializeAbstractQuestionnaire,
       convertFlatToNestedStructure: convertFlatToNestedStructure,
       postProcess: postProcess
+    };
+
+    var questionnaireModels = {
+      template_blocks: TemplateQuestionnaireBlockModel,
+      blocks: QuestionnaireBlockModel
     };
 
     return Model;
@@ -22,13 +27,13 @@
 
       // Set weight of questionnaire to 100 so that child blocks can compute
       // available weight based on this weight.
-      questionnaire.weight = 100;
+      questionnaire.weight = questionnaire.weight || 100;
 
       questionnaire.convertFlatToNestedStructure();
 
       _.forEach(questionnaire[questionnaire.childBlocksProp], function (block) {
-        angular.extend(block, TemplateQuestionnaireBlockModel);
-        block.initialize();
+        angular.extend(block, questionnaireModels[questionnaire.childBlocksProp]);
+        block.initialize(questionnaire.childBlocksProp, questionnaire.childQuestionsProp);
       });
     }
 

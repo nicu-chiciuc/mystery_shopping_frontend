@@ -12,6 +12,10 @@
     var vm = this;
 
     vm.evaluation = evaluation;
+    vm.questionCheckboxListOptions = {
+      labelProp: 'text',
+      valueProp: 'id'
+    };
 
     $scope.cancel = function() {
       $mdDialog.cancel();

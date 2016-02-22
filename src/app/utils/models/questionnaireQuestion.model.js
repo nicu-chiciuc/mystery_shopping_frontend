@@ -10,13 +10,9 @@
   function QuestionnaireQuestionModel () {
     var Model = {
       initialize: initialize,
-      addChoice: addChoice,
-      removeChoice: removeChoice,
-      updateQuestionType: updateQuestionType,
-      updateMaxScore: updateMaxScore,
       preProcess: preProcess,
       postProcess: postProcess,
-      recomputeChoiceWeights: recomputeChoiceWeights
+      updateQuestionType: updateQuestionType
     };
 
     var postProcessManager = {
@@ -43,31 +39,6 @@
 
       question.updateQuestionType();
       question.preProcess();
-    }
-
-    function addChoice () {
-      this.template_question_choices.push({});
-      this.recomputeChoiceWeights();
-    }
-
-    function removeChoice ( index ) {
-      this.template_question_choices.splice(index, 1);
-
-      this.updateMaxScore();
-    }
-
-    function updateQuestionType ( type ) {
-      var question = this;
-
-      if ( angular.isDefined(type) ) {
-        question.type = type;
-      }
-
-      question.isChoiceQuestion = question.type === 's' || question.type === 'm';
-      question.isTextQuestion = question.type === 't';
-      question.isDateQuestion = question.type === 'd';
-
-      question.updateMaxScore();
     }
 
     function postProcess () {
@@ -107,27 +78,18 @@
     function preProcessDateQuestion ( question ) {
     }
 
-    function recomputeChoiceWeights () {
+    function updateQuestionType ( type ) {
       var question = this;
-      var numberOfChoices = question.template_question_choices.length;
 
-      _.forEach(question.template_question_choices, function (choice) {
-        choice.weight = 1 / numberOfChoices;
-      });
-    }
-
-    function updateMaxScore () {
-      var question = this;
-      question.max_score = 0;
-
-      if ( question.type === 's' ) {
-        question.max_score = _.max(question.template_question_choices, 'score').score || 0;
-      } else if ( question.type === 'm' ) {
-        _.forEach(question.template_question_choices, function (choice) {
-          question.max_score += (choice.score > 0 ? choice.score : 0);
-        });
+      if ( angular.isDefined(type) ) {
+        question.type = type;
       }
+
+      question.isChoiceQuestion = question.type === 's' || question.type === 'm';
+      question.isTextQuestion = question.type === 't';
+      question.isDateQuestion = question.type === 'd';
     }
+
 
   }
 })();

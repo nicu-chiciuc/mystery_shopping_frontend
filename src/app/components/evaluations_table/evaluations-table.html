@@ -56,8 +56,8 @@
       <td md-cell>{{ evaluation.evaluation_type }}</td>
       <td md-cell>{{ evaluation.questionnaire_script_repr.title }}</td>
       <td md-cell>{{ evaluation.questionnaire_repr.title }}</td>
-      <td md-cell>{{ evaluation.suggested_start_date }}</td>
-      <td md-cell>{{ evaluation.suggested_end_date }}</td>
+      <td md-cell>{{ evaluation.suggested_start_date | date }}</td>
+      <td md-cell>{{ evaluation.suggested_end_date | date }}</td>
 
       <!-- Evaluation status badge -->
       <td md-cell>

@@ -53,7 +53,7 @@
           parent: angular.element(document.body),
           targetEvent: ev,
           escapeToClose: false,
-          fullscreen: useFullScreen,
+          fullscreen: true,
           locals: {
             evaluation: evaluation
           }
