@@ -77,9 +77,9 @@
       //block.title = $filter('translate')('QUESTIONNAIRE.DIALOG.BLOCK_TITLE');
 
       angular.extend(block, models.manager.TemplateQuestionnaireBlockModel);
-      block.initialize();
+      block.initialize(vm.questionnaireTemplate.childBlocksProp, vm.questionnaireTemplate.childQuestionsProp);
 
-      parentBlock.template_blocks.push(block);
+      parentBlock.addChildBlock(block);
       showBlockTitleDialog(ev, block, parentBlock, true);
     }
 

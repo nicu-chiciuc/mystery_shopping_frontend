@@ -14,7 +14,7 @@
     <md-dialog-content>
       <div class="md-dialog-content">
 
-          <h2>Available weight: {{ parentBlock.availableWeight + block.weight }}</h2>
+          <h2>{{ 'QUESTIONNAIRE.AVAILABLE_WEIGHT' | translate : {WEIGHT: (parentBlock.availableWeight + block.weight)} }}</h2>
 
           <div layout="row">
             <!-- Block title -->
@@ -24,7 +24,7 @@
 
               <!-- Validation messages -->
               <div ng-messages="blockForm.title.$error">
-                <div ng-message="required">Title is REQUIRED!</div>
+                <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.DIALOG.BLOCK_TITLE') }}</div>
               </div>
             </md-input-container>
 
@@ -44,7 +44,8 @@
 
                 <!-- Validation messages -->
                 <div ng-messages="blockForm.weight.$error">
-                  <div ng-message="required">Weight is REQUIRED!</div>
+                  <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.BLOCK.WEIGHT') }}</div>
+                  <div ng-message="number">{{ 'VALIDATION_MESSAGE.NUMBER.INVALID' | translate }}</div>
                 </div>
               </md-input-container>
 
@@ -56,20 +57,35 @@
             <md-list>
               <md-list-item ng-repeat="templateBlock in otherBlocks" layout="column">
 
-                <div layout="row">
-                  <md-input-container>
-                    <label>{{ 'QUESTIONNAIRE.DIALOG.BLOCK_TITLE' | translate }}</label>
-                    <input type="text" ng-model="templateBlock.title" disabled/>
-                  </md-input-container>
+                <ng-form name="siblingBlockForm">
 
-                  <md-input-container>
-                    <label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>
-                    <input ng-model="templateBlock.newWeight" ng-change="updateAvailableWeight(templateBlock)" type="number"/>
-                    <md-tooltip ng-if="templateBlock.showTooltip" md-visible="templateBlock.showTooltip" md-direction="top">
-                      {{ templateBlock.tooltip }}
-                    </md-tooltip>
-                  </md-input-container>
-                </div>
+                  <div layout="row">
+                    <md-input-container>
+                      <label>{{ 'QUESTIONNAIRE.DIALOG.BLOCK_TITLE' | translate }}</label>
+                      <input type="text" ng-model="templateBlock.title" disabled/>
+                    </md-input-container>
+
+                    <md-input-container>
+                      <label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>
+                      <input ng-model="templateBlock.newWeight"
+                             ng-change="updateAvailableWeight(templateBlock)"
+                             name="siblingWeight"
+                             type="number"
+                             ng-required="true" />
+
+                      <md-tooltip ng-if="templateBlock.showTooltip" md-visible="templateBlock.showTooltip" md-direction="top">
+                        {{ templateBlock.tooltip }}
+                      </md-tooltip>
+
+                      <!-- Validation messages -->
+                      <div ng-messages="siblingBlockForm.siblingWeight.$error">
+                        <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.BLOCK.WEIGHT') }}</div>
+                        <div ng-message="number">{{ 'VALIDATION_MESSAGE.NUMBER.INVALID' | translate }}</div>
+                      </div>
+                    </md-input-container>
+                  </div>
+
+                </ng-form>
               </md-list-item>
             </md-list>
           </div>

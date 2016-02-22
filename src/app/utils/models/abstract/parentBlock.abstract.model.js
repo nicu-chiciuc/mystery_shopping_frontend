@@ -10,6 +10,7 @@
   function AbstractParentBlockModel () {
     var Model = {
       initializeAbstract: initializeAbstract,
+      addChildBlock: addChildBlock,
       setWeight: setWeight,
       updateAvailableWeight: updateAvailableWeight,
       computeAvailableWeight: computeAvailableWeight,
@@ -33,10 +34,33 @@
       this.updateAvailableWeight();
     }
 
+    function addChildBlock ( childBlock ) {
+      var block = this;
+
+      // Because in the backend the tree representation of blocks is stored
+      // using MPTT method and creation of a block at a specific position
+      // requires some additional properties, set these additional properties
+      // here. The properties are the action to be made, the target block
+      // where to store the new block and the position. For more details
+      // check django-mptt documentation.
+      childBlock.block_action = 'create';
+      childBlock.target_block = block.id;
+      childBlock.position = 'last';
+
+      block[childBlocksKey].push(childBlock);
+    }
+
     function setWeight ( weight ) {
       var block = this;
       block.previousWeight = block.weight;
       block.weight = weight;
+
+      // Because in the backend the tree representation of blocks is stored
+      // using MPTT method and because the change in one block affects its child
+      // and sibling blocks, set some additional properties that will be used
+      // in the process of updating blocks in the backend.
+      block.block_action = 'update';
+      block.block_id = block.id;
 
       block.updateChildWeights();
     }

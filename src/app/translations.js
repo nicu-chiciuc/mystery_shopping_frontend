@@ -202,6 +202,7 @@
         TITLE: 'Title',
         DESCRIPTION: 'Description',
         SAME_LEVEL_BLOCKS: 'Same level blocks',
+        AVAILABLE_WEIGHT: 'Available weight: {WEIGHT}',
         AVAILABLE_WEIGHT_EXCEEDED: 'Weight cannot be greater than {ACCEPTABLE_WEIGHT}',
         BLOCK: {
           WEIGHT: 'Weight'
@@ -289,6 +290,9 @@
         SPECIFIC_FIELD_IS_REQUIRED: 'Field "{FIELD_NAME}" is required.',
         DATE: {
           INVALID: 'The entered value is not a date.'
+        },
+        NUMBER: {
+          INVALID: 'The entered value is not a number.'
         },
         PASSWORD: {
           MIN_LENGTH: 'Password should be longer than 8 characters.',

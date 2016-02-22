@@ -6,12 +6,14 @@
     .controller('EditBlockDialogController', EditBlockDialogController);
 
   /** @ngInject */
-  function EditBlockDialogController ( $log, $scope, $mdDialog, $filter, block, parentBlock, isNewBlock ) {
+  function EditBlockDialogController ( $log, $scope, $mdDialog, $filter, msUtils, block, parentBlock, isNewBlock ) {
     $log.debug('Entered EditBlockDialogController');
     $log.debug(block);
 
     $scope.block = block;
     $scope.parentBlock = parentBlock;
+
+    $scope.msUtils = msUtils;
 
     $scope.updateAvailableWeight = updateAvailableWeight;
 
