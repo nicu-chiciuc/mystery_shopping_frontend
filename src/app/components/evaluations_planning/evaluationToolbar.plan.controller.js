@@ -24,7 +24,7 @@
     function activate() {
     }
 
-    function createEvaluations ( evaluationSkeleton, isValid) {
+    function createEvaluations ( evaluationSkeleton, isValid ) {
       var evaluationsToCreate = [];
       var itemToAssess = evaluationSkeleton.itemToAssess;
 
