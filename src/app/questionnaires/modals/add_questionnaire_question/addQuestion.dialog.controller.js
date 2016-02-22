@@ -11,7 +11,9 @@
 
     $scope.msUtils = msUtils;
 
-    $scope.question = question || {
+    $scope.question = question.type
+      ? question
+      : {
       type: 's',
       template_question_choices: [],
       max_score: 0,

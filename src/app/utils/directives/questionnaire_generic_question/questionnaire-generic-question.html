@@ -17,6 +17,26 @@
   <p ng-show="vm.question.isChoiceQuestion">
     {{ 'QUESTIONNAIRE.QUESTION.MAX_SCORE' | translate : {MAX_SCORE: vm.question.max_score} }}
   </p>
+
+  <!-- Other options menu -->
+  <md-menu>
+    <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_QUESTION_MENU' | translate }}"
+               class="md-icon-button"
+               ng-click="vm.openMenu($mdOpenMenu, $event)">
+      <ng-md-icon icon="more_vert"></ng-md-icon>
+    </md-button>
+
+    <md-menu-content width="4">
+
+      <md-menu-item>
+        <md-button ng-click="vm.deleteQuestion($event, vm.question)">
+          {{ 'QUESTIONNAIRE.QUESTION.DELETE' | translate }}
+        </md-button>
+      </md-menu-item>
+
+    </md-menu-content>
+  </md-menu>
+
 </div>
 
 <!-- If it is a choice question, display a list with available choices. -->
