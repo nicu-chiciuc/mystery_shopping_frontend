@@ -10,6 +10,7 @@
     $log.debug('Entered QuestionnaireTemplateCreateController');
     $log.debug(questionnaireTemplate);
     var vm = this;
+    var originatorEv;
 
     vm.questionnaireTemplate = questionnaireTemplate;
     vm.questionnaireTemplate.template_blocks = vm.questionnaireTemplate.template_blocks || [];
@@ -19,12 +20,15 @@
     vm.addBlock = addBlock;
     vm.showBlockTitleDialog = showBlockTitleDialog;
     vm.showAddQuestionDialog = showAddQuestionDialog;
+    vm.deleteBlock = deleteBlock;
 
     vm.saveQuestionnaireTemplate = saveQuestionnaireTemplate;
 
-    //vm.questionnaireTemplate = vm.nestedQuestionnaireTemplate;
-    //angular.extend(vm.questionnaireTemplate, models.manager.TemplateQuestionnaireModel);
-    //vm.questionnaireTemplate.initialize();
+    vm.openMenu = function($mdOpenMenu, ev) {
+      originatorEv = ev;
+      $mdOpenMenu(ev);
+    };
+
 
     vm.questionnaireTemplate = models.restangularizeElement(null, vm.questionnaireTemplate, 'templatequestionnaires');
 
@@ -121,6 +125,36 @@
         .then(function(question) {
           block.addQuestion(question);
         });
+    }
+
+    function deleteBlock ( ev, block, parentBlock ) {
+      var confirm = $mdDialog.confirm()
+        .title($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.TITLE'))
+        .textContent($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.TEXT_CONTENT'))
+        .ariaLabel($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.ARIA_LABEL'))
+        .targetEvent(ev)
+        .ok($filter('translate')('BUTTON.DELETE'))
+        .cancel($filter('translate')('BUTTON.CANCEL'));
+
+      $mdDialog.show(confirm).then(function() {
+        if ( block.id ) {
+          block.remove().then(deleteBlockSuccessFn, deleteBlockErrorFn);
+        } else {
+          deleteBlockSuccessFn();
+        }
+        function deleteBlockSuccessFn ( questionnaire ) {
+          if ( questionnaire ) {
+            vm.questionnaireTemplate = models.restangularizeElement(null, questionnaire, 'templatequestionnaires');
+          } else {
+            _.remove(parentBlock.template_blocks, function (childBlock) {
+              return childBlock.title === block.title;
+            });
+          }
+        }
+        function deleteBlockErrorFn () {
+          // TODO deal with the error
+        }
+      });
     }
   }
 })();

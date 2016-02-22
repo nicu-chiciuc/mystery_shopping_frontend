@@ -55,6 +55,26 @@
               <span>
                 {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_1.weight }}
               </span>
+
+              <!-- Other options menu -->
+              <md-menu>
+                <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_BLOCK_MENU' | translate }}"
+                           class="md-icon-button"
+                           ng-click="vm.openMenu($mdOpenMenu, $event)">
+                  <ng-md-icon icon="more_vert"></ng-md-icon>
+                </md-button>
+
+                <md-menu-content width="4">
+
+                  <md-menu-item>
+                    <md-button ng-click="vm.deleteBlock($event, block_1, vm.questionnaireTemplate)">
+                      {{ 'QUESTIONNAIRE.BLOCK.DELETE' | translate }}
+                    </md-button>
+                  </md-menu-item>
+
+                </md-menu-content>
+              </md-menu>
+
             </h2>
           </md-toolbar>
 
@@ -105,6 +125,25 @@
                     <span>
                       {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_2.weight }}
                     </span>
+
+                    <!-- Other options menu -->
+                    <md-menu>
+                      <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_BLOCK_MENU' | translate }}"
+                                 class="md-icon-button"
+                                 ng-click="vm.openMenu($mdOpenMenu, $event)">
+                        <ng-md-icon icon="more_vert"></ng-md-icon>
+                      </md-button>
+
+                      <md-menu-content width="4">
+
+                        <md-menu-item>
+                          <md-button ng-click="vm.deleteBlock($event, block_2, block_1)">
+                            {{ 'QUESTIONNAIRE.BLOCK.DELETE' | translate }}
+                          </md-button>
+                        </md-menu-item>
+
+                      </md-menu-content>
+                    </md-menu>
                   </h2>
                 </md-toolbar>
 
@@ -155,6 +194,25 @@
                           <span>
                             {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_3.weight }}
                           </span>
+
+                          <!-- Other options menu -->
+                          <md-menu>
+                            <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_BLOCK_MENU' | translate }}"
+                                       class="md-icon-button"
+                                       ng-click="vm.openMenu($mdOpenMenu, $event)">
+                              <ng-md-icon icon="more_vert"></ng-md-icon>
+                            </md-button>
+
+                            <md-menu-content width="4">
+
+                              <md-menu-item>
+                                <md-button ng-click="vm.deleteBlock($event, block_3, block_2)">
+                                  {{ 'QUESTIONNAIRE.BLOCK.DELETE' | translate }}
+                                </md-button>
+                              </md-menu-item>
+
+                            </md-menu-content>
+                          </md-menu>
                         </h2>
                       </md-toolbar>
 

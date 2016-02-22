@@ -204,8 +204,15 @@
         SAME_LEVEL_BLOCKS: 'Same level blocks',
         AVAILABLE_WEIGHT: 'Available weight: {WEIGHT}',
         AVAILABLE_WEIGHT_EXCEEDED: 'Weight cannot be greater than {ACCEPTABLE_WEIGHT}',
+        OPEN_BLOCK_MENU: 'Open block menu',
         BLOCK: {
-          WEIGHT: 'Weight'
+          WEIGHT: 'Weight',
+          DELETE: 'Delete block',
+          DELETE_DIALOG: {
+            TITLE: 'Delete confirmation',
+            TEXT_CONTENT: 'Are you sure you want to delete this block?',
+            ARIA_LABEL: 'Delete block confirmation'
+          }
         },
         QUESTION: {
           TYPE: {
