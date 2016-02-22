@@ -21,7 +21,7 @@
       var block = this;
 
       angular.extend(block, AbstractQuestionnaireBlockModel);
-      block.initializeAbstract(childBlocksProp, childQuestionsProp);
+      block.initializeAbstractBlock(childBlocksProp, childQuestionsProp);
 
       _.forEach(block[childBlocksProp], function (childBlock) {
         angular.extend(childBlock, Model);
