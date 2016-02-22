@@ -23,7 +23,7 @@
 
       _.forEach(block[childBlocksProp], function (childBlock) {
         angular.extend(childBlock, Model);
-        childBlock.initialize();
+        childBlock.initialize( childBlocksProp, childQuestionsProp );
       });
 
       _.forEach(block[childQuestionsProp], function ( question ) {

@@ -58,7 +58,10 @@
             evaluation: evaluation
           }
         })
-          .then(function(evaluation) {
+          .then(function(updatedEvaluation) {
+            evaluation.questionnaire_repr = updatedEvaluation.questionnaire_repr;
+            evaluation.status = updatedEvaluation.status;
+            evaluation.statusCssClass[evaluation.status] = true;
           });
       }
 

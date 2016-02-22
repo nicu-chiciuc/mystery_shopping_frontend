@@ -27,6 +27,8 @@
         CREATE: 'Create',
         CANCEL: 'Cancel',
         DELETE: 'Delete',
+        CLOSE: 'Close',
+        SUBMIT: 'Submit',
         SET: 'Set',
         LOGIN: 'Login',
         LOGOUT: 'Logout',
@@ -222,6 +224,7 @@
             DATE: 'Date'
           },
           QUESTION_BODY: 'Question body',
+          COMMENTS: 'Comments',
           CHOICES: 'Choices',
           CHOICE: {
             BODY: 'Choice body',

@@ -21,3 +21,7 @@ md-toolbar.ms-height-sm {
 .no-errors-spacer > .md-errors-spacer {
     min-height: 1px;
 }
+
+.comment-wrapper {
+    border-top: 1px dashed #dddddd;
+}

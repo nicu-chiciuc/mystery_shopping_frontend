@@ -66,15 +66,15 @@
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
-        More on Wikipedia
-      </md-button>
       <span flex></span>
-      <md-button ng-click="answer('not useful')">
-        Not Useful
+      <md-button ng-click="vm.saveEvaluation('submitted')">
+        {{ 'BUTTON.SUBMIT' | translate }}
       </md-button>
-      <md-button ng-click="answer('useful')" style="margin-right:20px;">
-        Useful
+      <md-button ng-click="vm.saveEvaluation('draft')">
+        {{ 'BUTTON.SAVE' | translate }}
+      </md-button>
+      <md-button ng-click="cancel()" style="margin-right:20px;">
+        {{ 'BUTTON.CLOSE' | translate }}
       </md-button>
     </md-dialog-actions>
   </form>

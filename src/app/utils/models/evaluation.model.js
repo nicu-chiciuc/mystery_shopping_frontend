@@ -21,7 +21,8 @@
       angular.extend(evaluation, AbstractEvaluationModel);
       evaluation.initializeAbstractEvaluation();
 
-      if ( evaluation.questionnaire_repr ) {
+      if ( evaluation.questionnaire ) {
+        evaluation.questionnaire_repr = evaluation.questionnaire;
         angular.extend(evaluation.questionnaire_repr, QuestionnaireModel);
         evaluation.questionnaire_repr.initialize();
       }

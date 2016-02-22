@@ -24,21 +24,24 @@ table.md-table th.md-column {
 .planned, .draft, .submitted, .reviewed, .rejected, .declined, .approved {
   font-size: 12px;
 }
-.planned {
+.md-chip.planned {
   background-color: #CCCCCC;
 }
-.draft {
+.md-chip.draft {
   background-color: #aaaaaa;
 }
-.submitted {
-  background-color: #999999;
+.md-chip.submitted {
+  background-color: #1c94c4;
+  color: #ffffff;
 }
-.reviewed {
+.md-chip.reviewed {
   background-color: #ffc520;
 }
-.rejected, .declined {
+.md-chip.rejected, .declined {
   background-color: #ff3333;
+  color: #ffffff;
 }
-.approved {
+.md-chip.approved {
   background-color: #346a3f;
+  color: #ffffff;
 }

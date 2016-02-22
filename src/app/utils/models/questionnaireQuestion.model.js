@@ -37,6 +37,10 @@
 
       question.answer_choices = question.answer_choices || [];
 
+      if ( question.id ) {
+        question.question_id = question.id;
+      }
+
       question.updateQuestionType();
       question.preProcess();
     }
@@ -76,6 +80,7 @@
     }
 
     function preProcessDateQuestion ( question ) {
+      question.answer = new Date(question.answer);
     }
 
     function updateQuestionType ( type ) {

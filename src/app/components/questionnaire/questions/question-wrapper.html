@@ -27,3 +27,11 @@
 <div ng-if="question.isDateQuestion">
   <md-datepicker ng-model="question.answer" md-placeholder="{{ 'COMMON.ACTIONS.ENTER_DATE' | translate }}"></md-datepicker>
 </div>
+
+<!-- Question comment textarea -->
+<div ng-if="question.show_comment"  class="comment-wrapper">
+  <md-input-container class="md-block">
+    <label>{{ 'QUESTIONNAIRE.QUESTION.COMMENTS' | translate }}</label>
+    <textarea ng-model="question.comment" columns="1" rows="5"></textarea>
+  </md-input-container>
+</div>
