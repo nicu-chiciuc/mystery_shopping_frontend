@@ -268,6 +268,7 @@
         PLANNING: {
           HEADING: 'Planning',
           NUMBER_OF_EVALUATIONS: 'Number of evaluations',
+          LEFT_NUMBER_OF_EVALUATIONS: 'Only {NR} evaluations are left',
           CREATE_EVALUATIONS: 'Create evaluations',
           ALL_EVALUATIONS_WERE_PLANNED: 'No evaluations left to plan',
           SHOPPER: 'Shopper',

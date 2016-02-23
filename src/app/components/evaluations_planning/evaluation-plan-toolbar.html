@@ -213,7 +213,7 @@
           <!-- Validation messages -->
           <div ng-show="evaluationPlanningForm.$submitted" ng-messages="evaluationPlanningForm.nrOfEvaluations.$error">
             <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('EVALUATION.PLANNING.NUMBER_OF_EVALUATIONS') }}</div>
-            <div ng-message="max">Only {{ vm.evaluationPlanning.leftToPlanEvaluationNumber() }} evaluations are left.</div>
+            <div ng-message="max">{{ 'EVALUATION.PLANNING.LEFT_NUMBER_OF_EVALUATIONS' | translate : {NR: vm.evaluationPlanning.leftToPlanEvaluationNumber()} }}</div>
           </div>
         </md-input-container>
       </div>
