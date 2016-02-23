@@ -11,21 +11,27 @@
     var Model = {
       initialize: initialize,
       addQuestion: addQuestion,
-      updateQuestionWeights: updateQuestionWeights
+      updateQuestionWeights: updateQuestionWeights,
+      gatherUpdateDataOfSiblings: gatherUpdateDataOfSiblings,
+      prepareForSave: prepareForSave
     };
 
     return Model;
 
 
-    function initialize ( childBlocksProp, childQuestionsProp ) {
+    function initialize ( childBlocksProp, childQuestionsProp, parentBlock ) {
       var block = this;
+
+      if ( parentBlock ) {
+        block.parentBlock = parentBlock;
+      }
 
       angular.extend(block, AbstractQuestionnaireBlockModel);
       block.initializeAbstractBlock(childBlocksProp, childQuestionsProp);
 
       _.forEach(block[childBlocksProp], function (childBlock) {
         angular.extend(childBlock, Model);
-        childBlock.initialize();
+        childBlock.initialize(childBlocksProp, childQuestionsProp, parentBlock);
       });
 
       _.forEach(block[childQuestionsProp], function ( question ) {
@@ -50,6 +56,29 @@
       });
     }
 
+    function gatherUpdateDataOfSiblings () {
+      var block = this;
+      var siblings = _.filter(block.parentBlock.template_blocks, function (templateBlock) {
+        return templateBlock.id !== block.id && templateBlock.block_action === 'update';
+      });
+
+      block.siblings = [];
+      _.forEach(siblings, function (siblingBlock) {
+        block.siblings.push({
+          block_id: siblingBlock.id,
+          block_changes: {
+            weight: siblingBlock.weight
+          }
+        });
+      });
+    }
+
+    function prepareForSave () {
+      var block = this;
+
+      block.gatherUpdateDataOfSiblings();
+      block.parentBlock = null;
+    }
 
   }
 })();

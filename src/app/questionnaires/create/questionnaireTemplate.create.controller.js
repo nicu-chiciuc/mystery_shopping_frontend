@@ -6,11 +6,13 @@
     .controller('QuestionnaireTemplateCreateController', QuestionnaireTemplateCreateController);
 
   /** @ngInject */
-  function QuestionnaireTemplateCreateController ( $log, $scope, $filter, $mdMedia, $mdDialog, models, user, questionnaireTemplate, dragulaService ) {
+  function QuestionnaireTemplateCreateController ( $log, $scope, $filter, $mdMedia, $mdDialog, msUtils, models, user, questionnaireTemplate, dragulaService ) {
     $log.debug('Entered QuestionnaireTemplateCreateController');
     $log.debug(questionnaireTemplate);
     var vm = this;
     var originatorEv;
+
+    vm.msUtils = msUtils;
 
     vm.questionnaireTemplate = questionnaireTemplate;
     vm.questionnaireTemplate.template_blocks = vm.questionnaireTemplate.template_blocks || [];
@@ -29,12 +31,13 @@
       $mdOpenMenu(ev);
     };
 
-
-    vm.questionnaireTemplate = models.restangularizeElement(null, vm.questionnaireTemplate, 'templatequestionnaires');
-
     activate();
 
     function activate() {
+      if ( !vm.questionnaireTemplate.id ) {
+        vm.questionnaireTemplate = models.restangularizeElement(null, vm.questionnaireTemplate, 'templatequestionnaires');
+      }
+
       dragulaService.options($scope, 'block-1', {
         moves: function (el, container, handle) {
           return handle.className.indexOf('handle-1') > -1;
@@ -78,10 +81,15 @@
       var block = {};
       block.template_blocks = [];
       block.template_questions = [];
-      //block.title = $filter('translate')('QUESTIONNAIRE.DIALOG.BLOCK_TITLE');
+
+      if ( vm.questionnaireTemplate.id ) {
+        // In case the questionnaire is already saved, add its id to the new
+        // block that we are about to create.
+        block.questionnaire_template = vm.questionnaireTemplate.id;
+      }
 
       angular.extend(block, models.manager.TemplateQuestionnaireBlockModel);
-      block.initialize(vm.questionnaireTemplate.childBlocksProp, vm.questionnaireTemplate.childQuestionsProp);
+      block.initialize(vm.questionnaireTemplate.childBlocksProp, vm.questionnaireTemplate.childQuestionsProp, parentBlock);
 
       parentBlock.addChildBlock(block);
       showBlockTitleDialog(ev, block, parentBlock, true);
@@ -138,6 +146,8 @@
 
       $mdDialog.show(confirm).then(function() {
         if ( block.id ) {
+          block = models.restangularizeElement(null, block, 'templateblocks');
+          block.prepareForSave();
           block.remove().then(deleteBlockSuccessFn, deleteBlockErrorFn);
         } else {
           deleteBlockSuccessFn();

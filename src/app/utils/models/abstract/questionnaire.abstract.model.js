@@ -33,7 +33,7 @@
 
       _.forEach(questionnaire[questionnaire.childBlocksProp], function (block) {
         angular.extend(block, questionnaireModels[questionnaire.childBlocksProp]);
-        block.initialize(questionnaire.childBlocksProp, questionnaire.childQuestionsProp);
+        block.initialize(questionnaire.childBlocksProp, questionnaire.childQuestionsProp, questionnaire);
       });
     }
 

@@ -71,11 +71,7 @@
       .state('questionnaires.templates.detail.edit', {
         url: '/edit',
         templateUrl: 'app/questionnaires/create/questionnaire-template-create.html',
-        controller: 'QuestionnaireTemplateCreateController as vm',
-        resolve: {
-          industries: function ( models ) { return models.industries().getList(); },
-          countries: function ( models ) { return models.countries().getList(); }
-        }
+        controller: 'QuestionnaireTemplateCreateController as vm'
       })
       .state('questionnaires.templates.detail.fillIn', {
         url: '/fill-in',

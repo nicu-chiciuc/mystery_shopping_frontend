@@ -31,7 +31,7 @@
       questionnaire.initializeAbstractQuestionnaire();
 
       angular.extend(questionnaire, AbstractParentBlockModel);
-      questionnaire.initializeAbstract(questionnaire.childBlocksProp);
+      questionnaire.initializeAbstract(questionnaire.childBlocksProp, questionnaire.childQuestionsProp, true);
     }
   }
 })();

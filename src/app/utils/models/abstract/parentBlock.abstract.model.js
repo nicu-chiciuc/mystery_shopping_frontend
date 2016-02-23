@@ -7,8 +7,9 @@
     .factory('AbstractParentBlockModel', AbstractParentBlockModel);
 
   /** @ngInject */
-  function AbstractParentBlockModel () {
+  function AbstractParentBlockModel ( msUtils ) {
     var Model = {
+      parentBlockIsQuestionnaire: false,
       initializeAbstract: initializeAbstract,
       addChildBlock: addChildBlock,
       setWeight: setWeight,
@@ -28,9 +29,10 @@
     return Model;
 
 
-    function initializeAbstract ( childBlocksProp, questionsProp ) {
+    function initializeAbstract ( childBlocksProp, questionsProp, isQuestionnaire ) {
       childBlocksKey = childBlocksProp;
       questionsPropKey = questionsProp;
+      this.parentBlockIsQuestionnaire = isQuestionnaire ? true : false;
       this.updateAvailableWeight();
     }
 
@@ -47,6 +49,13 @@
       childBlock.target_block = block.id;
       childBlock.position = 'last';
 
+      // Parent block needed in backend for mptt tree representation. Set as
+      // null in case it is the top most block (the first layer in the serializer)
+      childBlock.parent_block = block.parentBlockIsQuestionnaire ? null : block.id;
+
+      // Parent block needed in frontend for computation of available weight.
+      childBlock.parentBlock = block;
+
       block[childBlocksKey].push(childBlock);
     }
 
@@ -54,6 +63,9 @@
       var block = this;
       block.previousWeight = block.weight;
       block.weight = weight;
+
+      block.previousWeightToDisplay = block.weightToDisplay;
+      block.weightToDisplay = msUtils.number.strip(weight / 100 * block.parentBlock.weightToDisplay);
 
       // Because in the backend the tree representation of blocks is stored
       // using MPTT method and because the change in one block affects its child
@@ -78,11 +90,17 @@
     function computeAvailableWeight () {
       var block = this;
 
+      // In case this is the questionnaire `parentBlock`, set its weight
+      // as the weight to display (which by default is 100).
+      block.weightToDisplay = block.parentBlockIsQuestionnaire
+        ? block.weight
+        : block.parentBlock.weightToDisplay * block.weight / 100;
+
       // Take the block's weight and set it as available weight for child blocks.
-      var availableWeight = block.weight;
+      var availableWeight = block.weightToDisplay;
 
       _.forEach(block[childBlocksKey], function (childBlock) {
-        availableWeight -= childBlock.newWeight ? childBlock.newWeight : (childBlock.weight ? childBlock.weight : 0);
+        availableWeight -= childBlock.newWeightToDisplay ? childBlock.newWeightToDisplay : (childBlock.weightToDisplay ? childBlock.weightToDisplay : 0);
       });
 
       return availableWeight;
@@ -101,6 +119,7 @@
 
       _.forEach(block[childBlocksKey], function (childBlock) {
         childBlock.initialWeight = childBlock.weight;
+        //childBlock.initialWeightToDisplay = childBlock.weightToDisplay;
       });
     }
 
@@ -116,7 +135,7 @@
       var block = this;
 
       _.forEach(block[childBlocksKey], function (childBlock) {
-        childBlock.setWeight(parseFloat(childBlock.weight * block.weight / block.previousWeight).toFixed(2));
+        childBlock.setWeight(childBlock.weight);
       });
     }
 

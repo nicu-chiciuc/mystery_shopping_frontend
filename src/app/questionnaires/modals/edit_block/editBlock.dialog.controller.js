@@ -6,7 +6,7 @@
     .controller('EditBlockDialogController', EditBlockDialogController);
 
   /** @ngInject */
-  function EditBlockDialogController ( $log, $scope, $mdDialog, $filter, msUtils, block, parentBlock, isNewBlock ) {
+  function EditBlockDialogController ( $log, $scope, $mdDialog, $filter, $mdToast, msUtils, models, block, parentBlock, isNewBlock ) {
     $log.debug('Entered EditBlockDialogController');
     $log.debug(block);
 
@@ -27,18 +27,20 @@
 
       $scope.parentBlock.updateAvailableWeight();
 
-      $scope.availableWeight = $scope.parentBlock.availableWeight + $scope.block.weight;
+      $scope.availableWeight = $scope.parentBlock.availableWeight + $scope.block.weightToDisplay;
       $scope.otherBlocks = _.filter($scope.parentBlock.template_blocks, function (templateBlock) {
 
         // Set newWeight to current weight in order to be able to first check availableWeight
         // and in case it is available, update weights
         templateBlock.newWeight = templateBlock.weight;
+        templateBlock.newWeightToDisplay = templateBlock.weightToDisplay;
 
         return templateBlock.title !== block.title;
       });
 
       if ( !$scope.block.weight ) {
         $scope.block.weight = 0;
+        $scope.block.weightToDisplay = 0;
       }
     }
 
@@ -50,10 +52,11 @@
 
       if ( availableWeight >= 0 ) {
         $scope.parentBlock.setAvailableWeight(availableWeight);
-        $scope.availableWeight = availableWeight + block.newWeight;
+        $scope.availableWeight = availableWeight + block.newWeightToDisplay;
+        block.newWeight = block.newWeightToDisplay / $scope.parentBlock.weightToDisplay * 100;
         block.setWeight(block.newWeight);
       } else {
-        block.newWeight = block.weight;
+        block.newWeightToDisplay = block.weightToDisplay;
         block.tooltip = $filter('translate')('QUESTIONNAIRE.AVAILABLE_WEIGHT_EXCEEDED', {ACCEPTABLE_WEIGHT: $scope.availableWeight});
         block.showTooltip = true;
       }
@@ -70,7 +73,34 @@
     };
     $scope.saveBlockChanges = function( block, isValid ) {
       if ( isValid ) {
+        block = models.restangularizeElement(null, block, 'templateblocks');
+        block.prepareForSave();
+        block[block.id ? 'put' : 'post']().then(saveBlockSuccessFn, saveBlockErrorFn);
+      }
+      function saveBlockSuccessFn ( response ) {
+        console.log(response);
+        if ( !block.id ) {
+          block.id = response.id;
+        }
+        block.weight = response.weight;
+        block.parentBlock = $scope.parentBlock;
+
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent($scope.msUtils.translation.genericSaveToast('QUESTIONNAIRE.BLOCK.HEADING'))
+            .theme('success-toast')
+            .hideDelay(3000)
+        );
+
         $mdDialog.hide(block);
+      }
+      function saveBlockErrorFn () {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent($scope.msUtils.translation.genericSaveErrorToast('QUESTIONNAIRE.BLOCK.HEADING'))
+            .theme('fail-toast')
+            .hideDelay(5000)
+        );
       }
     };
 

@@ -208,6 +208,7 @@
         AVAILABLE_WEIGHT_EXCEEDED: 'Weight cannot be greater than {ACCEPTABLE_WEIGHT}',
         OPEN_BLOCK_MENU: 'Open block menu',
         BLOCK: {
+          HEADING: 'Block',
           WEIGHT: 'Weight',
           DELETE: 'Delete block',
           DELETE_DIALOG: {
@@ -223,6 +224,7 @@
             TEXT: 'Text',
             DATE: 'Date'
           },
+          HEADING: 'Question',
           QUESTION_BODY: 'Question body',
           COMMENTS: 'Comments',
           CHOICES: 'Choices',
@@ -317,6 +319,12 @@
         },
         USER: {
           USERNAME_EXISTS: 'A user with that username already exists.'
+        }
+      },
+      TOAST: {
+        GENERIC: {
+          ITEM_SAVE_SUCCESS: '{ITEM} successfully saved',
+          ITEM_SAVE_ERROR: 'Error on saving "{ITEM}". Please retry.'
         }
       }
     });

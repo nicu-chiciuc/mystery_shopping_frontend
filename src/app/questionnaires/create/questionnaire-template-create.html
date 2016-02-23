@@ -6,7 +6,7 @@
 
       <!-- Validation messages -->
       <div ng-show="questionnaireForm.$submitted" ng-messages="questionnaireForm.title.$error">
-        <div ng-message="required">Title is REQUIRED!</div>
+        <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.TITLE') }}</div>
       </div>
     </md-input-container>
 
@@ -39,21 +39,12 @@
                 {{ block_1.title }}
               </span>
 
-              <!-- Edit block button -->
-              <md-button ng-click="vm.showBlockTitleDialog($event, block_1, vm.questionnaireTemplate)"
-                         class="md-icon-button">
-                <ng-md-icon icon="edit" size="18"
-                            class="md-icon-button-sm"
-                            aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
-                </ng-md-icon>
-              </md-button>
-
               <!-- Empty span element to fill in the width of block header -->
               <span flex></span>
 
               <!-- Block weight -->
               <span>
-                {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_1.weight }}
+                {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_1.weightToDisplay }}
               </span>
 
               <!-- Other options menu -->
@@ -66,6 +57,14 @@
 
                 <md-menu-content width="4">
 
+                  <!-- Edit block -->
+                  <md-menu-item>
+                    <md-button ng-click="vm.showBlockTitleDialog($event, block_1, vm.questionnaireTemplate)">
+                      {{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}
+                    </md-button>
+                  </md-menu-item>
+
+                  <!-- Delete block -->
                   <md-menu-item>
                     <md-button ng-click="vm.deleteBlock($event, block_1, vm.questionnaireTemplate)">
                       {{ 'QUESTIONNAIRE.BLOCK.DELETE' | translate }}
@@ -123,7 +122,7 @@
 
                     <!-- Block weight -->
                     <span>
-                      {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_2.weight }}
+                      {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_2.weightToDisplay }}
                     </span>
 
                     <!-- Other options menu -->
@@ -192,7 +191,7 @@
 
                           <!-- Block weight -->
                           <span>
-                            {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_3.weight }}
+                            {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_3.weightToDisplay }}
                           </span>
 
                           <!-- Other options menu -->
@@ -307,12 +306,24 @@
 
     </div>
 
-    <md-button ng-click="vm.addBlock($event, vm.questionnaireTemplate)" class="md-primary">
-      Add block
-    </md-button>
 
-    <md-button type="submit">
-      Save
+    <section layout="row" ng-show="vm.questionnaireTemplate.id">
+      <span flex></span>
+      <md-button ng-click="vm.addBlock($event, vm.questionnaireTemplate)"
+                 class="md-fab md-mini md-primary"
+                 aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}">
+        <ng-md-icon icon="my_library_add"></ng-md-icon>
+
+        <!-- Tooltip -->
+        <md-tooltip md-direction="top">
+          {{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}
+        </md-tooltip>
+
+      </md-button>
+    </section>
+
+    <md-button ng-show="vm.questionnaireTemplate.title" type="submit" class="md-primary md-raised">
+      {{ 'BUTTON.SAVE' | translate }}
     </md-button>
 
   </form>

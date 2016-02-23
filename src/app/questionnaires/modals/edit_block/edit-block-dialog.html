@@ -14,7 +14,7 @@
     <md-dialog-content>
       <div class="md-dialog-content">
 
-          <h2>{{ 'QUESTIONNAIRE.AVAILABLE_WEIGHT' | translate : {WEIGHT: (parentBlock.availableWeight + block.weight)} }}</h2>
+          <h2>{{ 'QUESTIONNAIRE.AVAILABLE_WEIGHT' | translate : {WEIGHT: (parentBlock.availableWeight + block.weightToDisplay)} }}</h2>
 
           <div layout="row">
             <!-- Block title -->
@@ -32,7 +32,7 @@
             <div>
               <md-input-container class="md-block">
                 <label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>
-                <input ng-model="block.newWeight"
+                <input ng-model="block.newWeightToDisplay"
                        ng-change="updateAvailableWeight(block)"
                        name="weight"
                        type="number"
@@ -67,7 +67,7 @@
 
                     <md-input-container>
                       <label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>
-                      <input ng-model="templateBlock.newWeight"
+                      <input ng-model="templateBlock.newWeightToDisplay"
                              ng-change="updateAvailableWeight(templateBlock)"
                              name="siblingWeight"
                              type="number"
