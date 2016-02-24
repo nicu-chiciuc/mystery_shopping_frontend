@@ -52,6 +52,10 @@ html {
   padding: 0.2em 0;
 }
 
+md-input-container > ng-md-icon + input {
+  margin-left: inherit;
+}
+
 .cursor {
   cursor: pointer;
 }

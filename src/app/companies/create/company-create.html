@@ -4,7 +4,7 @@
   <h2 ng-hide="vm.isNewCompany">{{ 'COMPANY.EDIT_COMPANY' | translate }}</h2>
 
   <div ng-cloak >
-    <form name="companyForm" ng-submit="vm.saveCompany(vm.company, companyForm.$valid, 'companies.detail.view')">
+    <form name="companyForm" ng-submit="vm.saveCompany(vm.company, companyForm.$valid, 'companies.detail.view')" novalidate>
 
       <!--
       Company name
@@ -15,7 +15,7 @@
 
         <!-- Validation messages -->
         <div ng-show="companyForm.$submitted" ng-messages="companyForm.name.$error">
-          <div ng-message="required">Company name is REQUIRED!</div>
+          <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('COMPANY.NAME') }}</div>
         </div>
       </md-input-container>
 
@@ -32,7 +32,7 @@
 
         <!-- Validation messages -->
         <div ng-show="companyForm.$submitted" ng-messages="companyForm.industry.$error">
-          <div ng-message="required">Industry is required!</div>
+          <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('COMPANY.INDUSTRY') }}</div>
         </div>
       </md-input-container>
 
@@ -49,7 +49,7 @@
 
         <!-- Validation messages -->
         <div ng-show="companyForm.$submitted" ng-messages="companyForm.country.$error">
-          <div ng-message="required">Country is required!</div>
+          <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('COMPANY.COUNTRY') }}</div>
         </div>
       </md-input-container>
 
@@ -57,9 +57,9 @@
       Contact person
       -->
       <md-input-container md-no-float class="md-block md-has-icon">
-        <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>-->
-        <ng-md-icon icon="person"></ng-md-icon>
         <label>{{ 'COMPANY.CONTACT_PERSON' | translate }}</label>
+        <!--<md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>-->
+        <ng-md-icon icon="person" class="md-icon"></ng-md-icon>
         <input ng-model="vm.company.contact_person"
                name="contact_person"
                type="text"
@@ -67,7 +67,7 @@
 
         <!-- Validation messages -->
         <div ng-show="companyForm.$submitted" ng-messages="companyForm.contact_person.$error">
-          <div ng-message="required">Contact person is required!</div>
+          <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('COMPANY.CONTACT_PERSON') }}</div>
         </div>
       </md-input-container>
 
@@ -75,13 +75,13 @@
       Contact phone
       -->
       <md-input-container md-no-float class="md-block md-has-icon">
-        <ng-md-icon icon="phone"></ng-md-icon>
         <label>{{ 'COMPANY.CONTACT_PHONE' | translate }}</label>
+        <ng-md-icon icon="phone" class="md-icon"></ng-md-icon>
         <input ng-model="vm.company.contact_phone" name="contact_phone" type="text" ng-required="true">
 
         <!-- Validation messages -->
         <div ng-show="companyForm.$submitted" ng-messages="companyForm.contact_phone.$error">
-          <div ng-message="required">Contact phone is required!</div>
+          <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('COMPANY.CONTACT_PHONE') }}</div>
         </div>
       </md-input-container>
 
@@ -89,29 +89,29 @@
       Contact email
       -->
       <md-input-container md-no-float class="md-block md-has-icon">
-        <ng-md-icon icon="mail"></ng-md-icon>
         <label>{{ 'COMPANY.CONTACT_EMAIL' | translate }}</label>
+        <ng-md-icon icon="mail" class="md-icon"></ng-md-icon>
         <input ng-model="vm.company.contact_email" name="contact_email" type="email" ng-required="true">
 
         <!-- Validation messages -->
         <div ng-show="companyForm.$submitted" ng-messages="companyForm.contact_email.$error">
-          <div ng-message="required">Contact email is required!</div>
+          <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('COMPANY.CONTACT_EMAIL') }}</div>
         </div>
       </md-input-container>
 
       <!--
       Domain name
       -->
-      <md-input-container md-no-float class="md-block md-has-icon">
-        <ng-md-icon icon="link"></ng-md-icon>
-        <label>{{ 'COMPANY.DOMAIN' | translate }}</label>
-        <input ng-model="vm.company.domain" name="domain" type="text" ng-required="true">
+      <!--<md-input-container md-no-float class="md-block md-has-icon">-->
+        <!--<label>{{ 'COMPANY.DOMAIN' | translate }}</label>-->
+        <!--<ng-md-icon icon="link" class="md-icon"></ng-md-icon>-->
+        <!--<input ng-model="vm.company.domain" name="domain" type="text" ng-required="true">-->
 
-        <!-- Validation messages -->
-        <div ng-show="companyForm.$submitted" ng-messages="companyForm.domain.$error">
-          <div ng-message="required">Domain is required!</div>
-        </div>
-      </md-input-container>
+        <!--&lt;!&ndash; Validation messages &ndash;&gt;-->
+        <!--<div ng-show="companyForm.$submitted" ng-messages="companyForm.domain.$error">-->
+          <!--<div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('COMPANY.DOMAIN') }}</div>-->
+        <!--</div>-->
+      <!--</md-input-container>-->
 
       <md-button type="submit" class="md-raised md-primary">
         {{ vm.isNewCompany ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}

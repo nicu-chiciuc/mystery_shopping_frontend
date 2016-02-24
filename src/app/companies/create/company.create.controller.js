@@ -6,7 +6,7 @@
     .controller('CompanyCreateController', CompanyCreateController);
 
   /** @ngInject */
-  function CompanyCreateController ( $log, $state, managementFlow, sideMenu, models, industries, countries, company, user ) {
+  function CompanyCreateController ( $log, $state, msUtils, managementFlow, sideMenu, models, industries, countries, company, user ) {
     $log.debug('Entered CompanyCreateController');
     var vm = this;
 
@@ -14,6 +14,8 @@
 
     vm.industries = industries;
     vm.countries = countries;
+
+    vm.msUtils = msUtils;
 
     vm.saveCompany = saveCompany;
 
@@ -28,6 +30,7 @@
       if ( isValid ) {
         if ( vm.isNewCompany ) {
           company.tenant = user.tenantId;
+          company.domain = company.name.substring(0, 30);
           company = models.restangularizeElement(null, company, 'companies');
           company.post().then(saveCompanySuccessFn, saveCompanyErrorFn);
         } else {

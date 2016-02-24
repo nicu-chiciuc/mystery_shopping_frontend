@@ -134,7 +134,7 @@
         EDIT_MANAGER: 'Edit manager',
         NEW_EMPLOYEE: 'New employee',
         EDIT_EMPLOYEE: 'Edit employee',
-        INDUSTRY: 'Industry company activates in',
+        INDUSTRY: 'Industry',
         COUNTRY: 'Country',
         CONTACT_PERSON: 'Contact person',
         CONTACT_PHONE: 'Contact phone',
