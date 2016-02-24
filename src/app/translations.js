@@ -211,6 +211,7 @@
           HEADING: 'Block',
           WEIGHT: 'Weight',
           DELETE: 'Delete block',
+          EDIT: 'Edit block',
           DELETE_DIALOG: {
             TITLE: 'Delete confirmation',
             TEXT_CONTENT: 'Are you sure you want to delete this block?',

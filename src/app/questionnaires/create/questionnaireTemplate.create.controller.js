@@ -36,6 +36,8 @@
     function activate() {
       if ( !vm.questionnaireTemplate.id ) {
         vm.questionnaireTemplate = models.restangularizeElement(null, vm.questionnaireTemplate, 'templatequestionnaires');
+      } else {
+        vm.questionnaireTemplate.initialize();
       }
 
       dragulaService.options($scope, 'block-1', {

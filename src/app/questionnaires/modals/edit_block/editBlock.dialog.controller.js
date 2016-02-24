@@ -84,6 +84,7 @@
         }
         block.weight = response.weight;
         block.parentBlock = $scope.parentBlock;
+        block.updateAvailableWeight();
 
         $mdToast.show(
           $mdToast.simple()

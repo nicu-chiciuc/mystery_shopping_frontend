@@ -30,10 +30,20 @@
 
 
     function initializeAbstract ( childBlocksProp, questionsProp, isQuestionnaire ) {
+      var parentBlock = this;
+
       childBlocksKey = childBlocksProp;
       questionsPropKey = questionsProp;
-      this.parentBlockIsQuestionnaire = isQuestionnaire ? true : false;
-      this.updateAvailableWeight();
+      parentBlock.parentBlockIsQuestionnaire = !parentBlock.parent_block;
+      //this.parentBlockIsQuestionnaire = isQuestionnaire ? true : false;
+
+      // If parent block is questionnaire (meaning top level block) or the
+      // block has a parent block assigned - compute the available weight,
+      // otherwise (when a block was just saved and it doesn't have a parentBlock
+      // assigned yet, don't compute the available weight.
+      if ( parentBlock.parentBlockIsQuestionnaire || parentBlock.parentBlock ) {
+        parentBlock.updateAvailableWeight();
+      }
     }
 
     function addChildBlock ( childBlock ) {

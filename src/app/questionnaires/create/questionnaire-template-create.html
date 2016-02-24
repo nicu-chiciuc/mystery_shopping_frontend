@@ -60,7 +60,7 @@
                   <!-- Edit block -->
                   <md-menu-item>
                     <md-button ng-click="vm.showBlockTitleDialog($event, block_1, vm.questionnaireTemplate)">
-                      {{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}
+                      {{ 'QUESTIONNAIRE.BLOCK.EDIT' | translate }}
                     </md-button>
                   </md-menu-item>
 
@@ -108,15 +108,6 @@
                       {{ block_2.title }}
                     </span>
 
-                    <!-- Edit button -->
-                    <md-button ng-click="vm.showBlockTitleDialog($event, block_2, block_1)"
-                               class="md-icon-button">
-                      <ng-md-icon icon="edit" size="18"
-                                  class="md-icon-button-sm"
-                                  aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
-                      </ng-md-icon>
-                    </md-button>
-
                     <!-- Empty span element to fill in the width of block header -->
                     <span flex></span>
 
@@ -135,6 +126,14 @@
 
                       <md-menu-content width="4">
 
+                        <!-- Edit block -->
+                        <md-menu-item>
+                          <md-button ng-click="vm.showBlockTitleDialog($event, block_2, block_1)">
+                            {{ 'QUESTIONNAIRE.BLOCK.EDIT' | translate }}
+                          </md-button>
+                        </md-menu-item>
+
+                        <!-- Delete block -->
                         <md-menu-item>
                           <md-button ng-click="vm.deleteBlock($event, block_2, block_1)">
                             {{ 'QUESTIONNAIRE.BLOCK.DELETE' | translate }}
@@ -177,15 +176,6 @@
                             {{ block_3.title }}
                           </span>
 
-                          <!-- Edit button -->
-                          <md-button ng-click="vm.showBlockTitleDialog($event, block_3, block_2)"
-                                     class="md-icon-button">
-                            <ng-md-icon icon="edit" size="18"
-                                        class="md-icon-button-sm"
-                                        aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
-                            </ng-md-icon>
-                          </md-button>
-
                           <!-- Empty span element to fill in the width of block header -->
                           <span flex></span>
 
@@ -204,6 +194,14 @@
 
                             <md-menu-content width="4">
 
+                              <!-- Edit block -->
+                              <md-menu-item>
+                                <md-button ng-click="vm.showBlockTitleDialog($event, block_3, block_2)">
+                                  {{ 'QUESTIONNAIRE.BLOCK.EDIT' | translate }}
+                                </md-button>
+                              </md-menu-item>
+
+                              <!-- Delete block -->
                               <md-menu-item>
                                 <md-button ng-click="vm.deleteBlock($event, block_3, block_2)">
                                   {{ 'QUESTIONNAIRE.BLOCK.DELETE' | translate }}
