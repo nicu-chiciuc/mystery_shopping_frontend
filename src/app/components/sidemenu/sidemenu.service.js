@@ -132,29 +132,25 @@
       setProjectChosenMenuState();
 
       if ( $rootScope.returnToState ) {
-        toState = $rootScope.returnToState;
-        toStateParams = $rootScope.returnToStateParams;
-        if ( toState.nextToState ) {
-          $rootScope.returnToStateParams = $rootScope.returnToState.nextToStateParams;
-          $rootScope.returnToState = $rootScope.returnToState.nextToState;
+        if ( isNotNeutralState($rootScope.returnToState.name) ) {
+          $state.go('projects.detail.edit', {projectId: project.id});
+          $rootScope.returnToState = undefined;
+          $rootScope.returnToStateParams = undefined;
+        } else {
+          toState = $rootScope.returnToState;
+          toStateParams = $rootScope.returnToStateParams;
+          if ( toState.nextToState ) {
+            $rootScope.returnToStateParams = $rootScope.returnToState.nextToStateParams;
+            $rootScope.returnToState = $rootScope.returnToState.nextToState;
+          }
+          $state.go(toState, toStateParams);
         }
-        $state.go(toState, toStateParams);
       }
     }
 
     function setCompany ( company ) {
       var toState, toStateParams;
 
-      function isNotNeutralState ( state ) {
-        var notNeutralStates = ['companies', 'projects', 'evaluations'];
-        var stateFound = false;
-
-        _.forEach(notNeutralStates, function (notNeutralState) {
-          stateFound = stateFound || state.indexOf(notNeutralState) > -1;
-        });
-
-        return stateFound;
-      }
       managementFlow.setCompany(company);
 
       // After selecting a company, populate the menu with that company's Projects.
@@ -218,6 +214,19 @@
 
       return sections;
     }
+
+    // Private
+    function isNotNeutralState ( state ) {
+      var notNeutralStates = ['companies', 'projects', 'evaluations'];
+      var stateFound = false;
+
+      _.forEach(notNeutralStates, function (notNeutralState) {
+        stateFound = stateFound || state.indexOf(notNeutralState) > -1;
+      });
+
+      return stateFound;
+    }
+
 
 
   }
