@@ -84,6 +84,9 @@
             CREATE: 'Create consultant',
             LIST: 'List consultants'
           }
+        },
+        SHOPPERS: {
+          EVALUATION_LIST: 'Evaluation list'
         }
       },
       COMMON: {

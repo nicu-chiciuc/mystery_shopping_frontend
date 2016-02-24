@@ -10,6 +10,7 @@
   function principal( $q, localStorageService, models ) {
     var _identity = undefined,
       _authenticated = false,
+      _shopperRoles = ['shopper'],
       _tenantRoles = ['tenantproductmanager', 'tenantprojectmanager', 'tenantconsultant'],
       _clientRoles = ['clientmanager', 'clientemployee', 'clientproductmanager'];
 
@@ -20,6 +21,7 @@
       isInAnyRole: isInAnyRole,
       authenticate: authenticate,
       identity: identity,
+      isInShopperRole: isInShopperRole,
       isInTenantRole: isInTenantRole,
       isInClientRole: isInClientRole
     };
@@ -56,6 +58,10 @@
 
     function isInClientRole () {
       return this.isAuthenticated() ? this.isInAnyRole(_clientRoles) : false;
+    }
+
+    function isInShopperRole () {
+      return this.isAuthenticated() ? this.isInAnyRole(_shopperRoles) : false;
     }
 
     function authenticate ( identity ) {

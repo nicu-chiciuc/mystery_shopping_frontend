@@ -11,24 +11,28 @@
     var self,
       sections = [];
 
-    // User Management section
-    sections.push(sideMenuData.userManagementSection);
+    if ( principal.isInShopperRole() ) {
+      sections.push(sideMenuData.shopperUserType.evaluationListItem);
 
-    // Company List section
-    sections.push(sideMenuData.companyListSection);
+    } else if ( principal.isInTenantRole() ) {
 
-    // Methodology section
-    sections.push(sideMenuData.methodologySection);
+      // User Management section
+      sections.push(sideMenuData.userManagementSection);
 
-    // Project Planning section
-    sections.push(sideMenuData.projectPlanningSection);
+      // Company List section
+      sections.push(sideMenuData.companyListSection);
+
+      // Methodology section
+      sections.push(sideMenuData.methodologySection);
+
+      // Project Planning section
+      sections.push(sideMenuData.projectPlanningSection);
+    } else if ( principal.isInClientRole() ) {
+
+    }
 
 
     $rootScope.$on('$stateChangeSuccess', onStateChange);
-
-    if ( principal.isInAnyRole(['tenantproductmanager', 'tenantprojectmanager', 'tenantconsultant']) ) {
-      //sections = getDefaultMenuDataForTenantUser();
-    }
 
     return self = {
       sections: sections,

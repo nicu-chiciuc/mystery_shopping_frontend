@@ -10,6 +10,19 @@
 
     var self;
 
+    /* ***********************
+     * Shopper User menu items
+     * ***********************/
+    // Evaluation list
+    var evaluationListItem = {
+      name: $filter('translate')('MENU.SHOPPERS.EVALUATION_LIST'),
+      state: 'shopperevaluations.list',
+      type: 'link'
+    };
+
+    /* *********************
+    * Tenant User menu items
+    * **********************/
     // User Management section
     var userManagementSection = {
       name: $filter('translate')('MENU.USER_MANAGEMENT.HEADING'),
@@ -141,6 +154,9 @@
         updateProjectList: updateProjectList,
         getCompanyListForMenu: getCompanyListForMenu,
         setChosenProjectMenuState: setChosenProjectMenuState
+      },
+      shopperUserType: {
+        evaluationListItem: evaluationListItem
       }
     };
 

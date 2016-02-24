@@ -9,11 +9,11 @@
   function routerConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
-        parent: 'companySelected',
+        parent: 'authenticated',
         url: '/',
         templateUrl: 'app/main/main.html',
         data: {
-          roles: ['tenantproductmanager']
+          roles: []
         },
         controller: 'MainController as main'
       })
