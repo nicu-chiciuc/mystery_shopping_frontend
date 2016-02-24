@@ -145,6 +145,8 @@
           }
           $state.go(toState, toStateParams);
         }
+      } else {
+        $state.go('projects.detail.edit', {projectId: project.id});
       }
     }
 

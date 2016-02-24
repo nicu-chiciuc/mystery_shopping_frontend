@@ -10,7 +10,9 @@
           &gt;
         </span>
 
-        <strong ng-show="vm.managementFlow.isProjectSelected()">
+        <strong ng-click="vm.goToProjectDetailsPage('edit')"
+                ng-show="vm.managementFlow.isProjectSelected()"
+                class="cursor">
           {{ vm.managementFlow.getProject().displayName }}
         </strong>
 
@@ -52,7 +54,7 @@
         </md-menu-item>
 
         <md-menu-item ng-show="vm.managementFlow.isProjectSelected()">
-          <md-button ng-click="vm.goToProjectDetailsPage()">
+          <md-button ng-click="vm.goToProjectDetailsPage('edit')">
             <!--<ng-md-icon icon="edit"></ng-md-icon>-->
             {{ 'MENU.MANAGEMENT.EDIT_PROJECT' | translate }}
           </md-button>

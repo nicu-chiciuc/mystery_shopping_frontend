@@ -34,8 +34,8 @@
       vm.goToCompanyDetailsPage = function ( pageType ) {
         $state.go('companies.detail.' + pageType, {companyId: vm.managementFlow.getCompany().id});
       };
-      vm.goToProjectDetailsPage = function () {
-        $state.go('projects.detail.edit', {projectId: vm.managementFlow.getProject().id});
+      vm.goToProjectDetailsPage = function ( pageType ) {
+        $state.go('projects.detail.' + pageType, {projectId: vm.managementFlow.getProject().id});
       };
 
       vm.openMenu = function($mdOpenMenu, ev) {
