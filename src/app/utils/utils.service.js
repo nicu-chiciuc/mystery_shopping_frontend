@@ -13,7 +13,8 @@
       },
       translation: {
         genericSaveToast: genericSaveToast,
-        genericSaveErrorToast: genericSaveErrorToast
+        genericSaveErrorToast: genericSaveErrorToast,
+        genericRequiredFieldMessage: translatedFieldMessage
       },
       number: {
         strip: strip

@@ -24,13 +24,12 @@
     return directive;
 
     /** @ngInject */
-    function ProjectMethodologyController ( $filter, $log ) {
+    function ProjectMethodologyController ( $filter, $log, msUtils ) {
       $log.debug('Entered ProjectMethodologyController');
       var vm = this;
 
-      console.log(vm.project);
-      console.log(vm.questionnaireTemplates);
-      console.log(vm.scripts);
+      vm.msUtils = msUtils;
+
       // If it's a new project, it doesn't have any consultants list, so create one.
       vm.project.research_methodology = vm.project.research_methodology || {};
       vm.project.research_methodology.scripts = vm.project.research_methodology.scripts || [];

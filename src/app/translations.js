@@ -187,7 +187,12 @@
           LIST_OF_PLACES_AND_PEOPLE: 'List of places and people to assess'
         },
         EVALUATION_LEVEL: {
-          ADD_PROJECT_MANAGER: 'Add project manager'
+          LEVEL: 'Level {LVL}',
+          ADD_PROJECT_MANAGER: 'Add project manager',
+          REMOVE_PROJECT_MANAGER: 'Remove project manager',
+          ADD_LAYER: 'Add layer',
+          DRAG_CONSULTANTS_HERE: 'Drag consultants here',
+          NO_AVAILABLE_CONSULTANTS: 'No available consultants'
         },
         PLACEHOLDER: {
           START_DATE: 'Start date',

@@ -43,8 +43,8 @@
 
             <!-- Validation messages -->
             <div ng-show="projectForm.$submitted" class="validation-messages" ng-messages="projectForm.period_start.$error">
-              <div ng-message="valid">The entered value is not a date!</div>
-              <div ng-message="required">This date is required!</div>
+              <div ng-message="valid">{{ 'VALIDATION_MESSAGE.DATE.INVALID' | translate }}</div>
+              <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('PROJECT.PLACEHOLDER.START_DATE') }}</div>
             </div>
           </div>
         </div><!-- End of layout="column" -->
@@ -64,8 +64,8 @@
 
             <!-- Validation messages -->
             <div ng-show="projectForm.$submitted" class="validation-messages" ng-messages="projectForm.period_end.$error">
-              <div ng-message="valid">The entered value is not a date!</div>
-              <div ng-message="required">This date is required!</div>
+              <div ng-message="valid">{{ 'VALIDATION_MESSAGE.DATE.INVALID' | translate }}</div>
+              <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('PROJECT.PLACEHOLDER.END_DATE') }}</div>
             </div>
           </div>
         </div><!-- End of layout="column" -->
@@ -84,7 +84,7 @@
 
         <!-- Validation messages -->
         <div ng-show="projectForm.$submitted" ng-messages="projectForm.project_manager.$error">
-          <div ng-message="required">Project Manager is required!</div>
+          <div ng-message="required">{{ vm.msUtils.translation.genericRequiredFieldMessage('PROJECT.PROJECT_MANAGER') }}</div>
         </div>
       </md-input-container>
 
@@ -99,7 +99,7 @@
         </ms-checkbox-list>
       </div>
 
-      <md-button type="submit" class="md-primary" ng-show="vm.project.state === 0">
+      <md-button type="submit" class="md-primary md-raised" ng-show="vm.project.state === 0">
         {{ vm.project.id ? ('BUTTON.SAVE' | translate) : ('BUTTON.CREATE' | translate) }}
       </md-button>
     </form>

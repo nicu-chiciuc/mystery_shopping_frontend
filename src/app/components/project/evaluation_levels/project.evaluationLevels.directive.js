@@ -23,7 +23,7 @@
     return directive;
 
     /** @ngInject */
-    function ProjectEvaluationLevelsController ( $scope, $log, models ) {
+    function ProjectEvaluationLevelsController ( $scope, $log, dragulaService, models ) {
       $log.debug('Entered ProjectEvaluationLevelsController');
       var vm = this;
 
@@ -38,11 +38,17 @@
           }
           assessmentLevel.consultants = _.pluck(assessmentLevel.consultants_repr, 'id');
         });
+        vm.project.hideAddAssessmentLevelButton = !allEvaluationLevelsAreSaved();
       });
 
       activate();
 
       function activate () {
+        dragulaService.options($scope, 'evaluator-bag', {
+          moves: function (el, container, handle) {
+            return handle.className.indexOf('evaluator-empty-container') === -1;
+          }
+        });
       }
 
       function addAssessmentLevel () {
@@ -60,18 +66,18 @@
 
         vm.project.evaluation_assessment_levels_repr.push(newLevel);
         vm.project.hideAddAssessmentLevelButton = true;
-        console.log(vm.project.evaluation_assessment_levels_repr);
       }
 
       function toggleProjectManagerOnLevel ( levelObj ) {
         if ( levelObj.project_manager_repr ) {
           levelObj.project_manager_repr = undefined;
-          levelObj.project_manager = undefined;
+          levelObj.project_manager = null;
         } else {
           levelObj.project_manager_repr = vm.project.project_manager_repr;
           levelObj.project_manager = vm.project.project_manager;
         }
         levelObj.showSaveLevelButton = true;
+        vm.project.hideAddAssessmentLevelButton = !allEvaluationLevelsAreSaved();
       }
 
       function saveEvaluationAssessmentLevel ( levelObj ) {

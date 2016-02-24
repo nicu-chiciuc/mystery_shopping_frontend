@@ -1,6 +1,6 @@
 <md-content layout="row" layout-padding>
 
-  <div ng-cloak flex layout="column">
+  <div ng-cloak flex layout="column" layout-padding>
     <!--<form name="shoppersForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: shoppersForm.$valid})" novalidate>-->
 
     <h2>
@@ -17,12 +17,18 @@
            class="md-whiteframe-z2 consultants-for-evaluation-levels">
         {{ consultant.user.fullName }}
       </div>
+
+      <!-- Empty bag placeholder -->
+      <div ng-hide="vm.project.availableConsultants.length"
+           class="evaluator-empty-container">
+        {{ 'PROJECT.EVALUATION_LEVEL.NO_AVAILABLE_CONSULTANTS' | translate }}
+      </div>
     </div>
 
     <!--
     Project levels
     -->
-    <div layout="row">
+    <div layout="row" layout-padding>
 
       <!-- Level container -->
       <div ng-repeat="assessmentLevel in vm.project.evaluation_assessment_levels_repr"
@@ -31,7 +37,7 @@
 
           <!-- Level number -->
          <strong>
-           Level {{ assessmentLevel.level }}
+           {{ 'PROJECT.EVALUATION_LEVEL.LEVEL' | translate : {LVL: assessmentLevel.level} }}
          </strong>
 
           <!-- Consultants bag for the given level -->
@@ -55,9 +61,7 @@
           <!-- Empty bag placeholder -->
           <div ng-hide="assessmentLevel.consultants_repr.length || assessmentLevel.project_manager"
                class="evaluator-empty-container">
-              <span>
-                Drag consultants here
-              </span>
+              {{ 'PROJECT.EVALUATION_LEVEL.DRAG_CONSULTANTS_HERE' | translate }}
           </div>
 
           <!-- Buttons -->
@@ -72,6 +76,11 @@
                           aria-label="{{ 'PROJECT.EVALUATION_LEVEL.ADD_PROJECT_MANAGER' | translate }}"
                           class="md-icon-button-sm">
               </ng-md-icon>
+
+              <!-- Tooltip -->
+              <md-tooltip md-direction="bottom">
+                {{ 'PROJECT.EVALUATION_LEVEL.ADD_PROJECT_MANAGER' | translate }}
+              </md-tooltip>
             </md-button>
 
             <!-- Remove project manager from current level button -->
@@ -80,9 +89,14 @@
                        class="md-icon-button">
               <ng-md-icon icon="person_outline"
                           size="18"
-                          aria-label="{{ 'PROJECT.EVALUATION_LEVEL.ADD_PROJECT_MANAGER' | translate }}"
+                          aria-label="{{ 'PROJECT.EVALUATION_LEVEL.REMOVE_PROJECT_MANAGER' | translate }}"
                           class="md-icon-button-sm">
               </ng-md-icon>
+
+              <!-- Tooltip -->
+              <md-tooltip md-direction="bottom">
+                {{ 'PROJECT.EVALUATION_LEVEL.REMOVE_PROJECT_MANAGER' | translate }}
+              </md-tooltip>
             </md-button>
 
             <!-- Save level button -->
@@ -94,6 +108,11 @@
                           aria-label="{{ 'BUTTON.SAVE' | translate }}"
                           class="md-icon-button-sm md-accent">
               </ng-md-icon>
+
+              <!-- Tooltip -->
+              <md-tooltip md-direction="bottom">
+                {{ 'BUTTON.SAVE' | translate }}
+              </md-tooltip>
             </md-button>
 
           </div>
@@ -101,17 +120,26 @@
 
       </div>
 
-      <md-button ng-click="vm.addAssessmentLevel()"
-                 ng-hide="vm.project.hideAddAssessmentLevelButton"
-                 layout-fill>
-        Add layer
-      </md-button>
-      <span flex></span>
+      <div flex layout="column" layout-align="center start">
+        <md-button ng-click="vm.addAssessmentLevel()"
+                   ng-hide="vm.project.hideAddAssessmentLevelButton"
+                   class="md-fab md-mini md-primary"
+                   aria-label="{{ 'PROJECT.EVALUATION_LEVEL.ADD_LAYER' | translate }}">
+          <ng-md-icon icon="add"></ng-md-icon>
+
+          <!-- Tooltip -->
+          <md-tooltip md-direction="top">
+            {{ 'PROJECT.EVALUATION_LEVEL.ADD_LAYER' | translate }}
+          </md-tooltip>
+        </md-button>
+      </div>
     </div>
 
-    <md-button type="submit" class="md-primary" ng-show="vm.project.state >= 4">
-      {{ 'BUTTON.SAVE' | translate }}
-    </md-button>
+    <div>
+      <md-button type="submit" class="md-primary md-raised" ng-show="vm.project.state >= 4">
+        {{ 'BUTTON.SAVE' | translate }}
+      </md-button>
+    </div>
     <!--</form>-->
   </div>
 </md-content>

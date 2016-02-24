@@ -25,9 +25,11 @@
     return directive;
 
     /** @ngInject */
-    function ProjectBasicInfoController ( $filter, $log, managementFlow ) {
+    function ProjectBasicInfoController ( $filter, $log, msUtils, managementFlow ) {
       $log.debug('Entered ProjectBasicInfoController');
       var vm = this;
+
+      vm.msUtils = msUtils;
 
       vm.project.project_workers_repr = vm.project.project_workers_repr || [];
       vm.project.company = managementFlow.getCompany().id;
