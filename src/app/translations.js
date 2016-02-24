@@ -271,8 +271,8 @@
             EVALUATION_TYPE: 'Evaluation type',
             SCRIPT: 'Script',
             QUESTIONNAIRE_TEMPLATE: 'Questionnaire template',
-            DATE: 'Date',
-            TIME: 'Time period',
+            SUGGESTED_START_DATE: 'Suggested start date',
+            SUGGESTED_END_DATE: 'Suggested end date',
             STATUS: 'Status'
           }
         },
