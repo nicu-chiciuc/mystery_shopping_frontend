@@ -152,6 +152,7 @@
       var question = this;
       question.gatherUpdateDataOfSiblings();
       question.parentBlock = null;
+      question.weight = parseFloat(question.weight.toFixed(2));
       postProcessManager[question.type](question);
     }
 
