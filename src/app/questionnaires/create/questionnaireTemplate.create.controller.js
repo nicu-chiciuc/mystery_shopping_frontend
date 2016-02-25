@@ -34,7 +34,8 @@
     activate();
 
     function activate() {
-      if ( !vm.questionnaireTemplate.id ) {
+      vm.isNewQuestionnaireTemplate = !vm.questionnaireTemplate.id;
+      if ( vm.isNewQuestionnaireTemplate ) {
         vm.questionnaireTemplate = models.restangularizeElement(null, vm.questionnaireTemplate, 'templatequestionnaires');
       } else {
         vm.questionnaireTemplate.initialize();

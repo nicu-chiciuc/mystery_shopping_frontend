@@ -1,4 +1,8 @@
 <md-content layout-padding>
+
+  <h2 ng-show="vm.isNewQuestionnaireTemplate">{{ 'QUESTIONNAIRE.NEW_QUESTIONNAIRE_TEMPLATE' | translate }}</h2>
+  <h2 ng-hide="vm.isNewQuestionnaireTemplate">{{ 'QUESTIONNAIRE.EDIT_QUESTIONNAIRE_TEMPLATE' | translate }}</h2>
+
   <form name="questionnaireForm" ng-submit="vm.saveQuestionnaireTemplate(vm.questionnaireTemplate, questionnaireForm.$valid)" novalidate>
     <md-input-container class="md-block">
       <label>{{ 'QUESTIONNAIRE.TITLE' | translate }}</label>

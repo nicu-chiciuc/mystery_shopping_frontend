@@ -215,6 +215,8 @@
         DESCRIPTION: 'Description'
       },
       QUESTIONNAIRE: {
+        NEW_QUESTIONNAIRE_TEMPLATE: 'New questionnaire template',
+        EDIT_QUESTIONNAIRE_TEMPLATE: 'Edit questionnaire template',
         TITLE: 'Title',
         DESCRIPTION: 'Description',
         SAME_LEVEL_BLOCKS: 'Same level blocks',
