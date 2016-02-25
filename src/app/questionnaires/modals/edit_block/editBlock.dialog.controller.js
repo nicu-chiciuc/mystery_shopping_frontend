@@ -20,7 +20,6 @@
     activate();
 
     function activate () {
-      console.log(parentBlock);
       // Before changing any weight, save current weights so that on close of dialog
       // window without saving, there is a possibility to reset initial weights.
       $scope.parentBlock.setInitialWeights();
@@ -45,7 +44,7 @@
     }
 
     function updateAvailableWeight ( block ) {
-      var availableWeight = $scope.parentBlock.computeAvailableWeight();
+      var availableWeight = $scope.msUtils.number.strip($scope.parentBlock.computeAvailableWeight());
 
       // On any action with weight inputs, remove all tooltips.
       $scope.parentBlock.removeExceededWeightsTooltips();
