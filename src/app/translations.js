@@ -89,6 +89,12 @@
           EVALUATION_LIST: 'Evaluation list'
         }
       },
+      ACTIONS: {
+        CHOOSE_COMPANY: 'Choose a company to manage or create a new one.',
+        CHOOSE_PROJECT: 'Choose a project to manage or create a new one.',
+        ACCESS_DENIED_TITLE: 'Access Denied',
+        ACCESS_DENIED_MESSAGE: "You don't have access to this page."
+      },
       COMMON: {
         CITY: 'City',
         SECTOR: 'Sector',

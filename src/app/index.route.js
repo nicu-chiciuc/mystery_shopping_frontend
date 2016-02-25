@@ -44,7 +44,7 @@
       })
       .state('companySelected', {
         parent: 'authenticated',
-        template: '<div ui-view></div>',
+        template: '<div ui-view layout="row" flex="100"></div>',
         abstract: true,
         resolve: {
           company: function ( managementFlow ) {
@@ -55,7 +55,9 @@
       })
       .state('chooseCompany', {
         parent: 'authenticated',
-        template: 'Choose a company to manage',
+        template: '<md-content layout="row" flex="100" layout-align="center center">' +
+        '<h2 class="md-display-1">{{ "ACTIONS.CHOOSE_COMPANY" | translate }}</h2>' +
+        '</md-content>',
         controller: function ( sideMenu ) {
           sideMenu.unsetCurrentCompany();
         },
@@ -65,7 +67,9 @@
       })
       .state('chooseProject', {
         parent: 'companySelected',
-        template: 'Choose a project to manage',
+        template: '<md-content layout="row" flex="100" layout-align="center center">' +
+        '<h2 class="md-display-1">{{ "ACTIONS.CHOOSE_PROJECT" | translate }}</h2>' +
+        '</md-content>',
         controller: function ( sideMenu ) {
           sideMenu.unsetCurrentProject();
         },
