@@ -86,6 +86,7 @@
         if ( $scope.isNewQuestion ) {
           question.id = response.id;
         }
+        question.cleanUpdateSiblingsIdentifiers();
 
         $mdToast.show(
           $mdToast.simple()
@@ -108,7 +109,7 @@
 
     $scope.cancel = function() {
       $scope.question.restoreInitialQuestion();
-      question.postProcess();
+      $scope.question.postProcess();
       //$scope.$apply();
       $mdDialog.cancel();
     };

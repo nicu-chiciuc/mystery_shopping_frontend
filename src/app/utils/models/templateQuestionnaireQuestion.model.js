@@ -20,6 +20,7 @@
       setWeight: setWeight,
       setInitialWeight: setInitialWeight,
       resetInitialWeight: resetInitialWeight,
+      cleanUpdateSiblingsIdentifiers: cleanUpdateSiblingsIdentifiers,
       gatherUpdateDataOfSiblings: gatherUpdateDataOfSiblings,
       recomputeChoiceWeights: recomputeChoiceWeights,
       backupInitialQuestion: backupInitialQuestion,
@@ -102,11 +103,13 @@
       question.isDateQuestion = question.type === 'd';
 
       if ( question.isTextQuestion || question.isDateQuestion ) {
+        question.weightIsEditable = false;
         if ( question.template_question_choices ) {
           question.temporary_question_choices = question.template_question_choices;
           question.template_question_choices = undefined;
         }
       } else {
+        question.weightIsEditable = true;
         if ( question.temporary_question_choices ) {
           question.template_question_choices = question.temporary_question_choices;
         }
@@ -135,6 +138,14 @@
           }
         });
       });
+    }
+
+    function cleanUpdateSiblingsIdentifiers () {
+      var question = this;
+      _.forEach(question.parentBlock.template_questions, function (blockQuestion) {
+        blockQuestion.question_action = undefined;
+      });
+      question.siblings.length = 0;
     }
 
     function postProcess () {
@@ -178,6 +189,7 @@
         choice.score = parseFloat(choice.score);
         choice.weight = parseFloat(choice.weight);
       });
+      question.weightIsEditable = true;
     }
 
     function preProcessMultipleChoiceQuestion ( question ) {
@@ -185,9 +197,11 @@
     }
 
     function preProcessTextQuestion ( question ) {
+      question.weightIsEditable = false;
     }
 
     function preProcessDateQuestion ( question ) {
+      question.weightIsEditable = false;
     }
 
     function recomputeChoiceWeights () {

@@ -39,7 +39,8 @@
                            ng-change="updateAvailableWeight(question)"
                            name="siblingWeight"
                            type="number"
-                           ng-required="true" />
+                           ng-required="true"
+                           ng-disabled="!question.weightIsEditable" />
 
                     <md-tooltip ng-if="question.showTooltip" md-visible="question.showTooltip" md-direction="top">
                       {{ question.tooltip }}
@@ -47,7 +48,7 @@
 
                     <!-- Validation messages -->
                     <div ng-messages="siblingQuestionForm.siblingWeight.$error">
-                      <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.BLOCK.WEIGHT') }}</div>
+                      <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.QUESTION.WEIGHT') }}</div>
                       <div ng-message="number">{{ 'VALIDATION_MESSAGE.NUMBER.INVALID' | translate }}</div>
                     </div>
                   </md-input-container>

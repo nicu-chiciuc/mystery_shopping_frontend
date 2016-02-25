@@ -50,11 +50,11 @@
 
     function updateQuestionWeights () {
       var block = this;
-      var weightAverage = parseFloat((block.weight / block.template_questions.length).toFixed(2));
+      //var weightAverage = parseFloat((block.weight / block.template_questions.length).toFixed(2));
 
-      _.forEach(block.template_questions, function (question) {
-        question.weight = weightAverage;
-      });
+      //_.forEach(block.template_questions, function (question) {
+      //  question.weight = weightAverage;
+      //});
     }
 
     function gatherUpdateDataOfSiblings () {

@@ -37,6 +37,7 @@
       }
 
       function saveQuestionSuccessFn () {
+        questionToSave.cleanUpdateSiblingsIdentifiers();
         $mdToast.show(
           $mdToast.simple()
             .textContent($scope.msUtils.translation.genericSaveSuccessToast('QUESTIONNAIRE.QUESTION.HEADING'))
