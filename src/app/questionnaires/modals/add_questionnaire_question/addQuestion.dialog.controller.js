@@ -79,6 +79,7 @@
       if ( isValid ) {
         question.postProcess();
         question[question.id ? 'put' : 'post']().then(saveQuestionSuccessFn, saveQuestionErrorFn);
+        question.parentBlock = $scope.block;
       }
 
       function saveQuestionSuccessFn ( response ) {

@@ -34,7 +34,7 @@
 
       childBlocksKey = childBlocksProp;
       questionsPropKey = questionsProp;
-      parentBlock.parentBlockIsQuestionnaire = !parentBlock.parent_block;
+      parentBlock.parentBlockIsQuestionnaire = !!isQuestionnaire;
       //this.parentBlockIsQuestionnaire = isQuestionnaire ? true : false;
 
       // If parent block is questionnaire (meaning top level block) or the

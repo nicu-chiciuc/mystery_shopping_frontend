@@ -23,7 +23,7 @@
     return directive;
 
     /** @ngInject */
-    function QuestionnaireGenericQuestionController ( $filter, $mdMedia, $mdDialog ) {
+    function QuestionnaireGenericQuestionController ( $filter, $mdMedia, $mdDialog, models ) {
       var vm = this;
       var originatorEv;
 
@@ -70,6 +70,8 @@
 
         $mdDialog.show(confirm).then(function() {
           if ( question.id ) {
+            question = models.restangularizeElement(null, question, 'templatequestions');
+            question.postProcess();
             question.remove().then(deleteQuestionSuccessFn, deleteQuestionErrorFn);
           } else {
             deleteQuestionSuccessFn();

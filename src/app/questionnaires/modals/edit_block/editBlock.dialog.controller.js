@@ -77,7 +77,6 @@
         block[block.id ? 'put' : 'post']().then(saveBlockSuccessFn, saveBlockErrorFn);
       }
       function saveBlockSuccessFn ( response ) {
-        console.log(response);
         if ( !block.id ) {
           block.id = response.id;
         }
