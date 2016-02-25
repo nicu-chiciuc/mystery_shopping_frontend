@@ -90,6 +90,8 @@
         question.type = type;
       }
 
+      question.isSingleChoiceQuestion = question.type === 's';
+      question.isMultipleChoiceQuestion = question.type === 'm';
       question.isChoiceQuestion = question.type === 's' || question.type === 'm';
       question.isTextQuestion = question.type === 't';
       question.isDateQuestion = question.type === 'd';

@@ -228,6 +228,7 @@
           WEIGHT: 'Weight',
           DELETE: 'Delete block',
           EDIT: 'Edit block',
+          QUESTIONS: 'Block questions',
           DELETE_DIALOG: {
             TITLE: 'Delete confirmation',
             TEXT_CONTENT: 'Are you sure you want to delete this block?',
@@ -251,9 +252,11 @@
           },
           ANSWER: 'Answer',
           MAX_SCORE: 'Max score: {MAX_SCORE}',
-          SCORE_AND_WEIGHT: '(score - {SCORE}, weight - {WEIGHT})',
+          SCORE_AND_WEIGHT: '(score: {SCORE}, weight: {WEIGHT})',
+          WEIGHT: 'Weight',
           DELETE: 'Delete question',
           EDIT: 'Edit question',
+          AVAILABLE_WEIGHT_EXCEEDED: 'Sum of all question weights can not exceed {MAX_AMOUNT}',
           DELETE_DIALOG: {
             TITLE: 'Delete confirmation',
             TEXT_CONTENT: 'Are you sure you want to delete this question?',
@@ -263,7 +266,8 @@
         ACTIONS: {
           ADD_BLOCK: 'Add block',
           ADD_QUESTION: 'Add question',
-          ADD_CHOICE: 'Add choice'
+          ADD_CHOICE: 'Add choice',
+          REVIEW_QUESTION_WEIGHTS: 'Review question weights'
         },
         DIALOG: {
           EDIT_BLOCK: 'Edit block',

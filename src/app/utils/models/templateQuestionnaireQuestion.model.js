@@ -7,15 +7,20 @@
     .factory('TemplateQuestionnaireQuestionModel', TemplateQuestionnaireQuestionModel);
 
   /** @ngInject */
-  function TemplateQuestionnaireQuestionModel () {
+  function TemplateQuestionnaireQuestionModel ( msUtils ) {
     var Model = {
       initialize: initialize,
       addChoice: addChoice,
       removeChoice: removeChoice,
       updateQuestionType: updateQuestionType,
       updateMaxScore: updateMaxScore,
+      setParentBlock: setParentBlock,
       preProcess: preProcess,
       postProcess: postProcess,
+      setWeight: setWeight,
+      setInitialWeight: setInitialWeight,
+      resetInitialWeight: resetInitialWeight,
+      gatherUpdateDataOfSiblings: gatherUpdateDataOfSiblings,
       recomputeChoiceWeights: recomputeChoiceWeights,
       backupInitialQuestion: backupInitialQuestion,
       restoreInitialQuestion: restoreInitialQuestion
@@ -38,14 +43,38 @@
     return Model;
 
 
-    function initialize () {
+    function initialize ( parentBlock ) {
       var question = this;
+
+      question.parentBlock = parentBlock;
 
       question.answer_choices = question.answer_choices || [];
       question.weight = parseFloat(question.weight);
+      question.weightToDisplay = question.parentBlock.weightToDisplay * question.weight / 100;
 
       question.updateQuestionType();
       question.preProcess();
+    }
+
+    function setWeight ( weight ) {
+      var question = this;
+      question.previousWeight = question.weight;
+      question.weight = weight;
+
+      question.previousWeightToDisplay = question.weightToDisplay;
+      question.weightToDisplay = msUtils.number.strip(weight / 100 * question.parentBlock.weightToDisplay);
+
+      question.question_action = 'update';
+    }
+
+    function setInitialWeight () {
+      var question = this;
+      question.initialWeight = question.weight;
+    }
+
+    function resetInitialWeight () {
+      var question = this;
+      question.setWeight(question.initialWeight);
     }
 
     function addChoice () {
@@ -66,6 +95,8 @@
         question.type = type;
       }
 
+      question.isSingleChoiceQuestion = question.type === 's';
+      question.isMultipleChoiceQuestion = question.type === 'm';
       question.isChoiceQuestion = question.type === 's' || question.type === 'm';
       question.isTextQuestion = question.type === 't';
       question.isDateQuestion = question.type === 'd';
@@ -84,8 +115,32 @@
       question.updateMaxScore();
     }
 
+    function setParentBlock ( block ) {
+      var question = this;
+      question.parentBlock = block;
+    }
+
+    function gatherUpdateDataOfSiblings () {
+      var question = this;
+      var siblings = _.filter(question.parentBlock.template_questions, function (templateQuestion) {
+        return templateQuestion.id !== question.id && templateQuestion.question_action === 'update';
+      });
+
+      question.siblings = [];
+      _.forEach(siblings, function (siblingQuestion) {
+        question.siblings.push({
+          question_id: siblingQuestion.id,
+          question_changes: {
+            weight: siblingQuestion.weight
+          }
+        });
+      });
+    }
+
     function postProcess () {
       var question = this;
+      question.gatherUpdateDataOfSiblings();
+      question.parentBlock = null;
       postProcessManager[question.type](question);
     }
 
@@ -113,6 +168,8 @@
 
     function preProcess () {
       var question = this;
+
+      question.weightToDisplay = question.parentBlock.weightToDisplay * question.weight / 100;
       preProcessManager[question.type](question);
     }
 

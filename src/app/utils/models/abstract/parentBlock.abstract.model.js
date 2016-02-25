@@ -82,7 +82,6 @@
       // and sibling blocks, set some additional properties that will be used
       // in the process of updating blocks in the backend.
       block.block_action = 'update';
-      block.block_id = block.id;
 
       block.updateChildWeights();
     }
@@ -113,6 +112,10 @@
         availableWeight -= childBlock.newWeightToDisplay ? childBlock.newWeightToDisplay : (childBlock.weightToDisplay ? childBlock.weightToDisplay : 0);
       });
 
+      _.forEach(block[questionsPropKey], function (question) {
+        availableWeight -= question.newWeightToDisplay ? question.newWeightToDisplay : (question.weightToDisplay ? question.weightToDisplay : 0);
+      });
+
       return availableWeight;
     }
 
@@ -131,6 +134,10 @@
         childBlock.initialWeight = childBlock.weight;
         //childBlock.initialWeightToDisplay = childBlock.weightToDisplay;
       });
+
+      _.forEach(block[questionsPropKey], function (question) {
+        question.setInitialWeight();
+      });
     }
 
     function resetInitialWeights () {
@@ -139,6 +146,9 @@
       _.forEach(block[childBlocksKey], function (childBlock) {
         childBlock.setWeight(childBlock.initialWeight);
       });
+      _.forEach(block[questionsPropKey], function (question) {
+        question.resetInitialWeight();
+      });
     }
 
     function updateChildWeights () {
@@ -146,6 +156,9 @@
 
       _.forEach(block[childBlocksKey], function (childBlock) {
         childBlock.setWeight(childBlock.weight);
+      });
+      _.forEach(block[questionsPropKey], function (question) {
+        question.setWeight(question.weight);
       });
     }
 

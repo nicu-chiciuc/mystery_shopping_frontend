@@ -259,6 +259,17 @@
 
                 <section layout="row">
                   <span flex></span>
+                  <md-button ng-click="vm.reivewQuestionWeights($event, block_2)"
+                             ng-show="block_2.template_questions.length"
+                             class="md-fab md-mini md-primary"
+                             aria-label="{{ 'QUESTIONNAIRE.ACTIONS.REVIEW_QUESTION_WEIGHTS' | translate }}">
+                    <ng-md-icon icon="rate_review"></ng-md-icon>
+
+                    <!-- Tooltip -->
+                    <md-tooltip md-direction="top">
+                      {{ 'QUESTIONNAIRE.ACTIONS.REVIEW_QUESTION_WEIGHTS' | translate }}
+                    </md-tooltip>
+                  </md-button>
                   <md-button ng-click="vm.showAddQuestionDialog($event, block_2, vm.questionnaireTemplate, true)"
                              class="md-fab md-mini md-primary"
                              aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">

@@ -13,7 +13,8 @@
       addQuestion: addQuestion,
       updateQuestionWeights: updateQuestionWeights,
       gatherUpdateDataOfSiblings: gatherUpdateDataOfSiblings,
-      prepareForSave: prepareForSave
+      prepareForSave: prepareForSave,
+      removeQuestionExceededWeightsTooltips: removeQuestionExceededWeightsTooltips
     };
 
     return Model;
@@ -36,7 +37,7 @@
 
       _.forEach(block[childQuestionsProp], function ( question ) {
         angular.extend(question, TemplateQuestionnaireQuestionModel);
-        question.initialize();
+        question.initialize(block);
       });
     }
 
@@ -78,6 +79,14 @@
 
       block.gatherUpdateDataOfSiblings();
       block.parentBlock = null;
+    }
+
+    function removeQuestionExceededWeightsTooltips () {
+      var block = this;
+
+      _.forEach(block.template_questions, function (question) {
+        question.showTooltip = false;
+      });
     }
 
   }

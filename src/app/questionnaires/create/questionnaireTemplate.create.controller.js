@@ -23,6 +23,7 @@
     vm.showBlockTitleDialog = showBlockTitleDialog;
     vm.showAddQuestionDialog = showAddQuestionDialog;
     vm.deleteBlock = deleteBlock;
+    vm.reivewQuestionWeights = reivewQuestionWeights;
 
     vm.saveQuestionnaireTemplate = saveQuestionnaireTemplate;
 
@@ -168,6 +169,21 @@
         }
         function deleteBlockErrorFn () {
           // TODO deal with the error
+        }
+      });
+    }
+
+    function reivewQuestionWeights ( ev, block ) {
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
+      $mdDialog.show({
+        controller: 'ReviewQuestionnaireQuestionWeightsDialogController as vm',
+        templateUrl: 'app/questionnaires/modals/review_question_weights/review-question-weights-dialog.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        escapeToClose: false,
+        fullscreen: useFullScreen,
+        locals: {
+          block: block
         }
       });
     }

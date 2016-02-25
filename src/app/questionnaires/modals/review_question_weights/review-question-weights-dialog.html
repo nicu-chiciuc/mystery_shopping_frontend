@@ -1,0 +1,75 @@
+<md-dialog aria-label="{{ 'QUESTIONNAIRE.ACTIONS.REVIEW_QUESTION_WEIGHTS' | translate }}" ng-cloak>
+  <form name="questionForm" ng-submit="saveReviewChanges(block, questionForm.$valid, questionForm)" novalidate>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          {{ 'QUESTIONNAIRE.ACTIONS.REVIEW_QUESTION_WEIGHTS' | translate }}
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <ng-md-icon icon="close" aria-label="{{ 'COMMON.ACTIONS.CLOSE_DIALOG' | translate }}"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <div layout="row">
+          <h2 class="md-title">{{ ::'QUESTIONNAIRE.BLOCK.HEADING' | translate }}: {{ ::block.title }}</h2>
+          <span flex></span>
+          <h2 class="md-title">{{ ::'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}: {{ block.weightToDisplay }}</h2>
+        </div>
+
+        <md-subheader>{{ 'QUESTIONNAIRE.BLOCK.QUESTIONS' | translate }}</md-subheader>
+        <div layout="column">
+          <md-list>
+            <md-list-item ng-repeat="question in block.template_questions" layout="column">
+
+              <ng-form name="siblingQuestionForm">
+
+                <div layout="row">
+                  <md-input-container>
+                    <label>{{ 'QUESTIONNAIRE.QUESTION.QUESTION_BODY' | translate }}</label>
+                    <textarea ng-model="question.question_body" columns="1" rows="5" disabled></textarea>
+                  </md-input-container>
+
+                  <md-input-container>
+                    <label>{{ 'QUESTIONNAIRE.QUESTION.WEIGHT' | translate }}</label>
+                    <input ng-model="question.newWeightToDisplay"
+                           ng-change="updateAvailableWeight(question)"
+                           name="siblingWeight"
+                           type="number"
+                           ng-required="true" />
+
+                    <md-tooltip ng-if="question.showTooltip" md-visible="question.showTooltip" md-direction="top">
+                      {{ question.tooltip }}
+                    </md-tooltip>
+
+                    <!-- Validation messages -->
+                    <div ng-messages="siblingQuestionForm.siblingWeight.$error">
+                      <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.BLOCK.WEIGHT') }}</div>
+                      <div ng-message="number">{{ 'VALIDATION_MESSAGE.NUMBER.INVALID' | translate }}</div>
+                    </div>
+                  </md-input-container>
+                </div>
+
+              </ng-form>
+            </md-list-item>
+          </md-list>
+        </div>
+
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button type="submit">
+        {{ 'BUTTON.SET' | translate }}
+      </md-button>
+      <md-button ng-click="cancel()" style="margin-right:20px;">
+        {{ 'BUTTON.CANCEL' | translate }}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+

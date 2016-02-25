@@ -5,8 +5,12 @@
 
   <span flex></span>
 
-  <p ng-show="vm.question.isChoiceQuestion">
+  <p ng-show="vm.question.isMultipleChoiceQuestion">
     {{ 'QUESTIONNAIRE.QUESTION.MAX_SCORE' | translate : {MAX_SCORE: vm.question.max_score} }}
+  </p>
+
+  <p ng-show="vm.question.isChoiceQuestion" class="margin-left-md">
+    {{ ('QUESTIONNAIRE.QUESTION.WEIGHT' | translate) + ': ' + vm.question.weightToDisplay }}
   </p>
 
   <!-- Other options menu -->

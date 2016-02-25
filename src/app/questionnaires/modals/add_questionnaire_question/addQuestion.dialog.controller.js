@@ -53,7 +53,7 @@
     function activate () {
       $scope.question = models.restangularizeElement(null, $scope.question, 'templatequestions');
       if ( $scope.isNewQuestion ) {
-        $scope.question.initialize();
+        $scope.question.initialize($scope.block);
       }
       $scope.question.backupInitialQuestion();
     }
