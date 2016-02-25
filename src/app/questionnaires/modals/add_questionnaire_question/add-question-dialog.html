@@ -83,9 +83,11 @@
               </md-list-item>
             </md-list>
 
-            <md-button ng-click="addChoice()">
-              {{ 'QUESTIONNAIRE.ACTIONS.ADD_CHOICE' | translate }}
-            </md-button>
+            <div>
+              <md-button ng-click="addChoice()" class="md-primary md-raised">
+                {{ 'QUESTIONNAIRE.ACTIONS.ADD_CHOICE' | translate }}
+              </md-button>
+            </div>
 
           </md-content>
         </md-tab>
@@ -158,9 +160,11 @@
               </md-list-item>
             </md-list>
 
-            <md-button ng-click="addChoice()">
-              {{ 'QUESTIONNAIRE.ACTIONS.ADD_CHOICE' | translate }}
-            </md-button>
+            <div>
+              <md-button ng-click="addChoice()" class="md-primary md-raised">
+                {{ 'QUESTIONNAIRE.ACTIONS.ADD_CHOICE' | translate }}
+              </md-button>
+            </div>
 
           </md-content>
         </md-tab>
@@ -233,11 +237,11 @@
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="cancel()" md-autofocus>
-        Cancel
+      <md-button type="submit" class="md-primary md-raised">
+        {{ 'BUTTON.SAVE' | translate }}
       </md-button>
-      <md-button type="submit" style="margin-right:20px;">
-        Add
+      <md-button ng-click="cancel()" md-autofocus class="md-raised">
+        {{ 'BUTTON.CANCEL' | translate }}
       </md-button>
     </md-dialog-actions>
   </form>

@@ -1,15 +1,6 @@
 <div layout="row">
   <p>
     {{ vm.question.question_body }}
-
-    <!-- Edit button -->
-    <md-button ng-click="vm.showEditQuestionDialog($event, vm.question, false)"
-               class="md-icon-button">
-      <ng-md-icon icon="edit" size="18"
-                  class="md-icon-button-sm"
-                  aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_BLOCK_TITLE' | translate }}">
-      </ng-md-icon>
-    </md-button>
   </p>
 
   <span flex></span>
@@ -28,6 +19,14 @@
 
     <md-menu-content width="4">
 
+      <!-- Edit block -->
+      <md-menu-item>
+        <md-button ng-click="vm.showEditQuestionDialog($event, vm.question, false)">
+          {{ 'QUESTIONNAIRE.QUESTION.EDIT' | translate }}
+        </md-button>
+      </md-menu-item>
+
+      <!-- Delete block -->
       <md-menu-item>
         <md-button ng-click="vm.deleteQuestion($event, vm.question)">
           {{ 'QUESTIONNAIRE.QUESTION.DELETE' | translate }}

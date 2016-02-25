@@ -12,7 +12,7 @@
         abstract: true,
         parent: 'companySelected',
         url: '/questionnaires',
-        template: '<div ui-view></div>',
+        template: '<div ui-view flex></div>',
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         }

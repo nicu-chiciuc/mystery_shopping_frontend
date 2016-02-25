@@ -12,7 +12,8 @@
       templateUrl: 'app/utils/directives/questionnaire_generic_question/questionnaire-generic-question.html',
       scope: {
         question: '=',
-        block: '='
+        block: '=',
+        questionnaire: '='
       },
       controller: QuestionnaireGenericQuestionController,
       controllerAs: 'vm',
@@ -48,6 +49,8 @@
           fullscreen: useFullScreen,
           locals: {
             question: question,
+            block: vm.block,
+            questionnaireTemplate: vm.questionnaire,
             isNewQuestion: isNewQuestion
           }
         })

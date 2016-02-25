@@ -86,7 +86,10 @@
 
             <!-- Block questions -->
             <div ng-repeat="question in block_1.template_questions">
-              <ms-questionnaire-generic-question question="question" block="block_1"></ms-questionnaire-generic-question>
+              <ms-questionnaire-generic-question question="question"
+                                                 block="block_1"
+                                                 questionnaire="vm.questionnaireTemplate">
+              </ms-questionnaire-generic-question>
               <md-divider></md-divider>
             </div>
 
@@ -154,7 +157,10 @@
 
                   <!-- Block questions -->
                   <div ng-repeat="question in block_2.template_questions">
-                    <ms-questionnaire-generic-question question="question" block="block_2"></ms-questionnaire-generic-question>
+                    <ms-questionnaire-generic-question question="question"
+                                                       block="block_2"
+                                                       questionnaire="vm.questionnaireTemplate">
+                    </ms-questionnaire-generic-question>
                     <md-divider></md-divider>
                   </div>
 
@@ -222,7 +228,10 @@
 
                         <!-- Block questions -->
                         <div ng-repeat="question in block_3.template_questions">
-                          <ms-questionnaire-generic-question question="question" block="block_3"></ms-questionnaire-generic-question>
+                          <ms-questionnaire-generic-question question="question"
+                                                             block="block_3"
+                                                             questionnaire="vm.questionnaireTemplate">
+                          </ms-questionnaire-generic-question>
                           <md-divider></md-divider>
                         </div>
 
@@ -230,7 +239,7 @@
 
                       <section layout="row">
                         <span flex></span>
-                        <md-button ng-click="vm.showAddQuestionDialog($event, block_3, true)"
+                        <md-button ng-click="vm.showAddQuestionDialog($event, block_3, vm.questionnaireTemplate, true)"
                                    class="md-fab md-mini md-primary"
                                    aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
                           <ng-md-icon icon="playlist_add"></ng-md-icon>
@@ -250,7 +259,7 @@
 
                 <section layout="row">
                   <span flex></span>
-                  <md-button ng-click="vm.showAddQuestionDialog($event, block_2, true)"
+                  <md-button ng-click="vm.showAddQuestionDialog($event, block_2, vm.questionnaireTemplate, true)"
                              class="md-fab md-mini md-primary"
                              aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
                     <ng-md-icon icon="playlist_add"></ng-md-icon>
@@ -280,7 +289,7 @@
 
           <section layout="row">
             <span flex></span>
-            <md-button ng-click="vm.showAddQuestionDialog($event, block_1, true)"
+            <md-button ng-click="vm.showAddQuestionDialog($event, block_1, vm.questionnaireTemplate, true)"
                        class="md-fab md-mini md-primary"
                        aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">
               <ng-md-icon icon="playlist_add"></ng-md-icon>

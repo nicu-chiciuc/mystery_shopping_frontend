@@ -253,6 +253,7 @@
           MAX_SCORE: 'Max score: {MAX_SCORE}',
           SCORE_AND_WEIGHT: '(score - {SCORE}, weight - {WEIGHT})',
           DELETE: 'Delete question',
+          EDIT: 'Edit question',
           DELETE_DIALOG: {
             TITLE: 'Delete confirmation',
             TEXT_CONTENT: 'Are you sure you want to delete this question?',

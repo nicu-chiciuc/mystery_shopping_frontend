@@ -119,7 +119,7 @@
         });
     }
 
-    function showAddQuestionDialog ( ev, block, isNewQuestion ) {
+    function showAddQuestionDialog ( ev, block, questionnaireTemplate, isNewQuestion ) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
       $mdDialog.show({
         controller: 'AddQuestionnaireQuestionDialogController as vm',
@@ -130,6 +130,8 @@
         fullscreen: useFullScreen,
         locals: {
           question: {},
+          block: block,
+          questionnaireTemplate: questionnaireTemplate,
           isNewQuestion: isNewQuestion
         }
       })

@@ -88,7 +88,7 @@
 
         $mdToast.show(
           $mdToast.simple()
-            .textContent($scope.msUtils.translation.genericSaveToast('QUESTIONNAIRE.BLOCK.HEADING'))
+            .textContent($scope.msUtils.translation.genericSaveSuccessToast('QUESTIONNAIRE.BLOCK.HEADING'))
             .theme('success-toast')
             .hideDelay(3000)
         );

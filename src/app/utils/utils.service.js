@@ -12,7 +12,7 @@
         translatedFieldMessage: translatedFieldMessage
       },
       translation: {
-        genericSaveToast: genericSaveToast,
+        genericSaveSuccessToast: genericSaveSuccessToast,
         genericSaveErrorToast: genericSaveErrorToast,
         genericRequiredFieldMessage: translatedFieldMessage
       },
@@ -34,7 +34,7 @@
     /*
     * Translation methods
     */
-    function genericSaveToast ( fieldTranslationKey ) {
+    function genericSaveSuccessToast ( fieldTranslationKey ) {
       var translatedItemName = $filter('translate')(fieldTranslationKey);
       return $filter('translate')('TOAST.GENERIC.ITEM_SAVE_SUCCESS', {ITEM: translatedItemName});
     }
