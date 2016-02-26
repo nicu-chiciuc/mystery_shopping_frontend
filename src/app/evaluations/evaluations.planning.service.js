@@ -23,11 +23,10 @@
     return self;
 
 
-    function createPlannedEvaluations ( evaluationsCopy ) {
-      //var evaluationsCopy = _.cloneDeep(evaluations);
-      evaluationsCopy = models.restangularizeCollection(null, evaluationsCopy, 'evaluations');
+    function createPlannedEvaluations ( evaluations ) {
+      evaluations = models.restangularizeCollection(managementFlow.getProject(), evaluations, 'evaluations');
 
-      evaluationsCopy.post().then(savePlannedEvaluationsSuccessFn, savePlannedEvaluationsErrorFn);
+      evaluations.post().then(savePlannedEvaluationsSuccessFn, savePlannedEvaluationsErrorFn);
 
       function savePlannedEvaluationsSuccessFn ( response ) {
         self.plannedEvaluations = self.plannedEvaluations.concat(response);
