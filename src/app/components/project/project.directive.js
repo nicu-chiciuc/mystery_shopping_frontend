@@ -19,6 +19,7 @@
         questionnaireTemplates: '=',
         scripts: '=',
         shoppers: '=',
+        company: '=',
         user: '='
       },
       controller: ProjectController,
@@ -44,7 +45,7 @@
         if (isValid) {
           if ( vm.isNewProject ) {
             project.tenant = vm.user.tenantId;
-            project = models.restangularizeElement(null, project, 'projects');
+            project = models.restangularizeElement(vm.company, project, 'projects');
             if ( project.state === 0 )
               delete project['research_methodology'];
             project.post().then(saveProjectSuccessFn, saveProjectErrorFn);

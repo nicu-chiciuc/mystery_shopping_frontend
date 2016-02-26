@@ -36,7 +36,7 @@
         templateUrl: 'app/projects/list/project-list.html',
         controller: 'ProjectListController as vm',
         resolve: {
-          projects: function ( models ) { return models.projects().getList(); }
+          projects: function ( managementFlow ) { return managementFlow.getCompany().getList('projects'); }
         }
       })
       .state('projects.detail', {
@@ -49,7 +49,7 @@
           tenantConsultants: function ( models ) { return models.tenantConsultants().getList(); },
           questionnaireTemplates: function ( models ) { return models.questionnaireTemplates().getList(); },
           scripts: function ( models ) { return models.scripts().getList(); },
-          project: function ( $stateParams, models ) { return models.projects().one($stateParams.projectId).get(); },
+          project: function ( $stateParams, models, managementFlow ) { return managementFlow.getCompany().one('projects', $stateParams.projectId).get(); },
           shoppers: function ( models ) { return models.shoppers().getList(); }
         }
       })
