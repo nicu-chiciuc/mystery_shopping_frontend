@@ -44,7 +44,10 @@
         PROJECT_MANAGEMENT: {
           HEADING: 'Project Management',
           PROJECTS: 'Projects',
-          MANAGE_PROJECTS: 'Manage projects'
+          MANAGE_PROJECTS: 'Manage projects',
+          FULLY_DEFINED: 'All project chapters are defined',
+          PARTIALLY_DEFINED: 'Not all project chapters are defined',
+          NOT_DEFINED: 'Project chapters are not defined'
         },
         PROJECT_PLANNING: {
           HEADING: 'Project Planning',

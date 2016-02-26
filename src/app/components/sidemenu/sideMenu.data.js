@@ -183,7 +183,8 @@
             name: project.period_start + ' - ' + project.period_end,
             value: project,
             type: 'action',
-            contentType: 'project'
+            contentType: 'project',
+            state: project.state
           });
         });
 

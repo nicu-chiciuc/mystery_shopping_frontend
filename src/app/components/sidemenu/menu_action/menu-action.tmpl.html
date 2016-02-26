@@ -1,5 +1,26 @@
 <md-button ng-class="{'active' : isSelected()}"
            ng-click="selectItem(section.value, section.contentType)">
+  <span ng-show="section.contentType === 'project' && section.state >= 5">
+    <ng-md-icon icon="star" style="opacity:0.3"></ng-md-icon>
+    <!-- Tooltip -->
+    <md-tooltip md-direction="top">
+      {{ 'MENU.PROJECT_MANAGEMENT.FULLY_DEFINED' | translate }}
+    </md-tooltip>
+  </span>
+  <span ng-show="section.contentType === 'project' && section.state >=2  && section.state < 5">
+    <ng-md-icon icon="star_half" style="opacity:0.3"></ng-md-icon>
+    <!-- Tooltip -->
+    <md-tooltip md-direction="top">
+      {{ 'MENU.PROJECT_MANAGEMENT.PARTIALLY_DEFINED' | translate }}
+    </md-tooltip>
+  </span>
+  <span ng-show="section.contentType === 'project' && section.state >= 0 && section.state < 2">
+    <ng-md-icon icon="star_outline" style="opacity:0.3"></ng-md-icon>
+    <!-- Tooltip -->
+    <md-tooltip md-direction="top">
+      {{ 'MENU.PROJECT_MANAGEMENT.NOT_DEFINED' | translate }}
+    </md-tooltip>
+  </span>
   {{ section.name }}
   <span class="md-visually-hidden"
         ng-if="isSelected()">
