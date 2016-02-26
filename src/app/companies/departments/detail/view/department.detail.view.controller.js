@@ -10,11 +10,8 @@
     $log.debug('Entered DepartmentDetailViewController');
     var vm = this;
 
-    console.log(company);
-
     vm.company = company;
     vm.department = department;
-
 
     activate();
 

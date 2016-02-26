@@ -12,7 +12,7 @@
         abstract: true,
         parent: 'authenticated',
         url: '/companies',
-        template: '<div ui-view></div>',
+        template: '<div ui-view flex></div>',
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         }
@@ -62,8 +62,6 @@
       })
       .state('companies.detail.edit', {
         url: '/edit',
-        //templateUrl: 'app/companies/detail/edit/company-detail-edit.html',
-        //controller: 'CompanyDetailViewController as vm',
         templateUrl: 'app/companies/create/company-create.html',
         controller: 'CompanyCreateController as vm',
         resolve: {
