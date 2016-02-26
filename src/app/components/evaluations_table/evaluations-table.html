@@ -1,5 +1,5 @@
 <md-table-container>
-  <table md-table md-row-select="tableOptions.rowSelection" ng-model="selected">
+  <table md-table md-row-select="tableOptions.rowSelection" ng-model="selected" class="evaluations-table">
     <thead md-head>
     <tr md-row>
       <th md-column>
@@ -26,6 +26,9 @@
       </th>
       <th md-column>
         {{ 'EVALUATION.TABLE.HEADER.SUGGESTED_END_DATE' | translate }}
+      </th>
+      <th md-column class="small-padding">
+        {{ 'EVALUATION.TABLE.HEADER.SCORE' | translate }}
       </th>
 
       <!-- Evaluation statuses column -->
@@ -58,9 +61,10 @@
       <td md-cell>{{ evaluation.questionnaire.title }}</td>
       <td md-cell>{{ evaluation.suggested_start_date | date }}</td>
       <td md-cell>{{ evaluation.suggested_end_date | date }}</td>
+      <td md-cell>{{ evaluation.questionnaire.score || '' }}</td>
 
       <!-- Evaluation status badge -->
-      <td md-cell>
+      <td md-cell class="small-padding">
         <md-chips class="evaluation-status-chips">
           <md-chip ng-class="evaluation.statusCssClass">
             {{ evaluation.status }}

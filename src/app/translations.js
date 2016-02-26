@@ -305,7 +305,8 @@
             QUESTIONNAIRE_TEMPLATE: 'Questionnaire template',
             SUGGESTED_START_DATE: 'Suggested start date',
             SUGGESTED_END_DATE: 'Suggested end date',
-            STATUS: 'Status'
+            STATUS: 'Status',
+            SCORE: 'Score'
           }
         },
         PLANNING: {

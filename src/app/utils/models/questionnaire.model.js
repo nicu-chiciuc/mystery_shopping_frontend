@@ -18,6 +18,8 @@
     function initialize () {
       var questionnaire = this;
 
+      questionnaire.score = parseFloat(questionnaire.score);
+
       // Child blocks property name
       questionnaire.childBlocksProp = 'blocks';
 
