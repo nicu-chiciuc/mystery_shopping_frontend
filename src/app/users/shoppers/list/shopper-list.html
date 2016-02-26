@@ -1,13 +1,73 @@
-<md-content>
+<md-content layout-padding layout="column">
 
-  <md-list>
+  <h2 class="md-headline">
+    {{ 'SHOPPER.LIST' | translate }}
+  </h2>
 
-    <md-list-item ng-repeat="shopper in vm.shoppers">
-      <md-button ui-sref="shoppers.detail.view({shopperId: shopper.id})">
-        {{ shopper.user.fullName }}
-      </md-button>
-    </md-list-item>
+  <md-table-container>
+    <table md-table md-row-select="vm.tableOptions.rowSelection" ng-model="vm.selected">
+      <thead md-head>
+      <tr md-row>
+        <th md-column>
+          {{ 'SHOPPER.TABLE.HEADER.NAME' | translate }}
+        </th>
+        <th md-column>
+          {{ 'SHOPPER.TABLE.HEADER.EMAIL' | translate }}
+        </th>
+        <th md-column>
+          {{ 'SHOPPER.TABLE.HEADER.GENDER' | translate }}
+        </th>
+        <th md-column>
+          {{ 'SHOPPER.TABLE.HEADER.DATE_OF_BIRTH' | translate }}
+        </th>
+        <th md-column>
+          {{ 'SHOPPER.TABLE.HEADER.DRIVERS_LICENSE' | translate }}
+        </th>
 
-  </md-list>
+        <!-- View details button column -->
+        <th md-column></th>
+      </tr>
+      </thead>
+      <tbody md-body>
+      <tr md-row
+          md-select="shopper"
+          md-select-id="{{shopper.id}}"
+          ng-model="vm.selectedRows"
+          md-auto-select="vm.tableOptions.autoSelect"
+          ng-repeat="shopper in vm.shoppers track by $index"
+          class="md-accent">
+        <td md-cell>{{ shopper.user.fullName }}</td>
+        <td md-cell>{{ shopper.user.email }}</td>
+        <td md-cell>{{ ('COMMON.GENDER.' + shopper.gender) | translate }}</td>
+        <td md-cell>{{ shopper.date_of_birth | date }}</td>
+        <td md-cell>
+          <ng-md-icon ng-show="shopper.has_drivers_license" icon="check" style="fill: #127423;"></ng-md-icon>
+          <ng-md-icon ng-hide="shopper.has_drivers_license" icon="close" style="fill: #ff4545;"></ng-md-icon>
+        </td>
 
+        <!-- View details button -->
+        <td md-cell>
+          <div layout="row" layout-align="center center">
+            <md-button ui-sref="shoppers.detail.view({shopperId: shopper.id})"
+                       aria-label="{{ 'BUTTON.DETAILS' | translate }}"
+                       class="md-primary md-icon-button">
+              <ng-md-icon icon="assignment_ind"></ng-md-icon>
+
+              <!-- Tooltip -->
+              <md-tooltip md-direction="top">
+                {{ 'SHOPPER.DETAILS' | translate }}
+              </md-tooltip>
+            </md-button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+
+  <div>
+    <md-button ui-sref="shoppers.create" class="md-primary md-raised">
+      {{ 'SHOPPER.NEW_SHOPPER' | translate }}
+    </md-button>
+  </div>
 </md-content>

@@ -1,12 +1,44 @@
-<md-content layout-padding>
+<md-content layout="column" layout-padding>
+
+  <h2 class="md-headline">
+    {{ 'SHOPPER.DETAILS' | translate }}
+  </h2>
 
   <div layout="row" layout-align="none center">
-    <h2 flex>{{ vm.shopper.user.username }}</h2>
-    <md-button ui-sref="shoppers.detail.edit({shopperId: vm.shopper.id})" class="md-primary">
-      {{ 'BUTTON.EDIT' | translate }}
-    </md-button>
+    <h2 class="md-display-1" flex>{{ vm.shopper.user.fullName }}</h2>
+    <div flex="none">
+      <md-button ui-sref="shoppers.detail.edit({shopperId: vm.shopper.id})"
+                 class="md-primary md-raised">
+        {{ 'BUTTON.EDIT' | translate }}
+      </md-button>
+    </div>
   </div>
 
-  {{ vm.shopper | json }}
+  <div layout="row">
+
+    <div layout="column" flex="100" flex-gt-sm="50">
+      <h4>{{ 'SHOPPER.TABLE.HEADER.EMAIL' | translate }}</h4>
+      <span>{{ vm.shopper.email }}</span>
+    </div>
+
+    <div layout="column" flex="100" flex-gt-sm="50">
+      <h4>{{ 'SHOPPER.TABLE.HEADER.GENDER' | translate }}</h4>
+      <span>{{('COMMON.GENDER.' + vm.shopper.gender) | translate }}</span>
+    </div>
+
+    <div layout="column" flex="100" flex-gt-sm="50">
+      <h4>{{ 'SHOPPER.TABLE.HEADER.DATE_OF_BIRTH' | translate }}</h4>
+      <span>{{ vm.shopper.date_of_birth | date }}</span>
+    </div>
+
+  </div>
+
+  <div layout="row">
+    <md-checkbox ng-disabled="true"
+                 aria-label="{{ 'SHOPPER.TABLE.HEADER.DRIVERS_LICENSE' | translate }}"
+                 ng-model="vm.shopper.has_drivers_license">
+      {{ 'SHOPPER.TABLE.HEADER.DRIVERS_LICENSE' | translate }}
+    </md-checkbox>
+  </div>
 
 </md-content>

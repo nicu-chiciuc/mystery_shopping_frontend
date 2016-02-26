@@ -18,8 +18,10 @@
     function initialize () {
       var shopper = this;
 
-      angular.extend(shopper.user, AbstractAccountModel);
-      shopper.user.initializeAbstract();
+      if ( shopper.user ) {
+        angular.extend(shopper.user, AbstractAccountModel);
+        shopper.user.initializeAbstract();
+      }
     }
   }
 })();

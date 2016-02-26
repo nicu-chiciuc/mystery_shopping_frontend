@@ -15,6 +15,13 @@
     vm.msUtils = msUtils;
 
     vm.isNewShopper = !vm.shopper.id;
+    vm.selected = [];
+    vm.selectedRows = [];
+    vm.tableOptions = {
+      autoSelect: false,
+      largeEditDialog: true,
+      rowSelection: false
+    };
 
     vm.saveShopper = saveShopper;
 
@@ -38,8 +45,9 @@
 
       function saveShopperSuccessFn ( response ) {
         vm.passwordRequired = false;
-        vm.shopper = response;
+        response.birth_date = new Date(response.date_of_birth);
         vm.isNewShopper = false;
+        vm.shopper = response;
 
         // TODO add translation for toast. Have different messages for CREATE/EDIT success
         $mdToast.show(

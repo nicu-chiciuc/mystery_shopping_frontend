@@ -108,7 +108,9 @@
         GENDER: {
           HEADING: 'Gender',
           MALE: 'Male',
-          FEMALE: 'Female'
+          FEMALE: 'Female',
+          m: 'M',
+          f: 'F'
         },
         ACTIONS: {
           CLOSE_DIALOG: 'Close dialog', // Dialog means modal/popup window
@@ -130,7 +132,18 @@
       SHOPPER: {
         HAS_DRIVERS_LICENSE: 'Has drivers license',
         NEW_SHOPPER: 'New shopper',
-        EDIT_SHOPPER: 'Edit shopper'
+        EDIT_SHOPPER: 'Edit shopper',
+        LIST: 'Shoppers list',
+        DETAILS: 'Shopper details',
+        TABLE: {
+          HEADER: {
+            NAME: 'Name',
+            EMAIL: 'Email',
+            DRIVERS_LICENSE: 'Driver license',
+            DATE_OF_BIRTH: 'Date of birth',
+            GENDER: 'Gender'
+          }
+        }
       },
       COMPANY: {
         NAME: 'Company name',

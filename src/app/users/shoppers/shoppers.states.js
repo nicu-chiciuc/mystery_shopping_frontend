@@ -12,7 +12,7 @@
         abstract: true,
         parent: 'authenticated',
         url: '/shoppers',
-        template: '<div ui-view></div>',
+        template: '<div ui-view flex></div>',
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         }
@@ -36,9 +36,11 @@
       .state('shoppers.detail', {
         abstract: true,
         url: '/{shopperId:int}',
-        template: '<div ui-view></div>',
+        template: '<div ui-view flex></div>',
         resolve: {
-          shopper: function ( $stateParams, models ) { return models.shoppers().one($stateParams.shopperId).get(); }
+          shopper: function ( $stateParams, models ) {
+            return models.shoppers().one($stateParams.shopperId).get();
+          }
         }
       })
       .state('shoppers.detail.view', {
