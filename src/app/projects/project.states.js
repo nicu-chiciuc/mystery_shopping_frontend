@@ -12,7 +12,7 @@
         abstract: true,
         parent: 'companySelected',
         url: '/projects',
-        template: '<div ui-view></div>',
+        template: '<div ui-view flex></div>',
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
         }

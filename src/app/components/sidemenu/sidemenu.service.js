@@ -63,7 +63,8 @@
       setProject: setProject,
       isCompanySelected: managementFlow.isCompanySelected,
       setCompanyList: setCompanyList,
-      setCompanyNotChosenMenuState: setCompanyNotChosenMenuState
+      setCompanyNotChosenMenuState: setCompanyNotChosenMenuState,
+      addProjectToProjectsList: addProjectToProjectsList
     };
 
     function onStateChange() {
@@ -148,6 +149,18 @@
       } else {
         $state.go('projects.detail.edit', {projectId: project.id});
       }
+    }
+
+    function addProjectToProjectsList ( project ) {
+      managementFlow.addProjectToProjectsList(project);
+
+      sideMenuData.projectPlanningSection.children.push({
+        name: project.period_start + ' - ' + project.period_end,
+        value: project,
+        type: 'action',
+        contentType: 'project',
+        state: project.state
+      });
     }
 
     function setCompany ( company ) {

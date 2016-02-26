@@ -9,5 +9,11 @@
         {{ clo.labelProp ? vm.getCheckboxLabel(element, clo.labelProp) : element }}
       </md-checkbox>
     </div>
+
+    <!-- Validation messages -->
+    <div ng-show="clo.showValidationMessages" class="validation-messages">
+      <div>{{ vm.msUtils.translation.genericRequiredQtyFieldMessage('COMPANY.CONSULTANT') }}</div>
+    </div>
+
   </div>
 </div>

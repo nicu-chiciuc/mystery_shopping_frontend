@@ -169,6 +169,7 @@
         MANAGER_OF: 'Manager of "{PLACE_NAME}"',
         EMPLOYEE_OF: 'Employee of "{PLACE_NAME}"',
         JOB_TITLE: 'Job title: {TITLE}',
+        CONSULTANT: 'Consultant',
         DEPARTMENT: {
           NAME: 'Department name',
           STRUCTURE: 'Department structure',
@@ -342,7 +343,8 @@
       },
       VALIDATION_MESSAGE: {
         GENERIC: {
-          FIELD_IS_REQUIRED: 'This field is required.'
+          FIELD_IS_REQUIRED: 'This field is required.',
+          AT_LEAST_ONE_REQUIRED: 'At least one {ITEM} is required'
         },
         SPECIFIC_FIELD_IS_REQUIRED: 'Field "{FIELD_NAME}" is required.',
         DATE: {

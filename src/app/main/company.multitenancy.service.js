@@ -98,6 +98,9 @@
       updateProject: function ( project ) {
         self.setProject(project);
       },
+      addProjectToProjectsList: function ( project ) {
+        self.projects.push(project);
+      },
 
       authorizeProject: function () {
         return self.getProjectPromise()

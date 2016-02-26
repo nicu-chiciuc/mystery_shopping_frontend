@@ -41,12 +41,6 @@
       return obj;
     });
 
-    Restangular.extendModel('projectworkers', function (obj) {
-      angular.extend(obj, modelManager.ProjectWorkerModel);
-      obj.initialize();
-      return obj;
-    });
-
     Restangular.extendModel('tenantprojectmanagers', function (obj) {
       angular.extend(obj, modelManager.TenantProjectManagerModel);
       obj.initialize();

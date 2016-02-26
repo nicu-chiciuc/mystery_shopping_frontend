@@ -23,8 +23,10 @@
     return directive;
 
     /** @ngInject */
-    function CheckboxListController ( $scope ) {
+    function CheckboxListController ( $scope, msUtils ) {
       var vm = this;
+
+      vm.msUtils = msUtils;
 
       // Create a shortcut for vm.checkboxListOptions in template.
       $scope.clo = vm.checkboxListOptions;
@@ -37,6 +39,7 @@
 
       function checkboxListToggle ( item, list, itemKey ) {
         var value, itemExists;
+        $scope.clo.showValidationMessages = false;
         if ( angular.isObject(itemKey) ) {
           value = itemKey;
           itemExists = _.find(list, function (listItem) {

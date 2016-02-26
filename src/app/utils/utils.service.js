@@ -14,7 +14,8 @@
       translation: {
         genericSaveSuccessToast: genericSaveSuccessToast,
         genericSaveErrorToast: genericSaveErrorToast,
-        genericRequiredFieldMessage: translatedFieldMessage
+        genericRequiredFieldMessage: translatedFieldMessage,
+        genericRequiredQtyFieldMessage: genericRequiredQtyFieldMessage,
       },
       number: {
         strip: strip
@@ -42,6 +43,10 @@
     function genericSaveErrorToast ( fieldTranslationKey ) {
       var translatedItemName = $filter('translate')(fieldTranslationKey);
       return $filter('translate')('TOAST.GENERIC.ITEM_SAVE_ERROR', {ITEM: translatedItemName});
+    }
+    function genericRequiredQtyFieldMessage ( fieldTranslationKey ) {
+      var translatedItemName = $filter('translate')(fieldTranslationKey);
+      return $filter('translate')('VALIDATION_MESSAGE.GENERIC.AT_LEAST_ONE_REQUIRED', {ITEM: translatedItemName});
     }
 
     /*

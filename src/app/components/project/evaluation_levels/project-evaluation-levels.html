@@ -136,7 +136,10 @@
     </div>
 
     <div>
-      <md-button type="submit" class="md-primary md-raised" ng-show="vm.project.state >= 4">
+      <md-button ng-click="vm.saveProjectMethod({project: vm.project, isValid: true})"
+                 type="submit"
+                 class="md-primary md-raised"
+                 ng-show="vm.project.state >= 4">
         {{ 'BUTTON.SAVE' | translate }}
       </md-button>
     </div>

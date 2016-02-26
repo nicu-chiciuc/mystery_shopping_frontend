@@ -34,13 +34,14 @@
       vm.project.project_workers_repr = vm.project.project_workers_repr || [];
       vm.project.company = managementFlow.getCompany().id;
 
-      //vm.selectProjectManager = selectProjectManager;
+      vm.saveProject = saveProject;
 
       vm.consultantsCheckboxListOptions = {
         showLegend: true,
         legendTitle: $filter('translate')('PROJECT.CONSULTANTS'),
         labelProp: 'user.fullName',
-        valueProp: 'id'
+        valueProp: 'id',
+        showValidationMessages: false
         //valueProp: function ( item ) {
         //  return {
         //    project_worker_id: item.id,
@@ -49,10 +50,12 @@
         //}
       };
 
-      //function selectProjectManager ( project, projectManager ) {
-      //  project.project_manager_id = projectManager.id;
-      //  project.project_manager_type = projectManager.contentTypeId;
-      //}
+      function saveProject ( project, form ) {
+        var validConsultants = !!project.consultants.length;
+
+        vm.saveProjectMethod({project: project, isValid: form.$valid && validConsultants});
+        vm.consultantsCheckboxListOptions.showValidationMessages = !validConsultants;
+      }
     }
   }
 
