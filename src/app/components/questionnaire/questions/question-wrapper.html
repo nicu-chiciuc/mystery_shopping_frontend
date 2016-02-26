@@ -4,7 +4,10 @@
 
 <!-- If it is a single choice question, display a list with available radio button choices. -->
 <md-radio-group ng-if="question.type === 's'" ng-model="question.answer_choices[0]">
-  <md-radio-button ng-repeat="choice in question[questionnaire.questionChoicesProp]" ng-value="choice.id" class="md-primary">
+  <md-radio-button ng-repeat="choice in question[questionnaire.questionChoicesProp]"
+                   ng-value="choice.id"
+                   class="md-primary"
+                   ng-disabled="question.answeringDisabled">
     {{ choice.text }}
   </md-radio-button>
 </md-radio-group>
@@ -20,18 +23,21 @@
 <!-- If it is a text question, display a textarea. -->
 <md-input-container ng-if="question.isTextQuestion" class="md-block">
   <label>{{ 'QUESTIONNAIRE.QUESTION.ANSWER' | translate }}</label>
-  <textarea ng-model="question.answer" columns="1" rows="5"></textarea>
+  <textarea ng-model="question.answer" columns="1" rows="5" ng-disabled="question.answeringDisabled"></textarea>
 </md-input-container>
 
 <!-- If it is a date question, display a datepicker widget. -->
 <div ng-if="question.isDateQuestion">
-  <md-datepicker ng-model="question.answer" md-placeholder="{{ 'COMMON.ACTIONS.ENTER_DATE' | translate }}"></md-datepicker>
+  <md-datepicker ng-model="question.answer"
+                 md-placeholder="{{ 'COMMON.ACTIONS.ENTER_DATE' | translate }}"
+                 ng-disabled="question.answeringDisabled">
+  </md-datepicker>
 </div>
 
 <!-- Question comment textarea -->
 <div ng-if="question.show_comment"  class="comment-wrapper">
   <md-input-container class="md-block">
     <label>{{ 'QUESTIONNAIRE.QUESTION.COMMENTS' | translate }}</label>
-    <textarea ng-model="question.comment" columns="1" rows="5"></textarea>
+    <textarea ng-model="question.comment" columns="1" rows="5" ng-disabled="question.answeringDisabled"></textarea>
   </md-input-container>
 </div>

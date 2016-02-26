@@ -15,7 +15,7 @@
     return Model;
 
 
-    function initialize ( childBlocksProp, childQuestionsProp ) {
+    function initialize ( childBlocksProp, childQuestionsProp, questionnaire ) {
       var block = this;
 
       angular.extend(block, AbstractQuestionnaireBlockModel);
@@ -28,7 +28,7 @@
 
       _.forEach(block[childQuestionsProp], function ( question ) {
         angular.extend(question, QuestionnaireQuestionModel);
-        question.initialize();
+        question.initialize(questionnaire.status);
       });
     }
   }

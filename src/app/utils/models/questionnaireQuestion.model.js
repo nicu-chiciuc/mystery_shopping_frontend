@@ -32,10 +32,11 @@
     return Model;
 
 
-    function initialize () {
+    function initialize ( questionnaireStatus ) {
       var question = this;
 
       question.answer_choices = question.answer_choices || [];
+      question.answeringDisabled = questionnaireStatus !== 'planned' && questionnaireStatus !== 'draft';
 
       if ( question.id ) {
         question.question_id = question.id;
