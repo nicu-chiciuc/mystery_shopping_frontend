@@ -41,13 +41,8 @@
         legendTitle: $filter('translate')('PROJECT.CONSULTANTS'),
         labelProp: 'user.fullName',
         valueProp: 'id',
-        showValidationMessages: false
-        //valueProp: function ( item ) {
-        //  return {
-        //    project_worker_id: item.id,
-        //    project_worker_type: item.contentTypeId
-        //  };
-        //}
+        showValidationMessages: false,
+        validationMessageEntity: 'COMPANY.CONSULTANT'
       };
 
       function saveProject ( project, form ) {

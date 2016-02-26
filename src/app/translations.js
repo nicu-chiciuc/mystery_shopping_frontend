@@ -203,6 +203,8 @@
         RESEARCH_METHODOLOGY: 'Research methodology',
         SHOPPERS_DISTRIBUTION: 'Shoppers distribution',
         EVALUATION_LEVELS: 'Evaluation levels',
+        QUESTIONNAIRE: 'Questionnaire',
+        SCRIPT: 'Script',
         METHODOLOGY: {
           NUMBER_OF_EVALUATIONS: 'Number of evaluations',
           QUESTIONNAIRES: 'Questionnaires',

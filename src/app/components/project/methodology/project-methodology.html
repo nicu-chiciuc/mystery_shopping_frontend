@@ -1,7 +1,7 @@
 <md-content layout="row" layout-padding>
 
   <div ng-cloak flex>
-    <form name="methodologyForm" ng-submit="vm.saveProjectMethod({project: vm.project, isValid: methodologyForm.$valid})" novalidate>
+    <form name="methodologyForm" ng-submit="vm.saveProject(vm.project, methodologyForm)" novalidate>
 
       <h2>
         {{ 'PROJECT.RESEARCH_METHODOLOGY' | translate }}

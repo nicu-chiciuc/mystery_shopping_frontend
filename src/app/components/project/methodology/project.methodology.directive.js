@@ -14,6 +14,7 @@
         project: '=',
         scripts: '=',
         questionnaireTemplates: '=',
+        user: '=',
         saveProjectMethod: '&'
       },
       controller: ProjectMethodologyController,
@@ -30,8 +31,11 @@
 
       vm.msUtils = msUtils;
 
+      vm.saveProject = saveProject;
+
       // If it's a new project, it doesn't have any consultants list, so create one.
       vm.project.research_methodology = vm.project.research_methodology || {};
+      vm.project.research_methodology.tenant = vm.user.tenantId;
       vm.project.research_methodology.scripts = vm.project.research_methodology.scripts || [];
       vm.project.research_methodology.questionnaires = vm.project.research_methodology.questionnaires || [];
       vm.project.research_methodology.project_id = vm.project.id;
@@ -40,14 +44,27 @@
         showLegend: true,
         legendTitle: $filter('translate')('PROJECT.METHODOLOGY.QUESTIONNAIRES'),
         labelProp: 'title',
-        valueProp: 'id'
+        valueProp: 'id',
+        showValidationMessages: false,
+        validationMessageEntity: 'PROJECT.QUESTIONNAIRE'
       };
       vm.scriptsCheckboxListOptions = {
         showLegend: true,
         legendTitle: $filter('translate')('PROJECT.METHODOLOGY.SCRIPTS'),
         labelProp: 'title',
-        valueProp: 'id'
+        valueProp: 'id',
+        showValidationMessages: false,
+        validationMessageEntity: 'PROJECT.SCRIPT'
       };
+
+      function saveProject ( project, form ) {
+        var validQuestionnaires = !!project.research_methodology.questionnaires.length;
+        var validScripts = !!project.research_methodology.scripts.length;
+
+        vm.saveProjectMethod({project: project, isValid: form.$valid && validQuestionnaires && validScripts});
+        vm.questionnaireTemplatesCheckboxListOptions.showValidationMessages = !validQuestionnaires;
+        vm.scriptsCheckboxListOptions.showValidationMessages = !validScripts;
+      }
     }
   }
 
