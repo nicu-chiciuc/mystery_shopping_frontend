@@ -11,7 +11,13 @@
       </div>
     </md-toolbar>
 
-    <div layout-padding layout="column">
+    <div ng-hide="vm.project.isFullyDefined" layout-padding layout="column">
+      <span>
+        {{ 'EVALUATION.PLANNING.PROJECT_NOT_FULLY_DEFINED' | translate }}
+      </span>
+    </div>
+
+    <div ng-show="vm.project.isFullyDefined" layout-padding layout="column">
 
       <!--
       Shoppers radio buttons

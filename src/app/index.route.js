@@ -80,7 +80,7 @@
       .state('projectSelected', {
         abstract: true,
         parent: 'authenticated',
-        template: '<div ui-view></div>',
+        template: '<div ui-view layout="row" flex="100"></div>',
         //template: 'Choose a project to manage',
         resolve:  {
           project: function ( managementFlow, $state, $rootScope ) {

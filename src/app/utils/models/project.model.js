@@ -89,11 +89,13 @@
         return !consultantIsAssignedToALevel;
       });
 
+      project.isFullyDefined = false;
       project.state = getProjectState(project);
     }
 
     function getProjectState ( project ) {
       if ( project.evaluation_assessment_levels_repr && project.evaluation_assessment_levels_repr.length > 0 ) {
+        project.isFullyDefined = true;
         return 5;
       } else if ( project.shoppers && project.shoppers.length > 0 ) {
         return 4;

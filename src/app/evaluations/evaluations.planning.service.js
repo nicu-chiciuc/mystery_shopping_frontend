@@ -38,11 +38,14 @@
     }
 
     function totalEvaluationNumber () {
-      return managementFlow.getProject().research_methodology.number_of_evaluations;
+      return managementFlow.getProject().research_methodology.number_of_evaluations || '-';
     }
 
     function leftToPlanEvaluationNumber () {
-      return totalEvaluationNumber() - self.plannedEvaluations.length;
+      var totalEvaluationsNumber = totalEvaluationNumber();
+      return totalEvaluationsNumber === '-'
+        ? '-'
+        : totalEvaluationsNumber - self.plannedEvaluations.length;
     }
 
     function setPlannedEvaluations ( evaluations ) {

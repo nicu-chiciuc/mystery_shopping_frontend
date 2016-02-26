@@ -319,7 +319,9 @@
           SCRIPT: 'Script',
           QUESTIONNAIRE_TEMPLATE: 'Questionnaire template',
           SUGGESTED_START_DATE: 'Suggested start date',
-          SUGGESTED_END_DATE: 'Suggested end date'
+          SUGGESTED_END_DATE: 'Suggested end date',
+          PROJECT_NOT_FULLY_DEFINED: 'The selected project is not fully defined and thus cannot be planned. Finish the definition of the project and then come back.',
+          NO_PLANNED_EVALUATIONS: 'There are no planned evaluations yet. You can add some in the section on the left side of the page.'
         },
         VIEW: {
           SECTION_NAME: 'Section name',
