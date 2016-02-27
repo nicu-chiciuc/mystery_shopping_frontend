@@ -28,6 +28,9 @@
     activate();
     function activate() {
       vm.passwordRequired = vm.isNewShopper;
+      if ( !vm.isNewShopper ) {
+        vm.shopper.birth_date = new Date(vm.shopper.date_of_birth);
+      }
     }
 
     function saveShopper ( shopper, isValid ) {
