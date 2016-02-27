@@ -13,7 +13,7 @@
         url: '/',
         templateUrl: 'app/main/main.html',
         data: {
-          roles: []
+          roles: ['tenantproductmanager', 'tenantprojectmanager', 'tenantconsultant', 'clientmanager', 'clientemployee', 'shopper']
         },
         controller: 'MainController as main'
       })
