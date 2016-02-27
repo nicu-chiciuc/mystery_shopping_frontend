@@ -35,7 +35,9 @@
       childBlocksKey = childBlocksProp;
       questionsPropKey = questionsProp;
       parentBlock.parentBlockIsQuestionnaire = !!isQuestionnaire;
-      //this.parentBlockIsQuestionnaire = isQuestionnaire ? true : false;
+
+      // This holds the position number of the child blocks.
+      parentBlock.nextBlockPositionNumber = parentBlock[childBlocksProp] ? parentBlock[childBlocksProp].length + 1 : 1;
 
       // If parent block is questionnaire (meaning top level block) or the
       // block has a parent block assigned - compute the available weight,
@@ -62,6 +64,9 @@
       // Parent block needed in backend for mptt tree representation. Set as
       // null in case it is the top most block (the first layer in the serializer)
       childBlock.parent_block = block.parentBlockIsQuestionnaire ? null : block.id;
+
+      childBlock.order = block.nextBlockPositionNumber;
+      block.nextBlockPositionNumber += 1;
 
       // Parent block needed in frontend for computation of available weight.
       childBlock.parentBlock = block;
