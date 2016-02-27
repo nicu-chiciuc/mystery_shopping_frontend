@@ -20,7 +20,7 @@
     function initialize () {
       var user = this;
 
-      user.tenantId = 1;
+      user.tenantId = user.tenant_repr.id;
       console.log('User initialized!');
     }
 
