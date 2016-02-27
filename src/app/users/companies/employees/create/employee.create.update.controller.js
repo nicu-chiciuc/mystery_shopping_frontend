@@ -6,7 +6,7 @@
     .controller('CompanyEmployeeFormController', CompanyEmployeeFormController);
 
   /** @ngInject */
-  function CompanyEmployeeFormController ( $log, $state, models, msUtils, company, entity, section, place, employee ) {
+  function CompanyEmployeeFormController ( $log, $state, models, msUtils, user, company, entity, section, place, employee ) {
     $log.debug('Entered CompanyEmployeeFormController');
     var vm = this;
 
@@ -15,6 +15,7 @@
     vm.entity = entity;
     vm.section = section;
     vm.place = place;
+    vm.user = user;
 
     vm.msUtils = msUtils;
 
@@ -27,6 +28,10 @@
       vm.employee.entity = vm.entity.id;
       vm.employee.section = vm.section.id ? vm.section.id : null;
       vm.employee.company = vm.company.id;
+
+      if ( vm.isNewEmployee ) {
+        vm.employee.tenant = vm.user.tenantId;
+      }
     }
 
     function saveEmployee ( employee, isValid ) {
@@ -44,6 +49,9 @@
         if ( vm.isNewEmployee ) {
           vm.place.addEmployee(response);
           vm.employee = response;
+        } else {
+          vm.employee.fullName = response.fullName;
+          vm.employee.job_title = response.job_title;
         }
         goToEmployeeDetailViewState();
       }

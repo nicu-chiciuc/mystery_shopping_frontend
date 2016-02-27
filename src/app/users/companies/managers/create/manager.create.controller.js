@@ -14,6 +14,7 @@
     vm.company = company;
     vm.manager = manager;
     vm.place = place;
+    vm.user = user;
 
     vm.msUtils = msUtils;
 
@@ -27,6 +28,10 @@
       vm.manager.place_id = vm.place.id;
       vm.manager.place_type = vm.place.contentType;
       vm.manager.company = vm.company.id;
+
+      if ( vm.isNewManager ) {
+        vm.manager.tenant = vm.user.tenantId;
+      }
     }
 
     function saveManager ( manager, isValid ) {
@@ -44,6 +49,9 @@
         if ( vm.isNewManager ) {
           place.addManager(response);
           vm.manager = response;
+        } else {
+          vm.manager.fullName = response.fullName;
+          vm.manager.job_title = response.job_title;
         }
         goToManagerDetailViewState();
       }
