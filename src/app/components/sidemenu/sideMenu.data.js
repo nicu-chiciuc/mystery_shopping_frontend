@@ -60,6 +60,11 @@
       children: []
     };
 
+    var companiesToManageSubHeader = {
+      name: $filter('translate')('MENU.CLIENT_MANAGEMENT.NO_CLIENTS'),
+      type: 'sub-header'
+    };
+
     // Methodology section
     var methodologySection = {
       name: $filter('translate')('MENU.METHODOLOGY_TOOLS.HEADING'),
@@ -148,7 +153,8 @@
         planEvaluationsChildObject: planEvaluationsChildObject,
         assessEvaluationsChildObject: assessEvaluationsChildObject,
         projectCreateChildObject: projectCreateChildObject,
-        projectsToManageSubHeader: projectsToManageSubHeader
+        projectsToManageSubHeader: projectsToManageSubHeader,
+        companiesToManageSubHeader: companiesToManageSubHeader
       },
       methods: {
         updateProjectList: updateProjectList,
@@ -207,10 +213,12 @@
       });
 
       // Add the subheader for company list
-      children.push({
-        name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CLIENTS_TO_MANAGE'),
-        type: 'sub-header'
-      });
+      if ( managementFlow.isSetCompanyList() ) {
+        self.childObjects.companiesToManageSubHeader.name = $filter('translate')('MENU.CLIENT_MANAGEMENT.CLIENTS_TO_MANAGE');
+      } else {
+        self.childObjects.companiesToManageSubHeader.name = $filter('translate')('MENU.CLIENT_MANAGEMENT.NO_CLIENTS');
+      }
+      children.push(self.childObjects.companiesToManageSubHeader);
 
       _.forEach(managementFlow.getCompanyList(), function (company) {
         children.push({

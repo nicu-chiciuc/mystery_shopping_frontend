@@ -10,6 +10,7 @@
     var self;
 
     return self = {
+      companies: [],
       setCompanyList: function(companies) {
         self.companies = companies;
       },
@@ -17,7 +18,7 @@
         return self.companies || [];
       },
       isSetCompanyList: function() {
-        return !!self.companies;
+        return !!self.companies.length;
       },
 
       setCompany: function(company) {

@@ -61,7 +61,8 @@
           HEADING: 'Client Management',
           CLIENTS: 'Clients',
           CREATE: 'Create company',
-          CLIENTS_TO_MANAGE: 'Choose a company to manage'
+          CLIENTS_TO_MANAGE: 'Choose a company to manage',
+          NO_CLIENTS: 'No companies to manage'
         },
         QUESTIONNAIRE_MANAGEMENT: {
           HEADING: 'Questionnaire Management',

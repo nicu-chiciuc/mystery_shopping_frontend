@@ -6,7 +6,7 @@
     .controller('SideMenuController', SideMenuController);
 
   /** @ngInject */
-  function SideMenuController ( $scope, $log, $state, user, sideMenu, companies ) {
+  function SideMenuController ( $scope, $log, $state, principal, sideMenu, companies ) {
     $log.debug('Entered SideMenuController');
     var vm = this;
 
@@ -24,7 +24,7 @@
     activate();
 
     function activate() {
-      if ( companies.length ) {
+      if ( principal.isInTenantRole() ) {
         $scope.sideMenu.setCompanyList(companies);
       }
     }
