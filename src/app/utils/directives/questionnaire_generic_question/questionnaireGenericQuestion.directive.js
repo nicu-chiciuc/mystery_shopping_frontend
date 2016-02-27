@@ -81,6 +81,7 @@
             _.remove(vm.block.template_questions, function (templateQuestion) {
               return templateQuestion[removalProp] === question[removalProp];
             });
+            vm.block.nextQuestionPositionNumber -= 1;
 
           //  TODO update parentBlock's question weights
           }

@@ -159,6 +159,7 @@
           deleteBlockSuccessFn();
         }
         function deleteBlockSuccessFn ( questionnaire ) {
+          parentBlock.nextBlockPositionNumber -= 1;
           if ( questionnaire ) {
             vm.questionnaireTemplate = models.restangularizeElement(null, questionnaire, 'templatequestionnaires');
           } else {
