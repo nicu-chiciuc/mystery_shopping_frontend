@@ -35,6 +35,7 @@
   <!-- Entity Employees -->
   <div class="margin-left-md" layout="column" layout-align="center start">
     <md-button ng-repeat="employee in vm.entity.employees"
+               ng-hide="employee.section"
                ui-sref="companies.detail.departments.detail.entities.detail.employees.detail.view({employeeId: employee.id, entityId: vm.entity.id, departmentId: vm.entity.department})">
       {{ employee.fullName }}
       <span class="subject-of-evaluation-type">
