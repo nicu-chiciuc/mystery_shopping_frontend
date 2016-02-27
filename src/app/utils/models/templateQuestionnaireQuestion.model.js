@@ -219,7 +219,7 @@
       question.max_score = 0;
 
       if ( question.type === 's' ) {
-        question.max_score = _.max(question.template_question_choices, 'score').score || 0;
+        question.max_score = _.map(_.maxBy(question.template_question_choices, 'score'), 'score')[0] || 0;
       } else if ( question.type === 'm' ) {
         _.forEach(question.template_question_choices, function (choice) {
           question.max_score += (choice.score > 0 ? choice.score : 0);

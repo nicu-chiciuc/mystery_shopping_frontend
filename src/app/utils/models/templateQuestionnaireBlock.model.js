@@ -27,6 +27,9 @@
         block.parentBlock = parentBlock;
       }
 
+      // This holds the order number of the child questions.
+      block.nextQuestionPositionNumber = block.template_questions.length + 1;
+
       angular.extend(block, AbstractQuestionnaireBlockModel);
       block.initializeAbstractBlock(childBlocksProp, childQuestionsProp);
 
@@ -43,6 +46,9 @@
 
     function addQuestion ( question ) {
       var block = this;
+
+      question.order = block.nextQuestionPositionNumber;
+      block.nextQuestionPositionNumber += 1;
 
       block.template_questions.push(question);
       block.updateQuestionWeights();

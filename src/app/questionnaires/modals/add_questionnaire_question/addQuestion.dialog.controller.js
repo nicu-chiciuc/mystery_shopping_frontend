@@ -21,6 +21,7 @@
         template_question_choices: [],
         max_score: 0,
         weight: 0,
+        order: $scope.block.nextQuestionPositionNumber,
         questionnaire_template: $scope.questionnaireTemplate.id,
         template_block: $scope.block.id
       }
