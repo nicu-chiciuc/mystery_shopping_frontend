@@ -50,6 +50,7 @@
       question.parentBlock = parentBlock;
 
       question.answer_choices = question.answer_choices || [];
+      question.nextChoicePositionNumber = question.template_question_choices.length + 1;
       question.weight = parseFloat(question.weight);
       question.weightToDisplay = question.parentBlock.weightToDisplay * question.weight / 100;
 
@@ -79,14 +80,31 @@
     }
 
     function addChoice () {
-      this.template_question_choices.push({});
-      this.recomputeChoiceWeights();
+      var question = this;
+      var newChoice = {
+        order: question.nextChoicePositionNumber
+      };
+      question.nextChoicePositionNumber += 1;
+
+      question.template_question_choices.push(newChoice);
+      question.recomputeChoiceWeights();
     }
 
     function removeChoice ( index ) {
-      this.template_question_choices.splice(index, 1);
+      var question = this;
+      question.template_question_choices.splice(index, 1);
 
-      this.updateMaxScore();
+      // Because choice create/update/delete is made through the question
+      // instance by first deleting all choices and recreating them anew,
+      // on removal, recompute all order positions so that when the choices
+      // will be created, the order will be correct.
+      _.forEach(question.template_question_choices, function (choice, idx) {
+        choice.order = idx + 1;
+      });
+
+      question.nextChoicePositionNumber -= 1;
+
+      question.updateMaxScore();
     }
 
     function updateQuestionType ( type ) {
@@ -216,10 +234,13 @@
 
     function updateMaxScore () {
       var question = this;
+      var maxScoreChoice;
+
       question.max_score = 0;
 
       if ( question.type === 's' ) {
-        question.max_score = _.map(_.maxBy(question.template_question_choices, 'score'), 'score')[0] || 0;
+        maxScoreChoice = _.maxBy(question.template_question_choices, 'score');
+        question.max_score = maxScoreChoice ? maxScoreChoice.score : 0;
       } else if ( question.type === 'm' ) {
         _.forEach(question.template_question_choices, function (choice) {
           question.max_score += (choice.score > 0 ? choice.score : 0);
