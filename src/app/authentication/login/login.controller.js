@@ -6,8 +6,10 @@
     .controller('LoginController', LoginController);
 
   /** @ngInject */
-  function LoginController($scope, $state, $rootScope, $log, Authentication, principal) {
+  function LoginController($scope, $state, $rootScope, $log, msUtils, Authentication, principal) {
     var vm = this;
+
+    vm.msUtils = msUtils;
 
     vm.login = login;
 

@@ -108,6 +108,8 @@
         DEADLINE: 'Deadline',
         TYPE: 'Type',
         NAME: 'Name',
+        USERNAME: 'Username',
+        PASSWORD: 'Password',
         GENDER: {
           HEADING: 'Gender',
           MALE: 'Male',
