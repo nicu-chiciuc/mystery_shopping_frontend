@@ -105,6 +105,7 @@
       question.nextChoicePositionNumber -= 1;
 
       question.updateMaxScore();
+      question.recomputeChoiceWeights();
     }
 
     function updateQuestionType ( type ) {
