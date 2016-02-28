@@ -37,6 +37,7 @@
 
       question.answer_choices = question.answer_choices || [];
       question.answeringDisabled = questionnaireStatus !== 'planned' && questionnaireStatus !== 'draft';
+      question.question_choices = _.sortBy(question.question_choices, 'order');
 
       if ( question.id ) {
         question.question_id = question.id;

@@ -24,7 +24,7 @@
       if ( evaluation.questionnaire ) {
         evaluation.questionnaire_repr = evaluation.questionnaire;
         angular.extend(evaluation.questionnaire_repr, QuestionnaireModel);
-        evaluation.questionnaire_repr.initialize();
+        evaluation.questionnaire_repr.initialize(evaluation.status);
       }
     }
 

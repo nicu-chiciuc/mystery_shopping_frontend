@@ -31,6 +31,8 @@
 
       questionnaire.convertFlatToNestedStructure();
 
+      questionnaire[questionnaire.childBlocksProp] = _.sortBy(questionnaire[questionnaire.childBlocksProp], 'order');
+
       _.forEach(questionnaire[questionnaire.childBlocksProp], function (block) {
         angular.extend(block, questionnaireModels[questionnaire.childBlocksProp]);
         block.initialize(questionnaire.childBlocksProp, questionnaire.childQuestionsProp, questionnaire);

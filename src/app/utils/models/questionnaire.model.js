@@ -15,10 +15,12 @@
     return Model;
 
 
-    function initialize () {
+    function initialize ( evaluationStatus ) {
       var questionnaire = this;
 
       questionnaire.score = parseFloat(questionnaire.score);
+
+      questionnaire.status = evaluationStatus ? evaluationStatus : 'planned';
 
       // Child blocks property name
       questionnaire.childBlocksProp = 'blocks';
