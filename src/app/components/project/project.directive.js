@@ -64,9 +64,9 @@
 
           vm.isNewProject = false;
 
-          if ( vm.project.state === 4 ) {
-            goToProjectDetailViewState();
-          }
+          //if ( vm.project.state === 5 ) {
+          //  goToProjectDetailViewState();
+          //}
         }
         function saveProjectErrorFn () {
           // TODO deal with the error
