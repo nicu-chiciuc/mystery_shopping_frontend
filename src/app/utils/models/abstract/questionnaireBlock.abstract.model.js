@@ -23,6 +23,8 @@
 
       block.weight = parseFloat(block.weight);
 
+      block[block.childQuestionsProp] = _.sortBy(block[block.childQuestionsProp], 'order');
+
       angular.extend(block, AbstractParentBlockModel);
       block.initializeAbstract(childBlocksProp, childQuestionsProp);
     }
