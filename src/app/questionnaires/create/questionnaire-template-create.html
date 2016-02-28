@@ -14,10 +14,12 @@
       </div>
     </md-input-container>
 
-    <p medium-editor
-       ng-model="vm.questionnaireTemplate.description"
-       bind-options="{'toolbar': {'buttons': ['bold', 'italic', 'underline']}}"
-       data-placeholder="{{ 'QUESTIONNAIRE.DESCRIPTION' | translate }}"></p>
+    <div class="medium-editor-wrapper">
+      <p medium-editor
+         ng-model="vm.questionnaireTemplate.description"
+         bind-options="{'toolbar': {'buttons': ['bold', 'italic', 'underline']}}"
+         data-placeholder="{{ 'QUESTIONNAIRE.DESCRIPTION' | translate }}"></p>
+    </div>
 
     <div class="questionnaire" layout-padding>
 

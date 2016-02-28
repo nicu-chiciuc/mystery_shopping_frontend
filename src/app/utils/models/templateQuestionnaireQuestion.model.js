@@ -50,7 +50,7 @@
       question.parentBlock = parentBlock;
 
       question.answer_choices = question.answer_choices || [];
-      question.nextChoicePositionNumber = question.template_question_choices.length + 1;
+      question.nextChoicePositionNumber = question.template_question_choices ? question.template_question_choices.length + 1 : 1;
       question.weight = parseFloat(question.weight);
       question.weightToDisplay = question.parentBlock.weightToDisplay * question.weight / 100;
 
