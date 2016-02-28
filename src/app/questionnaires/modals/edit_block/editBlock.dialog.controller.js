@@ -81,7 +81,8 @@
           block.id = response.id;
         }
         block.weight = response.weight;
-        block.parentBlock = $scope.parentBlock;
+        block.setParentBlock($scope.parentBlock);
+        block.updateChildQuestionsParentBlock();
         block.updateAvailableWeight();
 
         $mdToast.show(

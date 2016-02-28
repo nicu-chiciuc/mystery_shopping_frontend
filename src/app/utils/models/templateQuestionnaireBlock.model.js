@@ -14,6 +14,8 @@
       updateQuestionWeights: updateQuestionWeights,
       gatherUpdateDataOfSiblings: gatherUpdateDataOfSiblings,
       prepareForSave: prepareForSave,
+      setParentBlock: setParentBlock,
+      updateChildQuestionsParentBlock: updateChildQuestionsParentBlock,
       removeQuestionExceededWeightsTooltips: removeQuestionExceededWeightsTooltips
     };
 
@@ -85,6 +87,9 @@
 
       block.gatherUpdateDataOfSiblings();
       block.parentBlock = null;
+      _.forEach(block.template_questions, function (question) {
+        question.parentBlock = null;
+      });
     }
 
     function removeQuestionExceededWeightsTooltips () {
@@ -92,6 +97,19 @@
 
       _.forEach(block.template_questions, function (question) {
         question.showTooltip = false;
+      });
+    }
+
+    function setParentBlock ( parentBlock ) {
+      var block = this;
+      block.parentBlock = parentBlock;
+    }
+
+    function updateChildQuestionsParentBlock () {
+      var block = this;
+
+      _.forEach(block.template_questions, function (question) {
+        question.parentBlock = block;
       });
     }
 

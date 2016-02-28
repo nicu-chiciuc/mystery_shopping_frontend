@@ -274,7 +274,7 @@
           },
           ANSWER: 'Answer',
           MAX_SCORE: 'Max score: {MAX_SCORE}',
-          SCORE_AND_WEIGHT: '(score: {SCORE}, weight: {WEIGHT})',
+          SCORE_AND_WEIGHT: '(score: {SCORE})',
           WEIGHT: 'Weight',
           DELETE: 'Delete question',
           EDIT: 'Edit question',
