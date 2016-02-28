@@ -98,6 +98,7 @@
         project.isFullyDefined = true;
         return 5;
       } else if ( project.shoppers && project.shoppers.length > 0 ) {
+        project.canBePlanned = true;
         return 4;
       } else if ( project.research_methodology.places_to_assess_repr.length > 0
         || project.research_methodology.people_to_assess_repr.length > 0 ) {
