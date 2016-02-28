@@ -60,6 +60,11 @@ md-input-container > ng-md-icon + input {
   cursor: pointer;
 }
 
+.medium-editor-wrapper {
+  padding: 8px;
+  border: 2px dotted #999999;
+}
+
 .md-dialog-fullscreen {
   width: 95%;
 }

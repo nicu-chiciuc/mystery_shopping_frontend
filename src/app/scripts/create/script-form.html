@@ -6,24 +6,28 @@
   <form name="scriptForm" ng-submit="vm.saveScript(vm.script, scriptForm.$valid)" novalidate>
     <div ng-cloak layout="column">
 
-    <md-input-container>
-      <label>{{ 'SCRIPT.TITLE' | translate }}</label>
-      <input ng-model="vm.script.title" name="title" type="text" ng-required="true">
+      <md-input-container>
+        <label>{{ 'SCRIPT.TITLE' | translate }}</label>
+        <input ng-model="vm.script.title" name="title" type="text" ng-required="true">
 
-      <!-- Validation messages -->
-      <div ng-show="scriptForm.$submitted" ng-messages="scriptForm.title.$error">
-        <div ng-message="required">Title is REQUIRED!</div>
+        <!-- Validation messages -->
+        <div ng-show="scriptForm.$submitted" ng-messages="scriptForm.title.$error">
+          <div ng-message="required">Title is REQUIRED!</div>
+        </div>
+      </md-input-container>
+
+      <div class="medium-editor-wrapper">
+        <p medium-editor
+           ng-model="vm.script.description"
+           bind-options="{'toolbar': {'buttons': ['bold', 'italic', 'underline']}}"
+           data-placeholder="{{ 'SCRIPT.DESCRIPTION' | translate }}"></p>
       </div>
-    </md-input-container>
 
-    <p medium-editor
-       ng-model="vm.script.description"
-       bind-options="{'toolbar': {'buttons': ['bold', 'italic', 'underline']}}"
-       data-placeholder="{{ 'SCRIPT.DESCRIPTION' | translate }}"></p>
-
-    <md-button type="submit" class="md-primary">
-      {{ vm.isNewScript ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
-    </md-button>
+      <div>
+        <md-button type="submit" class="md-primary md-raised">
+          {{ vm.isNewScript ? ('BUTTON.CREATE' | translate) : ('BUTTON.SAVE' | translate) }}
+        </md-button>
+      </div>
 
     </div>
   </form>
