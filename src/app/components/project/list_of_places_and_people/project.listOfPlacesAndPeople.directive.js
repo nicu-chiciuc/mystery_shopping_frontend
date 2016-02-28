@@ -86,7 +86,8 @@
                     itemValueProp: personItemValuePropFn,
                     type: 'person',
                     contentType: 'clientemployee',
-                    includeInList: true
+                    includeInList: true,
+                    requireEmptyProp: 'section'
                   },
                   {
                     itemsProp: 'sections',
