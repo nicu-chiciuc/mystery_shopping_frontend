@@ -61,6 +61,7 @@
           .then(function(updatedEvaluation) {
             evaluation.questionnaire_repr = updatedEvaluation.questionnaire_repr;
             evaluation.status = updatedEvaluation.status;
+            evaluation.canBeSubmitted = updatedEvaluation.canBeSubmitted;
             evaluation.statusCssClass[evaluation.status] = true;
           });
       }

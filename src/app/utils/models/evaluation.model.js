@@ -21,6 +21,8 @@
       angular.extend(evaluation, AbstractEvaluationModel);
       evaluation.initializeAbstractEvaluation();
 
+      evaluation.canBeSubmitted = evaluation.status === 'planned' || evaluation.status === 'draft';
+
       if ( evaluation.questionnaire ) {
         evaluation.questionnaire_repr = evaluation.questionnaire;
         angular.extend(evaluation.questionnaire_repr, QuestionnaireModel);

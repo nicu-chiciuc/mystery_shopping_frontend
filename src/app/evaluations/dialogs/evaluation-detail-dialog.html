@@ -67,13 +67,17 @@
     </md-dialog-content>
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="vm.saveEvaluation('submitted')">
+      <md-button ng-click="vm.saveEvaluation('submitted')"
+                 ng-disabled="!vm.evaluation.canBeSubmitted"
+                 class="md-primary md-raised">
         {{ 'BUTTON.SUBMIT' | translate }}
       </md-button>
-      <md-button ng-click="vm.saveEvaluation('draft')">
-        {{ 'BUTTON.SAVE' | translate }}
+      <md-button ng-click="vm.saveEvaluation('draft')"
+                 ng-disabled="!vm.evaluation.canBeSubmitted"
+                 class="md-primary">
+        {{ 'BUTTON.SAVE_AS_DRAFT' | translate }}
       </md-button>
-      <md-button ng-click="cancel()" style="margin-right:20px;">
+      <md-button ng-click="cancel()">
         {{ 'BUTTON.CLOSE' | translate }}
       </md-button>
     </md-dialog-actions>

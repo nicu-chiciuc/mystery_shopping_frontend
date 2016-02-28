@@ -32,7 +32,8 @@
         SET: 'Set',
         LOGIN: 'Login',
         LOGOUT: 'Logout',
-        DETAILS: 'Details'
+        DETAILS: 'Details',
+        SAVE_AS_DRAFT: 'Save as draft'
       },
       MENU: {
         MANAGEMENT: {
@@ -339,6 +340,7 @@
           VISIT: 'Visit'
         },
         HEADING: 'Evaluations',
+        HEADING_SINGULAR: 'Evaluation',
         TOTAL: 'Total: {NR}',
         NOT_PLANNED: 'Not planned: {NR}',
         DETAILS: 'Evaluation details',
@@ -373,7 +375,9 @@
         GENERIC: {
           ITEM_SAVE_SUCCESS: '{ITEM} successfully saved',
           ITEM_SAVE_ERROR: 'Error on saving "{ITEM}". Please retry.'
-        }
+        },
+        EVALUATION_SAVED_AS_DRAFT: 'Evaluation saved as draft',
+        EVALUATION_SUBMITTED: 'Evaluation successfully submitted'
       }
     });
 
