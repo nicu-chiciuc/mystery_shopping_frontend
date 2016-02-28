@@ -83,7 +83,7 @@
 
           <!-- Evaluation menu -->
           <!-- TODO add a translation to md-button aria-label -->
-          <md-menu>
+          <md-menu ng-if="vm.userCanManageEvaluations()">
             <md-button aria-label="Open evaluation menu"
                        class="md-icon-button"
                        ng-click="vm.openMenu($mdOpenMenu, $event)">

@@ -11,7 +11,8 @@
       restrict: 'E',
       templateUrl: 'app/components/evaluations_table/evaluations-table.html',
       scope: {
-        evaluations: '='
+        evaluations: '=',
+        user: '='
       },
       controller: EvaluationsTableController,
       controllerAs: 'vm',
@@ -21,7 +22,7 @@
     return directive;
 
     /** @ngInject */
-    function EvaluationsTableController ( $log, $scope, $filter, $mdMedia, $mdDialog, evaluationPlanning ) {
+    function EvaluationsTableController ( $log, $scope, $filter, $mdMedia, $mdDialog, principal, evaluationPlanning ) {
       $log.debug('Entered EvaluationsTableController');
 
       var vm = this;
@@ -38,6 +39,7 @@
 
       vm.viewEvaluationDetails = viewEvaluationDetails;
       vm.deleteEvaluation = deleteEvaluation;
+      vm.userCanManageEvaluations = userCanManageEvaluations;
 
       vm.openMenu = function($mdOpenMenu, ev) {
         originatorEv = ev;
@@ -78,6 +80,10 @@
         $mdDialog.show(confirm).then(function() {
           evaluationPlanning.removeEvaluation(evaluation);
         });
+      }
+
+      function userCanManageEvaluations () {
+        return principal.isInTenantRole();
       }
     }
   }

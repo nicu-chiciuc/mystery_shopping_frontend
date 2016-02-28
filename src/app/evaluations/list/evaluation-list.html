@@ -1,7 +1,8 @@
 <md-content>
 
   <ms-evaluations-table ng-show="vm.evaluationPlanning.getPlannedEvaluations().length"
-                        evaluations="vm.evaluationPlanning.getPlannedEvaluations()">
+                        evaluations="vm.evaluationPlanning.getPlannedEvaluations()"
+                        user="vm.user">
   </ms-evaluations-table>
 
   <div ng-hide="vm.evaluationPlanning.getPlannedEvaluations().length">
