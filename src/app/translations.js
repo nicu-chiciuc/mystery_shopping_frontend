@@ -17,10 +17,10 @@
         24: 'Department',
         25: 'Entity',
         26: 'Section',
-        16: 'Client project manager',
-        17: 'Manager',
-        18: 'Employee',
-        19: 'Shopper'
+        17: 'Client project manager',
+        18: 'Manager',
+        19: 'Employee',
+        20: 'Shopper'
       },
       BUTTON: {
         EDIT: 'Edit',
