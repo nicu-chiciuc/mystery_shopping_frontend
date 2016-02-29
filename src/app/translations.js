@@ -8,6 +8,7 @@
   /** @ngInject */
   function config ( $translateProvider ) {
     $translateProvider.translations('en', {
+      WELCOME: 'Welcome to Mystery Shopping platform! Start working by navigating the side menu.',
       LANGUAGE: {
         RO: 'Rom',
         RU: 'Rus'
