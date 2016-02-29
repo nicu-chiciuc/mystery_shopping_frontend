@@ -11,6 +11,7 @@
     var _identity = undefined,
       _authenticated = false,
       _shopperRoles = ['shopper'],
+      _adminRoles = ['admin'],
       _tenantRoles = ['tenantproductmanager', 'tenantprojectmanager', 'tenantconsultant'],
       _clientRoles = ['clientmanager', 'clientemployee', 'clientproductmanager'];
 
@@ -23,7 +24,8 @@
       identity: identity,
       isInShopperRole: isInShopperRole,
       isInTenantRole: isInTenantRole,
-      isInClientRole: isInClientRole
+      isInClientRole: isInClientRole,
+      isInAdminRole: isInAdminRole
     };
 
     return principal;
@@ -62,6 +64,10 @@
 
     function isInShopperRole () {
       return this.isAuthenticated() ? this.isInAnyRole(_shopperRoles) : false;
+    }
+
+    function isInAdminRole () {
+      return this.isAuthenticated() ? this.isInAnyRole(_tenantRoles) : false;
     }
 
     function authenticate ( identity ) {

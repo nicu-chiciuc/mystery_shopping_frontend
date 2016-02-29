@@ -18,7 +18,8 @@
       'pascalprecht.translate',
       'RecursionHelper',
       angularDragula(angular),
-      'toastr'
+      'toastr',
+      'ngFileUpload'
     ]);
 
 })();

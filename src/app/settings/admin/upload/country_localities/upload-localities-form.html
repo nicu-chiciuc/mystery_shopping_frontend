@@ -1,0 +1,27 @@
+<md-content layout="column" layout-padding>
+  <form name="csvUploadForm">
+    <input id="input-file-id"
+           ngf-select
+           ng-model="vm.csvFile"
+           name="csv_file"
+           accept="text/csv"
+           ngf-max-size="2MB"
+           required
+           type="file" />
+    <!--<label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>-->
+
+    <md-button ng-disabled="!csvUploadForm.$valid"
+               ng-click="vm.submitLocalitiesCsvFile(vm.csvFile)">
+      Submit
+    </md-button>
+
+    <span class="progress" ng-show="vm.csvFile.progress >= 0">
+        <div style="width:{{vm.csvFile.progress}}%"
+             ng-bind="vm.csvFile.progress + '%'"></div>
+      </span>
+    <span ng-show="vm.csvFile.result">Upload Successful</span>
+    <span class="err" ng-show="vm.errorMsg">{{vm.errorMsg}}</span>
+
+  </form>
+</md-content>
+

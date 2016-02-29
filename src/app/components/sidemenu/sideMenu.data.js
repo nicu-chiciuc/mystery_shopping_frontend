@@ -11,6 +11,30 @@
     var self;
 
     /* ***********************
+     * Admin User menu items
+     * ***********************/
+    // Settings
+    var adminManagementSection = {
+      name: $filter('translate')('MENU.ADMIN.HEADING'),
+      type: 'heading',
+      accessLvl: 0,
+      hidden: false,
+      children: [
+        {
+          name: $filter('translate')('MENU.ADMIN.UPLOADS.HEADING'),
+          type: 'toggle',
+          pages: [
+            {
+              name: $filter('translate')('MENU.ADMIN.UPLOADS.LOCALITIES'),
+              state: 'admin.uploadLocalities',
+              type: 'link'
+            }
+          ]
+        }
+      ]
+    };
+
+    /* ***********************
      * Shopper User menu items
      * ***********************/
     // Evaluation list
@@ -32,7 +56,6 @@
       children: [
         {
           name: $filter('translate')('MENU.USER_MANAGEMENT.SHOPPERS.HEADING'),
-          state: 'shoppers.create',
           type: 'toggle',
           pages: [
             {
@@ -149,6 +172,7 @@
       companyListSection: companyListSection,
       methodologySection: methodologySection,
       projectPlanningSection: projectPlanningSection,
+      adminManagementSection: adminManagementSection,
       childObjects: {
         planEvaluationsChildObject: planEvaluationsChildObject,
         assessEvaluationsChildObject: assessEvaluationsChildObject,

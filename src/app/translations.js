@@ -93,6 +93,12 @@
         },
         SHOPPERS: {
           EVALUATION_LIST: 'Evaluation list'
+        },
+        ADMIN: {
+          UPLOADS: {
+            HEADING: 'Uploads',
+            LOCALITIES: 'Upload localities'
+          }
         }
       },
       ACTIONS: {
