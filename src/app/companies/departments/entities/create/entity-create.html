@@ -7,35 +7,41 @@
     <form name="entityForm" ng-submit="vm.saveEntity(vm.entity, entityForm.$valid)" novalidate>
 
       <!--
-      Entity name
-      -->
-      <md-input-container class="md-block">
-        <label>{{ 'COMPANY.DEPARTMENT.ENTITY.NAME' | translate }}</label>
-        <input ng-model="vm.entity.name" name="name" type="text" ng-required="true">
-
-        <!-- Validation messages -->
-        <div ng-show="entityForm.$submitted" ng-messages="entityForm.name.$error">
-          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMPANY.DEPARTMENT.ENTITY.NAME')}}</div>
-        </div>
-      </md-input-container>
-
-
-      <!--
       City select
       -->
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>{{ 'COMMON.CITY' | translate }}</label>
-        <md-select ng-model="vm.entity.city" ng-change="vm.citySelected(vm.cities, vm.entity.city)" name="city" ng-required="true">
-          <md-option ng-repeat="city in vm.cities" ng-value="city.id">
-            {{ city.name }}
-          </md-option>
-        </md-select>
+      <md-autocomplete md-input-name="city"
+                       md-no-cache="vm.noCache"
+                       md-selected-item="vm.entity.city_repr"
+                       md-search-text="vm.searchText"
+                       md-selected-item-change="vm.selectedCityChange(item)"
+                       md-items="item in vm.querySearch(vm.searchText)"
+                       md-item-text="item.name"
+                       md-min-length="2"
+                       ng-required="true"
+                       md-floating-label="{{ 'COMMON.CITY' | translate }}">
+        <md-item-template>
+          <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.name}}</span>
+        </md-item-template>
 
         <!-- Validation messages -->
         <div ng-show="entityForm.$submitted" ng-messages="entityForm.city.$error">
           <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMMON.CITY')}}</div>
         </div>
-      </md-input-container>
+      </md-autocomplete>
+
+      <!--<md-input-container class="md-block" flex-gt-sm>-->
+        <!--<label>{{ 'COMMON.CITY' | translate }}</label>-->
+        <!--<md-select ng-model="vm.entity.city" ng-change="vm.citySelected(vm.cities, vm.entity.city)" name="city" ng-required="true">-->
+          <!--<md-option ng-repeat="city in vm.cities" ng-value="city.id">-->
+            <!--{{ city.name }}-->
+          <!--</md-option>-->
+        <!--</md-select>-->
+
+        <!--&lt;!&ndash; Validation messages &ndash;&gt;-->
+        <!--<div ng-show="entityForm.$submitted" ng-messages="entityForm.city.$error">-->
+          <!--<div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMMON.CITY')}}</div>-->
+        <!--</div>-->
+      <!--</md-input-container>-->
 
 
       <!--
@@ -52,6 +58,20 @@
         <!-- Validation messages -->
         <div ng-show="entityForm.$submitted" ng-messages="entityForm.sector.$error">
           <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMMON.SECTOR')}}</div>
+        </div>
+      </md-input-container>
+
+
+      <!--
+      Entity name
+      -->
+      <md-input-container class="md-block">
+        <label>{{ 'COMPANY.DEPARTMENT.ENTITY.NAME' | translate }}</label>
+        <input ng-model="vm.entity.name" name="name" type="text" ng-required="true">
+
+        <!-- Validation messages -->
+        <div ng-show="entityForm.$submitted" ng-messages="entityForm.name.$error">
+          <div ng-message="required">{{ vm.msUtils.validation.translatedFieldMessage('COMPANY.DEPARTMENT.ENTITY.NAME')}}</div>
         </div>
       </md-input-container>
 
