@@ -31,6 +31,7 @@
       function savePlannedEvaluationsSuccessFn ( response ) {
         _.forEach(response, function (evaluation) {
           angular.extend(evaluation, models.manager.EvaluationModel);
+          evaluation.initialize();
           evaluation.questionnaire_repr = evaluation.questionnaire;
         });
         self.plannedEvaluations = self.plannedEvaluations.concat(response);
