@@ -8,9 +8,9 @@
     STORAGE_COOKIE_DOMAIN: ''
   };
 
-  var jsonServerUrls = {
-    API_URL: 'http://localhost:4000/api/v1/',
-    DOMAIN_URL: 'http://localhost:4000/',
+  var productionUrls = {
+    API_URL: 'http://mystery-shopping-prod.elasticbeanstalk.com/api/v1/',
+    DOMAIN_URL: 'http://mystery-shopping-prod.elasticbeanstalk.com/',
     STORAGE_COOKIE_DOMAIN: ''
   };
 
