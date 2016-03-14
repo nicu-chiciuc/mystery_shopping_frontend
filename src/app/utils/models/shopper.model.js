@@ -7,7 +7,7 @@
     .factory('ShopperModel', ShopperModel);
 
   /** @ngInject */
-  function ShopperModel ( AbstractAccountModel ) {
+  function ShopperModel ( moment, AbstractAccountModel ) {
     var Model = {
       initialize: initialize
     };
@@ -17,6 +17,8 @@
 
     function initialize () {
       var shopper = this;
+
+      shopper.age = moment().diff(shopper.date_of_birth, 'years');
 
       if ( shopper.user ) {
         angular.extend(shopper.user, AbstractAccountModel);

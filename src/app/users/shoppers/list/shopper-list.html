@@ -18,7 +18,7 @@
           {{ 'SHOPPER.TABLE.HEADER.GENDER' | translate }}
         </th>
         <th md-column>
-          {{ 'SHOPPER.TABLE.HEADER.DATE_OF_BIRTH' | translate }}
+          {{ 'SHOPPER.TABLE.HEADER.AGE' | translate }}
         </th>
         <th md-column>
           {{ 'SHOPPER.TABLE.HEADER.DRIVERS_LICENSE' | translate }}
@@ -39,7 +39,7 @@
         <td md-cell>{{ shopper.user.fullName }}</td>
         <td md-cell>{{ shopper.user.email }}</td>
         <td md-cell>{{ ('COMMON.GENDER.' + shopper.gender) | translate }}</td>
-        <td md-cell>{{ shopper.date_of_birth | date }}</td>
+        <td md-cell>{{ shopper.age }}</td>
         <td md-cell>
           <ng-md-icon ng-show="shopper.has_drivers_license" icon="check" style="fill: #127423;"></ng-md-icon>
           <ng-md-icon ng-hide="shopper.has_drivers_license" icon="close" style="fill: #ff4545;"></ng-md-icon>

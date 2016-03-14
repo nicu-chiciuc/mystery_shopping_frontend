@@ -148,6 +148,7 @@
             EMAIL: 'Email',
             DRIVERS_LICENSE: 'Driver license',
             DATE_OF_BIRTH: 'Date of birth',
+            AGE: 'Age',
             GENDER: 'Gender'
           }
         }
