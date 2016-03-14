@@ -18,7 +18,7 @@
     function initialize ( evaluationStatus ) {
       var questionnaire = this;
 
-      questionnaire.score = parseFloat(questionnaire.score);
+      questionnaire.score = questionnaire.score ? parseFloat(questionnaire.score) : null;
 
       questionnaire.status = evaluationStatus ? evaluationStatus : 'planned';
 

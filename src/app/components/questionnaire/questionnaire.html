@@ -3,7 +3,7 @@
   <h2 layout="row">
     {{ questionnaire.title }}
     <span flex></span>
-    <span flex="none">
+    <span flex="none" ng-show="questionnaire.score !== null">
         {{ +questionnaire.score }}/{{ questionnaire.weight }}
       </span>
   </h2>
