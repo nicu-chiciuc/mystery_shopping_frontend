@@ -114,11 +114,11 @@
       var availableWeight = block.weightToDisplay;
 
       _.forEach(block[childBlocksKey], function (childBlock) {
-        availableWeight -= childBlock.newWeightToDisplay ? childBlock.newWeightToDisplay : (childBlock.weightToDisplay ? childBlock.weightToDisplay : 0);
+        availableWeight -= _.isNumber(childBlock.newWeightToDisplay) ? childBlock.newWeightToDisplay : (childBlock.weightToDisplay ? childBlock.weightToDisplay : 0);
       });
 
       _.forEach(block[questionsPropKey], function (question) {
-        availableWeight -= question.newWeightToDisplay ? question.newWeightToDisplay : (question.weightToDisplay ? question.weightToDisplay : 0);
+        availableWeight -= _.isNumber(question.newWeightToDisplay) ? question.newWeightToDisplay : (question.weightToDisplay ? question.weightToDisplay : 0);
       });
 
       return availableWeight;

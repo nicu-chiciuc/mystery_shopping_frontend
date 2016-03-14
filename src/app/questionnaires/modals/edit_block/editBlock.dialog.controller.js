@@ -44,6 +44,7 @@
     }
 
     function updateAvailableWeight ( block ) {
+      block.newWeightToDisplay = _.isNumber(block.newWeightToDisplay) ? block.newWeightToDisplay : 0;
       var availableWeight = $scope.msUtils.number.strip($scope.parentBlock.computeAvailableWeight());
 
       // On any action with weight inputs, remove all tooltips.

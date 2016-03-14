@@ -36,6 +36,7 @@
                        ng-change="updateAvailableWeight(block)"
                        name="weight"
                        type="number"
+                       ng-min="0"
                        ng-required="true"/>
 
                 <md-tooltip ng-if="block.showTooltip" md-visible="block.showTooltip" md-direction="top">
@@ -71,6 +72,7 @@
                              ng-change="updateAvailableWeight(templateBlock)"
                              name="siblingWeight"
                              type="number"
+                             ng-min="0"
                              ng-required="true" />
 
                       <md-tooltip ng-if="templateBlock.showTooltip" md-visible="templateBlock.showTooltip" md-direction="top">
