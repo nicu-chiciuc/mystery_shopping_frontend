@@ -13,7 +13,9 @@
       _shopperRoles = ['shopper'],
       _adminRoles = ['admin'],
       _tenantRoles = ['tenantproductmanager', 'tenantprojectmanager', 'tenantconsultant'],
-      _clientRoles = ['clientmanager', 'clientemployee', 'clientproductmanager'];
+      _clientRoles = ['clientmanager', 'clientemployee', 'clientproductmanager'],
+      _companyManager = ['tenantproductmanager', 'tenantprojectmanager'],
+      _projectManager = ['tenantproductmanager', 'tenantprojectmanager'];
 
     var principal = {
       isIdentityResolved: isIdentityResolved,
@@ -25,7 +27,9 @@
       isInShopperRole: isInShopperRole,
       isInTenantRole: isInTenantRole,
       isInClientRole: isInClientRole,
-      isInAdminRole: isInAdminRole
+      isInAdminRole: isInAdminRole,
+      canCreateCompanies: canCreateCompanies,
+      canCreateProjects: canCreateProjects
     };
 
     return principal;
@@ -68,6 +72,14 @@
 
     function isInAdminRole () {
       return this.isAuthenticated() ? this.isInAnyRole(_tenantRoles) : false;
+    }
+
+    function canCreateCompanies () {
+      return this.isInAnyRole(_companyManager);
+    }
+
+    function canCreateProjects () {
+      return this.isInAnyRole(_projectManager);
     }
 
     function authenticate ( identity ) {

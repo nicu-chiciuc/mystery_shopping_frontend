@@ -6,7 +6,7 @@
     .factory('sideMenuData', sideMenuData);
 
   /** @ngInject */
-  function sideMenuData ( $filter, managementFlow ) {
+  function sideMenuData ( $filter, principal, managementFlow ) {
 
     var self;
 
@@ -191,12 +191,15 @@
     };
 
     function getProjectPlanningBaseChildren () {
-      return [
+      var projectSectionElements = [
         planEvaluationsChildObject,
         assessEvaluationsChildObject,
-        projectCreateChildObject,
         projectsToManageSubHeader
       ];
+      if ( principal.canCreateProjects() ) {
+        projectSectionElements.splice(2, 0, projectCreateChildObject);
+      }
+      return projectSectionElements;
     }
 
     function updateProjectList ( projects ) {
@@ -230,11 +233,13 @@
     function getCompanyListForMenu () {
       var children = [];
       // Add the Add company menu item to add a new company
-      children.push({
-        name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CREATE'),
-        type: 'link',
-        state: 'companies.create'
-      });
+      if ( principal.canCreateCompanies() ) {
+        children.push({
+          name: $filter('translate')('MENU.CLIENT_MANAGEMENT.CREATE'),
+          type: 'link',
+          state: 'companies.create'
+        });
+      }
 
       // Add the subheader for company list
       if ( managementFlow.isSetCompanyList() ) {
