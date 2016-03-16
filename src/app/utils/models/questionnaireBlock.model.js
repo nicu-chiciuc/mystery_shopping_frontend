@@ -7,7 +7,7 @@
     .factory('QuestionnaireBlockModel', QuestionnaireBlockModel);
 
   /** @ngInject */
-  function QuestionnaireBlockModel ( QuestionnaireQuestionModel, AbstractQuestionnaireBlockModel, AbstractParentBlockModel ) {
+  function QuestionnaireBlockModel ( QuestionnaireQuestionModel, AbstractQuestionnaireBlockModel ) {
     var Model = {
       initialize: initialize
     };

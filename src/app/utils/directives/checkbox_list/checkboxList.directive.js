@@ -1,3 +1,4 @@
+/* global _:false */
 (function() {
   'use strict';
 
@@ -107,7 +108,7 @@
       }
 
       function checkboxItemValue ( item, valueProp ) {
-        if ( typeof valueProp === 'function' ) {
+        if ( angular.isFunction(valueProp) ) {
           return valueProp(item);
         } else {
           return valueProp;

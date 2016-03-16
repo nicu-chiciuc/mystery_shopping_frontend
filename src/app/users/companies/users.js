@@ -1,3 +1,4 @@
+/* global _:false */
 (function() {
   'use strict';
 
@@ -6,7 +7,7 @@
     .config(routerConfig);
 
   /** @ngInject */
-  function routerConfig($stateProvider, $urlRouterProvider) {
+  function routerConfig ( $stateProvider ) {
     $stateProvider
       .state('companies.detail.departments.detail.managers', {
         abstract: true,

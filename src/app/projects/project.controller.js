@@ -17,11 +17,6 @@
     vm.shoppers = shoppers;
     vm.project = project;
 
-    console.log(vm.clients);
-    console.log(vm.projectManagers);
-    console.log(vm.questionnaireTemplates);
-    console.log(vm.scripts);
-
     vm.submit = function () {};
 
     activate();

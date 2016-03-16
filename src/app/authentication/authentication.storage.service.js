@@ -45,7 +45,7 @@
      * @param {Object} account The account object to be stored
      * @returns {undefined}
      */
-    function setAuthenticatedAccount(account) {
+    function setAuthenticatedAccount(identity) {
       if(localStorageService.isSupported) {
         $log.debug('localStorage is supported on this browser.');
       }

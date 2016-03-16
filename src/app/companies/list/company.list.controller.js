@@ -11,7 +11,6 @@
     var vm = this;
 
     vm.companies = companies;
-    console.log(companies);
 
     activate();
 

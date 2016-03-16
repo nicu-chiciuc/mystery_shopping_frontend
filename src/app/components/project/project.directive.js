@@ -73,11 +73,6 @@
         }
       }
 
-      function goToProjectDetailViewState () {
-        var projectDetailViewState = $state.current.name.replace(/(create|detail\.edit)/g, 'detail.view');
-        $state.go(projectDetailViewState, {projectId: vm.project.id});
-      }
-
     }
   }
 

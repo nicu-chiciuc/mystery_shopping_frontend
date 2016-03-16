@@ -11,7 +11,6 @@
     var vm = this;
 
     vm.questionnaires = questionnaires;
-    console.log(questionnaires);
 
     activate();
 
