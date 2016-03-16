@@ -36,7 +36,7 @@
           if ( assessmentLevel.consultants_repr.length !== assessmentLevel.consultants.length ) {
             assessmentLevel.showSaveLevelButton = true;
           }
-          assessmentLevel.consultants = _.pluck(assessmentLevel.consultants_repr, 'id');
+          assessmentLevel.consultants = _.map(assessmentLevel.consultants_repr, 'id');
         });
         vm.project.hideAddAssessmentLevelButton = !allEvaluationLevelsAreSaved();
       });
