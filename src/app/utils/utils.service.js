@@ -15,7 +15,7 @@
         genericSaveSuccessToast: genericSaveSuccessToast,
         genericSaveErrorToast: genericSaveErrorToast,
         genericRequiredFieldMessage: translatedFieldMessage,
-        genericRequiredQtyFieldMessage: genericRequiredQtyFieldMessage,
+        genericRequiredQtyFieldMessage: genericRequiredQtyFieldMessage
       },
       number: {
         strip: strip

@@ -18,14 +18,13 @@
     "angular-local-storage": "~0.2.3",
     "angular-translate": "~2.8.1",
     "angular-translate-interpolation-messageformat": "~2.8.1",
-    "angular-formly": "~7.3.9",
-    "angular-formly-material": "~0.14.0",
     "angular-material-icons": "~0.6.0",
     "angular-recursion": "~1.0.5",
     "angular-dragula": "~1.2.2",
     "angular-material-data-table": "~0.9.9",
     "angular-medium-editor": "~1.1.0",
-    "angular-validation-match": "~1.7.1"
+    "angular-validation-match": "~1.7.1",
+    "ng-file-upload": "~12.0.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.2"

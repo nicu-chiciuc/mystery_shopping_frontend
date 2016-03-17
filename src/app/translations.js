@@ -8,6 +8,7 @@
   /** @ngInject */
   function config ( $translateProvider ) {
     $translateProvider.translations('en', {
+      WELCOME: 'Welcome to Mystery Shopping platform! Start working by navigating the side menu.',
       LANGUAGE: {
         RO: 'Rom',
         RU: 'Rus'
@@ -16,10 +17,10 @@
         24: 'Department',
         25: 'Entity',
         26: 'Section',
-        16: 'Client project manager',
-        17: 'Manager',
-        18: 'Employee',
-        19: 'Shopper'
+        17: 'Client project manager',
+        18: 'Manager',
+        19: 'Employee',
+        20: 'Shopper'
       },
       BUTTON: {
         EDIT: 'Edit',
@@ -92,6 +93,12 @@
         },
         SHOPPERS: {
           EVALUATION_LIST: 'Evaluation list'
+        },
+        ADMIN: {
+          UPLOADS: {
+            HEADING: 'Uploads',
+            LOCALITIES: 'Upload localities'
+          }
         }
       },
       ACTIONS: {

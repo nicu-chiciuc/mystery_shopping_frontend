@@ -1,3 +1,4 @@
+/* global _:false */
 (function() {
   'use strict';
 
@@ -16,6 +17,9 @@
 
     vm.questionnaireTemplate = questionnaireTemplate;
     vm.questionnaireTemplate.template_blocks = vm.questionnaireTemplate.template_blocks || [];
+    vm.questionnaireTemplate.is_editable = angular.isDefined(vm.questionnaireTemplate.id)
+      ? vm.questionnaireTemplate.is_editable
+      : true;
 
     vm.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
@@ -61,7 +65,7 @@
 
     function saveQuestionnaireTemplate ( questionnaireTemplate, isValid, nextState ) {
       if ( isValid ) {
-        vm.questionnaireTemplate = _.cloneDeep(questionnaireTemplate);
+        vm.questionnaireTemplate = models.restangularCopy(questionnaireTemplate);
         questionnaireTemplate.postProcess();
         if ( !questionnaireTemplate.id ) {
           questionnaireTemplate.tenant = user.tenantId;

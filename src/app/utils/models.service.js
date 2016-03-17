@@ -25,6 +25,7 @@
       evaluationassessmentlevels: evaluationassessmentlevels,
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
+      restangularCopy: restangularCopy,
       manager: modelManager
     };
 
@@ -99,6 +100,10 @@
     function restangularizeCollection ( parent, object, model ) {
       Restangular.restangularizeCollection(parent, object, model);
       return object;
+    }
+
+    function restangularCopy ( object ) {
+      return Restangular.copy(object);
     }
   }
 })();

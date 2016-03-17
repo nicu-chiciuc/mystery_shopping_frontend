@@ -6,7 +6,7 @@
     .controller('LoginController', LoginController);
 
   /** @ngInject */
-  function LoginController($scope, $state, $rootScope, $log, msUtils, Authentication, principal) {
+  function LoginController($scope, $state, $rootScope, $log, models, msUtils, Authentication, principal) {
     var vm = this;
 
     vm.msUtils = msUtils;
@@ -26,6 +26,8 @@
       Authentication.login(vm.username, vm.password)
         .then(
           function ( response ) {
+            angular.extend(response.data.user, models.manager.UserModel);
+            response.data.user.initialize();
             principal.authenticate(response.data);
 
             if ( $rootScope.returnToState ) {

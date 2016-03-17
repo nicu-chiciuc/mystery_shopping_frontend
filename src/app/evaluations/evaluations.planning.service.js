@@ -1,3 +1,4 @@
+/* global _:false */
 (function() {
   'use strict';
 
@@ -29,6 +30,11 @@
       evaluations.post().then(savePlannedEvaluationsSuccessFn, savePlannedEvaluationsErrorFn);
 
       function savePlannedEvaluationsSuccessFn ( response ) {
+        _.forEach(response, function (evaluation) {
+          angular.extend(evaluation, models.manager.EvaluationModel);
+          evaluation.initialize();
+          evaluation.questionnaire_repr = evaluation.questionnaire;
+        });
         self.plannedEvaluations = self.plannedEvaluations.concat(response);
       }
       function savePlannedEvaluationsErrorFn ( error ) {
@@ -38,7 +44,8 @@
     }
 
     function totalEvaluationNumber () {
-      return managementFlow.getProject().research_methodology.number_of_evaluations || '-';
+      var selectedProject = managementFlow.getProject();
+      return selectedProject ? (selectedProject.research_methodology.number_of_evaluations || '-') : '-';
     }
 
     function leftToPlanEvaluationNumber () {

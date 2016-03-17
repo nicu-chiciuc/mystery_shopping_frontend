@@ -6,24 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock ( $rootScope, $state, $stateParams, $filter, $log, formlyConfig, formlyValidationMessages, Restangular, modelManager, authorization, principal ) {
-
-    formlyValidationMessages.messages.required = getRequiredMessage;
-      function getRequiredMessage ($viewValue, $modelValue, scope) {
-      if (scope.useGenericMessage) {
-        return $filter('translate')('VALIDATION_MESSAGE.GENERIC.FIELD_IS_REQUIRED');
-      } else {
-        return $filter('translate')('VALIDATION_MESSAGE.SPECIFIC_FIELD_IS_REQUIRED', {FIELD_NAME: scope.to.label});
-      }
-    }
-
-    // Config checkbox list template for angular-formly.
-    formlyConfig.setType({
-      name: 'checkbox-list',
-      templateUrl: 'app/utils/formly_templates/checkbox-list-template.html'
-    });
-
-    formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
+  function runBlock ( $rootScope, $log, Restangular, modelManager, authorization, principal ) {
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toStateParams) {
       // track the state the user wants to go to; authorization service needs this

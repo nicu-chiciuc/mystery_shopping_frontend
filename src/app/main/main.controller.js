@@ -6,7 +6,7 @@
     .controller('MainController', MainController);
 
   /** @ngInject */
-  function MainController ( $log, $state ) {
+  function MainController ( $log ) {
     $log.debug('Entered MainController');
     var vm = this;
 

@@ -1,3 +1,4 @@
+/* global _:false */
 (function() {
   'use strict';
 
@@ -6,7 +7,7 @@
     .directive('msRecursiveCheckboxList', msRecursiveCheckboxList);
 
   /** @ngInject */
-  function msRecursiveCheckboxList ( RecursionHelper, contentTypes ) {
+  function msRecursiveCheckboxList ( RecursionHelper ) {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/utils/directives/nested_checkbox_list/recursive_checkbox_list/recursive-checkbox-list.html',
@@ -150,7 +151,7 @@
       }
 
       function checkboxItemValue ( item, valueProp ) {
-        if ( typeof valueProp === 'function' ) {
+        if ( angular.isFunction(valueProp) ) {
           return valueProp(item);
         } else {
           return valueProp;

@@ -1,3 +1,4 @@
+/* global _:false */
 (function() {
   'use strict';
 
@@ -114,8 +115,7 @@
         templateUrl: 'app/companies/departments/entities/create/entity-create.html',
         controller: 'EntityCreateController as vm',
         resolve: {
-          entity: function () { return {}; },
-          cities: function ( models ) { return models.cities().getList(); }
+          entity: function () { return {}; }
         }
       })
       .state('companies.detail.departments.detail.entities.detail', {
@@ -138,10 +138,7 @@
       .state('companies.detail.departments.detail.entities.detail.edit', {
         url: '/edit',
         templateUrl: 'app/companies/departments/entities/create/entity-create.html',
-        controller: 'EntityCreateController as vm',
-        resolve: {
-          cities: function ( models ) { return models.cities().getList(); }
-        }
+        controller: 'EntityCreateController as vm'
       })
       .state('companies.detail.departments.detail.entities.detail.sections', {
         abstract: true,

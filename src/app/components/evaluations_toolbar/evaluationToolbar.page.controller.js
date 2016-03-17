@@ -14,8 +14,6 @@
     vm.evaluationPlanning = evaluationPlanning;
     vm.project = project;
 
-    console.log(project);
-
     activate();
 
     function activate() {

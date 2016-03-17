@@ -54,7 +54,7 @@
               </span>
 
               <!-- Other options menu -->
-              <md-menu>
+              <md-menu ng-show="vm.questionnaireTemplate.is_editable">
                 <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_BLOCK_MENU' | translate }}"
                            class="md-icon-button"
                            ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -126,7 +126,7 @@
                     </span>
 
                     <!-- Other options menu -->
-                    <md-menu>
+                    <md-menu ng-show="vm.questionnaireTemplate.is_editable">
                       <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_BLOCK_MENU' | translate }}"
                                  class="md-icon-button"
                                  ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -197,7 +197,7 @@
                           </span>
 
                           <!-- Other options menu -->
-                          <md-menu>
+                          <md-menu ng-show="vm.questionnaireTemplate.is_editable">
                             <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_BLOCK_MENU' | translate }}"
                                        class="md-icon-button"
                                        ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -274,7 +274,7 @@
 
                 </md-content>
 
-                <section layout="row">
+                <section layout="row" ng-show="vm.questionnaireTemplate.is_editable">
                   <span flex></span>
 
                   <!-- Review question weights button -->
@@ -321,7 +321,7 @@
 
           </md-content>
 
-          <section layout="row">
+          <section layout="row" ng-show="vm.questionnaireTemplate.is_editable">
             <span flex></span>
 
             <!-- Review question weights button -->
@@ -369,7 +369,7 @@
     </div>
 
 
-    <section layout="row" ng-show="vm.questionnaireTemplate.id">
+    <section layout="row" ng-show="vm.questionnaireTemplate.id && vm.questionnaireTemplate.is_editable">
       <span flex></span>
       <md-button ng-click="vm.addBlock($event, vm.questionnaireTemplate)"
                  class="md-fab md-mini md-primary"
@@ -384,7 +384,7 @@
       </md-button>
     </section>
 
-    <md-button ng-show="vm.questionnaireTemplate.title" type="submit" class="md-primary md-raised">
+    <md-button ng-show="vm.questionnaireTemplate.title && vm.questionnaireTemplate.is_editable" type="submit" class="md-primary md-raised">
       {{ 'BUTTON.SAVE' | translate }}
     </md-button>
 

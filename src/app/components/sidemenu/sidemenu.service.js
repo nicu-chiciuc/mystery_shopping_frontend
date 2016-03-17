@@ -1,3 +1,4 @@
+/* global _:false */
 (function() {
   'use strict';
 
@@ -29,6 +30,8 @@
       sections.push(sideMenuData.projectPlanningSection);
     } else if ( principal.isInClientRole() ) {
 
+    } else if ( principal.isInAdminRole() ) {
+      sections.push(sideMenuData.adminManagementSection);
     }
 
 

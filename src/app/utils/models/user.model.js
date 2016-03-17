@@ -1,4 +1,3 @@
-/* global _:false */
 (function() {
   'use strict';
 
@@ -23,14 +22,13 @@
       if ( user.tenant_repr ) {
         user.tenantId = user.tenant_repr.id;
       }
-      console.log('User initialized!');
     }
 
-    function hasRole ( role ) {
+    function hasRole () {
 
     }
 
-    function hasAnyRole ( roles ) {
+    function hasAnyRole () {
 
     }
 
