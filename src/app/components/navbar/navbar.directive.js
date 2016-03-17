@@ -21,7 +21,7 @@
     return directive;
 
     /** @ngInject */
-    function NavbarController( $rootScope, $state, principal, managementFlow, sideMenu ) {
+    function NavbarController( $rootScope, $state, $timeout, $mdSidenav, principal, managementFlow, sideMenu ) {
       var vm = this;
       var originatorEv;
 
@@ -36,6 +36,10 @@
       };
       vm.goToProjectDetailsPage = function ( pageType ) {
         $state.go('projects.detail.' + pageType, {projectId: vm.managementFlow.getProject().id});
+      };
+
+      vm.openSidebar = function () {
+        $timeout(function() { $mdSidenav('left').open(); });
       };
 
       vm.openMenu = function($mdOpenMenu, ev) {

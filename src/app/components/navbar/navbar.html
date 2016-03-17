@@ -1,6 +1,13 @@
 <div md-theme="toolbar">
   <md-toolbar layout="row" layout-align="end center" class="md-whiteframe-glow-z1">
+
+    <!-- Toggle Menu -->
+    <md-button class="md-icon-button" ng-click="vm.openSidebar()" hide-gt-sm aria-label="Toggle Menu">
+      <ng-md-icon icon="menu"></ng-md-icon>
+    </md-button>
+
     <div ng-show="vm.managementFlow.isCompanySelected()" layout="row" class="md-toolbar-tools">
+
       <h3 layout-padding>
         <strong ng-click="vm.goToCompanyDetailsPage('view')" class="cursor">
             {{ vm.managementFlow.getCompany().name }}
