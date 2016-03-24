@@ -111,6 +111,7 @@
     $scope.cancel = function() {
       $scope.question.restoreInitialQuestion();
       $scope.question.postProcess();
+      $scope.question.parentBlock = $scope.block;
       //$scope.$apply();
       $mdDialog.cancel();
     };
