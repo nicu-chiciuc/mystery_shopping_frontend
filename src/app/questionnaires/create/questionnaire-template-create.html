@@ -3,7 +3,9 @@
   <h2 ng-show="vm.isNewQuestionnaireTemplate">{{ 'QUESTIONNAIRE.NEW_QUESTIONNAIRE_TEMPLATE' | translate }}</h2>
   <h2 ng-hide="vm.isNewQuestionnaireTemplate">{{ 'QUESTIONNAIRE.EDIT_QUESTIONNAIRE_TEMPLATE' | translate }}</h2>
 
-  <form name="questionnaireForm" ng-submit="vm.saveQuestionnaireTemplate(vm.questionnaireTemplate, questionnaireForm.$valid)" novalidate>
+  <form name="questionnaireForm"
+        ng-submit="vm.saveQuestionnaireTemplate(vm.questionnaireTemplate, questionnaireForm.$valid)"
+        novalidate>
     <md-input-container class="md-block">
       <label>{{ 'QUESTIONNAIRE.TITLE' | translate }}</label>
       <input ng-model="vm.questionnaireTemplate.title" name="title" type="text" ng-required="true">
@@ -26,13 +28,13 @@
       <!--
       Level 1 blocks
       -->
-      <md-whiteframe dragula="'block-1'"
-                     dragula-model="vm.questionnaireTemplate.template_blocks"
-                     class="md-whiteframe-2dp">
+      <div dragula="'block-1'"
+           dragula-model="vm.questionnaireTemplate.template_blocks">
 
         <!-- Content container for each top level block -->
-        <md-content ng-repeat="block_1 in vm.questionnaireTemplate.template_blocks"
-                    flex="100">
+        <md-card ng-repeat="block_1 in vm.questionnaireTemplate.template_blocks"
+                    flex="100"
+                    class="md-whiteframe-2dp">
 
           <!-- Block header -->
           <md-toolbar flex="100" class="ms-height-md">
@@ -50,7 +52,7 @@
 
               <!-- Block weight -->
               <span>
-                {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_1.weightToDisplay }}
+                {{'QUESTIONNAIRE.BLOCK.WEIGHT' | translate}}: {{block_1.weightToDisplay | number : 2}}
               </span>
 
               <!-- Other options menu -->
@@ -122,7 +124,7 @@
 
                     <!-- Block weight -->
                     <span>
-                      {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_2.weightToDisplay }}
+                      {{'QUESTIONNAIRE.BLOCK.WEIGHT' | translate}}: {{block_2.weightToDisplay | number : 2}}
                     </span>
 
                     <!-- Other options menu -->
@@ -193,7 +195,7 @@
 
                           <!-- Block weight -->
                           <span>
-                            {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + block_3.weightToDisplay }}
+                            {{'QUESTIONNAIRE.BLOCK.WEIGHT' | translate}}: {{block_2.weightToDisplay | number : 2}}
                           </span>
 
                           <!-- Other options menu -->
@@ -362,12 +364,11 @@
             </md-button>
           </section>
 
-        </md-content>
+        </md-card>
 
-      </md-whiteframe>
+      </div>
 
     </div>
-
 
     <section layout="row" ng-show="vm.questionnaireTemplate.id && vm.questionnaireTemplate.is_editable">
       <span flex></span>
@@ -384,7 +385,149 @@
       </md-button>
     </section>
 
-    <md-button ng-show="vm.questionnaireTemplate.title && vm.questionnaireTemplate.is_editable" type="submit" class="md-primary md-raised">
+    <!-- Cross-Index blocks -->
+    <div class="questionnaire" layout-padding>
+      <!--
+      Level 1 blocks
+      -->
+      <div dragula="'block-cross-index'"
+           dragula-model="vm.questionnaireTemplate.template_blocks">
+
+        <!-- Content container for each top level block -->
+        <md-card ng-repeat="block_cross_index in vm.questionnaireTemplate.cross_index_templates"
+                 flex="100"
+                 class="md-whiteframe-2dp">
+
+          <!-- Block header -->
+          <md-toolbar flex="100" class="ms-height-md">
+
+            <!-- Header wrapper -->
+            <h2 class="md-toolbar-tools handle-1" layout-align="left center" layout="row">
+
+              <!-- Block title -->
+              <span>
+                {{ block_cross_index.title }}
+              </span>
+
+              <!-- Empty span element to fill in the width of block header -->
+              <span flex></span>
+
+              <!-- Block weight -->
+              <span>
+                {{ ('QUESTIONNAIRE.BLOCK.WEIGHT' | translate) + ': ' + 100 }}
+              </span>
+
+              <!-- Other options menu -->
+              <md-menu ng-show="vm.questionnaireTemplate.is_editable">
+                <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_BLOCK_MENU' | translate }}"
+                           class="md-icon-button"
+                           ng-click="vm.openMenu($mdOpenMenu, $event)">
+                  <ng-md-icon icon="more_vert"></ng-md-icon>
+                </md-button>
+
+                <md-menu-content width="4">
+
+                  <!-- Edit block -->
+                  <md-menu-item>
+                    <md-button ng-click="vm.showCrossIndexTitleDialog($event, block_cross_index, vm.questionnaireTemplate)">
+                      {{ 'QUESTIONNAIRE.BLOCK.EDIT' | translate }}
+                    </md-button>
+                  </md-menu-item>
+
+                  <!-- Delete block -->
+                  <md-menu-item>
+                    <md-button ng-click="vm.deleteCrossIndex($event, block_cross_index, vm.questionnaireTemplate)">
+                      {{ 'QUESTIONNAIRE.BLOCK.DELETE' | translate }}
+                    </md-button>
+                  </md-menu-item>
+
+                </md-menu-content>
+              </md-menu>
+
+            </h2>
+          </md-toolbar>
+
+          <!-- Block content container -->
+          <md-content flex="100" layout="column" layout-padding>
+
+            <!-- Block questions -->
+            <div ng-repeat="question in block_cross_index.question_templates">
+              <ms-questionnaire-generic-question question="vm.questionnaireTemplate.getQuestionById(
+                                                   vm.questionnaireTemplate, question.question_template)"
+                                                 block="block_cross_index"
+                                                 questionnaire="vm.questionnaireTemplate"
+                                                 is-link="true"
+                                                 cross-index-parent="block_cross_index">
+              </ms-questionnaire-generic-question>
+              <md-divider></md-divider>
+            </div>
+
+          </md-content>
+
+          <section layout="row" ng-show="vm.questionnaireTemplate.is_editable">
+            <span flex></span>
+
+            <!-- Review question weights button -->
+            <!--<md-button ng-click="vm.reivewQuestionWeights($event, block_cross_index)"-->
+                       <!--ng-show="block_cross_index.template_questions.length"-->
+                       <!--class="md-fab md-mini md-primary"-->
+                       <!--aria-label="{{ 'QUESTIONNAIRE.ACTIONS.REVIEW_QUESTION_WEIGHTS' | translate }}">-->
+              <!--<ng-md-icon icon="rate_review"></ng-md-icon>-->
+
+              <!--&lt;!&ndash; Tooltip &ndash;&gt;-->
+              <!--<md-tooltip md-direction="top">-->
+                <!--{{ 'QUESTIONNAIRE.ACTIONS.REVIEW_QUESTION_WEIGHTS' | translate }}-->
+              <!--</md-tooltip>-->
+            <!--</md-button>-->
+
+            <!-- Add question button -->
+            <!--<md-button ng-click="vm.showAddQuestionDialog($event, block_cross_index, vm.questionnaireTemplate, true)"-->
+                       <!--class="md-fab md-mini md-primary"-->
+                       <!--aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}">-->
+              <!--<ng-md-icon icon="playlist_add"></ng-md-icon>-->
+
+              <!--&lt;!&ndash; Tooltip &ndash;&gt;-->
+              <!--<md-tooltip md-direction="top">-->
+                <!--{{ 'QUESTIONNAIRE.ACTIONS.ADD_QUESTION' | translate }}-->
+              <!--</md-tooltip>-->
+            <!--</md-button>-->
+
+            <!-- Add block button -->
+            <!--<md-button ng-click="vm.addBlock($event, block_cross_index)"-->
+                       <!--class="md-fab md-mini md-primary"-->
+                       <!--aria-label="{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}">-->
+              <!--<ng-md-icon icon="my_library_add"></ng-md-icon>-->
+
+              <!--&lt;!&ndash; Tooltip &ndash;&gt;-->
+              <!--<md-tooltip md-direction="top">-->
+                <!--{{ 'QUESTIONNAIRE.ACTIONS.ADD_BLOCK' | translate }}-->
+              <!--</md-tooltip>-->
+            <!--</md-button>-->
+          </section>
+
+        </md-card>
+
+      </div>
+    </div>
+
+    <section layout="row" ng-show="vm.questionnaireTemplate.id && vm.questionnaireTemplate.is_editable">
+      <span flex></span>
+      <md-button ng-click="vm.addCrossIndex($event, vm.questionnaireTemplate)"
+                 class="md-fab md-mini md-primary"
+                 aria-label="Add cross index block (not translated)">
+        <ng-md-icon icon="my_library_add"></ng-md-icon>
+
+        <!-- Tooltip -->
+        <md-tooltip md-direction="top">
+          Add cross index block (not translated)
+        </md-tooltip>
+
+      </md-button>
+    </section>
+
+    <md-button ng-show="vm.questionnaireTemplate.title && vm.questionnaireTemplate.is_editable"
+               type="submit"
+               class="md-primary md-raised">
       {{ 'BUTTON.SAVE' | translate }}
     </md-button>
 

@@ -7,14 +7,17 @@
     .directive('msQuestionnaireGenericQuestion', msQuestionnaireGenericQuestion);
 
   /** @ngInject */
-  function msQuestionnaireGenericQuestion () {
+  function msQuestionnaireGenericQuestion ( models ) {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/utils/directives/questionnaire_generic_question/questionnaire-generic-question.html',
       scope: {
         question: '=',
         block: '=',
-        questionnaire: '='
+        questionnaire: '=',
+
+        isLink: '=',
+        crossIndexParent: '='
       },
       controller: QuestionnaireGenericQuestionController,
       controllerAs: 'vm',
@@ -32,12 +35,30 @@
 
       vm.showEditQuestionDialog = showEditQuestionDialog;
       vm.deleteQuestion = deleteQuestion;
+      vm.removeQuestionFromCrossIndex = removeQuestionFromCrossIndex;
+      vm.addToCrossIndex = addToCrossIndex;
 
       vm.openMenu = function($mdOpenMenu, ev) {
         originatorEv = ev;
         $mdOpenMenu(ev);
       };
 
+      function removeQuestionFromCrossIndex ( ev, question, crossIndex ) {
+        _.remove(crossIndex.question_templates, function (question_template) {
+          return question_template.question_template === question.id;
+        });
+
+        models.restangularizeElement(null, crossIndex, 'crossindextemplates');
+
+        crossIndex.put().then(
+          function () {
+            console.log('is good');
+          },
+          function () {
+            console.log('not is good');
+          }
+        )
+      }
 
       function showEditQuestionDialog ( ev, question, isNewQuestion ) {
         var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
@@ -90,6 +111,10 @@
             // TODO deal with the error
           }
         });
+      }
+
+      function addToCrossIndex ( questionnaire, question, crossIndex ) {
+        questionnaire.addQuestionToCrossIndex(question, crossIndex);
       }
     }
   }

@@ -10,7 +10,7 @@
   </p>
 
   <p ng-show="vm.question.isChoiceQuestion" class="margin-left-md">
-    {{ ('QUESTIONNAIRE.QUESTION.WEIGHT' | translate) + ': ' + vm.question.weightToDisplay }}
+    {{'QUESTIONNAIRE.QUESTION.WEIGHT' | translate}}: {{vm.question.weightToDisplay | number : 2}}
   </p>
 
   <!-- Other options menu -->
@@ -21,7 +21,7 @@
       <ng-md-icon icon="more_vert"></ng-md-icon>
     </md-button>
 
-    <md-menu-content width="4">
+    <md-menu-content width="3">
 
       <!-- Edit block -->
       <md-menu-item>
@@ -31,9 +31,24 @@
       </md-menu-item>
 
       <!-- Delete block -->
-      <md-menu-item>
+      <md-menu-item ng-if="!vm.isLink">
         <md-button ng-click="vm.deleteQuestion($event, vm.question)">
           {{ 'QUESTIONNAIRE.QUESTION.DELETE' | translate }}
+        </md-button>
+      </md-menu-item>
+
+      <md-menu-item ng-if="vm.isLink">
+        <md-button ng-click="vm.removeQuestionFromCrossIndex($event, vm.question, vm.crossIndexParent)">
+          {{ 'QUESTIONNAIRE.QUESTION.REMOVE_FROM_CROSS_INDEX' | translate }}
+        </md-button>
+      </md-menu-item>
+
+      <md-menu-divider></md-menu-divider>
+
+      <!-- Add to cross-index block -->
+      <md-menu-item ng-repeat="crossIndex in vm.questionnaire.cross_index_templates">
+        <md-button ng-click="vm.addToCrossIndex(vm.questionnaire, vm.question, crossIndex)">
+          Add to {{crossIndex.title}}
         </md-button>
       </md-menu-item>
 

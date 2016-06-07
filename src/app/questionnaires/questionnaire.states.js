@@ -49,7 +49,9 @@
         templateUrl: 'app/questionnaires/list/questionnaire-list.html',
         controller: 'QuestionnaireListController as vm',
         resolve: {
-          questionnaires: function ( models ) { return models.questionnaireTemplates().getList(); }
+          questionnaires: function ( models ) {
+            return models.questionnaireTemplates().getList();
+          }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
@@ -60,7 +62,9 @@
         url: '/{templateQuestionnaireId:int}',
         template: '<div ui-view></div>',
         resolve: {
-          questionnaireTemplate: function ( $stateParams, models ) { return models.questionnaireTemplates().one($stateParams.templateQuestionnaireId).get(); }
+          questionnaireTemplate: function ( $stateParams, models ) {
+            return models.questionnaireTemplates().one($stateParams.templateQuestionnaireId).get();
+          }
         }
       })
       .state('questionnaires.templates.detail.view', {

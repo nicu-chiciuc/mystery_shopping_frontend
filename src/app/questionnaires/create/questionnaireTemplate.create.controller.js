@@ -7,9 +7,13 @@
     .controller('QuestionnaireTemplateCreateController', QuestionnaireTemplateCreateController);
 
   /** @ngInject */
-  function QuestionnaireTemplateCreateController ( $log, $scope, $filter, $mdMedia, $mdDialog, msUtils, models, user, questionnaireTemplate, dragulaService ) {
+  function QuestionnaireTemplateCreateController (
+      $log, $scope, $filter, $mdMedia, $mdDialog, msUtils,
+      models, user, questionnaireTemplate, dragulaService )
+  {
     $log.debug('Entered QuestionnaireTemplateCreateController');
     $log.debug(questionnaireTemplate);
+
     var vm = this;
     var originatorEv;
 
@@ -17,6 +21,8 @@
 
     vm.questionnaireTemplate = questionnaireTemplate;
     vm.questionnaireTemplate.template_blocks = vm.questionnaireTemplate.template_blocks || [];
+    vm.questionnaireTemplate.cross_index_templates = vm.questionnaireTemplate.cross_index_templates || [];
+
     vm.questionnaireTemplate.is_editable = angular.isDefined(vm.questionnaireTemplate.id)
       ? vm.questionnaireTemplate.is_editable
       : true;
@@ -24,10 +30,14 @@
     vm.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 
     vm.addBlock = addBlock;
+    vm.addCrossIndex = addCrossIndex;
     vm.showBlockTitleDialog = showBlockTitleDialog;
+    vm.showCrossIndexTitleDialog = showCrossIndexTitleDialog;
     vm.showAddQuestionDialog = showAddQuestionDialog;
     vm.deleteBlock = deleteBlock;
+    vm.deleteCrossIndex = deleteCrossIndex;
     vm.reivewQuestionWeights = reivewQuestionWeights;
+    vm.deleteCrossIndex = deleteCrossIndex;
 
     vm.saveQuestionnaireTemplate = saveQuestionnaireTemplate;
 
@@ -41,7 +51,8 @@
     function activate() {
       vm.isNewQuestionnaireTemplate = !vm.questionnaireTemplate.id;
       if ( vm.isNewQuestionnaireTemplate ) {
-        vm.questionnaireTemplate = models.restangularizeElement(null, vm.questionnaireTemplate, 'templatequestionnaires');
+        vm.questionnaireTemplate =
+          models.restangularizeElement(null, vm.questionnaireTemplate, 'templatequestionnaires');
       } else {
         vm.questionnaireTemplate.initialize();
       }
@@ -65,14 +76,20 @@
 
     function saveQuestionnaireTemplate ( questionnaireTemplate, isValid, nextState ) {
       if ( isValid ) {
+        delete questionnaireTemplate.cross_index_templates;
         vm.questionnaireTemplate = models.restangularCopy(questionnaireTemplate);
+
         questionnaireTemplate.postProcess();
         if ( !questionnaireTemplate.id ) {
           questionnaireTemplate.tenant = user.tenantId;
           //questionnaireTemplate = models.restangularizeElement(null, questionnaireTemplate, 'templatequestionnaires');
-          questionnaireTemplate.post().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
+          questionnaireTemplate.post().then(
+            saveQuestionnaireTemplateSuccessFn,
+            saveQuestionnaireTemplateErrorFn);
         } else {
-          questionnaireTemplate.put().then(saveQuestionnaireTemplateSuccessFn, saveQuestionnaireTemplateErrorFn);
+          questionnaireTemplate.put().then(
+            saveQuestionnaireTemplateSuccessFn,
+            saveQuestionnaireTemplateErrorFn);
         }
       }
 
@@ -97,10 +114,27 @@
       }
 
       angular.extend(block, models.manager.TemplateQuestionnaireBlockModel);
-      block.initialize(vm.questionnaireTemplate.childBlocksProp, vm.questionnaireTemplate.childQuestionsProp, parentBlock);
+      block.initialize(
+        vm.questionnaireTemplate.childBlocksProp,
+        vm.questionnaireTemplate.childQuestionsProp,
+        parentBlock);
 
       parentBlock.addChildBlock(block);
       showBlockTitleDialog(ev, block, parentBlock, true);
+    }
+
+    function addCrossIndex ( ev, questionnaireTemplate ) {
+      var crossIndex = {
+        'title': '',
+        'questionnaire_template': questionnaireTemplate.id,
+        'question_templates': []
+      };
+
+      models.restangularizeElement(null, crossIndex, 'crossindextemplates');
+
+      questionnaireTemplate.cross_index_templates.push(crossIndex);
+
+      showCrossIndexTitleDialog(ev, crossIndex, questionnaireTemplate, true);
     }
 
     function showBlockTitleDialog ( ev, block, parentBlock, isNewBlock ) {
@@ -124,6 +158,28 @@
         });
     }
 
+    function showCrossIndexTitleDialog ( ev, block, questionnaireBlock, isNewBlock ) {
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && vm.customFullscreen;
+      $mdDialog.show({
+          controller: 'EditCrossIndexDialogController as vm',
+          templateUrl: 'app/questionnaires/modals/edit_cross_index_block/edit-cross-index-dialog.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          fullscreen: useFullScreen,
+          escapeToClose: false,
+          locals: {
+            block: block,
+            parentBlock: questionnaireBlock,
+            isNewBlock: isNewBlock
+          }
+        })
+        .then(function(returnedBlock) {
+          block.title = returnedBlock.title;
+          block.weight = returnedBlock.weight;
+        });
+
+    }
+
     function showAddQuestionDialog ( ev, block, questionnaireTemplate, isNewQuestion ) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
       $mdDialog.show({
@@ -143,6 +199,39 @@
         .then(function(question) {
           block.addQuestion(question);
         });
+    }
+
+    function deleteCrossIndex ( ev, block, questionnaireTemplate ) {
+      var confirm = $mdDialog.confirm()
+        .title($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.TITLE'))
+        .textContent($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.TEXT_CONTENT'))
+        .ariaLabel($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.ARIA_LABEL'))
+        .targetEvent(ev)
+        .ok($filter('translate')('BUTTON.DELETE'))
+        .cancel($filter('translate')('BUTTON.CANCEL'));
+
+      $mdDialog.show(confirm).then(function() {
+        if ( block.id ) {
+          block = models.restangularizeElement(null, block, 'crossindextemplates');
+          // block.prepareForSave();
+          block.remove().then(deleteBlockSuccessFn, deleteBlockErrorFn);
+        } else {
+          deleteBlockSuccessFn();
+        }
+        function deleteBlockSuccessFn ( questionnaire ) {
+          parentBlock.nextBlockPositionNumber -= 1;
+          if ( questionnaire ) {
+            vm.questionnaireTemplate = models.restangularizeElement(null, questionnaire, 'templatequestionnaires');
+          } else {
+            _.remove(parentBlock.template_blocks, function (childBlock) {
+              return childBlock.title === block.title;
+            });
+          }
+        }
+        function deleteBlockErrorFn () {
+          // TODO deal with the error
+        }
+      });
     }
 
     function deleteBlock ( ev, block, parentBlock ) {
@@ -171,6 +260,34 @@
               return childBlock.title === block.title;
             });
           }
+        }
+        function deleteBlockErrorFn () {
+          // TODO deal with the error
+        }
+      });
+    }
+
+    function deleteCrossIndex ( ev, block, parentBlock ) {
+      var confirm = $mdDialog.confirm()
+        .title($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.TITLE'))
+        .textContent($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.TEXT_CONTENT'))
+        .ariaLabel($filter('translate')('QUESTIONNAIRE.BLOCK.DELETE_DIALOG.ARIA_LABEL'))
+        .targetEvent(ev)
+        .ok($filter('translate')('BUTTON.DELETE'))
+        .cancel($filter('translate')('BUTTON.CANCEL'));
+
+      $mdDialog.show(confirm).then(function () {
+        if ( block.id ) {
+          block = models.restangularizeElement(null, block, 'crossindextemplates');
+          // block.prepareForSave();
+          block.remove().then(deleteBlockSuccessFn, deleteBlockErrorFn);
+        } else {
+          deleteBlockSuccessFn();
+        }
+        function deleteBlockSuccessFn ( questionnaire ) {
+          _.remove(parentBlock.cross_index_templates, function (crossIndex) {
+            return crossIndex.title === block.title;
+          });
         }
         function deleteBlockErrorFn () {
           // TODO deal with the error

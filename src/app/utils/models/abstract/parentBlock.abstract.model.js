@@ -7,11 +7,15 @@
     .factory('AbstractParentBlockModel', AbstractParentBlockModel);
 
   /** @ngInject */
-  function AbstractParentBlockModel ( msUtils ) {
+  function AbstractParentBlockModel ( msUtils, Restangular ) {
     var Model = {
       parentBlockIsQuestionnaire: false,
       initializeAbstract: initializeAbstract,
       addChildBlock: addChildBlock,
+      addQuestionToCrossIndex: addQuestionToCrossIndex,
+      processBeforeSave: processBeforeSave,
+      getQuestionById: getQuestionById,
+
       setWeight: setWeight,
       updateAvailableWeight: updateAvailableWeight,
       computeAvailableWeight: computeAvailableWeight,
@@ -19,8 +23,7 @@
       removeExceededWeightsTooltips: removeExceededWeightsTooltips,
       setInitialWeights: setInitialWeights,
       resetInitialWeights: resetInitialWeights,
-      updateChildWeights: updateChildWeights,
-      processBeforeSave: processBeforeSave
+      updateChildWeights: updateChildWeights
     };
 
     var childBlocksKey = '';
@@ -28,6 +31,48 @@
 
     return Model;
 
+    function getQuestionById ( parentBlock, id ) {
+      var retQuestion;
+
+      if (_.isArray(parentBlock.template_questions)) {
+        retQuestion = _.find(parentBlock.template_questions, {'id': id});
+
+        if (retQuestion)
+          return retQuestion;
+      }
+
+      if (_.isArray(parentBlock.template_blocks)) {
+        _.forEach(parentBlock.template_blocks, function (childBlock) {
+          retQuestion = retQuestion || getQuestionById(childBlock, id);
+        });
+
+        return retQuestion;
+      }
+    }
+
+    function addQuestionToCrossIndex ( question, crossIndex ) {
+      if (_.find(crossIndex.question_templates, {'question_template': question.id})) {
+        console.log("Cross-Index already contains question.")
+      }
+      else {
+
+        crossIndex.question_templates.push({
+          'question_template': question.id,
+          'weight': 7
+        });
+
+        Restangular.restangularizeElement(null, crossIndex, 'crossindextemplates');
+
+        crossIndex.put().then(
+          function successFn() {
+            console.log('success');
+          },
+          function errorFn() {
+            console.log('error');
+          }
+        );
+      }
+    }
 
     function initializeAbstract ( childBlocksProp, questionsProp, isQuestionnaire ) {
       var parentBlock = this;
@@ -80,6 +125,7 @@
       block.weight = weight;
 
       block.previousWeightToDisplay = block.weightToDisplay;
+
       block.weightToDisplay = msUtils.number.strip(weight / 100 * block.parentBlock.weightToDisplay);
 
       // Because in the backend the tree representation of blocks is stored
@@ -114,11 +160,15 @@
       var availableWeight = block.weightToDisplay;
 
       _.forEach(block[childBlocksKey], function (childBlock) {
-        availableWeight -= _.isNumber(childBlock.newWeightToDisplay) ? childBlock.newWeightToDisplay : (childBlock.weightToDisplay ? childBlock.weightToDisplay : 0);
+        availableWeight -= _.isNumber(childBlock.newWeightToDisplay)
+          ? childBlock.newWeightToDisplay
+          : (childBlock.weightToDisplay || 0);
       });
 
       _.forEach(block[questionsPropKey], function (question) {
-        availableWeight -= _.isNumber(question.newWeightToDisplay) ? question.newWeightToDisplay : (question.weightToDisplay ? question.weightToDisplay : 0);
+        availableWeight -= _.isNumber(question.newWeightToDisplay)
+          ? question.newWeightToDisplay
+          : (question.weightToDisplay || 0);
       });
 
       return availableWeight;

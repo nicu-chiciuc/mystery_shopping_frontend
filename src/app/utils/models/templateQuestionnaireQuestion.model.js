@@ -24,7 +24,8 @@
       gatherUpdateDataOfSiblings: gatherUpdateDataOfSiblings,
       recomputeChoiceWeights: recomputeChoiceWeights,
       backupInitialQuestion: backupInitialQuestion,
-      restoreInitialQuestion: restoreInitialQuestion
+      restoreInitialQuestion: restoreInitialQuestion,
+      resetWeightToDisplay: resetWeightToDisplay
     };
 
     var postProcessManager = {
@@ -53,10 +54,21 @@
       question.template_question_choices = _.sortBy(question.template_question_choices, 'order');
       question.nextChoicePositionNumber = question.template_question_choices ? question.template_question_choices.length + 1 : 1;
       question.weight = parseFloat(question.weight);
-      question.weightToDisplay = question.parentBlock.weightToDisplay * question.weight / 100;
+      question.resetWeightToDisplay();
+      // question.weightToDisplay = question.parentBlock.weightToDisplay * question.weight / 100;
 
       question.updateQuestionType();
       question.preProcess();
+    }
+
+    function resetWeightToDisplay () {
+      this.weightToDisplay = msUtils.number.strip(this.parentBlock.weightToDisplay * this.weight / 100);
+      return this.weightToDisplay;
+    }
+
+    function weightToDisplayFn () {
+      return parseFloat(
+        (this.parentBlock.weightToDisplayFn() * this.weight / 100).toFixed(2));
     }
 
     function setWeight ( weight ) {
@@ -65,7 +77,8 @@
       question.weight = weight;
 
       question.previousWeightToDisplay = question.weightToDisplay;
-      question.weightToDisplay = msUtils.number.strip(weight / 100 * question.parentBlock.weightToDisplay);
+      question.resetWeightToDisplay();
+      // question.weightToDisplay = msUtils.number.strip(weight / 100 * question.parentBlock.weightToDisplay);
 
       question.question_action = 'update';
     }
@@ -201,7 +214,8 @@
     function preProcess () {
       var question = this;
 
-      question.weightToDisplay = question.parentBlock.weightToDisplay * question.weight / 100;
+      question.resetWeightToDisplay();
+      // question.weightToDisplay = question.parentBlock.weightToDisplay * question.weight / 100;
       preProcessManager[question.type](question);
     }
 
@@ -268,6 +282,5 @@
       question.question_body = question.initial_question_body;
       question.updateQuestionType(question.type);
     }
-
   }
 })();

@@ -26,6 +26,7 @@
       restangularizeElement: restangularizeElement,
       restangularizeCollection: restangularizeCollection,
       restangularCopy: restangularCopy,
+      crossIndexTemplates: crossIndexTemplates,
       manager: modelManager
     };
 
@@ -90,6 +91,10 @@
 
     function evaluationassessmentlevels () {
       return Restangular.service('evaluationassessmentlevels');
+    }
+
+    function crossIndexTemplates () {
+      return Restangular.service('crossindextemplates');
     }
 
     function restangularizeElement ( parent, object, model ) {

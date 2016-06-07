@@ -286,6 +286,7 @@
           SCORE_AND_WEIGHT: '(score: {SCORE})',
           WEIGHT: 'Weight',
           DELETE: 'Delete question',
+          REMOVE_FROM_CROSS_INDEX: 'Remove question from Cross-Index',
           EDIT: 'Edit question',
           AVAILABLE_WEIGHT_EXCEEDED: 'Sum of all question weights can not exceed {MAX_AMOUNT}',
           DELETE_DIALOG: {
@@ -303,7 +304,10 @@
         DIALOG: {
           EDIT_BLOCK: 'Edit block',
           BLOCK_TITLE: 'Block title',
-          ADD_QUESTION: 'Add question'
+          ADD_QUESTION: 'Add question',
+
+          EDIT_CROSS_INDEX: 'Edit Cross-Index',
+          CROSS_INDEX_TITLE: 'Cross-Index title'
         }
       },
       EVALUATION: {

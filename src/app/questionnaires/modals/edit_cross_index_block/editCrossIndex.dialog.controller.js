@@ -1,17 +1,20 @@
+/**
+ * Created by nicusor on 5/31/2016.
+ */
 /* global _:false */
 (function() {
   'use strict';
 
   angular
     .module('spark')
-    .controller('EditBlockDialogController', EditBlockDialogController);
+    .controller('EditCrossIndexDialogController', EditCrossIndexDialogController);
 
   /** @ngInject */
-  function EditBlockDialogController (
-      $log, $scope, $mdDialog, $filter, $mdToast,
-      msUtils, models, block, parentBlock, isNewBlock )
+  function EditCrossIndexDialogController (
+    $log, $scope, $mdDialog, $filter, $mdToast,
+    msUtils, models, block, parentBlock, isNewBlock )
   {
-    $log.debug('Entered EditBlockDialogController');
+    $log.debug('Entered EditCrossIndexDialogController');
     $log.debug(block);
 
     $scope.block = block;
@@ -78,27 +81,18 @@
 
     $scope.saveBlockChanges = function( block, isValid ) {
       if ( isValid ) {
-        block = models.restangularizeElement(null, block, 'templateblocks');
-        block.prepareForSave();
-        var sendBlock = block.createSendingBlock();
-        console.log(sendBlock);
-        console.log(block);
-
-        models.restangularizeElement(null, sendBlock, 'templateblocks');
-        console.log(sendBlock);
-
-        sendBlock[sendBlock.id ? 'put' : 'post']().then(saveBlockSuccessFn, saveBlockErrorFn);
-        // block[block.id ? 'put' : 'post']().then(saveBlockSuccessFn, saveBlockErrorFn);
+        block = models.restangularizeElement(null, block, 'crossindextemplates');
+        // block.prepareForSave();
+        block[block.id ? 'put' : 'post']().then(saveBlockSuccessFn, saveBlockErrorFn);
       }
-
       function saveBlockSuccessFn ( response ) {
         if ( !block.id ) {
           block.id = response.id;
         }
-        block.weight = response.weight;
-        block.setParentBlock($scope.parentBlock);
-        block.updateChildQuestionsParentBlock();
-        block.updateAvailableWeight();
+        // block.weight = response.weight;
+        // block.setParentBlock($scope.parentBlock);
+        // block.updateChildQuestionsParentBlock();
+        // block.updateAvailableWeight();
 
         $mdToast.show(
           $mdToast.simple()
@@ -116,10 +110,6 @@
             .theme('fail-toast')
             .hideDelay(5000)
         );
-      }
-
-      function resetConnections () {
-
       }
     };
 

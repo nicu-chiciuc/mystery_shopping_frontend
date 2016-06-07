@@ -14,6 +14,7 @@
       updateQuestionWeights: updateQuestionWeights,
       gatherUpdateDataOfSiblings: gatherUpdateDataOfSiblings,
       prepareForSave: prepareForSave,
+      createSendingBlock: createSendingBlock,
       setParentBlock: setParentBlock,
       updateChildQuestionsParentBlock: updateChildQuestionsParentBlock,
       removeQuestionExceededWeightsTooltips: removeQuestionExceededWeightsTooltips
@@ -66,30 +67,57 @@
     }
 
     function gatherUpdateDataOfSiblings () {
-      var block = this;
-      var siblings = _.filter(block.parentBlock.template_blocks, function (templateBlock) {
-        return templateBlock.id !== block.id && templateBlock.block_action === 'update';
-      });
+      return _.map(sibilingsWithUpdates(this), chooseIdAndWeight);
 
-      block.siblings = [];
-      _.forEach(siblings, function (siblingBlock) {
-        block.siblings.push({
-          block_id: siblingBlock.id,
-          block_changes: {
-            weight: siblingBlock.weight
-          }
-        });
-      });
+      function sibilingsWithUpdates (block) {
+        return _.isNil(block.parentBlock) ? [] :
+          _.filter(block.parentBlock.template_blocks, function (templateBlock) {
+            return templateBlock.id !== block.id && templateBlock.block_action === 'update';
+          });
+      }
+
+      function chooseIdAndWeight (obj) {
+        return {
+          block_id: obj.id,
+          block_changed: obj.weight
+        }
+      }
     }
 
-    function prepareForSave () {
+    function  prepareForSave () {
       var block = this;
 
-      block.gatherUpdateDataOfSiblings();
+      // block.gatherUpdateDataOfSiblings();
+      block.sibilings = block.gatherUpdateDataOfSiblings();
       block.parentBlock = null;
       _.forEach(block.template_questions, function (question) {
         question.parentBlock = null;
       });
+
+      _.forEach(block.template_blocks, function (block) {
+        block.parentBlock = null;
+      });
+
+      checkWeightValidity(block);
+    }
+
+    function createSendingBlock () {
+      return {
+        "id": this.id,
+        "template_questions" : [],
+        "parent_order_number": this.parent_order_number,
+        "order_number": this.order_number,
+        "siblings": this.gatherUpdateDataOfSiblings(),
+        "title": this.title,
+        "weight": this.weight,
+        "order": this.order,
+        "questionnaire_template": this.questionnaire_template,
+        "parent_block": this.parent_block
+      };
+    }
+
+    function checkWeightValidity ( block ) {
+      block.weight = block.weight.toFixed(2);
     }
 
     function removeQuestionExceededWeightsTooltips () {

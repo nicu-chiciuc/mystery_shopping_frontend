@@ -1,0 +1,85 @@
+<md-dialog aria-label="{{ 'QUESTIONNAIRE.DIALOG.EDIT_CROSS_INDEX' | translate }}" ng-cloak>
+  <form name="blockForm" ng-submit="saveBlockChanges(block, blockForm.$valid, blockForm)" novalidate>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          {{ 'QUESTIONNAIRE.DIALOG.EDIT_CROSS_INDEX' | translate }}
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <ng-md-icon icon="close" aria-label="{{ 'COMMON.ACTIONS.CLOSE_DIALOG' | translate }}"></ng-md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <h2>{{ 'QUESTIONNAIRE.AVAILABLE_WEIGHT' | translate : {WEIGHT: (100)} }}</h2>
+
+        <div layout="row">
+          <!-- Block title -->
+          <md-input-container>
+            <label>{{ 'QUESTIONNAIRE.DIALOG.CROSS_INDEX_TITLE' | translate }}</label>
+            <input ng-model="block.title" md-autofocus name="title" type="text" ng-required="true"/>
+
+            <!-- Validation messages -->
+            <div ng-messages="blockForm.title.$error">
+              <div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.DIALOG.CROSS_INDEX_TITLE') }}</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <!--<md-subheader>{{ 'QUESTIONNAIRE.SAME_LEVEL_BLOCKS' | translate }}</md-subheader>-->
+        <!--<div layout="column">-->
+          <!--<md-list>-->
+            <!--<md-list-item ng-repeat="templateBlock in otherBlocks" layout="column">-->
+
+              <!--<ng-form name="siblingBlockForm">-->
+
+                <!--<div layout="row">-->
+                  <!--<md-input-container>-->
+                    <!--<label>{{ 'QUESTIONNAIRE.DIALOG.CROSS_INDEX_TITLE' | translate }}</label>-->
+                    <!--<input type="text" ng-model="templateBlock.title" disabled/>-->
+                  <!--</md-input-container>-->
+
+                  <!--<md-input-container>-->
+                    <!--<label>{{ 'QUESTIONNAIRE.BLOCK.WEIGHT' | translate }}</label>-->
+                    <!--<input ng-model="templateBlock.newWeightToDisplay"-->
+                           <!--ng-change="updateAvailableWeight(templateBlock)"-->
+                           <!--name="siblingWeight"-->
+                           <!--type="number"-->
+                           <!--ng-min="0"-->
+                           <!--ng-required="true" />-->
+
+                    <!--<md-tooltip ng-if="templateBlock.showTooltip" md-visible="templateBlock.showTooltip" md-direction="top">-->
+                      <!--{{ templateBlock.tooltip }}-->
+                    <!--</md-tooltip>-->
+
+                    <!--&lt;!&ndash; Validation messages &ndash;&gt;-->
+                    <!--<div ng-messages="siblingBlockForm.siblingWeight.$error">-->
+                      <!--<div ng-message="required">{{ msUtils.validation.translatedFieldMessage('QUESTIONNAIRE.BLOCK.WEIGHT') }}</div>-->
+                      <!--<div ng-message="number">{{ 'VALIDATION_MESSAGE.NUMBER.INVALID' | translate }}</div>-->
+                    <!--</div>-->
+                  <!--</md-input-container>-->
+                <!--</div>-->
+
+              <!--</ng-form>-->
+            <!--</md-list-item>-->
+          <!--</md-list>-->
+        <!--</div>-->
+
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button type="submit" class="md-primary md-raised">
+        {{ 'BUTTON.SAVE' | translate }}
+      </md-button>
+      <md-button ng-click="cancel()" style="margin-right:20px;" class="md-raised">
+        {{ 'BUTTON.CANCEL' | translate }}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+
