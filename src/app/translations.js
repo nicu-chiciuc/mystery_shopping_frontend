@@ -57,7 +57,8 @@
           NO_PROJECTS: 'No projects to manage',
           PROJECTS_TO_MANAGE: 'Choose a project to manage',
           PLAN_EVALUATIONS: 'Plan evaluations',
-          ASSESS_EVALUATIONS: 'Assess evaluations'
+          ASSESS_EVALUATIONS: 'Assess evaluations',
+          EDIT_GRID_PANEL: 'Grid Panel'
         },
         CLIENT_MANAGEMENT: {
           HEADING: 'Client Management',

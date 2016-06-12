@@ -19,7 +19,8 @@
       'RecursionHelper',
       angularDragula(angular),
       'toastr',
-      'ngFileUpload'
+      'ngFileUpload',
+      'gridster'
     ]);
 
 })();
