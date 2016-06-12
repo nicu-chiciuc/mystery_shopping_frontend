@@ -62,7 +62,9 @@
     }
 
     function resetWeightToDisplay () {
-      this.weightToDisplay = msUtils.number.strip(this.parentBlock.weightToDisplay * this.weight / 100);
+      if (this.parentBlock) {
+        this.weightToDisplay = msUtils.number.strip(this.parentBlock.weightToDisplay * this.weight / 100);
+      }
       return this.weightToDisplay;
     }
 
