@@ -10,7 +10,11 @@
     var directive = {
       restrict: 'E',
       templateUrl: 'app/gridpanel/gridpanel_widget/gridpanel-widget.html',
-      scope: true,
+      scope: {
+        locationData: '=',
+        blockData: '=',
+        timeData: '='
+      },
       controller: GridPanelWidgetController,
       controllerAs: 'vm',
       bindToController: true
@@ -22,9 +26,13 @@
       var vm = this;
 
       console.log($scope);
+      vm.project = $scope.$parent.project;
+
+      console.log(d3);
+      console.log($scope);
 
       $scope.$on('refresh-yourself', function () {
-        vm.api.refreshWithTimeout();
+        vm.api.refreshWithTimeout(5);
 
       });
 
@@ -70,11 +78,22 @@
 
       console.log(vm);
 
-      vm.data = generateData();
+      vm.data = [
+        {
+          key: 'Easiness',
+          values: [
+            {x: 1, y: 10},
+            {x: 2, y: 20},
+            {x: 3, y: 15},
+            {x: 4, y: 12},
+            {x: 5, y: 20},
+          ]
+        }
+      ];
 
       /* Random Data Generator (took from nvd3.org) */
       function generateData() {
-        return stream_layers(3,50+Math.random()*50,.1).map(function(data, i) {
+        return stream_layers(1,50+Math.random()*50,.1).map(function(data, i) {
           return {
             key: 'Stream' + i,
             values: data

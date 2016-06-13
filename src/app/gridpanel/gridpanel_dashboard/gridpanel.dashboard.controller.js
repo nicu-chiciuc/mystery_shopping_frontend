@@ -12,10 +12,25 @@
 
     activate();
 
+    vm.project = project;
+    vm.addWidget = addWidget;
+    vm.deleteWidget = deleteWidget;
 
+    function deleteWidget (widget) {
+      console.log(widget);
+      console.log(vm.standardItems);
+      _.remove(vm.standardItems, widget);
+    }
+
+    function addWidget () {
+      vm.standardItems.push({
+        sizeX: 2, sizeY: 1,
+        row: 0, col: 0
+      })
+    }
 
     function activate() {
-      $scope.standardItems = [
+      vm.standardItems = [
         { sizeX: 2, sizeY: 1, row: 0, col: 0 },
         { sizeX: 2, sizeY: 2, row: 0, col: 2 },
         { sizeX: 1, sizeY: 1, row: 0, col: 4 },
@@ -29,7 +44,8 @@
         // { sizeX: 1, sizeY: 1, row: 2, col: 4 }
       ];
 
-      $scope.gridsterOpts = {
+      vm.gridsterOpts = {
+        minSizeX: 2,
         resizable: {
 
           stop: function (event, $element, widget) {
