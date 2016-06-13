@@ -20,7 +20,8 @@
       angularDragula(angular),
       'toastr',
       'ngFileUpload',
-      'gridster'
+      'gridster',
+      'nvd3'
     ]);
 
 })();
