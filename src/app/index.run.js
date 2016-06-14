@@ -28,8 +28,6 @@
       ['sections', 'SectionModel'],
       ['questionnaires', 'QuestionnaireModel'],
       ['templatequestionnaires', 'TemplateQuestionnaireModel'],
-      ['templateblocks', 'TemplateQuestionnaireBlockModel'],
-      ['templatequestions', 'TemplateQuestionnaireQuestionModel'],
       ['crossindextemplates', 'CrossIndexTemplates'],
       ['shoppers', 'ShopperModel'],
       ['evaluations', 'EvaluationModel'],
@@ -38,6 +36,7 @@
       ['clientemployees', 'CompanyEmployeeModel']
     ],
       function (modelData) {
+
         Restangular.extendModel(modelData[0], function (obj) {
           angular.extend(obj, modelManager[ modelData[1] ]);
           obj.initialize();
@@ -45,7 +44,19 @@
         });
       }
     );
-    
+
+    // Models that are initialized differently
+    Restangular.extendModel('templateblocks', function (obj) {
+      angular.extend(obj, modelManager.TemplateQuestionnaireBlockModel);
+      obj.initialize('template_blocks', 'template_questions');
+      return obj;
+    });
+
+    Restangular.extendModel('templatequestions', function (obj) {
+      angular.extend(obj, modelManager.TemplateQuestionnaireQuestionModel);
+      return obj;
+    });
+
     $log.debug('runBlock end');
   }
 
