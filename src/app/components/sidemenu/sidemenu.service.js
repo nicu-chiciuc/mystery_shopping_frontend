@@ -30,8 +30,7 @@
       sections.push(sideMenuData.projectPlanningSection);
     } else if ( principal.isInClientRole() ) {
 
-    }
-    if ( principal.isInAdminRole() ) {
+    } else if ( principal.isInAdminRole() ) {
       sections.push(sideMenuData.adminManagementSection);
     }
 
