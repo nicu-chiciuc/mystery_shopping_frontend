@@ -245,9 +245,11 @@
 
       $mdDialog.show(confirm).then(function() {
         if ( block.id ) {
-          block = models.restangularizeElement(null, block, 'templateblocks');
-          block.prepareForSave();
-          block.remove().then(deleteBlockSuccessFn, deleteBlockErrorFn);
+          var sendBlock = block.createSendingBlock();
+
+          models.restangularizeElement(null, sendBlock, 'templateblocks');
+
+          sendBlock.remove().then(deleteBlockSuccessFn, deleteBlockErrorFn);
         } else {
           deleteBlockSuccessFn();
         }
