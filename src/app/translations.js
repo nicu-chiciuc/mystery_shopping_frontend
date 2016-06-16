@@ -14,9 +14,9 @@
         RU: 'Rus'
       },
       CONTENT_TYPE: {
-        24: 'Department',
-        25: 'Entity',
-        26: 'Section',
+        25: 'Department',
+        26: 'Entity',
+        27: 'Section',
         17: 'Client project manager',
         18: 'Manager',
         19: 'Employee',
