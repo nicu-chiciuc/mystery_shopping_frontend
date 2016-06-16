@@ -68,22 +68,12 @@
       {
         position: { sizeX: 2, sizeY: 1, row: 0, col: 0 },
         data: [],
-        title: "Informație"
-      },
-      {
-        position: { sizeX: 2, sizeY: 2, row: 0, col: 2 },
-        data: [],
-        title: "Bucurie"
-      },
-      {
-        position: { sizeX: 1, sizeY: 1, row: 0, col: 4 },
-        data: [],
-        title: "Bunăstare"
-      },
-      {
-        position: { sizeX: 1, sizeY: 1, row: 0, col: 5 },
-        data: [],
-        title: "Amabilitate"
+        title: "Informație",
+        checked: {
+          places: [],
+          templates: []
+        },
+        available: {}
       }
     ];
 
@@ -110,7 +100,7 @@
       }
     ];
 
-    vm.dataManager = (function () {
+    vm.dataManager = (function (evaluations) {
       var byContentType = _.groupBy(evaluations, 'typeTranslationKey');
 
       function getLocations () {
@@ -153,6 +143,14 @@
         return ret;
       }
 
+      function getQuestionnaireByLocation (locations) {
+        var questionnaireTemplates = getQuestionnaireTemplates();
+
+        locations.forEach(function (location) {
+
+        });
+      }
+
       function getQuestionnaireTemplates () {
         var quesitonnaireTemplates = [];
 
@@ -172,19 +170,203 @@
         questionnaireTemplates.forEach(getSubBlocksAndQuestions);
 
         function getSubBlocksAndQuestions (block) {
-          
+
         }
 
       }
 
+      function isEvaluationsOfPlace (evaluation, place) {
+        if (evaluation.typeTranslationKey !== place.content_type) {
+          return false;
+        }
+
+        switch (evaluation.typeTranslationKey) {
+          case 'CONTENT_TYPE.18':
+          case 'CONTENT_TYPE.19':
+            return evaluation.employee_repr.id === place.id;
+
+          case 'CONTENT_TYPE.25':
+            return evaluation.department_repr.id === place.id;
+
+          case 'CONTENT_TYPE.26':
+            return evaluation.entity_repr.id === place.id;
+
+          case 'CONTENT_TYPE.27':
+            return evaluation.section_repr.id === place.id;
+
+          default:
+            return false;
+        }
+      }
+
+      function isEvaluationOfTemplate (evaluation, template) {
+        return evaluation.questionnaire_repr.template === template;
+      }
+
+      // place = {content_type, id}
+      function getTemplateIdsByPlace (place) {
+        var templateIds = [];
+
+        evaluations.forEach(function (evaluation) {
+          if (isEvaluationsOfPlace(evaluation, place)) {
+            templateIds.push(evaluation.questionnaire_repr.template);
+          }
+        });
+
+        return _.uniq(templateIds);
+      }
+
+      function getPlacesByTemplate (template) {
+        var places = [];
+
+        evaluations.forEach(function (evaluation) {
+          if (isEvaluationOfTemplate(evaluation, template)){
+            places.push( getPlaceOfEvaluation(evaluation) );
+          }
+        });
+
+
+        return places;
+      }
+
+      function getPlaceOfEvaluation (evaluation) {
+        var retId;
+        var retRepr
+
+        switch (evaluation.typeTranslationKey) {
+          case 'CONTENT_TYPE.18':
+          case 'CONTENT_TYPE.19':
+            retId = evaluation.employee_repr.id;
+            retRepr = evaluation.employee_repr;
+            break;
+
+          case 'CONTENT_TYPE.25':
+            retId = evaluation.department_repr.id;
+            retRepr = evaluation.department_repr;
+            break;
+
+          case 'CONTENT_TYPE.26':
+            retId = evaluation.entity_repr.id;
+            retRepr = evaluation.entity_repr;
+            break;
+
+          case 'CONTENT_TYPE.27':
+            retId = evaluation.section_repr.id;
+            retRepr = evaluation.section_repr;
+            break;
+
+          default:
+            return null;
+        }
+
+        return {
+          content_type: evaluation.typeTranslationKey,
+          id: retId,
+          repr: retRepr
+        };
+      }
+
+      // For uniqueness comparison
+      function placeMatcher (place) {
+        return place.content_type + place.id.toString();
+      }
+
+
+      function getPlacesOfAllEvaluations () {
+        return _.uniqBy(_.map(evaluations, getPlaceOfEvaluation), placeMatcher);
+      }
+
+      function getTemplateOfEvaluation (evaluation) {
+        return evaluation.questionnaire_repr.template;
+      }
+
+      function getTemplatesOfAllEvaluations () {
+        return _.uniq(_.map(evaluations, getTemplateOfEvaluation));
+      }
+
+      function getTemplateIdsByPlaceArray (places) {
+        var templateIdsArrays = [];
+
+        places.forEach(function (place) {
+          var tmp = getTemplateIdsByPlace(place);
+          if (tmp !== []) {
+            templateIdsArrays.push(tmp);
+          }
+        });
+
+        var templateIds = _.intersection.apply(_, templateIdsArrays);
+
+        return templateIds;
+      }
+
+      function getPlacesByTemplateArray (templates) {
+        var placesArrays = [];
+
+        templates.forEach(function (template) {
+          var tmp = getPlacesByTemplate(template);
+          if (tmp !== []) {
+            placesArrays.push(tmp);
+          }
+        });
+
+        // cannot use simple union of objects
+        placesArrays.push(placeMatcher)
+        var uniqPlaces = _.intersectionBy.apply(_, placesArrays);
+
+        return uniqPlaces;
+      }
+
+      function recalculateAvailableForWidget (widget) {
+        var availableTemplates;
+        var availablePlaces;
+
+        if (widget.checked.places.length > 0) {
+          availableTemplates = getTemplateIdsByPlaceArray(widget.checked.places);
+        }
+        else {
+          availableTemplates = getTemplatesOfAllEvaluations();
+        }
+
+        if (widget.checked.templates.length > 0) {
+          availablePlaces = getPlacesByTemplateArray(widget.checked.templates)
+        }
+        else {
+          availablePlaces = getPlacesOfAllEvaluations();
+        }
+
+        widget.available.places = availablePlaces;
+        widget.available.templates = availableTemplates;
+      }
+
+      function getFirstEvaluationByPlace (place) {
+        return evaluations.find(function (evaluation) {
+          return isEvaluationsOfPlace(evaluation, place);
+        });
+      }
+
+      function getFirstEvaluationByTemplate (template) {
+        return evaluations.find(function (evaluation) {
+          return isEvaluationOfTemplate(evaluation, place);
+        });
+      }
+
       return {
         getLocations: getLocations,
-        getBlocks: getBlocks
+        getQuestionnaireTemplates: getQuestionnaireTemplates,
+        getQuestionnaireByLocation: getQuestionnaireByLocation,
+        recalculateAvailableForWidget: recalculateAvailableForWidget,
+        getTemplateIdsByPlace: getTemplateIdsByPlace,
+        getPlaceOfEvaluation: getPlaceOfEvaluation,
+        getPlacesOfAllEvaluations: getPlacesOfAllEvaluations,
+        getTemplatesOfAllEvaluations: getTemplatesOfAllEvaluations,
+        placeMatcher: placeMatcher,
+        getFirstEvaluationByPlace: getFirstEvaluationByPlace,
+        getFirstEvaluationByTemplate: getFirstEvaluationByTemplate
 
       };
-    })();
+    })(evaluations);
 
-    console.log(vm.dataManager.getBlocks());
+    vm.dataManager.recalculateAvailableForWidget(vm.widgets[0]);
 
     function showSettingsDialog (event, widget) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;

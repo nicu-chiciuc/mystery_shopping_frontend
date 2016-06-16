@@ -1,23 +1,28 @@
 <md-dialog>
     <md-dialog-content layout="row">
-        <div flex="30" layout-padding layout="column">
+        <div flex="50" layout-padding layout="column">
             <h2>Places</h2>
 
-            <md-checkbox ng-model="location.checked" ng-repeat="location in vm.availableLocations">
-                {{location.type | translate}}
-                {{location.repr.displayName}}
+            <md-checkbox ng-model="place.checked"
+                         ng-repeat="place in vm.allPlaces"
+                         ng-disabled="place.disabled"
+                         ng-click="vm.placeClick(place)">
+                <span>{{place.content_type | translate}}: {{place.repr.name}}</span>
             </md-checkbox>
         </div>
 
         <div flex="30" layout-padding>
-            <h2>Blocks</h2>
+            <h2>Questionnaire Templates</h2>
 
-            <md-checkbox ng-model="block.checked" ng-repeat="block in vm.availableBlocks">
-                {{block.title}}
+            <md-checkbox ng-model="template.checked"
+                         ng-repeat="template in vm.allTemplates"
+                         ng-disabled="template.disabled"
+                         ng-click="vm.templateClick(template)">
+                {{template}}
             </md-checkbox>
         </div>
 
-        <div flex="30" layout-padding>
+        <div flex="20" layout-padding>
             <h2>Time</h2>
         </div>
     </md-dialog-content>
