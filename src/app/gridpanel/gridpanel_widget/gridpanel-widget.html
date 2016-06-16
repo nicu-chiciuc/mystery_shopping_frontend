@@ -1,4 +1,40 @@
 
+<!-- TODO replace inline style with a class of some sort -->
+<li layout="row" style="background-color: #fff;" class="md-whiteframe-3dp" gridster-item="vm.data">
+
+  <md-toolbar flex="100" class="ms-height-sm">
+    <div class="md-toolbar-tools">
+      <h2>
+        <span>Contacts</span>
+      </h2>
+      <span flex></span>
+
+      <md-button class="md-icon-button" aria-label="Settings">
+        <md-icon class="material-icons">assessment</md-icon>
+      </md-button>
+
+      <md-button class="md-icon-button" aria-label="Settings">
+        <md-icon class="material-icons">settings</md-icon>
+      </md-button>
+
+      <md-button class="md-icon-button" aria-label="Delete widget" ng-click="vm.deleteWidget(item)">
+        <md-icon class="material-icons">delete</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <!--<div flex style="height: 80%">-->
+    <!--<ms-grid-panel-widget-->
+      <!--location-data=""-->
+      <!--block-data=""-->
+      <!--time-data="">-->
+
+    <!--</ms-grid-panel-widget>-->
+  <!--</div>-->
+
+
+</li>
+
 <nvd3 options="vm.options" api="vm.api" data="vm.data">
 
 </nvd3>

@@ -17,6 +17,9 @@
         resolve: {
           project: function (managementFlow) {
             return managementFlow.getProject();
+          },
+          evaluations: function (managementFlow) {
+            return managementFlow.getProject().getList('evaluations');
           }
         },
         data: {

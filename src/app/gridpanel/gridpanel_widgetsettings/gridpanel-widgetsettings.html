@@ -1,0 +1,34 @@
+<md-dialog>
+    <md-dialog-content layout="row">
+        <div flex="30" layout-padding layout="column">
+            <h2>Places</h2>
+
+            <md-checkbox ng-model="location.checked" ng-repeat="location in vm.availableLocations">
+                {{location.type | translate}}
+                {{location.repr.displayName}}
+            </md-checkbox>
+        </div>
+
+        <div flex="30" layout-padding>
+            <h2>Blocks</h2>
+
+            <md-checkbox ng-model="block.checked" ng-repeat="block in vm.availableBlocks">
+                {{block.title}}
+            </md-checkbox>
+        </div>
+
+        <div flex="30" layout-padding>
+            <h2>Time</h2>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="vm.save()" class="md-primary md-raised">
+            {{ 'BUTTON.SAVE' | translate }}
+        </md-button>
+        <md-button ng-click="vm.cancel()" md-autofocus class="md-raised">
+            {{ 'BUTTON.CANCEL' | translate }}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>
