@@ -10,11 +10,11 @@
         $log.debug('Entered GridPanelDashboardController');
         var vm = this;
 
+        vm.widget = widget;
         vm.cancel = cancel;
         vm.save = save;
         vm.placeClick = placeClick;
         vm.templateClick = templateClick;
-        vm.graphType = 'placesKey';
         vm.allPlaces = [];
         vm.allTemplates = [];
 
@@ -113,7 +113,7 @@
         }
 
         function save () {
-          if (vm.graphType == 'placesKey') {
+          if (vm.widget.graphType == 'placesKey') {
             dashboard.dataManager.setWidgetDataWithKeyPlaces(widget);
           }
           else {

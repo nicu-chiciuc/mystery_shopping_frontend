@@ -64,18 +64,8 @@
       }
     };
 
-    vm.widgets = [
-      {
-        position: { sizeX: 2, sizeY: 1, row: 0, col: 0 },
-        data: [],
-        title: "Informație",
-        checked: {
-          places: [],
-          templates: []
-        },
-        available: {}
-      }
-    ];
+    vm.widgets = [];
+    addWidget();
 
     vm.dataManager = (function (evaluations) {
       var byContentType = _.groupBy(evaluations, 'typeTranslationKey');
@@ -400,7 +390,8 @@
           places: [],
           templates: []
         },
-        available: {} 
+        available: {},
+        graphType: 'placesKey'
       });
     }
 
