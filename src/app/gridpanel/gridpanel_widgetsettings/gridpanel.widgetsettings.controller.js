@@ -14,15 +14,15 @@
         vm.save = save;
         vm.placeClick = placeClick;
         vm.templateClick = templateClick;
-        vm.allPlaces;
-        vm.allTemplates;
+        vm.allPlaces = [];
+        vm.allTemplates = [];
 
         resetPlacesAndTemplateCheckboxes();
 
         function resetPlacesAndTemplateCheckboxes() {
             dashboard.dataManager.recalculateAvailableForWidget(widget);
 
-            vm.allPlaces = dashboard.dataManager.getPlacesOfAllEvaluations();     
+            vm.allPlaces = dashboard.dataManager.getPlacesOfAllEvaluations();
             vm.allTemplates = _.map(
                 dashboard.dataManager.getTemplatesOfAllEvaluations(),
                 function (num) {return {id: num}}
@@ -39,7 +39,7 @@
                         return (place.content_type === availablePlace.content_type) &&
                             (place.id === availablePlace.id);
                     });
-                    
+
                     place.disabled = (index === -1);
                 });
             }
@@ -60,7 +60,7 @@
                     var index = _.findIndex(widget.available.templates, function (availableTemplate) {
                         return template.id === availableTemplate;
                     });
-                    
+
                     template.disabled = (index === -1);
                 });
             }
@@ -70,7 +70,7 @@
                     var index = _.findIndex(widget.checked.templates, function (availableTemplate) {
                         return template.id === availableTemplate;
                     });
-                    
+
                     template.checked = (index !== -1);
                 });
             }
@@ -85,7 +85,8 @@
             if (index === -1) {
                 widget.checked.places.push({
                     content_type: place.content_type,
-                    id: place.id
+                    id: place.id,
+                    repr: place.repr
                 })
             }
             else {
@@ -111,6 +112,7 @@
         }
 
         function save () {
+            dashboard.dataManager.setWidgetDataWithKeyPlaces(widget);
             $mdDialog.hide();
         }
 

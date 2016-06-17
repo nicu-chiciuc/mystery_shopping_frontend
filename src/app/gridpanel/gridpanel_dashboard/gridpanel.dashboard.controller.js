@@ -103,78 +103,6 @@
     vm.dataManager = (function (evaluations) {
       var byContentType = _.groupBy(evaluations, 'typeTranslationKey');
 
-      function getLocations () {
-
-        var ret = [];
-
-        _.forOwn(byContentType, function (value, key) {
-          value.forEach(function (tmp) {
-            var ent;
-            switch (key) {
-              case 'CONTENT_TYPE.18':
-              case 'CONTENT_TYPE.19':
-                ent = tmp.employee_repr;
-                break;
-
-              case 'CONTENT_TYPE.25':
-                ent = tmp.department_repr;
-                break;
-
-              case 'CONTENT_TYPE.26':
-                ent = tmp.entity_repr;
-                break;
-
-              case 'CONTENT_TYPE.27':
-                ent = tmp.section_repr;
-                break;
-            }
-
-            ret.push({
-              type: key,
-              repr: ent
-            });
-          });
-        });
-
-        ret = _.uniqBy(ret, function (location) {
-          return location.type + location.repr.id.toString();
-        });
-
-        return ret;
-      }
-
-      function getQuestionnaireByLocation (locations) {
-        var questionnaireTemplates = getQuestionnaireTemplates();
-
-        locations.forEach(function (location) {
-
-        });
-      }
-
-      function getQuestionnaireTemplates () {
-        var quesitonnaireTemplates = [];
-
-        evaluations.forEach(function (evaluation) {
-          quesitonnaireTemplates.push(evaluation.questionnaire_repr);
-        });
-
-        quesitonnaireTemplates = _.uniqBy(quesitonnaireTemplates, 'template');
-
-        return quesitonnaireTemplates;
-      }
-
-      function getBlocks () {
-        var questionnaireTemplates = getQuestionnaireTemplates();
-        var allBlocks = [];
-
-        questionnaireTemplates.forEach(getSubBlocksAndQuestions);
-
-        function getSubBlocksAndQuestions (block) {
-
-        }
-
-      }
-
       function isEvaluationsOfPlace (evaluation, place) {
         if (evaluation.typeTranslationKey !== place.content_type) {
           return false;
@@ -271,6 +199,10 @@
         return place.content_type + place.id.toString();
       }
 
+      function templateMatcher (template) {
+        return template.id;
+      }
+
 
       function getPlacesOfAllEvaluations () {
         return _.uniqBy(_.map(evaluations, getPlaceOfEvaluation), placeMatcher);
@@ -350,10 +282,61 @@
         });
       }
 
+      function getEvaluationsByPlace (place) {
+        return _.filter(evaluations, function (evaluation) {
+          return isEvaluationsOfPlace(evaluation, place);
+        });
+      }
+
+      function getEvaluationsByPlaceAndTemplate (place, template) {
+        return _.filter(evaluations, function (evaluation) {
+          return isEvaluationsOfPlace(evaluation, place) &&
+            isEvaluationOfTemplate(evaluation, template);
+        })
+      }
+
+      function getAverageOfEvaluationArray (evaluationArr) {
+        var sum = 0;
+        var num = 0;
+
+        if (evaluationArr.length < 1) {
+          return -1;
+        }
+
+        evaluationArr.forEach(function (evaluation) {
+          sum += evaluation.questionnaire_repr.score;
+          num += 1;
+        });
+
+        return sum / num;
+      }
+
+      function setWidgetDataWithKeyPlaces (widget) {
+        var newData = [];
+
+        widget.checked.places.forEach(function (place) {
+          var newObj = {
+            key: place.repr.displayName,
+            values: []
+          };
+
+          widget.checked.templates.forEach(function (template) {
+            var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(place, template));
+
+            newObj.values.push({
+              label: template,
+              value: averageValue
+            });
+            console.log(averageValue);
+          });
+
+          newData.push(newObj);          
+        });
+
+        widget.data = newData;
+      }
+
       return {
-        getLocations: getLocations,
-        getQuestionnaireTemplates: getQuestionnaireTemplates,
-        getQuestionnaireByLocation: getQuestionnaireByLocation,
         recalculateAvailableForWidget: recalculateAvailableForWidget,
         getTemplateIdsByPlace: getTemplateIdsByPlace,
         getPlaceOfEvaluation: getPlaceOfEvaluation,
@@ -361,12 +344,12 @@
         getTemplatesOfAllEvaluations: getTemplatesOfAllEvaluations,
         placeMatcher: placeMatcher,
         getFirstEvaluationByPlace: getFirstEvaluationByPlace,
-        getFirstEvaluationByTemplate: getFirstEvaluationByTemplate
+        getFirstEvaluationByTemplate: getFirstEvaluationByTemplate,
+        setWidgetDataWithKeyPlaces: setWidgetDataWithKeyPlaces
 
       };
     })(evaluations);
 
-    vm.dataManager.recalculateAvailableForWidget(vm.widgets[0]);
 
     function showSettingsDialog (event, widget) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
