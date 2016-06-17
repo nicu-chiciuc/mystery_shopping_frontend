@@ -77,29 +77,6 @@
       }
     ];
 
-    vm.widgets[0].data = [
-      {
-        key: 'Easiness',
-        values: [
-          {'label': 'Botanica', 'value': 10},
-          {'label': 'Posta Veche', 'value': 20},
-          {'label': 'Cahul', 'value': 15},
-          {'label': 'Iepureni', 'value': 12},
-          {'label': 'Iargara', 'value': 20},
-        ]
-      },
-      {
-        key: 'Usefulness',
-        values: [
-          {'label': 'Botanica', 'value': 6},
-          {'label': 'Posta Veche', 'value': 7},
-          {'label': 'Cahul', 'value': 2},
-          {'label': 'Iepureni', 'value': 12},
-          {'label': 'Iargara', 'value': 5},
-        ]
-      }
-    ];
-
     vm.dataManager = (function (evaluations) {
       var byContentType = _.groupBy(evaluations, 'typeTranslationKey');
 
@@ -336,6 +313,31 @@
         widget.data = newData;
       }
 
+      function setWidgetDataWithKeyTemplates (widget) {
+        var newData = [];
+
+        widget.checked.templates.forEach(function (template) {
+          var newObj = {
+            key: template,
+            values: []
+          };
+
+          widget.checked.places.forEach(function (place) {
+            var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(place, template));
+
+            newObj.values.push({
+              label: place.repr.displayName,
+              value: averageValue
+            });
+
+          });
+
+          newData.push(newObj);
+        });
+
+        widget.data = newData;
+      }
+
       return {
         recalculateAvailableForWidget: recalculateAvailableForWidget,
         getTemplateIdsByPlace: getTemplateIdsByPlace,
@@ -345,8 +347,8 @@
         placeMatcher: placeMatcher,
         getFirstEvaluationByPlace: getFirstEvaluationByPlace,
         getFirstEvaluationByTemplate: getFirstEvaluationByTemplate,
-        setWidgetDataWithKeyPlaces: setWidgetDataWithKeyPlaces
-
+        setWidgetDataWithKeyPlaces: setWidgetDataWithKeyPlaces,
+        setWidgetDataWithKeyTemplates: setWidgetDataWithKeyTemplates
       };
     })(evaluations);
 
@@ -390,7 +392,12 @@
           row: 100, col: 0
         },
         data: [],
-        title: title
+        title: title,
+        checked: {
+          places: [],
+          templates: []
+        },
+        available: {} 
       });
     }
 

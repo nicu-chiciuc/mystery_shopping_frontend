@@ -1,5 +1,6 @@
 <md-dialog>
-    <md-dialog-content layout="row">
+    <md-dialog-content layout="column">
+      <div layout="row">
         <div flex="50" layout-padding layout="column">
             <h2>Places</h2>
 
@@ -25,6 +26,14 @@
         <div flex="20" layout-padding>
             <h2>Time</h2>
         </div>
+      </div>
+      <p></p>
+      <div layot="column">
+        <md-radio-group ng-model="vm.graphType">
+          <md-radio-button value="placesKey">Places as Key</md-radio-button>
+          <md-radio-button value="templatesKey">Templates as Key</md-radio-button>
+        </md-radio-group>
+      </div>
     </md-dialog-content>
 
     <md-dialog-actions layout="row">

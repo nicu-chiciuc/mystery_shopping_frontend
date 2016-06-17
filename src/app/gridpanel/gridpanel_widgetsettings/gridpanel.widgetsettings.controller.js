@@ -14,6 +14,7 @@
         vm.save = save;
         vm.placeClick = placeClick;
         vm.templateClick = templateClick;
+        vm.graphType = 'placesKey';
         vm.allPlaces = [];
         vm.allTemplates = [];
 
@@ -112,7 +113,12 @@
         }
 
         function save () {
+          if (vm.graphType == 'placesKey') {
             dashboard.dataManager.setWidgetDataWithKeyPlaces(widget);
+          }
+          else {
+            dashboard.dataManager.setWidgetDataWithKeyTemplates(widget);
+          }
             $mdDialog.hide();
         }
 
