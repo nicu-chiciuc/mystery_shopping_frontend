@@ -19,7 +19,7 @@
                          ng-repeat="template in vm.allTemplates"
                          ng-disabled="template.disabled"
                          ng-click="vm.templateClick(template)">
-                {{template}}
+                {{template.repr.title}}
             </md-checkbox>
         </div>
 

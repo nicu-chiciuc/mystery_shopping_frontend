@@ -34,11 +34,11 @@
         // height: 450,
 
         margin : {
-          top: 0,
-          right: 0,
+          top: 20,
+          right: 20,
           //
-          bottom: 0,
-          left: 20
+          bottom: 45,
+          left: 40
         },
         // clipEdge: true,
         staggerLabels: true,
@@ -105,20 +105,20 @@
       }
 
       function isEvaluationOfTemplate (evaluation, template) {
-        return evaluation.questionnaire_repr.template === template;
+        return evaluation.questionnaire_repr.template === template.id;
       }
 
       // place = {content_type, id}
-      function getTemplateIdsByPlace (place) {
-        var templateIds = [];
+      function getTemplatesByPlace (place) {
+        var templates = [];
 
         evaluations.forEach(function (evaluation) {
           if (isEvaluationsOfPlace(evaluation, place)) {
-            templateIds.push(evaluation.questionnaire_repr.template);
+            templates.push( getTemplateOfEvaluation(evaluation) );
           }
         });
 
-        return _.uniq(templateIds);
+        return templates;
       }
 
       function getPlacesByTemplate (template) {
@@ -171,6 +171,13 @@
         };
       }
 
+      function getTemplateOfEvaluation (evaluation) {
+        return {
+          id: evaluation.questionnaire_repr.template,
+          repr: evaluation.questionnaire_repr
+        }
+      }
+
       // For uniqueness comparison
       function placeMatcher (place) {
         return place.content_type + place.id.toString();
@@ -185,25 +192,22 @@
         return _.uniqBy(_.map(evaluations, getPlaceOfEvaluation), placeMatcher);
       }
 
-      function getTemplateOfEvaluation (evaluation) {
-        return evaluation.questionnaire_repr.template;
-      }
-
       function getTemplatesOfAllEvaluations () {
-        return _.uniq(_.map(evaluations, getTemplateOfEvaluation));
+        return _.uniqBy(_.map(evaluations, getTemplateOfEvaluation), templateMatcher);
       }
 
-      function getTemplateIdsByPlaceArray (places) {
-        var templateIdsArrays = [];
+      function getTemplatesByPlaceArray (places) {
+        var templatesArrays = [];
 
         places.forEach(function (place) {
-          var tmp = getTemplateIdsByPlace(place);
+          var tmp = getTemplatesByPlace(place);
           if (tmp !== []) {
-            templateIdsArrays.push(tmp);
+            templatesArrays.push(tmp);
           }
         });
 
-        var templateIds = _.intersection.apply(_, templateIdsArrays);
+        templatesArrays.push(templateMatcher);
+        var templateIds = _.intersectionBy.apply(_, templatesArrays);
 
         return templateIds;
       }
@@ -218,7 +222,6 @@
           }
         });
 
-        // cannot use simple union of objects
         placesArrays.push(placeMatcher)
         var uniqPlaces = _.intersectionBy.apply(_, placesArrays);
 
@@ -230,7 +233,7 @@
         var availablePlaces;
 
         if (widget.checked.places.length > 0) {
-          availableTemplates = getTemplateIdsByPlaceArray(widget.checked.places);
+          availableTemplates = getTemplatesByPlaceArray(widget.checked.places);
         }
         else {
           availableTemplates = getTemplatesOfAllEvaluations();
@@ -301,7 +304,7 @@
             var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(place, template));
 
             newObj.values.push({
-              label: template,
+              label: template.repr.title,
               value: averageValue
             });
             console.log(averageValue);
@@ -318,7 +321,7 @@
 
         widget.checked.templates.forEach(function (template) {
           var newObj = {
-            key: template,
+            key: template.repr.title,
             values: []
           };
 
@@ -340,7 +343,7 @@
 
       return {
         recalculateAvailableForWidget: recalculateAvailableForWidget,
-        getTemplateIdsByPlace: getTemplateIdsByPlace,
+        getTemplatesByPlace: getTemplatesByPlace,
         getPlaceOfEvaluation: getPlaceOfEvaluation,
         getPlacesOfAllEvaluations: getPlacesOfAllEvaluations,
         getTemplatesOfAllEvaluations: getTemplatesOfAllEvaluations,
