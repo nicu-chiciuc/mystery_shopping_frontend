@@ -67,6 +67,137 @@
     vm.widgets = [];
     addWidget();
 
+    //////////////////////////////////////////////////////////////////
+    // This part is not yet finished
+    var GeneralDataManager = (function () {
+      function GeneralDataManager () {
+        this.categories = {};
+        // this.datas = [];
+      }
+
+      // GeneralDataManager.prototype.addDataArray = function (dataArray) {
+      //   Array.prototype.push.apply(this.datas, dataArray);
+      // }
+
+
+      /**
+       * @callback idGetter
+       * @param {object} dataObject - A data object (usually a evaluation)
+       * @returns {object} idObj    - An identifier for the category (the object should also contain a name)
+       */
+
+      /**
+       * @param {string} categoryName - Name of new category
+       * @param {idGetter} idGetterFromData
+       * @param {nameGetter} nameGetterFromData 
+       */
+      GeneralDataManager.prototype.addCategory = function (categoryName, idGetterFromData) {
+        this.categories[categoryName] = {
+          idGetter: idGetterFromData,
+
+          foundTypes: []
+        };
+      }
+
+      GeneralDataManager.prototype.findTypesOfCategory = function(categoryName, datas) {
+        var self = this;
+        var categNow = self.categories[categoryName];
+        var typesNow = categNow.foundTypes;
+
+        // Remove all elements
+        typesNow.length = 0;
+
+        datas.forEach(function (data) {
+          // Find id of data by category
+          var idNow = categNow.idGetter(data);
+
+          // Search if such id was already found
+          var temp = _.find(typesNow, function (type) {
+            return _.isEqual(type.idObj, idNow)
+          });
+
+          // Creaty new entry if id wasn't found
+          if (!temp) {
+            temp = {
+              idObj: idNow,
+              datas: []
+            };
+            typesNow.push(temp);
+          }
+
+          // Add data entry to that ids types
+          temp.datas.push(data);
+        });
+      };
+
+      GeneralDataManager.prototype.isDataOfCategory = function(category, data, categoryTypeId) {
+        return _.isEqual(self.categories[category].idGetter(data), categoryTypeId);
+      }
+
+
+      return GeneralDataManager;
+    })();
+
+    var generalData = new GeneralDataManager();
+
+    // generalData.addDataArray(evaluations);
+
+    generalData.addCategory(
+      'places',
+      function (evaluation) {
+        var retId;
+        var retRepr
+
+        switch (evaluation.typeTranslationKey) {
+          case 'CONTENT_TYPE.18':
+          case 'CONTENT_TYPE.19':
+            retId = evaluation.employee_repr.id;
+            retRepr = evaluation.employee_repr;
+            break;
+
+          case 'CONTENT_TYPE.25':
+            retId = evaluation.department_repr.id;
+            retRepr = evaluation.department_repr;
+            break;
+
+          case 'CONTENT_TYPE.26':
+            retId = evaluation.entity_repr.id;
+            retRepr = evaluation.entity_repr;
+            break;
+
+          case 'CONTENT_TYPE.27':
+            retId = evaluation.section_repr.id;
+            retRepr = evaluation.section_repr;
+            break;
+
+          default:
+            return null;
+        }
+
+        return {
+          content_type: evaluation.typeTranslationKey,
+          id: retId,
+          repr: retRepr
+        };
+      }
+    );
+
+    generalData.addCategory(
+      'templates',
+      function (evaluation) {
+        return {
+          id: evaluation.questionnaire_repr.template,
+          name: evaluation.questionnaire_repr.title 
+        }
+      }
+    );
+
+    generalData.findTypesOfCategory('places', evaluations);
+    generalData.findTypesOfCategory('templates', evaluations);
+
+    ///////////////////////////////////////////////////////////////////
+
+
     vm.dataManager = (function (evaluations) {
       var byContentType = _.groupBy(evaluations, 'typeTranslationKey');
 
