@@ -10,21 +10,11 @@
     $log.debug('Entered GridPanelDashboardController');
     var vm = this;
 
-    // var plainEvaluations  = _.map(evaluations,
-    //   function (evaluation) {
-    //     return evaluation.plain();
-    //   });
-
-    console.log(evaluations);
-
-
     activate();
 
     vm.project = project;
     vm.addWidget = addWidget;
     vm.deleteWidget = deleteWidget;
-    vm.setInputDataForWidget = setInputDataForWidget;
-    vm.setGraphTypeForWidget = setGraphTypeForWidget;
     vm.triggerResize = triggerResize;
     vm.showSettingsDialog = showSettingsDialog;
 
@@ -89,7 +79,6 @@
       /**
        * @param {string} categoryName - Name of new category
        * @param {idGetter} idGetterFromData
-       * @param {nameGetter} nameGetterFromData 
        */
       GeneralDataManager.prototype.addCategory = function (categoryName, idGetterFromData) {
         this.categories[categoryName] = {
@@ -97,7 +86,7 @@
 
           foundTypes: []
         };
-      }
+      };
 
       GeneralDataManager.prototype.findTypesOfCategory = function(categoryName, datas) {
         var self = this;
@@ -132,7 +121,7 @@
 
       GeneralDataManager.prototype.isDataOfCategory = function(category, data, categoryTypeId) {
         return _.isEqual(self.categories[category].idGetter(data), categoryTypeId);
-      }
+      };
 
 
       return GeneralDataManager;
@@ -187,7 +176,7 @@
       function (evaluation) {
         return {
           id: evaluation.questionnaire_repr.template,
-          name: evaluation.questionnaire_repr.title 
+          name: evaluation.questionnaire_repr.title
         }
       }
     );
@@ -431,7 +420,7 @@
             console.log(averageValue);
           });
 
-          newData.push(newObj);          
+          newData.push(newObj);
         });
 
         widget.data = newData;
@@ -497,25 +486,19 @@
         });
     }
 
-    function setInputDataForWidget (widget) {
-
-    }
-
-    function setGraphTypeForWidget (widget) {
-
-    }
-
     function deleteWidget (widget) {
       _.remove(vm.widgets, widget);
     }
 
     function addWidget (title) {
-      vm.widgets.push({
+      var newWidget = {
         position: {
           sizeX: 1, sizeY: 1,
           row: 100, col: 0
         },
         data: [],
+        api: {},
+
         title: title,
         checked: {
           places: [],
@@ -523,30 +506,30 @@
         },
         available: {},
         graphType: 'placesKey'
-      });
+      };
+
+      newWidget.position.actualWidget = newWidget;
+
+      vm.widgets.push(newWidget);
     }
 
     function activate() {
       vm.gridsterOpts = {
+        columns: 8,
         resizable: {
-
-          stop: function (event, $element, widget) {
-
-            vm.triggerResize(event, $element, widget);
-
+          stop: function (event, $element, widgetPos) {
+            vm.triggerResize(widgetPos.actualWidget);
           }
         }
       };
-
-      triggerResize();
     }
 
-    function triggerResize (event, $element, widget) {
+    function triggerResize (widget) {
       // It's important to set a timeout because the widgets will take a small time to adjust
       // and this is not taken into account by gridster which means that content inside will be
       // resized incorrectly
       setTimeout(function () {
-        // $scope.$broadcast('refresh-yourself', {widget: widget, data: byEntities});
+        widget.api.refresh();
       }, 300);
     }
 
