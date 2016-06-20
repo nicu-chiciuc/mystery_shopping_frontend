@@ -499,6 +499,28 @@
         data: [],
         api: {},
 
+        comments: [
+          {
+            date: '1 April',
+            author: 'Boris Ivanovici',
+            text: 'when an unknown printer took a galley of type and scrambled it to make a ' +
+            'type specimen book. It has survived not only five centuries, but.'
+          },
+          {
+            date: '25 April',
+            author: 'Ion Pietraru',
+            text: 'Lorem Ipsum is that it has a more-or-less normal distribution of letters, ' +
+              'as opposed to using Content here, content here, making it look like readable English.'
+          },
+          {
+            date: '15 May',
+            author: 'Ivan Petrovici',
+            text: 'ure, discovered thum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. ' +
+            'This book is a treatise Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", c.'
+          }
+        ],
+        currentCommentIndex: 0,
+
         title: title,
         checked: {
           places: [],
@@ -522,6 +544,10 @@
           }
         }
       };
+    }
+
+    function setComment (widget, comment) {
+
     }
 
     function triggerResize (widget) {

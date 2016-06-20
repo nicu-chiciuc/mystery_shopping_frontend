@@ -28,11 +28,20 @@
           </div>
         </md-toolbar>
 
-        <div flex style="height: 80%">
+        <div style="height: 60%">
           <nvd3 options="vm.chartOptions" data="widget.data" api="widget.api">
 
           </nvd3>
         </div>
+
+        <md-content flex>
+          <md-button ng-click="widget.currentCommentIndex = $index" class="small-button" ng-repeat="comment in widget.comments">{{comment.date}}</md-button>
+        </md-content>
+
+        <md-content flex>
+          <h4>{{widget.comments[widget.currentCommentIndex].date}} - {{widget.comments[widget.currentCommentIndex].author}}</h4>
+          {{widget.comments[widget.currentCommentIndex].text}}
+        </md-content>
 
       </li>
 
