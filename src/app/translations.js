@@ -76,6 +76,10 @@
           CREATE_SCRIPT: 'Create scripts',
           LIST_SCRIPTS: 'List scripts'
         },
+        GRIDPANEL_MANAGEMENT: {
+          CREATE_GRIDPANEL: 'Create GridPanel',
+          LIST_GRIDPANELS: 'List GridPanels'
+        },
         METHODOLOGY_TOOLS: {
           HEADING: 'Methodology'
         },

@@ -145,12 +145,22 @@
       hidden: true,
       state: 'evaluations.assess'
     };
-    
+
     var gridPanelChildObject = {
       name: $filter('translate')('MENU.PROJECT_PLANNING.EDIT_GRID_PANEL'),
-      type: 'link',
-      hidden: true,
-      state: 'gridpanel'
+      type: 'toggle',
+      pages: [
+        {
+          name: $filter('translate')('MENU.GRIDPANEL_MANAGEMENT.CREATE_GRIDPANEL'),
+          state: 'gridpanel.create',
+          type: 'link'
+        },
+        {
+          name: $filter('translate')('MENU.GRIDPANEL_MANAGEMENT.LIST_GRIDPANELS'),
+          state: 'gridpanel.list',
+          type: 'link'
+        }
+      ]
     };
 
     // Project creation child object
