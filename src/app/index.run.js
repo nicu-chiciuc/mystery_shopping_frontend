@@ -57,6 +57,11 @@
       return obj;
     });
 
+    Restangular.extendModel('dashboard/templates', function (obj) {
+      angular.extend(obj, modelManager.DashboardTemplate);
+      return obj;
+    });
+
     $log.debug('runBlock end');
   }
 
