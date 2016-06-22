@@ -6,18 +6,23 @@
     .controller('GridPanelDashboardController', GridPanelDashboardController);
 
   /** @ngInject */
-  function GridPanelDashboardController ( $log, $scope, models, project, evaluations, $mdDialog, $mdMedia, currentDashboard ) {
+  function GridPanelDashboardController ( $log, $scope, models, project, evaluations, $mdDialog, $mdMedia, currentDashboard, managementFlow, principal, currentUser ) {
     $log.debug('Entered GridPanelDashboardController');
     var vm = this;
 
     activate();
 
+    vm.currentUserName = currentUser.user.first_name + " " + currentUser.user.last_name;
+    vm.currentDate = new Date();
+
+    vm.addingNewComment = false;
 
     vm.isNewDashboard = currentDashboard === null;
     vm.currentDashboard = currentDashboard || {};
     vm.project = project;
     vm.addWidget = addWidget;
     vm.saveDashboard = saveDashboard;
+    vm.addNewComment = addNewComment;
     vm.deleteWidget = deleteWidget;
     vm.triggerResize = triggerResize;
     vm.showSettingsDialog = showSettingsDialog;
@@ -515,7 +520,7 @@
 
       var rawWidgets = _.map(vm.widgets,
         function (widget) {
-          var rawWidget = _.pick(widget, ['position', 'title', 'checked']);
+          var rawWidget = _.pick(widget, ['position', 'title', 'checked', 'comments', 'currentCommentIndex']);
           rawWidget.position.actualWidget = undefined;
           return rawWidget;
         });
@@ -548,27 +553,8 @@
         data: [],
         api: {},
 
-        comments: rawWidget.comments || [
-          {
-            date: '1 April',
-            author: 'Boris Ivanovici',
-            text: 'when an unknown printer took a galley of type and scrambled it to make a ' +
-            'type specimen book. It has survived not only five centuries, but.'
-          },
-          {
-            date: '25 April',
-            author: 'Ion Pietraru',
-            text: 'Lorem Ipsum is that it has a more-or-less normal distribution of letters, ' +
-              'as opposed to using Content here, content here, making it look like readable English.'
-          },
-          {
-            date: '15 May',
-            author: 'Ivan Petrovici',
-            text: 'ure, discovered thum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. ' +
-            'This book is a treatise Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", c.'
-          }
-        ],
-        currentCommentIndex: 0,
+        comments: rawWidget.comments || [],
+        currentCommentIndex: rawWidget.currentCommentIndex || 0,
 
         title: rawWidget.title || 'Default title',
         checked: rawWidget.checked || {
@@ -600,6 +586,19 @@
     }
 
     function setComment (widget, comment) {
+
+    }
+
+    function addNewComment (widget) {
+      widget.comments.push({
+        date: new Date(),
+        author: vm.currentUserName,
+        text: widget.newComment
+      });
+
+      widget.currentCommentIndex = widget.comments.length - 1;
+      widget.newComment = '';
+      widget.addingNewComment = false;
 
     }
 

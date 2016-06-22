@@ -19,6 +19,9 @@
           },
           evaluations: function (managementFlow) {
             return managementFlow.getProject().getList('evaluations');
+          },
+          currentUser: function (principal) {
+            return principal.identity();
           }
         },
         data: {

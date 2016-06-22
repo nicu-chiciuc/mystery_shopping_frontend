@@ -1,10 +1,10 @@
 <!-- Not setting style with width and height will result in not displaying correctly-->
 <div flex="100">
-  <md-button ng-click="vm.addWidget()">
+  <md-button class="md-raised" ng-click="vm.addWidget()">
     Add widget
   </md-button>
 
-  <md-button ng-click="vm.saveDashboard()">
+  <md-button class="md-raised" ng-click="vm.saveDashboard()">
     Save Dashboard
   </md-button>
   <div gridster="vm.gridsterOpts">
@@ -38,13 +38,34 @@
           </nvd3>
         </div>
 
+        <!--<md-divider></md-divider>-->
+        <hr style="margin: 2px;"/>
+
         <md-content flex>
-          <md-button ng-click="widget.currentCommentIndex = $index" class="small-button" ng-repeat="comment in widget.comments">{{comment.date}}</md-button>
+          <md-button ng-click="widget.currentCommentIndex = $index" class="small-button" ng-repeat="comment in widget.comments">
+            {{comment.date | date : 'mediumDate'}}
+          </md-button>
+          <md-button ng-click="widget.addingNewComment = !widget.addingNewComment" class="small-button">+</md-button>
         </md-content>
 
         <md-content flex style="height: 20%;">
-          <p class="no-margin md-subhead">{{widget.comments[widget.currentCommentIndex].date}} - {{widget.comments[widget.currentCommentIndex].author}}</p>
-          <p class="md-caption">{{widget.comments[widget.currentCommentIndex].text}}</p>
+          <div ng-if="!widget.addingNewComment">
+            <p class="no-margin md-subhead">{{widget.comments[widget.currentCommentIndex].date | date : 'mediumDate'}} - {{widget.comments[widget.currentCommentIndex].author}}</p>
+            <p class="md-caption">{{widget.comments[widget.currentCommentIndex].text}}</p>
+          </div>
+
+          <div ng-if="widget.addingNewComment" layout="row">
+            <md-input-container flex="85" class="md-block">
+              <!--<label>Biography</label>-->
+              <textarea class="md-subhead" ng-model="widget.newComment" md-select-on-focus=""></textarea>
+            </md-input-container>
+
+            <div flex="15" layout="column">
+              <md-button ng-click="vm.addNewComment(widget)" class="small-button">save</md-button>
+              <md-button class="small-button">cancel</md-button>
+            </div>
+          </div>
+
         </md-content>
 
       </li>
