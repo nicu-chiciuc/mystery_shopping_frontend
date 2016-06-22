@@ -4,5 +4,9 @@
   min-width: 30px;
   line-height: normal;
 
-  margin: 0px;
+  margin: 0;
+}
+
+.no-margin {
+  margin: 0;
 }

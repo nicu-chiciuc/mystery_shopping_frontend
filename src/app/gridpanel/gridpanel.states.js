@@ -31,7 +31,9 @@
         templateUrl: 'app/gridpanel/gridpanel_dashboard/gridpanel-dashboard.html',
         controller: 'GridPanelDashboardController as vm',
         resolve: {
-          currentDashboard: function () {return {}}
+          currentDashboard: function () {
+            return null;
+          }
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']
@@ -39,16 +41,22 @@
       })
       .state('gridpanel.list', {
         url: '/list',
-        template: 'testing the test'
+        templateUrl: 'app/gridpanel/gridpanel_list/gridpanel-list.html',
+        controller: 'GridPanelListController as vm',
+        resolve: {
+          projectDashboards: function (models, project) {
+            return models.dashboardTemplates().getList({project: project.id});
+          }
+        }
       })
       .state('gridpanel.edit', {
         abstract: false,
-        url: '/create',
+        url: '/edit/{currentDashboardId:int}',
         templateUrl: 'app/gridpanel/gridpanel_dashboard/gridpanel-dashboard.html',
         controller: 'GridPanelDashboardController as vm',
         resolve: {
-          currentDashboard: function () {
-            return {};
+          currentDashboard: function (models, $stateParams) {
+            return models.dashboardTemplates().one($stateParams.currentDashboardId).get();
           }
         }
       })

@@ -3,6 +3,10 @@
   <md-button ng-click="vm.addWidget()">
     Add widget
   </md-button>
+
+  <md-button ng-click="vm.saveDashboard()">
+    Save Dashboard
+  </md-button>
   <div gridster="vm.gridsterOpts">
     <ul>
       <!-- TODO replace inline style with a class of some sort -->
@@ -38,9 +42,9 @@
           <md-button ng-click="widget.currentCommentIndex = $index" class="small-button" ng-repeat="comment in widget.comments">{{comment.date}}</md-button>
         </md-content>
 
-        <md-content flex>
-          <h4>{{widget.comments[widget.currentCommentIndex].date}} - {{widget.comments[widget.currentCommentIndex].author}}</h4>
-          {{widget.comments[widget.currentCommentIndex].text}}
+        <md-content flex style="height: 20%;">
+          <p class="no-margin md-subhead">{{widget.comments[widget.currentCommentIndex].date}} - {{widget.comments[widget.currentCommentIndex].author}}</p>
+          <p class="md-caption">{{widget.comments[widget.currentCommentIndex].text}}</p>
         </md-content>
 
       </li>

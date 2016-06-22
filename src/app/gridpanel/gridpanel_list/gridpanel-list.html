@@ -1,0 +1,11 @@
+<md-content layout="column">
+  <div flex ng-click="vm.editDashboard(dashboard)" ng-repeat="dashboard in vm.dashboards">
+    <md-button >
+      {{dashboard.title}}
+    </md-button>
+
+    <md-button ng-click="vm.removeDashboard(dashboard)">
+      Delete
+    </md-button>
+  </div>
+</md-content>
