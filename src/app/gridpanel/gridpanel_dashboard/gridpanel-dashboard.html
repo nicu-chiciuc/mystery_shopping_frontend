@@ -1,5 +1,8 @@
-<!-- Not setting style with width and height will result in not displaying correctly-->
 <div flex="100">
+  <div flex="100" layout-padding>
+    <strong>{{vm.currentDashboard.title}}</strong>
+  </div>
+
   <md-button class="md-raised" ng-click="vm.addWidget()">
     Add widget
   </md-button>
@@ -7,6 +10,11 @@
   <md-button class="md-raised" ng-click="vm.saveDashboard()">
     Save Dashboard
   </md-button>
+
+  <md-button class="md-raised" ng-click="vm.showDashboardSettingsDialog($event)">
+    Edit Dashboard
+  </md-button>
+
   <div gridster="vm.gridsterOpts">
     <ul>
       <!-- TODO replace inline style with a class of some sort -->
@@ -22,7 +30,7 @@
             </h2>
             <span flex></span>
 
-            <md-button class="md-icon-button" aria-label="Set input data" ng-click="vm.showSettingsDialog($event, widget)">
+            <md-button class="md-icon-button" aria-label="Set input data" ng-click="vm.showWidgetSettingsDialog($event, widget)">
               <md-icon class="material-icons">settings</md-icon>
             </md-button>
 
@@ -38,14 +46,14 @@
           </nvd3>
         </div>
 
-        <!--<md-divider></md-divider>-->
+
         <hr style="margin: 2px;"/>
 
         <md-content flex>
           <md-button ng-click="widget.currentCommentIndex = $index" class="small-button" ng-repeat="comment in widget.comments">
             {{comment.date | date : 'mediumDate'}}
           </md-button>
-          <md-button ng-click="widget.addingNewComment = !widget.addingNewComment" class="small-button">+</md-button>
+          <md-button ng-click="widget.addingNewComment = true" class="small-button">+</md-button>
         </md-content>
 
         <md-content flex style="height: 20%;">

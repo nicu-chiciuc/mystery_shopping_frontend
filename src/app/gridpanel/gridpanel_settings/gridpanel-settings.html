@@ -1,0 +1,20 @@
+<md-dialog>
+  <md-input-container>
+    <label>Dashboard Title</label>
+    <input ng-model="vm.dashboard.title">
+  </md-input-container>
+
+  <md-checkbox ng-model="vm.dashboard.published">
+    Published
+  </md-checkbox>
+
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button ng-click="vm.save()" class="md-primary md-raised">
+      {{ 'BUTTON.SAVE' | translate }}
+    </md-button>
+    <md-button ng-click="vm.cancel()" md-autofocus class="md-raised">
+      {{ 'BUTTON.CANCEL' | translate }}
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>

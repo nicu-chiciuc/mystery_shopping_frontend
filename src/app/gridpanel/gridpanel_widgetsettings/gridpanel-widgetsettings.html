@@ -1,48 +1,53 @@
 <md-dialog>
-    <md-dialog-content layout="column">
-      <div layout="row">
-        <div flex="50" layout-padding layout="column">
-            <h2>Places</h2>
+  <md-dialog-content layout="column">
+    <md-input-container>
+    <label>Widget Title</label>
+    <input ng-model="vm.widget.title">
+    </md-input-container>
 
-            <md-checkbox ng-model="place.checked"
-                         ng-repeat="place in vm.allPlaces"
-                         ng-disabled="place.disabled"
-                         ng-click="vm.placeClick(place)">
-                <span>{{place.content_type | translate}}: {{place.repr.name}}</span>
-            </md-checkbox>
-        </div>
+    <div layout="row">
+    <div flex="50" layout-padding layout="column">
+      <h2>Places</h2>
 
-        <div flex="30" layout-padding>
-            <h2>Questionnaire Templates</h2>
+      <md-checkbox ng-model="place.checked"
+             ng-repeat="place in vm.allPlaces"
+             ng-disabled="place.disabled"
+             ng-click="vm.placeClick(place)">
+        <span>{{place.content_type | translate}}: {{place.repr.name}}</span>
+      </md-checkbox>
+    </div>
 
-            <md-checkbox ng-model="template.checked"
-                         ng-repeat="template in vm.allTemplates"
-                         ng-disabled="template.disabled"
-                         ng-click="vm.templateClick(template)">
-                {{template.repr.title}}
-            </md-checkbox>
-        </div>
+    <div flex="30" layout-padding>
+      <h2>Questionnaire Templates</h2>
 
-        <div flex="20" layout-padding>
-            <h2>Time</h2>
-        </div>
-      </div>
-      <p></p>
-      <div layot="column">
-        <md-radio-group ng-model="vm.widget.graphType">
-          <md-radio-button value="placesKey">Places as Key</md-radio-button>
-          <md-radio-button value="templatesKey">Templates as Key</md-radio-button>
-        </md-radio-group>
-      </div>
-    </md-dialog-content>
+      <md-checkbox ng-model="template.checked"
+             ng-repeat="template in vm.allTemplates"
+             ng-disabled="template.disabled"
+             ng-click="vm.templateClick(template)">
+        {{template.repr.title}}
+      </md-checkbox>
+    </div>
 
-    <md-dialog-actions layout="row">
-        <span flex></span>
-        <md-button ng-click="vm.save()" class="md-primary md-raised">
-            {{ 'BUTTON.SAVE' | translate }}
-        </md-button>
-        <md-button ng-click="vm.cancel()" md-autofocus class="md-raised">
-            {{ 'BUTTON.CANCEL' | translate }}
-        </md-button>
-    </md-dialog-actions>
+    <div flex="20" layout-padding>
+      <h2>Time</h2>
+    </div>
+    </div>
+    <p></p>
+    <div layot="column">
+    <md-radio-group ng-model="vm.widget.graphType">
+      <md-radio-button value="placesKey">Places as Key</md-radio-button>
+      <md-radio-button value="templatesKey">Templates as Key</md-radio-button>
+    </md-radio-group>
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button ng-click="vm.save()" class="md-primary md-raised">
+      {{ 'BUTTON.SAVE' | translate }}
+    </md-button>
+    <md-button ng-click="vm.cancel()" md-autofocus class="md-raised">
+      {{ 'BUTTON.CANCEL' | translate }}
+    </md-button>
+  </md-dialog-actions>
 </md-dialog>

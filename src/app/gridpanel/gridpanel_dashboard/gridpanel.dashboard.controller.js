@@ -18,14 +18,15 @@
     vm.addingNewComment = false;
 
     vm.isNewDashboard = currentDashboard === null;
-    vm.currentDashboard = currentDashboard || {};
+    vm.currentDashboard = currentDashboard || {title: 'Default name'};
     vm.project = project;
     vm.addWidget = addWidget;
     vm.saveDashboard = saveDashboard;
     vm.addNewComment = addNewComment;
     vm.deleteWidget = deleteWidget;
     vm.triggerResize = triggerResize;
-    vm.showSettingsDialog = showSettingsDialog;
+    vm.showWidgetSettingsDialog = showWidgetSettingsDialog;
+    vm.showDashboardSettingsDialog = showDashboardSettingsDialog;
 
     vm.widgets = [];
 
@@ -321,8 +322,6 @@
 
         vm.triggerResize(widget);
       });
-
-      // console.log(widgets);
     }
 
     vm.chartOptions = {
@@ -490,7 +489,7 @@
 
     ///////////////////////////////////////////////////////////////////
 
-    function showSettingsDialog (event, widget) {
+    function showWidgetSettingsDialog (event, widget) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
       $mdDialog.show({
         controller: 'GridPanelWidgetSettingsController as vm',
@@ -502,6 +501,25 @@
         locals: {
           widget: widget,
           dashboard: vm
+        }
+      })
+        .then(function(question) {
+          console.log('in then mate');
+          // block.addQuestion(question);
+        });
+    }
+
+    function showDashboardSettingsDialog (event) {
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
+      $mdDialog.show({
+        controller: 'GridPanelSettingsController as vm',
+        templateUrl: 'app/gridpanel/gridpanel_settings/gridpanel-settings.html',
+        parent: angular.element(document.body),
+        targetEvent: event,
+        escapeToClose: false,
+        fullscreen: useFullScreen,
+        locals: {
+          dashboard: vm.currentDashboard
         }
       })
         .then(function(question) {
