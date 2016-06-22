@@ -13,7 +13,7 @@
              ng-repeat="place in vm.allPlaces"
              ng-disabled="place.disabled"
              ng-click="vm.placeClick(place)">
-        <span>{{place.content_type | translate}}: {{place.repr.name}}</span>
+        <span>{{place.content_type | translate}}: {{place.name}}</span>
       </md-checkbox>
     </div>
 
@@ -24,7 +24,7 @@
              ng-repeat="template in vm.allTemplates"
              ng-disabled="template.disabled"
              ng-click="vm.templateClick(template)">
-        {{template.repr.title}}
+        {{template.name}}
       </md-checkbox>
     </div>
 

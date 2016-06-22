@@ -85,7 +85,7 @@
         widget.checked.places.push({
           content_type: place.content_type,
           id: place.id,
-          repr: place.repr
+          name: place.name
         })
       }
       else {
@@ -103,7 +103,7 @@
       if (index === -1) {
         widget.checked.templates.push({
           id: template.id,
-          repr: template.repr
+          name: template.name
         });
       }
       else {

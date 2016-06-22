@@ -89,7 +89,7 @@
 
       function getPlaceOfEvaluation (evaluation) {
         var retId;
-        var retRepr
+        var retRepr;
 
         switch (evaluation.typeTranslationKey) {
           case 'CONTENT_TYPE.18':
@@ -120,14 +120,14 @@
         return {
           content_type: evaluation.typeTranslationKey,
           id: retId,
-          repr: retRepr
+          name: retRepr.displayName
         };
       }
 
       function getTemplateOfEvaluation (evaluation) {
         return {
           id: evaluation.questionnaire_repr.template,
-          repr: evaluation.questionnaire_repr
+          name: evaluation.questionnaire_repr.title
         }
       }
 
@@ -249,7 +249,7 @@
 
         widget.checked.places.forEach(function (place) {
           var newObj = {
-            key: place.repr.displayName,
+            key: place.name,
             values: []
           };
 
@@ -257,7 +257,7 @@
             var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(place, template));
 
             newObj.values.push({
-              label: template.repr.title,
+              label: template.name,
               value: averageValue
             });
             console.log(averageValue);
@@ -274,7 +274,7 @@
 
         widget.checked.templates.forEach(function (template) {
           var newObj = {
-            key: template.repr.title,
+            key: template.name,
             values: []
           };
 
@@ -282,7 +282,7 @@
             var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(place, template));
 
             newObj.values.push({
-              label: place.repr.displayName,
+              label: place.name,
               value: averageValue
             });
 
@@ -469,7 +469,7 @@
           return {
             content_type: evaluation.typeTranslationKey,
             id: retId,
-            repr: retRepr
+            name: retRepr.displayName
           };
         }
       );
