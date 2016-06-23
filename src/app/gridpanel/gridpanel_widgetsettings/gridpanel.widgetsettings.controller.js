@@ -6,7 +6,7 @@
     .controller('GridPanelWidgetSettingsController', GridPanelWidgetSettingsController);
 
   /** @ngInject */
-  function GridPanelWidgetSettingsController($log, $scope, $mdDialog, widget, dashboard) {
+  function GridPanelWidgetSettingsController($log, $scope, $mdDialog, widget, dashboard, evaluations, ClassificationManager) {
     $log.debug('Entered GridPanelDashboardController');
     var vm = this;
 
@@ -22,10 +22,10 @@
     resetPlacesAndTemplateCheckboxes();
 
     function resetPlacesAndTemplateCheckboxes() {
-      dashboard.dataManager.recalculateAvailableForWidget(widget);
+      ClassificationManager.recalculateAvailableForWidget(evaluations, widget);
 
-      vm.allPlaces = dashboard.dataManager.getPlacesOfAllEvaluations();
-      vm.allTemplates = dashboard.dataManager.getTemplatesOfAllEvaluations();
+      vm.allPlaces = ClassificationManager.getPlacesOfAllEvaluations(evaluations);
+      vm.allTemplates = ClassificationManager.getTemplatesOfAllEvaluations(evaluations);
 
       setAvailabilityOfPlaces();
       setAlreadyCheckedPlaces();
@@ -115,10 +115,10 @@
 
     function save () {
       if (vm.widget.graphType == 'placesKey') {
-      dashboard.dataManager.setWidgetDataWithKeyPlaces(widget);
+      ClassificationManager.setWidgetDataWithKeyPlaces(evaluations, widget);
       }
       else {
-      dashboard.dataManager.setWidgetDataWithKeyTemplates(widget);
+      ClassificationManager.setWidgetDataWithKeyTemplates(evaluations, widget);
       }
       $mdDialog.hide();
     }

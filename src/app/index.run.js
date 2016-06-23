@@ -33,7 +33,8 @@
       ['evaluations', 'EvaluationModel'],
       ['evaluationassessmentlevels', 'EvaluationAssessmentLevelModel'],
       ['clientmanagers', 'CompanyManagerModel'],
-      ['clientemployees', 'CompanyEmployeeModel']
+      ['clientemployees', 'CompanyEmployeeModel'],
+      ['dashboard/templates', 'DashboardTemplate']
     ],
       function (modelData) {
 
@@ -54,11 +55,6 @@
 
     Restangular.extendModel('templatequestions', function (obj) {
       angular.extend(obj, modelManager.TemplateQuestionnaireQuestionModel);
-      return obj;
-    });
-
-    Restangular.extendModel('dashboard/templates', function (obj) {
-      angular.extend(obj, modelManager.DashboardTemplate);
       return obj;
     });
 
