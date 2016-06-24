@@ -17,12 +17,31 @@
           project: function (managementFlow) {
             return managementFlow.getProject();
           },
-          evaluations: function (managementFlow) {
-            return managementFlow.getProject().getList('evaluations');
-          },
+          // evaluations: function (managementFlow) {
+          //   return managementFlow.getProject().getList('evaluations');
+          // },
           currentUser: function (principal) {
             return principal.identity();
+          },
+
+          // Test of getting evaluations of all projects
+          evaluations: function ($q, managementFlow) {
+            var projEvals = _.map(managementFlow.getProjectList(),
+              function (project) {
+                return project.getList('evaluations')
+              });
+
+            return $q.all(projEvals).then(function (resp) {
+              var allEvals = Array.prototype.concat.apply([], resp);
+              allEvals = _.map(allEvals,
+                function (evaluation) {
+                  return evaluation.plain();
+                });
+
+              return allEvals;
+            });
           }
+
         },
         data: {
           roles: ['tenantprojectmanager', 'tenantproductmanager', 'tenantconsultant']

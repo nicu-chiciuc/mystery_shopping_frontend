@@ -7,151 +7,88 @@
 
   function ClassificationManager () {
 
-    function isEvaluationsOfPlace (evaluation, place) {
-      if (evaluation.typeTranslationKey !== place.content_type) {
-        return false;
-      }
+    var categories = {
+      'places': function (evaluation) {
+          var retId;
+          var retRepr;
 
-      switch (evaluation.typeTranslationKey) {
-        case 'CONTENT_TYPE.18':
-        case 'CONTENT_TYPE.19':
-          return evaluation.employee_repr.id === place.id;
+          switch (evaluation.typeTranslationKey) {
+            case 'CONTENT_TYPE.18':
+            case 'CONTENT_TYPE.19':
+              retId = evaluation.employee_repr.id;
+              retRepr = evaluation.employee_repr;
+              break;
 
-        case 'CONTENT_TYPE.25':
-          return evaluation.department_repr.id === place.id;
+            case 'CONTENT_TYPE.25':
+              retId = evaluation.department_repr.id;
+              retRepr = evaluation.department_repr;
+              break;
 
-        case 'CONTENT_TYPE.26':
-          return evaluation.entity_repr.id === place.id;
+            case 'CONTENT_TYPE.26':
+              retId = evaluation.entity_repr.id;
+              retRepr = evaluation.entity_repr;
+              break;
 
-        case 'CONTENT_TYPE.27':
-          return evaluation.section_repr.id === place.id;
+            case 'CONTENT_TYPE.27':
+              retId = evaluation.section_repr.id;
+              retRepr = evaluation.section_repr;
+              break;
 
-        default:
-          return false;
-      }
-    }
+            default:
+              return null;
+          }
 
-    function isEvaluationOfTemplate (evaluation, template) {
-      return evaluation.questionnaire_repr.template === template.id;
-    }
+          return {
+            content_type: evaluation.typeTranslationKey,
+            id: retId,
+            name: retRepr.displayName
+          }
+        },
 
-    function getTemplatesByPlace (evaluations, place) {
-      var templates = [];
-
-      evaluations.forEach(function (evaluation) {
-        if (isEvaluationsOfPlace(evaluation, place)) {
-          templates.push( getTemplateOfEvaluation(evaluation) );
+      'templates': function (evaluation) {
+          return {
+            id: evaluation.questionnaire_repr.template,
+            name: evaluation.questionnaire_repr.title
+          }
         }
+    };
+
+    function isEvaluationOfCategoryType (category, evaluation, categoryType) {
+      return _.isEqual(categories[category](evaluation), categoryType);
+    }
+
+    function getEvaluationsByCategoryType (category, evaluations, categoryType) {
+      return _.filter(evaluations, function (evaluation) {
+        return isEvaluationOfCategoryType(category, evaluation, categoryType);
+      });
+    }
+
+    function getCategoryTypesByEvaluation (category, evaluations) {
+      return _.uniqWith(_.map(evaluations, categories[category]), _.isEqual);
+    }
+
+    function getCategoryTypesByCategoryType (getCategory, evaluations, byCategory, byCategoryType) {
+      return getCategoryTypesByEvaluation(
+        getCategory,
+        getEvaluationsByCategoryType(byCategory, evaluations, byCategoryType)
+      );
+    }
+
+    function getCategoryTypesByCategoryTypes (getCategory, evaluations, byCategory, byCategoryTypes) {
+      var categoryTypes = _.map(byCategoryTypes, function (categoryType) {
+        return getCategoryTypesByCategoryType(getCategory, evaluations, byCategory, categoryType);
       });
 
-      return templates;
+      categoryTypes.push(_.isEqual);
+      return _.intersectionWith.apply(_, categoryTypes)
     }
-
-    function getPlacesByTemplate (evaluations, template) {
-      var places = [];
-
-      evaluations.forEach(function (evaluation) {
-        if (isEvaluationOfTemplate(evaluation, template)){
-          places.push( getPlaceOfEvaluation(evaluation) );
-        }
-      });
-
-
-      return places;
-    }
-
-    function getPlaceOfEvaluation (evaluation) {
-      var retId;
-      var retRepr;
-
-      switch (evaluation.typeTranslationKey) {
-        case 'CONTENT_TYPE.18':
-        case 'CONTENT_TYPE.19':
-          retId = evaluation.employee_repr.id;
-          retRepr = evaluation.employee_repr;
-          break;
-
-        case 'CONTENT_TYPE.25':
-          retId = evaluation.department_repr.id;
-          retRepr = evaluation.department_repr;
-          break;
-
-        case 'CONTENT_TYPE.26':
-          retId = evaluation.entity_repr.id;
-          retRepr = evaluation.entity_repr;
-          break;
-
-        case 'CONTENT_TYPE.27':
-          retId = evaluation.section_repr.id;
-          retRepr = evaluation.section_repr;
-          break;
-
-        default:
-          return null;
-      }
-
-      return {
-        content_type: evaluation.typeTranslationKey,
-        id: retId,
-        name: retRepr.displayName
-      };
-    }
-
-    function getTemplateOfEvaluation (evaluation) {
-      return {
-        id: evaluation.questionnaire_repr.template,
-        name: evaluation.questionnaire_repr.title
-      }
-    }
-
-    // For uniqueness comparison
-    function placeMatcher (place) {
-      return place.content_type + place.id.toString();
-    }
-
-    function templateMatcher (template) {
-      return template.id;
-    }
-
 
     function getPlacesOfAllEvaluations (evaluations) {
-      return _.uniqBy(_.map(evaluations, getPlaceOfEvaluation), placeMatcher);
+      return getCategoryTypesByEvaluation('places', evaluations);
     }
 
     function getTemplatesOfAllEvaluations (evaluations) {
-      return _.uniqBy(_.map(evaluations, getTemplateOfEvaluation), templateMatcher);
-    }
-
-    function getTemplatesByPlaceArray (evaluations, places) {
-      var templatesArrays = [];
-
-      places.forEach(function (place) {
-        var tmp = getTemplatesByPlace(evaluations, place);
-        if (tmp !== []) {
-          templatesArrays.push(tmp);
-        }
-      });
-
-      templatesArrays.push(templateMatcher);
-      var templateIds = _.intersectionBy.apply(_, templatesArrays);
-
-      return templateIds;
-    }
-
-    function getPlacesByTemplateArray (evaluations, templates) {
-      var placesArrays = [];
-
-      templates.forEach(function (template) {
-        var tmp = getPlacesByTemplate(evaluations, template);
-        if (tmp !== []) {
-          placesArrays.push(tmp);
-        }
-      });
-
-      placesArrays.push(placeMatcher);
-      var uniqPlaces = _.intersectionBy.apply(_, placesArrays);
-
-      return uniqPlaces;
+      return getCategoryTypesByEvaluation('templates', evaluations);
     }
 
     function recalculateAvailableForWidget (evaluations, widget) {
@@ -159,14 +96,14 @@
       var availablePlaces;
 
       if (widget.checked.places.length > 0) {
-        availableTemplates = getTemplatesByPlaceArray(evaluations, widget.checked.places);
+        availableTemplates = getCategoryTypesByCategoryTypes('templates', evaluations, 'places', widget.checked.places);
       }
       else {
         availableTemplates = getTemplatesOfAllEvaluations(evaluations);
       }
 
       if (widget.checked.templates.length > 0) {
-        availablePlaces = getPlacesByTemplateArray(evaluations, widget.checked.templates)
+        availablePlaces = getCategoryTypesByCategoryTypes('places', evaluations, 'templates', widget.checked.templates);
       }
       else {
         availablePlaces = getPlacesOfAllEvaluations(evaluations);
@@ -178,8 +115,8 @@
 
     function getEvaluationsByPlaceAndTemplate (evaluations, place, template) {
       return _.filter(evaluations, function (evaluation) {
-        return isEvaluationsOfPlace(evaluation, place) &&
-          isEvaluationOfTemplate(evaluation, template);
+        return isEvaluationOfCategoryType('places', evaluation, place) &&
+          isEvaluationOfCategoryType('templates', evaluation, template);
       })
     }
 

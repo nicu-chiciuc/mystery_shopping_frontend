@@ -19,6 +19,7 @@
 
     vm.isNewDashboard = currentDashboard === null;
     vm.currentDashboard = currentDashboard || {title: 'Default name'};
+    
     vm.project = project;
     vm.addWidget = addWidget;
     vm.saveDashboard = saveDashboard;
