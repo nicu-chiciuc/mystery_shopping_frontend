@@ -31,11 +31,12 @@
 
       function savePlannedEvaluationsSuccessFn ( response ) {
         _.forEach(response, function (evaluation) {
-          angular.extend(evaluation, models.manager.EvaluationModel);
-          evaluation.initialize();
+          models.restangularizeElement(managementFlow.getProject(), evaluation, 'evaluations');
           evaluation.questionnaire_repr = evaluation.questionnaire;
         });
-        self.plannedEvaluations = self.plannedEvaluations.concat(response);
+        // Using concat, will get rid of the properties of the array
+        // and restangularizing the element would be needed
+        Array.prototype.push.apply(self.plannedEvaluations, response);
       }
       function savePlannedEvaluationsErrorFn ( error ) {
         // TODO deal with the error
