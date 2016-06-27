@@ -35,7 +35,7 @@
                    ng-repeat="wave in vm.wrappedCategoryTypes['waves']"
                    ng-disabled="!wave.available"
                    ng-click="vm.categoryTypeClick('waves', wave)">
-        {{wave.type.id}}
+        Project {{wave.type.id}}, {{wave.type.name}}
       </md-checkbox>
     </div>
     </div>

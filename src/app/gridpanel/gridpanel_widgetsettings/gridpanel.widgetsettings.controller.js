@@ -15,40 +15,27 @@
     vm.cancel = cancel;
     vm.save = save;
     vm.categoryTypeClick = categoryTypeClick;
+    vm.wrappedCategoryTypes = {};
 
     resetPlacesAndTemplateCheckboxes();
 
     function resetPlacesAndTemplateCheckboxes() {
       ClassificationManager.recalculateAvailableForWidget(evaluations, widget);
 
-      vm.wrappedCategoryTypes = {
-        'places': createWrappedCategoryTypes('places'),
-        'templates': createWrappedCategoryTypes('templates'),
-        'waves': createWrappedCategoryTypes('waves')
-      };
+      ['places', 'templates', 'waves'].forEach(function (category) {
+        vm.wrappedCategoryTypes[category] = createWrappedCategoryTypes (category);
+      });
 
       function createWrappedCategoryTypes (category) {
         var rawCategoryTypes = ClassificationManager.getCategoryTypesByEvaluations(category, evaluations);
         return _.map( rawCategoryTypes, function (categoryType) {
           return {
             type: categoryType,
-            checked: false,
-            available: false
+            checked: !! _.find(widget.checked[category], categoryType),
+            available: !! _.find(widget.available[category], categoryType)
           }
         });
       }
-
-      setAvailabilityAndCheckedStatusOfCategoryTypes('places');
-      setAvailabilityAndCheckedStatusOfCategoryTypes('templates');
-      setAvailabilityAndCheckedStatusOfCategoryTypes('waves');
-
-      function setAvailabilityAndCheckedStatusOfCategoryTypes (category) {
-        vm.wrappedCategoryTypes[category].forEach(function (wrappedCategoryType) {
-          wrappedCategoryType.available = !! _.find(widget.available[category], wrappedCategoryType.type);
-          wrappedCategoryType.checked   = !! _.find(widget.checked[category], wrappedCategoryType.type);
-        });
-      }
-
     }
 
     function categoryTypeClick (category, wrappedCategoryType) {

@@ -55,7 +55,7 @@
       'waves': function (evaluation) {
         return {
           id: evaluation.project,
-          name: 'not implemented'
+          name: evaluation.project_repr.period_start + " - " + evaluation.project_repr.period_end
         }
       }
     };
