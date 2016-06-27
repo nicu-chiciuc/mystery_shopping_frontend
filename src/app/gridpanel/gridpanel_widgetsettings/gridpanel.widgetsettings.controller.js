@@ -14,104 +14,59 @@
     vm.oldWidgetTitle = widget.title;
     vm.cancel = cancel;
     vm.save = save;
-    vm.placeClick = placeClick;
-    vm.templateClick = templateClick;
-    vm.allPlaces = [];
-    vm.allTemplates = [];
+    vm.categoryTypeClick = categoryTypeClick;
 
     resetPlacesAndTemplateCheckboxes();
 
     function resetPlacesAndTemplateCheckboxes() {
       ClassificationManager.recalculateAvailableForWidget(evaluations, widget);
 
-      vm.allPlaces = ClassificationManager.getPlacesOfAllEvaluations(evaluations);
-      vm.allTemplates = ClassificationManager.getTemplatesOfAllEvaluations(evaluations);
+      vm.wrappedCategoryTypes = {
+        'places': createWrappedCategoryTypes('places'),
+        'templates': createWrappedCategoryTypes('templates'),
+        'waves': createWrappedCategoryTypes('waves')
+      };
 
-      setAvailabilityOfPlaces();
-      setAlreadyCheckedPlaces();
-      setAvailabilityOfTemplates();
-      setAlreadyCheckedTemplates();
-
-      function setAvailabilityOfPlaces () {
-        vm.allPlaces.forEach(function (place) {
-          var index = _.findIndex(widget.available.places, function (availablePlace) {
-            return (place.content_type === availablePlace.content_type) &&
-              (place.id === availablePlace.id);
-          });
-
-          place.disabled = (index === -1);
+      function createWrappedCategoryTypes (category) {
+        var rawCategoryTypes = ClassificationManager.getCategoryTypesByEvaluations(category, evaluations);
+        return _.map( rawCategoryTypes, function (categoryType) {
+          return {
+            type: categoryType,
+            checked: false,
+            available: false
+          }
         });
       }
 
-      function setAlreadyCheckedPlaces () {
-        vm.allPlaces.forEach(function (place) {
-          var index = _.findIndex(widget.checked.places, function (availablePlace) {
-            return (place.content_type === availablePlace.content_type) &&
-              (place.id === availablePlace.id);
-          });
+      setAvailabilityAndCheckedStatusOfCategoryTypes('places');
+      setAvailabilityAndCheckedStatusOfCategoryTypes('templates');
+      setAvailabilityAndCheckedStatusOfCategoryTypes('waves');
 
-          place.checked = (index !== -1);
+      function setAvailabilityAndCheckedStatusOfCategoryTypes (category) {
+        vm.wrappedCategoryTypes[category].forEach(function (wrappedCategoryType) {
+          wrappedCategoryType.available = !! _.find(widget.available[category], wrappedCategoryType.type);
+          wrappedCategoryType.checked   = !! _.find(widget.checked[category], wrappedCategoryType.type);
         });
       }
 
-      function setAvailabilityOfTemplates () {
-        vm.allTemplates.forEach(function (template) {
-          var index = _.findIndex(widget.available.templates, function (availableTemplate) {
-            return template.id === availableTemplate.id;
-          });
+    }
 
-          template.disabled = (index === -1);
-        });
-      }
+    function categoryTypeClick (category, wrappedCategoryType) {
+      if (wrappedCategoryType.available) {
 
-      function setAlreadyCheckedTemplates () {
-        vm.allTemplates.forEach(function (template) {
-          var index = _.findIndex(widget.checked.templates, function (availableTemplate) {
-            return template.id === availableTemplate.id;
-          });
+        var index = _.findIndex(widget.checked[category], wrappedCategoryType.type);
 
-          template.checked = (index !== -1);
-        });
+        if (index === -1) {
+          widget.checked[category].push(wrappedCategoryType.type)
+        }
+        else {
+          widget.checked[category].splice(index, 1);
+        }
+
+        resetPlacesAndTemplateCheckboxes();
       }
     }
 
-    function placeClick (place) {
-      var index = _.findIndex(widget.checked.places, function (checkedPlace) {
-        return (place.content_type === checkedPlace.content_type) &&
-          (place.id === checkedPlace.id);
-      });
-
-      if (index === -1) {
-        widget.checked.places.push({
-          content_type: place.content_type,
-          id: place.id,
-          name: place.name
-        })
-      }
-      else {
-        widget.checked.places.splice(index, 1);
-      }
-
-      resetPlacesAndTemplateCheckboxes();
-    }
-
-    function templateClick (template) {
-      var index = _.findIndex(widget.checked.templates, function (checkedTemplate) {
-        return template.id === checkedTemplate.id;
-      });
-
-      if (index === -1) {
-        widget.checked.templates.push({
-          id: template.id,
-          name: template.name
-        });
-      }
-      else {
-        widget.checked.templates.splice(index, 1);
-      }
-
-      resetPlacesAndTemplateCheckboxes();
-    }
 
     function save () {
       if (vm.widget.graphType == 'placesKey') {

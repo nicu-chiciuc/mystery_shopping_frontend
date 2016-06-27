@@ -6,30 +6,37 @@
     </md-input-container>
 
     <div layout="row">
-    <div flex="50" layout-padding layout="column">
+    <div flex="33" layout-padding layout="column">
       <h2>Places</h2>
 
       <md-checkbox ng-model="place.checked"
-             ng-repeat="place in vm.allPlaces"
-             ng-disabled="place.disabled"
-             ng-click="vm.placeClick(place)">
-        <span>{{place.content_type | translate}}: {{place.name}}</span>
+             ng-repeat="place in vm.wrappedCategoryTypes['places']"
+             ng-disabled="!place.available"
+             ng-click="vm.categoryTypeClick('places', place)">
+        <span>{{place.type.content_type | translate}}: {{place.type.name}}</span>
       </md-checkbox>
     </div>
 
-    <div flex="30" layout-padding>
+    <div flex="33" layout-padding>
       <h2>Questionnaire Templates</h2>
 
       <md-checkbox ng-model="template.checked"
-             ng-repeat="template in vm.allTemplates"
-             ng-disabled="template.disabled"
-             ng-click="vm.templateClick(template)">
-        {{template.name}}
+             ng-repeat="template in vm.wrappedCategoryTypes['templates']"
+             ng-disabled="!template.available"
+             ng-click="vm.categoryTypeClick('templates', template)">
+        {{template.type.name}}
       </md-checkbox>
     </div>
 
-    <div flex="20" layout-padding>
-      <h2>Time</h2>
+    <div flex="33" layout-padding>
+      <h2>Waves</h2>
+
+      <md-checkbox ng-model="wave.checked"
+                   ng-repeat="wave in vm.wrappedCategoryTypes['waves']"
+                   ng-disabled="!wave.available"
+                   ng-click="vm.categoryTypeClick('waves', wave)">
+        {{wave.type.id}}
+      </md-checkbox>
     </div>
     </div>
     <p></p>

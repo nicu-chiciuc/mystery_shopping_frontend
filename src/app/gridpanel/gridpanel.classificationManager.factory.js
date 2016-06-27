@@ -50,7 +50,14 @@
             id: evaluation.questionnaire_repr.template,
             name: evaluation.questionnaire_repr.title
           }
+        },
+
+      'waves': function (evaluation) {
+        return {
+          id: evaluation.project,
+          name: 'not implemented'
         }
+      }
     };
 
     function isEvaluationOfCategoryType (category, evaluation, categoryType) {
@@ -63,18 +70,31 @@
       });
     }
 
-    function getCategoryTypesByEvaluation (category, evaluations) {
+    function getEvaluationsByCategoryTypesIntersection (category, evaluations, categoryTypes) {
+      var evaluationsArray = _.map(categoryTypes, function (categoryType) {
+        return getEvaluationsByCategoryType(category, evaluations, categoryType);
+      });
+
+      return _.intersection.apply(_, evaluationsArray);
+    }
+
+    function getCategoryTypesByEvaluations (category, evaluations) {
       return _.uniqWith(_.map(evaluations, categories[category]), _.isEqual);
     }
 
     function getCategoryTypesByCategoryType (getCategory, evaluations, byCategory, byCategoryType) {
-      return getCategoryTypesByEvaluation(
+      return getCategoryTypesByEvaluations(
         getCategory,
         getEvaluationsByCategoryType(byCategory, evaluations, byCategoryType)
       );
     }
 
-    function getCategoryTypesByCategoryTypes (getCategory, evaluations, byCategory, byCategoryTypes) {
+    function getCategoryTypesByCategoryTypes (getCategory, evaluations, byCategory, byCategoryTypes, returnAllIfNoCategoryTypes) {
+      // A common approach is to return everything if nothing is set as a filter
+      if (returnAllIfNoCategoryTypes && byCategoryTypes.length === 0) {
+        return getCategoryTypesByEvaluations(getCategory, evaluations)
+      }
+
       var categoryTypes = _.map(byCategoryTypes, function (categoryType) {
         return getCategoryTypesByCategoryType(getCategory, evaluations, byCategory, categoryType);
       });
@@ -83,34 +103,25 @@
       return _.intersectionWith.apply(_, categoryTypes)
     }
 
-    function getPlacesOfAllEvaluations (evaluations) {
-      return getCategoryTypesByEvaluation('places', evaluations);
-    }
-
-    function getTemplatesOfAllEvaluations (evaluations) {
-      return getCategoryTypesByEvaluation('templates', evaluations);
-    }
 
     function recalculateAvailableForWidget (evaluations, widget) {
-      var availableTemplates;
-      var availablePlaces;
+      _.forOwn(categories, function (value, category) {
+        widget.available[category] = getAvailableForCategory(category);
+      });
 
-      if (widget.checked.places.length > 0) {
-        availableTemplates = getCategoryTypesByCategoryTypes('templates', evaluations, 'places', widget.checked.places);
-      }
-      else {
-        availableTemplates = getTemplatesOfAllEvaluations(evaluations);
-      }
 
-      if (widget.checked.templates.length > 0) {
-        availablePlaces = getCategoryTypesByCategoryTypes('places', evaluations, 'templates', widget.checked.templates);
-      }
-      else {
-        availablePlaces = getPlacesOfAllEvaluations(evaluations);
-      }
+      function getAvailableForCategory (category) {
+        var avail = [];
 
-      widget.available.places = availablePlaces;
-      widget.available.templates = availableTemplates;
+        _.forOwn(categories, function (value, otherCategory) {
+          if (otherCategory !== category) {
+            avail.push(getCategoryTypesByCategoryTypes(category, evaluations, otherCategory, widget.checked[otherCategory], true));
+          }
+        });
+
+        avail.push(_.isEqual);
+        return _.intersectionWith.apply(_, avail);
+      }
     }
 
     function getEvaluationsByPlaceAndTemplate (evaluations, place, template) {
@@ -188,8 +199,8 @@
 
     return {
       recalculateAvailableForWidget: recalculateAvailableForWidget,
-      getPlacesOfAllEvaluations: getPlacesOfAllEvaluations,
-      getTemplatesOfAllEvaluations: getTemplatesOfAllEvaluations,
+      getCategoryTypesByEvaluations: getCategoryTypesByEvaluations,
+
       setWidgetDataWithKeyPlaces: setWidgetDataWithKeyPlaces,
       setWidgetDataWithKeyTemplates: setWidgetDataWithKeyTemplates
     };
