@@ -279,6 +279,7 @@
             DATE: 'Date'
           },
           HEADING: 'Question',
+          HEADING_PLURAL: 'Questions',
           QUESTION_BODY: 'Question body',
           COMMENTS: 'Comments',
           CHOICES: 'Choices',
@@ -371,7 +372,8 @@
       VALIDATION_MESSAGE: {
         GENERIC: {
           FIELD_IS_REQUIRED: 'This field is required.',
-          AT_LEAST_ONE_REQUIRED: 'At least one {ITEM} is required'
+          AT_LEAST_ONE_REQUIRED: 'At least one {ITEM} is required',
+          ALL_ARE_REQUIRED: 'All {ITEMS} are required'
         },
         SPECIFIC_FIELD_IS_REQUIRED: 'Field "{FIELD_NAME}" is required.',
         DATE: {

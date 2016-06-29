@@ -15,7 +15,8 @@
         genericSaveSuccessToast: genericSaveSuccessToast,
         genericSaveErrorToast: genericSaveErrorToast,
         genericRequiredFieldMessage: translatedFieldMessage,
-        genericRequiredQtyFieldMessage: genericRequiredQtyFieldMessage
+        genericRequiredQtyFieldMessage: genericRequiredQtyFieldMessage,
+        genericRequiredAllFields: genericRequiredAllFields 
       },
       number: {
         strip: strip
@@ -48,6 +49,11 @@
       var translatedItemName = $filter('translate')(fieldTranslationKey);
       return $filter('translate')('VALIDATION_MESSAGE.GENERIC.AT_LEAST_ONE_REQUIRED', {ITEM: translatedItemName});
     }
+    function genericRequiredAllFields (fieldTranslationKey) {
+      var translatedItemName = $filter('translate')(fieldTranslationKey);
+      return $filter('translate')('VALIDATION_MESSAGE.GENERIC.ALL_ARE_REQUIRED', {ITEMS: translatedItemName});
+    }
+    
 
     /*
      * Number methods

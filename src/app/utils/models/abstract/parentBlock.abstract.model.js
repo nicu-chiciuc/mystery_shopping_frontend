@@ -23,7 +23,9 @@
       removeExceededWeightsTooltips: removeExceededWeightsTooltips,
       setInitialWeights: setInitialWeights,
       resetInitialWeights: resetInitialWeights,
-      updateChildWeights: updateChildWeights
+      updateChildWeights: updateChildWeights,
+
+      allAnswerChoicesAreSelected: allAnswerChoicesAreSelected
     };
 
     var childBlocksKey = '';
@@ -223,6 +225,24 @@
       _.forEach(block[questionsPropKey], function (question) {
         question.postProcess();
       })
+    }
+
+    function allAnswerChoicesAreSelected () {
+      var block = this;
+
+      var resQuestions = _.reduce(block.questions, function (result, question) {
+        return result && question.answer_choices.length > 0;
+      }, true);
+
+      if (!resQuestions) {
+        return resQuestions;
+      }
+
+      var resBlocks = _.reduce(block.blocks, function (result, innerBlock) {
+        return result && innerBlock.allAnswerChoicesAreSelected();
+      }, true);
+
+      return resBlocks;
     }
 
   }

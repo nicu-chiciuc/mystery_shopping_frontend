@@ -31,7 +31,7 @@
     function activate() {
     }
 
-    function saveEvaluation ( status ) {
+    function saveEvaluationWithoutCompletionCheck (status) {
       vm.evaluation.questionnaire = _.cloneDeep(vm.evaluation.questionnaire_repr);
       angular.extend(vm.evaluation.questionnaire, models.manager.QuestionnaireModel);
 
@@ -42,25 +42,43 @@
 
       function saveEvaluationSuccessFn ( response ) {
         var translationKey = status === 'draft'
-          ? 'TOAST.EVALUATION_SAVED_AS_DRAFT'
-          : 'TOAST.EVALUATION_SUBMITTED';
+            ? 'TOAST.EVALUATION_SAVED_AS_DRAFT'
+            : 'TOAST.EVALUATION_SUBMITTED';
 
         $mdToast.show(
-          $mdToast.simple()
-            .textContent($filter('translate')(translationKey))
-            .theme('success-toast')
-            .hideDelay(3000)
+            $mdToast.simple()
+                .textContent($filter('translate')(translationKey))
+                .theme('success-toast')
+                .hideDelay(3000)
         );
         $mdDialog.hide(response);
       }
       function saveEvaluationErrorFn () {
         $mdToast.show(
+            $mdToast.simple()
+                .textContent(vm.msUtils.translation.genericSaveErrorToast('EVALUATION.HEADING_SINGULAR'))
+                .theme('fail-toast')
+                .hideDelay(5000)
+        );
+      }
+    }
+
+    function saveEvaluation ( status ) {
+      if (status === 'submitted' && !vm.evaluation.questionnaire_repr.allAnswerChoicesAreSelected()) {
+        $mdToast.show(
           $mdToast.simple()
-            .textContent(vm.msUtils.translation.genericSaveErrorToast('EVALUATION.HEADING_SINGULAR'))
+            .textContent(vm.msUtils.translation.genericRequiredAllFields('QUESTIONNAIRE.QUESTION.HEADING_PLURAL'))
+            .position('bottom left')
             .theme('fail-toast')
             .hideDelay(5000)
         );
       }
+      else {
+        saveEvaluationWithoutCompletionCheck(status);
+      }
+
+
+
     }
   }
 })();
