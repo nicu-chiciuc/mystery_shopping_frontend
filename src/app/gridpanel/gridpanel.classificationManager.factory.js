@@ -39,29 +39,52 @@
           }
 
           return {
-            content_type: evaluation.typeTranslationKey,
-            id: retId,
-            name: retRepr.displayName
+            idObj: {
+              category: 'places',
+              content_type: evaluation.typeTranslationKey,
+              id: retId
+            },
+            data: {
+              repr: retRepr,
+              name: retRepr.displayName
+            }
           }
         },
 
       'templates': function (evaluation) {
           return {
-            id: evaluation.questionnaire_repr.template,
-            name: evaluation.questionnaire_repr.title
+            idObj: {
+              category: 'templates',
+              id: evaluation.questionnaire_repr.template
+            },
+            data: {
+              repr: evaluation.questionnaire_repr,
+              name: evaluation.questionnaire_repr.title
+            }
           }
         },
 
       'waves': function (evaluation) {
         return {
-          id: evaluation.project,
-          name: evaluation.project_repr.period_start + " - " + evaluation.project_repr.period_end
+          idObj: {
+            category: 'waves',
+            id: evaluation.project
+          },
+          data: {
+            repr: evaluation.project_repr,
+            period_start: evaluation.project_repr.period_start,
+            period_end: evaluation.project_repr.period_end
+          }
         }
       }
     };
 
+    var isEqualCategoryType = R.curry(function (categoryType1, categoryType2) {
+      return _.isEqual(categoryType1.idObj, categoryType2.idObj);
+    });
+
     function isEvaluationOfCategoryType (category, evaluation, categoryType) {
-      return _.isEqual(categories[category](evaluation), categoryType);
+      return isEqualCategoryType(categories[category](evaluation), categoryType);
     }
 
     function getEvaluationsByCategoryType (category, evaluations, categoryType) {
@@ -79,7 +102,7 @@
     }
 
     function getCategoryTypesByEvaluations (category, evaluations) {
-      return _.uniqWith(_.map(evaluations, categories[category]), _.isEqual);
+      return _.uniqWith(_.map(evaluations, categories[category]), isEqualCategoryType);
     }
 
     function getCategoryTypesByCategoryType (getCategory, evaluations, byCategory, byCategoryType) {
@@ -99,10 +122,9 @@
         return getCategoryTypesByCategoryType(getCategory, evaluations, byCategory, categoryType);
       });
 
-      categoryTypes.push(_.isEqual);
+      categoryTypes.push(isEqualCategoryType);
       return _.intersectionWith.apply(_, categoryTypes)
     }
-
 
     function recalculateAvailableForWidget (evaluations, widget) {
       _.forOwn(categories, function (value, category) {
@@ -119,7 +141,7 @@
           }
         });
 
-        avail.push(_.isEqual);
+        avail.push(isEqualCategoryType);
         return _.intersectionWith.apply(_, avail);
       }
     }
@@ -152,7 +174,7 @@
 
       widget.checked.places.forEach(function (place) {
         var newObj = {
-          key: place.name,
+          key: place.data.name,
           values: []
         };
 
@@ -160,7 +182,7 @@
           var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(evaluations, place, template));
 
           newObj.values.push({
-            label: template.name,
+            label: template.data.name,
             value: averageValue
           });
           console.log(averageValue);
@@ -177,7 +199,7 @@
 
       widget.checked.templates.forEach(function (template) {
         var newObj = {
-          key: template.name,
+          key: template.data.name,
           values: []
         };
 
@@ -185,7 +207,7 @@
           var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(evaluations, place, template));
 
           newObj.values.push({
-            label: place.name,
+            label: place.data.name,
             value: averageValue
           });
 
@@ -200,6 +222,7 @@
     return {
       recalculateAvailableForWidget: recalculateAvailableForWidget,
       getCategoryTypesByEvaluations: getCategoryTypesByEvaluations,
+      isEqualCategoryType: isEqualCategoryType,
 
       setWidgetDataWithKeyPlaces: setWidgetDataWithKeyPlaces,
       setWidgetDataWithKeyTemplates: setWidgetDataWithKeyTemplates

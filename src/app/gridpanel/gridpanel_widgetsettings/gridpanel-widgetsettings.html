@@ -13,7 +13,7 @@
              ng-repeat="place in vm.wrappedCategoryTypes['places']"
              ng-disabled="!place.available"
              ng-click="vm.categoryTypeClick('places', place)">
-        <span>{{place.type.content_type | translate}}: {{place.type.name}}</span>
+        <span>{{place.type.idObj.content_type | translate}}: {{place.type.data.name}}</span>
       </md-checkbox>
     </div>
 
@@ -24,7 +24,7 @@
              ng-repeat="template in vm.wrappedCategoryTypes['templates']"
              ng-disabled="!template.available"
              ng-click="vm.categoryTypeClick('templates', template)">
-        {{template.type.name}}
+        {{template.type.data.name}}
       </md-checkbox>
     </div>
 
@@ -35,7 +35,7 @@
                    ng-repeat="wave in vm.wrappedCategoryTypes['waves']"
                    ng-disabled="!wave.available"
                    ng-click="vm.categoryTypeClick('waves', wave)">
-        Project {{wave.type.id}}, {{wave.type.name}}
+        Project {{wave.type.idObj.id}}, {{wave.type.data.name}}
       </md-checkbox>
     </div>
     </div>

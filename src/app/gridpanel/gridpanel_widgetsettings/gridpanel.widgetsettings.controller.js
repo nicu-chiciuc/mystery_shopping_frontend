@@ -31,9 +31,9 @@
         return _.map( rawCategoryTypes, function (categoryType) {
           return {
             type: categoryType,
-            checked: !! _.find(widget.checked[category], categoryType),
-            available: !! _.find(widget.available[category], categoryType)
-          }
+            checked: !! _.find(widget.checked[category], ClassificationManager.isEqualCategoryType(categoryType)),
+            available: !! _.find(widget.available[category], ClassificationManager.isEqualCategoryType(categoryType))
+          };
         });
       }
     }
@@ -41,7 +41,10 @@
     function categoryTypeClick (category, wrappedCategoryType) {
       if (wrappedCategoryType.available) {
 
-        var index = _.findIndex(widget.checked[category], wrappedCategoryType.type);
+        var index = _.findIndex(
+          widget.checked[category],
+          ClassificationManager.isEqualCategoryType(wrappedCategoryType.type)
+        );
 
         if (index === -1) {
           widget.checked[category].push(wrappedCategoryType.type)
