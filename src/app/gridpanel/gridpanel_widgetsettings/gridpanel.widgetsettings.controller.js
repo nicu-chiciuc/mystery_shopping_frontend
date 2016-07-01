@@ -17,6 +17,25 @@
     vm.categoryTypeClick = categoryTypeClick;
     vm.wrappedCategoryTypes = {};
 
+    vm.someQuestionnaire_repr = evaluations[0].questionnaire_repr;
+    vm.nestedCheckboxOptions = {
+      showLegend: true,
+      legend: 'what',
+      children: [
+        {
+          itemsProp: 'blocks',
+          itemLabelProp: 'title',
+          itemValueProp: function () {
+            console.log('something')
+          },
+          type: 'ignored',
+          contentType: 'department',
+          includeInList: false
+
+        }
+      ]
+    };
+
     resetPlacesAndTemplateCheckboxes();
 
     function resetPlacesAndTemplateCheckboxes() {

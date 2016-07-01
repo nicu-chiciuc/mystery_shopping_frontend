@@ -83,43 +83,33 @@
       return _.isEqual(categoryType1.idObj, categoryType2.idObj);
     });
 
-    function isEvaluationOfCategoryType (category, evaluation, categoryType) {
+    var isEvaluationOfCategoryType = R.curry(function (category, categoryType, evaluation) {
       return isEqualCategoryType(categories[category](evaluation), categoryType);
-    }
+    });
 
-    function getEvaluationsByCategoryType (category, evaluations, categoryType) {
-      return _.filter(evaluations, function (evaluation) {
-        return isEvaluationOfCategoryType(category, evaluation, categoryType);
-      });
-    }
-
-    function getEvaluationsByCategoryTypesIntersection (category, evaluations, categoryTypes) {
-      var evaluationsArray = _.map(categoryTypes, function (categoryType) {
-        return getEvaluationsByCategoryType(category, evaluations, categoryType);
-      });
-
-      return _.intersection.apply(_, evaluationsArray);
+    function getEvaluationsByCategoryType (category, categoryType, evaluations) {
+      return R.filter(isEvaluationOfCategoryType(category, categoryType), evaluations);
     }
 
     function getCategoryTypesByEvaluations (category, evaluations) {
       return _.uniqWith(_.map(evaluations, categories[category]), isEqualCategoryType);
     }
 
-    function getCategoryTypesByCategoryType (getCategory, evaluations, byCategory, byCategoryType) {
+    function getCategoryTypesByCategoryType (getCategory, byCategory, byCategoryType, evaluations) {
       return getCategoryTypesByEvaluations(
         getCategory,
-        getEvaluationsByCategoryType(byCategory, evaluations, byCategoryType)
+        getEvaluationsByCategoryType(byCategory, byCategoryType, evaluations)
       );
     }
 
-    function getCategoryTypesByCategoryTypes (getCategory, evaluations, byCategory, byCategoryTypes, returnAllIfNoCategoryTypes) {
+    function getCategoryTypesByCategoryTypes (getCategory, byCategory, byCategoryTypes, returnAllIfNoCategoryTypes, evaluations) {
       // A common approach is to return everything if nothing is set as a filter
       if (returnAllIfNoCategoryTypes && byCategoryTypes.length === 0) {
         return getCategoryTypesByEvaluations(getCategory, evaluations)
       }
 
       var categoryTypes = _.map(byCategoryTypes, function (categoryType) {
-        return getCategoryTypesByCategoryType(getCategory, evaluations, byCategory, categoryType);
+        return getCategoryTypesByCategoryType(getCategory, byCategory, categoryType, evaluations);
       });
 
       categoryTypes.push(isEqualCategoryType);
@@ -137,7 +127,7 @@
 
         _.forOwn(categories, function (value, otherCategory) {
           if (otherCategory !== category) {
-            avail.push(getCategoryTypesByCategoryTypes(category, evaluations, otherCategory, widget.checked[otherCategory], true));
+            avail.push(getCategoryTypesByCategoryTypes(category, otherCategory, widget.checked[otherCategory], true, evaluations));
           }
         });
 
@@ -148,8 +138,8 @@
 
     function getEvaluationsByPlaceAndTemplate (evaluations, place, template) {
       return _.filter(evaluations, function (evaluation) {
-        return isEvaluationOfCategoryType('places', evaluation, place) &&
-          isEvaluationOfCategoryType('templates', evaluation, template);
+        return isEvaluationOfCategoryType('places', place, evaluation) &&
+          isEvaluationOfCategoryType('templates', template, evaluation);
       })
     }
 
