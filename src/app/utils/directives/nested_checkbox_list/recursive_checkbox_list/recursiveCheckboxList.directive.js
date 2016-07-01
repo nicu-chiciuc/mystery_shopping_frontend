@@ -45,13 +45,13 @@
 
 
       function checkboxToggle ( project, item, itemOptions, itemValue ) {
-        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], _.matches(itemValue));
+        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], itemValue);
 
         toggleItem(project, item, itemOptions, itemValue, !selectedObj);
       }
 
       function checkboxState ( project, item, itemOptions, itemValue ) {
-        return _.find(project.listOfSpecificType[itemOptions.type], _.matches(itemValue));
+        return _.find(project.listOfSpecificType[itemOptions.type], itemValue);
       }
 
       /**
@@ -81,9 +81,9 @@
       function toggleItem (project, item, itemOptions, itemValue, isSelectAction) {
 
         // Find out which is the clicked object.
-        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], _.matches(itemValue));
+        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], itemValue);
 
-        // The _.matches function resolves this problem very nicely.
+        // The the find function will use the _.matches function if passed an object
         //// Because list of places and people is more detailed when it is returned from
         //// the server (it contains more info besides type and id), the selection condition
         //// resides in checking whether the keys from itemValue (which are [place|person]_type
