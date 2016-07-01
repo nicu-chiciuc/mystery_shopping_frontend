@@ -29,7 +29,8 @@
     "jquery-resize": "*",
     "javascript-detect-element-resize": "^0.5.3",
     "angular-nvd3": "^1.0.7",
-    "ramda": "^0.21.0"
+    "ramda": "^0.21.0",
+    "angular-ivh-treeview": "^1.0.4"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.2"

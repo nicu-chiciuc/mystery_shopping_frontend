@@ -4,52 +4,60 @@
     <label>Widget Title</label>
     <input ng-model="vm.widget.title">
     </md-input-container>
+    <div layout="column">
+      <div layout="row">
+        <div flex="33" layout-padding layout="column">
+          <h2>Places</h2>
 
-    <div layout="row">
-    <div flex="33" layout-padding layout="column">
-      <h2>Places</h2>
+          <md-checkbox ng-model="place.checked"
+                 ng-repeat="place in vm.wrappedCategoryTypes['places']"
+                 ng-disabled="!place.available"
+                 ng-click="vm.categoryTypeClick('places', place)">
+            <span>{{place.idObj.content_type | translate}}: {{place.label}}</span>
+          </md-checkbox>
+        </div>
 
-      <md-checkbox ng-model="place.checked"
-             ng-repeat="place in vm.wrappedCategoryTypes['places']"
-             ng-disabled="!place.available"
-             ng-click="vm.categoryTypeClick('places', place)">
-        <span>{{place.type.idObj.content_type | translate}}: {{place.type.data.name}}</span>
-      </md-checkbox>
-    </div>
+        <div flex="50" layout-padding>
+          <h2>Questionnaire Templates</h2>
 
-    <div flex="33" layout-padding>
-      <h2>Questionnaire Templates</h2>
+          <md-checkbox ng-model="template.checked"
+                 ng-repeat="template in vm.wrappedCategoryTypes['templates']"
+                 ng-disabled="!template.available"
+                 ng-click="vm.categoryTypeClick('templates', template)">
+            {{template.label}}
+          </md-checkbox>
 
-      <md-checkbox ng-model="template.checked"
-             ng-repeat="template in vm.wrappedCategoryTypes['templates']"
-             ng-disabled="!template.available"
-             ng-click="vm.categoryTypeClick('templates', template)">
-        {{template.type.data.name}}
-      </md-checkbox>
+          <span ng-repeat="template in vm.wrappedCategoryTypes['templates']">
+            <ms-material-ivh-treeview tree="template"
+                                      node-click="vm.awesomeCallback(root, node, selected)">
 
-      <ms-nested-checkbox-list nested-checkbox-list-items="vm.someQuestionnaire_repr"
-                               nested-checkbox-list-options="vm.nestedCheckboxOptions"
-                               project="{}">
-      </ms-nested-checkbox-list>
-    </div>
+            </ms-material-ivh-treeview>
+          </span>
 
-    <div flex="33" layout-padding>
-      <h2>Waves</h2>
 
-      <md-checkbox ng-model="wave.checked"
-                   ng-repeat="wave in vm.wrappedCategoryTypes['waves']"
-                   ng-disabled="!wave.available"
-                   ng-click="vm.categoryTypeClick('waves', wave)">
-        Project {{wave.type.idObj.id}}, {{wave.type.data.name}}
-      </md-checkbox>
-    </div>
-    </div>
-    <p></p>
-    <div layot="column">
-    <md-radio-group ng-model="vm.widget.graphType">
-      <md-radio-button value="placesKey">Places as Key</md-radio-button>
-      <md-radio-button value="templatesKey">Templates as Key</md-radio-button>
-    </md-radio-group>
+
+
+        </div>
+
+        <div flex="20" layout-padding>
+          <h2>Waves</h2>
+
+          <md-checkbox ng-model="wave.checked"
+                       ng-repeat="wave in vm.wrappedCategoryTypes['waves']"
+                       ng-disabled="!wave.available"
+                       ng-click="vm.categoryTypeClick('waves', wave)">
+            Project {{wave.idObj.id}}, {{wave.label}}
+          </md-checkbox>
+        </div>
+        </div>
+
+      <div layot="column">
+
+      <md-radio-group ng-model="vm.widget.graphType">
+        <md-radio-button value="placesKey">Places as Key</md-radio-button>
+        <md-radio-button value="templatesKey">Templates as Key</md-radio-button>
+      </md-radio-group>
+      </div>
     </div>
   </md-dialog-content>
 

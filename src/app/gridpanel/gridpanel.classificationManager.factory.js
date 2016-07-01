@@ -44,10 +44,9 @@
               content_type: evaluation.typeTranslationKey,
               id: retId
             },
-            data: {
-              repr: retRepr,
-              name: retRepr.displayName
-            }
+
+            label: retRepr.displayName
+
           }
         },
 
@@ -57,10 +56,10 @@
               category: 'templates',
               id: evaluation.questionnaire_repr.template
             },
-            data: {
-              repr: evaluation.questionnaire_repr,
-              name: evaluation.questionnaire_repr.title
-            }
+
+            label: evaluation.questionnaire_repr.title,
+
+            children: blockToSelectableData(evaluation.questionnaire_repr)
           }
         },
 
@@ -70,14 +69,27 @@
             category: 'waves',
             id: evaluation.project
           },
-          data: {
-            repr: evaluation.project_repr,
-            period_start: evaluation.project_repr.period_start,
-            period_end: evaluation.project_repr.period_end
-          }
+
+          label: evaluation.project_repr.period_start + ' - ' + evaluation.project_repr.period_end
+
         }
       }
     };
+
+    function blockToSelectableData (questionnaire) {
+      var a = R.map(function (question) {
+        return {label: question.question_body}
+      }, questionnaire.questions || []);
+
+      var b = R.map(function (block) {
+        return {
+          label: block.title,
+          children: blockToSelectableData(block)
+        }
+      }, questionnaire.blocks);
+
+      return a.concat(b);
+    }
 
     var isEqualCategoryType = R.curry(function (categoryType1, categoryType2) {
       return _.isEqual(categoryType1.idObj, categoryType2.idObj);

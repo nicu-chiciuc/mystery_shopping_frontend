@@ -1,0 +1,16 @@
+<div flex>
+  <div ivh-treeview="vm.tree"
+       ivh-treeview-expand-to-depth="0">
+
+    <script type="text/ng-template">
+      <span ivh-treeview-toggle>
+        <span ivh-treeview-twistie></span>
+      </span>
+      <ms-custom-checkbox tree="trvw.root()" node="node"></ms-custom-checkbox>
+      <span class="ivh-treeview-node-label" ivh-treeview-toggle>
+        {{trvw.label(node)}}
+      </span>
+      <div ivh-treeview-children></div>
+    </script>
+  </div>
+</div>

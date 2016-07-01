@@ -3,7 +3,7 @@
 
   angular
     .module('spark')
-    .controller('GridPanelWidgetSettingsController', GridPanelWidgetSettingsController);
+    .controller('GridPanelWidgetSettingsController', GridPanelWidgetSettingsController)
 
   /** @ngInject */
   function GridPanelWidgetSettingsController($log, $scope, $mdDialog, widget, dashboard, evaluations, ClassificationManager) {
@@ -16,27 +16,14 @@
     vm.save = save;
     vm.categoryTypeClick = categoryTypeClick;
     vm.wrappedCategoryTypes = {};
-
-    vm.someQuestionnaire_repr = evaluations[0].questionnaire_repr;
-    vm.nestedCheckboxOptions = {
-      showLegend: true,
-      legend: 'what',
-      children: [
-        {
-          itemsProp: 'blocks',
-          itemLabelProp: 'title',
-          itemValueProp: function () {
-            console.log('something')
-          },
-          type: 'ignored',
-          contentType: 'department',
-          includeInList: false
-
-        }
-      ]
-    };
+    vm.awesomeCallback = awesomeCallback;
 
     resetPlacesAndTemplateCheckboxes();
+
+
+    function awesomeCallback (tree, node, state) {
+      console.log('here');
+    }
 
     function resetPlacesAndTemplateCheckboxes() {
       ClassificationManager.recalculateAvailableForWidget(evaluations, widget);
@@ -47,13 +34,12 @@
 
       function createWrappedCategoryTypes (category) {
         var rawCategoryTypes = ClassificationManager.getCategoryTypesByEvaluations(category, evaluations);
-        return _.map( rawCategoryTypes, function (categoryType) {
-          return {
-            type: categoryType,
-            checked: !! _.find(widget.checked[category], ClassificationManager.isEqualCategoryType(categoryType)),
-            available: !! _.find(widget.available[category], ClassificationManager.isEqualCategoryType(categoryType))
-          };
+        rawCategoryTypes.forEach(function (categoryType) {
+          categoryType.checked = !! _.find(widget.checked[category], ClassificationManager.isEqualCategoryType(categoryType));
+          categoryType.available = !! _.find(widget.available[category], ClassificationManager.isEqualCategoryType(categoryType));
         });
+
+        return rawCategoryTypes;
       }
     }
 
@@ -62,11 +48,11 @@
 
         var index = _.findIndex(
           widget.checked[category],
-          ClassificationManager.isEqualCategoryType(wrappedCategoryType.type)
+          ClassificationManager.isEqualCategoryType(wrappedCategoryType)
         );
 
         if (index === -1) {
-          widget.checked[category].push(wrappedCategoryType.type)
+          widget.checked[category].push(wrappedCategoryType)
         }
         else {
           widget.checked[category].splice(index, 1);

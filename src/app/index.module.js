@@ -21,7 +21,8 @@
       'toastr',
       'ngFileUpload',
       'gridster',
-      'nvd3'
+      'nvd3',
+      'ivh.treeview'
     ]);
 
 })();
