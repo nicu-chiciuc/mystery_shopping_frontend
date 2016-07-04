@@ -133,7 +133,7 @@
 
       var rawWidgets = _.map(vm.widgets,
         function (widget) {
-          var rawWidget = _.pick(widget, ['position', 'title', 'checked', 'comments', 'currentCommentIndex']);
+          var rawWidget = _.pick(widget, ['position', 'title', 'selected', 'comments', 'currentCommentIndex']);
           rawWidget.position.actualWidget = undefined;
           return rawWidget;
         });
@@ -170,7 +170,10 @@
         currentCommentIndex: rawWidget.currentCommentIndex || 0,
 
         title: rawWidget.title || 'Default title',
-        checked: rawWidget.checked || {
+        categoryTypes: {
+
+        },
+        selected: rawWidget.selected || {
           places: [],
           templates: [],
           waves: []

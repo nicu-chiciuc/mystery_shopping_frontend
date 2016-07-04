@@ -139,7 +139,7 @@
 
         _.forOwn(categories, function (value, otherCategory) {
           if (otherCategory !== category) {
-            avail.push(getCategoryTypesByCategoryTypes(category, otherCategory, widget.checked[otherCategory], true, evaluations));
+            avail.push(getCategoryTypesByCategoryTypes(category, otherCategory, widget.selected[otherCategory], true, evaluations));
           }
         });
 
@@ -174,13 +174,13 @@
     function setWidgetDataWithKeyPlaces (evaluations, widget) {
       var newData = [];
 
-      widget.checked.places.forEach(function (place) {
+      widget.selected.places.forEach(function (place) {
         var newObj = {
           key: place.data.name,
           values: []
         };
 
-        widget.checked.templates.forEach(function (template) {
+        widget.selected.templates.forEach(function (template) {
           var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(evaluations, place, template));
 
           newObj.values.push({
@@ -199,13 +199,13 @@
     function setWidgetDataWithKeyTemplates (evaluations, widget) {
       var newData = [];
 
-      widget.checked.templates.forEach(function (template) {
+      widget.selected.templates.forEach(function (template) {
         var newObj = {
           key: template.data.name,
           values: []
         };
 
-        widget.checked.places.forEach(function (place) {
+        widget.selected.places.forEach(function (place) {
           var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(evaluations, place, template));
 
           newObj.values.push({
