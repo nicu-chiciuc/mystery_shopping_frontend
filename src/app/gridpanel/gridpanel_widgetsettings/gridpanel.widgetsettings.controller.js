@@ -15,61 +15,26 @@
     vm.cancel = cancel;
     vm.save = save;
     vm.categoryTypeClick = categoryTypeClick;
-    vm.wrappedCategoryTypes = {};
-    vm.awesomeCallback = awesomeCallback;
+    vm.childCallback = childCallback;
 
-    resetPlacesAndTemplateCheckboxes();
+    ClassificationManager.recalculateAvailableForWidget(evaluations, widget);
 
 
-    function awesomeCallback (tree, node, state) {
-      categoryTypeClick('templates', tree);
-    }
-
-    function resetPlacesAndTemplateCheckboxes() {
+    function childCallback (tree, node, state) {
       ClassificationManager.recalculateAvailableForWidget(evaluations, widget);
-
-      ['places', 'templates', 'waves'].forEach(function (category) {
-        vm.wrappedCategoryTypes[category] = createWrappedCategoryTypes (category);
-      });
-
-      function createWrappedCategoryTypes (category) {
-        var rawCategoryTypes = ClassificationManager.getCategoryTypesByEvaluations(category, evaluations);
-        rawCategoryTypes.forEach(function (categoryType) {
-          categoryType.selected = !! _.find(widget.selected[category], ClassificationManager.isEqualCategoryType(categoryType));
-          categoryType.available = !! _.find(widget.available[category], ClassificationManager.isEqualCategoryType(categoryType));
-        });
-
-        return rawCategoryTypes;
-      }
     }
+
 
     function categoryTypeClick (category, wrappedCategoryType) {
-      if (wrappedCategoryType.available) {
-
-        var index = _.findIndex(
-          widget.selected[category],
-          ClassificationManager.isEqualCategoryType(wrappedCategoryType)
-        );
-
-        if (index === -1) {
-          widget.selected[category].push(wrappedCategoryType)
-        }
-        else {
-          widget.selected[category].splice(index, 1);
-        }
-
-        resetPlacesAndTemplateCheckboxes();
-      }
+      ClassificationManager.recalculateAvailableForWidget(evaluations, widget);
     }
 
 
     function save () {
-      if (vm.widget.graphType == 'placesKey') {
-        ClassificationManager.setWidgetDataWithKeyPlaces(evaluations, widget);
-      }
-      else {
-        ClassificationManager.setWidgetDataWithKeyTemplates(evaluations, widget);
-      }
+      var splitted = vm.widget.graphType.split(',');
+
+      ClassificationManager.setWidgetData(widget, splitted[0], splitted[1], evaluations);
+
       $mdDialog.hide();
     }
 

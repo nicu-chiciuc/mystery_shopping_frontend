@@ -45,8 +45,10 @@
               id: retId
             },
 
-            label: retRepr.displayName
+            label: retRepr.displayName,
 
+            selected: false,
+            available: true
           }
         },
 
@@ -59,7 +61,10 @@
 
             label: evaluation.questionnaire_repr.title,
 
-            children: blockToSelectableData(evaluation.questionnaire_repr)
+            children: blockToSelectableData(evaluation.questionnaire_repr),
+
+            selected: false,
+            available: true
           }
         },
 
@@ -70,21 +75,31 @@
             id: evaluation.project
           },
 
-          label: evaluation.project_repr.period_start + ' - ' + evaluation.project_repr.period_end
+          label: evaluation.project_repr.period_start + ' - ' + evaluation.project_repr.period_end,
 
+          selected: false,
+          available: true
         }
       }
+
     };
 
     function blockToSelectableData (questionnaire) {
       var a = R.map(function (question) {
-        return {label: question.question_body}
+        return {
+          label: question.question_body,
+          selected: false,
+          available: true
+        }
       }, questionnaire.questions || []);
 
       var b = R.map(function (block) {
         return {
           label: block.title,
-          children: blockToSelectableData(block)
+          children: blockToSelectableData(block),
+
+          selected: false,
+          available: true
         }
       }, questionnaire.blocks);
 
@@ -94,6 +109,10 @@
     var isEqualCategoryType = R.curry(function (categoryType1, categoryType2) {
       return _.isEqual(categoryType1.idObj, categoryType2.idObj);
     });
+
+    function isCategoryTypeSelectedIncludingChildren (categoryType) {
+      return categoryType.selected || R.any(isCategoryTypeSelectedIncludingChildren, categoryType.children || []);
+    }
 
     var isEvaluationOfCategoryType = R.curry(function (category, categoryType, evaluation) {
       return isEqualCategoryType(categories[category](evaluation), categoryType);
@@ -129,17 +148,21 @@
     }
 
     function recalculateAvailableForWidget (evaluations, widget) {
-      _.forOwn(categories, function (value, category) {
-        widget.available[category] = getAvailableForCategory(category);
+      categoriesList().forEach(function (category) {
+        var availableNow = getAvailableForCategory(category);
+        widget.categoryTypes[category].forEach(function (categoryType) {
+          categoryType.available = !!R.find(isEqualCategoryType(categoryType), availableNow);
+        });
       });
 
 
       function getAvailableForCategory (category) {
         var avail = [];
 
-        _.forOwn(categories, function (value, otherCategory) {
+        categoriesList().forEach(function (otherCategory) {
           if (otherCategory !== category) {
-            avail.push(getCategoryTypesByCategoryTypes(category, otherCategory, widget.selected[otherCategory], true, evaluations));
+            var selectedCategoryTypes = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes[otherCategory]);
+            avail.push(getCategoryTypesByCategoryTypes(category, otherCategory, selectedCategoryTypes, true, evaluations));
           }
         });
 
@@ -148,14 +171,39 @@
       }
     }
 
-    function getEvaluationsByPlaceAndTemplate (evaluations, place, template) {
-      return _.filter(evaluations, function (evaluation) {
-        return isEvaluationOfCategoryType('places', place, evaluation) &&
-          isEvaluationOfCategoryType('templates', template, evaluation);
-      })
+    function getScoreOfEvaluationByCategoryTypeOrKid (categoryTypeKid, evaluation) {
+
     }
 
-    function getAverageOfEvaluationArray (evaluationArr) {
+    function updateCategoryTypesOfWidget (widget, evaluations) {
+      categoriesList().forEach(function (category) {
+        var availableCategoryTypes = getCategoryTypesByEvaluations(category, evaluations);
+        widget.categoryTypes[category] = widget.categoryTypes[category] || [];
+        var tmp = widget.categoryTypes[category];
+
+        var shouldBeAdded = R.differenceWith(isEqualCategoryType, availableCategoryTypes, tmp);
+        var shouldBeRemoved = R.differenceWith(isEqualCategoryType, tmp, availableCategoryTypes);
+
+        Array.prototype.push.apply(tmp, shouldBeAdded);
+      });
+    }
+
+    var flattenPathObj = R.curry(function (recursiveProperties, acc, currentPathObj) {
+      acc.push(currentPathObj);
+
+      recursiveProperties.forEach(function (recProp) {
+        (currentPathObj.obj[recProp] || []).forEach(function (subObject, index) {
+          flattenPathObj(recursiveProperties, acc, {
+            path: currentPathObj.path.concat([recProp, index]),
+            obj: subObject
+          })
+        });
+      });
+
+      return acc;
+    });
+
+    function getAverageOfEvaluationArray (lens, evaluationArr) {
       var sum = 0;
       var num = 0;
 
@@ -163,71 +211,86 @@
         return -1;
       }
 
-      evaluationArr.forEach(function (evaluation) {
-        sum += evaluation.questionnaire_repr.score;
+      evaluationArr.forEach(function (evaluation, index) {
+        sum += parseFloat(R.view(lens, evaluation));
         num += 1;
       });
 
       return sum / num;
     }
 
-    function setWidgetDataWithKeyPlaces (evaluations, widget) {
+
+    function setWidgetData(widget, keyCategory, valueCategory, evaluations) {
       var newData = [];
 
-      widget.selected.places.forEach(function (place) {
-        var newObj = {
-          key: place.data.name,
-          values: []
-        };
 
-        widget.selected.templates.forEach(function (template) {
-          var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(evaluations, place, template));
 
-          newObj.values.push({
-            label: template.data.name,
-            value: averageValue
-          });
-          console.log(averageValue);
+
+      widget.categoryTypes[keyCategory].forEach(function (keyCategoryType) {
+        var keyCategoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: keyCategoryType});
+
+        keyCategoryTypeFlatKids.forEach(function (flatKeyCategoryType) {
+          if (flatKeyCategoryType.obj.selected) {
+            var newObj = {
+              key: flatKeyCategoryType.obj.label,
+              values: []
+            };
+
+            widget.categoryTypes[valueCategory].forEach(function (valueCategoryType) {
+              var valueCategoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: valueCategoryType});
+
+              valueCategoryTypeFlatKids.forEach(function (flatValueCategoryType) {
+                if (flatValueCategoryType.obj.selected) {
+                  var flt = R.allPass([
+                    isEvaluationOfCategoryType(keyCategory, keyCategoryType),
+                    isEvaluationOfCategoryType(valueCategory, valueCategoryType)
+                  ]);
+
+                  var nowEvals = R.filter(flt, evaluations);
+
+
+                  var lensObj = keyCategory === 'templates' ? flatKeyCategoryType : flatValueCategoryType;
+                  var flatEval = flattenPathObj(['questions', 'blocks'], [], {path: ['questionnaire_repr'], obj: nowEvals[0].questionnaire_repr});
+
+                  var actEval = R.filter(function (block) {
+                    return block.obj.title === lensObj.obj.label || block.obj.question_body === lensObj.obj.label
+                  }, flatEval);
+
+                  var averageValue = getAverageOfEvaluationArray(R.lensPath(actEval[0].path.concat('score')), nowEvals);
+
+                  newObj.values.push({
+                    label: valueCategoryType.label + ': ' + flatValueCategoryType.obj.label,
+                    value: averageValue
+                  });
+                }
+              });
+            });
+
+            newData.push(newObj);
+          }
         });
-
-        newData.push(newObj);
       });
 
       widget.data = newData;
     }
 
-    function setWidgetDataWithKeyTemplates (evaluations, widget) {
-      var newData = [];
-
-      widget.selected.templates.forEach(function (template) {
-        var newObj = {
-          key: template.data.name,
-          values: []
-        };
-
-        widget.selected.places.forEach(function (place) {
-          var averageValue = getAverageOfEvaluationArray(getEvaluationsByPlaceAndTemplate(evaluations, place, template));
-
-          newObj.values.push({
-            label: place.data.name,
-            value: averageValue
-          });
-
-        });
-
-        newData.push(newObj);
-      });
-
-      widget.data = newData;
+    function categoriesList () {
+      return Object.keys(categories);
     }
+
+
 
     return {
       recalculateAvailableForWidget: recalculateAvailableForWidget,
+      updateCategoryTypesOfWidget: updateCategoryTypesOfWidget,
+
       getCategoryTypesByEvaluations: getCategoryTypesByEvaluations,
       isEqualCategoryType: isEqualCategoryType,
+      isCategoryTypeSelectedIncludingChildren: isCategoryTypeSelectedIncludingChildren,
 
-      setWidgetDataWithKeyPlaces: setWidgetDataWithKeyPlaces,
-      setWidgetDataWithKeyTemplates: setWidgetDataWithKeyTemplates
+      setWidgetData: setWidgetData,
+
+      categoriesList: categoriesList
     };
 
 

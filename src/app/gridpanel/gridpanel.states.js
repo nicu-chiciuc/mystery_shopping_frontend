@@ -38,7 +38,7 @@
                   return evaluation.plain();
                 });
 
-              return allEvals;
+              return R.filter(R.propEq('status', 'submitted'), allEvals);
             });
           }
 

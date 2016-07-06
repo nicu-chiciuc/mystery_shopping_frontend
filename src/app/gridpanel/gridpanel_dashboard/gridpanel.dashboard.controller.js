@@ -36,11 +36,11 @@
       rawWidgets.forEach(function (rawWidget) {
         var widget = addWidget(rawWidget);
 
-        if (widget.graphType == 'placesKey') {
-          ClassificationManager.setWidgetDataWithKeyPlaces(evaluations, widget);
+        if (widget.graphType == 'places,templates') {
+          ClassificationManager.setWidgetData(widget, 'places', 'templates', evaluations);
         }
         else {
-          ClassificationManager.setWidgetDataWithKeyTemplates(evaluations, widget);
+          ClassificationManager.setWidgetData(widget, 'templates', 'places', evaluations);
         }
 
         vm.triggerResize(widget);
@@ -133,7 +133,7 @@
 
       var rawWidgets = _.map(vm.widgets,
         function (widget) {
-          var rawWidget = _.pick(widget, ['position', 'title', 'selected', 'comments', 'currentCommentIndex']);
+          var rawWidget = _.pick(widget, ['position', 'title', 'categoryTypes', 'comments', 'currentCommentIndex']);
           rawWidget.position.actualWidget = undefined;
           return rawWidget;
         });
@@ -170,21 +170,18 @@
         currentCommentIndex: rawWidget.currentCommentIndex || 0,
 
         title: rawWidget.title || 'Default title',
-        categoryTypes: {
+        categoryTypes: rawWidget.categoryTypes || {
 
         },
-        selected: rawWidget.selected || {
-          places: [],
-          templates: [],
-          waves: []
-        },
-        available: {},
-        graphType: rawWidget.graphType || 'placesKey'
+
+        graphType: rawWidget.graphType || 'places,templates'
       };
 
       newWidget.position.actualWidget = newWidget;
 
       vm.widgets.push(newWidget);
+
+      ClassificationManager.updateCategoryTypesOfWidget(newWidget, evaluations);
 
       return newWidget;
     }
@@ -200,6 +197,7 @@
           }
         }
       };
+
     }
 
     function addNewComment (widget) {

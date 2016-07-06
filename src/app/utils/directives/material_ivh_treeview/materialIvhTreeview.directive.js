@@ -9,7 +9,7 @@
   // Not the most elegant solution
   var veryBadGlobal = {};
 
-  function msCustomCheckbox(ivhTreeviewMgr) {
+  function msCustomCheckbox(ivhTreeviewMgr, ClassificationManager) {
     return {
       restrict: 'AE',
       scope: {
@@ -17,11 +17,17 @@
         node: '=',
         currentVm: '='
       },
-      template: '<md-checkbox aria-label="Default Aria Label" ng-disabled="!tree.available" ng-checked="node.selected" md-indeterminate="node.__ivhTreeviewIndeterminate"></md-checkbox>',
+      template:
+        '<md-checkbox aria-label="Default Aria Label" ' +
+          'ng-disabled="!tree.available"' +
+          'ng-checked="node.selected"' +
+          'md-indeterminate="node.__ivhTreeviewIndeterminate">' +
+        '</md-checkbox>',
       link: function (scope, element, attrs) {
         element.on('click', function () {
           if (scope.tree.available) {
-            ivhTreeviewMgr.select(scope.tree, scope.node, !scope.node.selected);
+            // ivhTreeviewMgr.select(scope.tree, scope.node, !scope.node.selected);
+            scope.node.selected = !scope.node.selected;
 
             veryBadGlobal.onClick(scope.tree, scope.node, scope.node.selected);
             scope.$apply();

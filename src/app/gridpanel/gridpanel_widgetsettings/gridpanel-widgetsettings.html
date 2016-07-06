@@ -9,10 +9,10 @@
         <div flex="33" layout-padding layout="column">
           <h2>Places</h2>
 
-          <md-checkbox ng-model="place.checked"
-                 ng-repeat="place in vm.wrappedCategoryTypes['places']"
+          <md-checkbox ng-model="place.selected"
+                 ng-repeat="place in vm.widget.categoryTypes['places']"
                  ng-disabled="!place.available"
-                 ng-click="vm.categoryTypeClick('places', place)">
+                 ng-change="vm.categoryTypeClick('places', place)">
             <span>{{place.idObj.content_type | translate}}: {{place.label}}</span>
           </md-checkbox>
         </div>
@@ -20,16 +20,16 @@
         <div flex="50" layout-padding>
           <h2>Questionnaire Templates</h2>
 
-          <md-checkbox ng-model="template.checked"
-                 ng-repeat="template in vm.wrappedCategoryTypes['templates']"
-                 ng-disabled="!template.available"
-                 ng-click="vm.categoryTypeClick('templates', template)">
-            {{template.label}}
-          </md-checkbox>
+          <!--<md-checkbox ng-model="template.selected"-->
+                 <!--ng-repeat="template in vm.widget.categoryTypes['templates']"-->
+                 <!--ng-disabled="!template.available"-->
+                 <!--ng-change="vm.categoryTypeClick('templates', template)">-->
+            <!--{{template.label}}-->
+          <!--</md-checkbox>-->
 
-          <span ng-repeat="template in vm.wrappedCategoryTypes['templates']">
+          <span ng-repeat="template in vm.widget.categoryTypes['templates']">
             <ms-material-ivh-treeview tree="template"
-                                      node-click="vm.awesomeCallback(root, node, selected)">
+                                      node-click="vm.childCallback(root, node, selected)">
 
             </ms-material-ivh-treeview>
           </span>
@@ -42,10 +42,10 @@
         <div flex="20" layout-padding>
           <h2>Waves</h2>
 
-          <md-checkbox ng-model="wave.checked"
-                       ng-repeat="wave in vm.wrappedCategoryTypes['waves']"
+          <md-checkbox ng-model="wave.selected"
+                       ng-repeat="wave in vm.widget.categoryTypes['waves']"
                        ng-disabled="!wave.available"
-                       ng-click="vm.categoryTypeClick('waves', wave)">
+                       ng-change="vm.categoryTypeClick('waves', wave)">
             Project {{wave.idObj.id}}, {{wave.label}}
           </md-checkbox>
         </div>
@@ -54,8 +54,9 @@
       <div layot="column">
 
       <md-radio-group ng-model="vm.widget.graphType">
-        <md-radio-button value="placesKey">Places as Key</md-radio-button>
-        <md-radio-button value="templatesKey">Templates as Key</md-radio-button>
+        <md-radio-button value="places,templates">key Places, value Templates</md-radio-button>
+        <md-radio-button value="templates,places">key Templates, value Places</md-radio-button>
+        <md-radio-button value="waves,templates">key Project, value Templates</md-radio-button>
       </md-radio-group>
       </div>
     </div>
