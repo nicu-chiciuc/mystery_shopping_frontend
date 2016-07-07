@@ -24,6 +24,8 @@
           'md-indeterminate="node.__ivhTreeviewIndeterminate">' +
         '</md-checkbox>',
       link: function (scope, element, attrs) {
+        scope.node.__ivhTreeviewIndeterminate = false;
+
         element.on('click', function () {
           if (scope.tree.available) {
             // ivhTreeviewMgr.select(scope.tree, scope.node, !scope.node.selected);

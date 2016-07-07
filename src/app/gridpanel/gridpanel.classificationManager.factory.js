@@ -84,26 +84,33 @@
 
     };
 
-    function blockToSelectableData (questionnaire) {
-      var a = R.map(function (question) {
+    function blockToSelectableData (questionnaire, useScore) {
+      var questions = R.map(function (question) {
         return {
+          id: question.id,
           label: question.question_body,
+
+          // score: useScore ? block.score : undefined,
+
           selected: false,
           available: true
         }
       }, questionnaire.questions || []);
 
-      var b = R.map(function (block) {
+      var blocks = R.map(function (block) {
         return {
+          id: block.id,
           label: block.title,
           children: blockToSelectableData(block),
+
+          // score: useScore ? block.score : undefined,
 
           selected: false,
           available: true
         }
-      }, questionnaire.blocks);
+      }, questionnaire.blocks || []);
 
-      return a.concat(b);
+      return questions.concat(blocks);
     }
 
     var isEqualCategoryType = R.curry(function (categoryType1, categoryType2) {
@@ -204,74 +211,151 @@
     });
 
     function getAverageOfEvaluationArray (lens, evaluationArr) {
-      var sum = 0;
-      var num = 0;
+      return evaluationArr.length ?
+        R.sum(R.map(R.compose(parseFloat, R.view(lens)), evaluationArr)) / evaluationArr.length :
+        -1;
+    }
 
-      if (evaluationArr.length < 1) {
-        return -1;
+    var isEvaluationOfWidget = R.curry(function (widget, evaluation) {
+      function isEvaluationOfCategoryTypes (category) {
+        return R.anyPass(
+          R.map(
+            isEvaluationOfCategoryType(category),
+            R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes[category])
+          )
+        );
       }
 
-      evaluationArr.forEach(function (evaluation, index) {
-        sum += parseFloat(R.view(lens, evaluation));
-        num += 1;
+      return R.allPass(R.map(isEvaluationOfCategoryTypes, categoriesList())) (evaluation);
+    });
+
+    function createScoreObjectList (widget, evaluations) {
+      var scoreObjects = [];
+
+      var goodPlaces    = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes.places);
+      var goodTemplates = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes.templates);
+      var goodWaves     = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes.waves);
+
+      var combos = R.map(R.unnest, R.xprod(R.xprod(goodPlaces, goodTemplates), goodWaves));
+
+
+      combos.forEach(function (combo) {
+        combo.evals = [];
+
+        evaluations.forEach(function (evaluation) {
+          if (isEvaluationOfCategoryType('places', combo[0], evaluation) &&
+            isEvaluationOfCategoryType('templates', combo[1], evaluation) &&
+            isEvaluationOfCategoryType('waves', combo[2], evaluation))
+          {
+            combo.evals.push(evaluation);
+          }
+
+        });
+
       });
 
-      return sum / num;
+      combos.forEach(function (combo) {
+        if (combo.evals.length) {
+          var sampleEval = combo.evals[0];
+
+          var flattened = flattenPathObj(['questions', 'blocks'], [], {path: [], obj: sampleEval.questionnaire_repr});
+
+          var obj = {};
+
+          flattened.forEach(function (flatt) {
+            var test = R.map(R.view(R.lensPath(['questionnaire_repr'].concat(flatt.path))), combo.evals);
+
+            var average = R.sum(R.map(R.prop('score'), test)) / test.length;
+
+            // Replace questions and blocks with children for better compatibility
+            var goodPath = R.map(function (path) {
+              return path === 'questions' || path === 'blocks' ? 'children' : path;
+            }, flatt.path);
+
+            obj = R.set(R.lensPath(goodPath), {
+              score: average,
+              label: R.prop('title', test[0]) || R.prop('question_body', test[0])
+            }, obj);
+
+            console.log(test);
+          });
+
+          combo.obj = obj;
+        }
+      });
+
+
+      console.log(combos);
     }
 
 
     function setWidgetData(widget, keyCategory, valueCategory, evaluations) {
       var newData = [];
 
+      var widgetFilteredEvals = R.filter(isEvaluationOfWidget(widget), evaluations);
+
+      createScoreObjectList(widget, evaluations);
+
+      if (widgetFilteredEvals.length > 0) {
+
+        widget.categoryTypes[keyCategory].forEach(function (keyCategoryType) {
+          var keyCategoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: keyCategoryType});
+
+          keyCategoryTypeFlatKids.forEach(function (flatKeyCategoryType) {
+            if (flatKeyCategoryType.obj.selected) {
+              var newObj = {
+                key: flatKeyCategoryType.obj.label,
+                values: []
+              };
+
+              var keyEvaluations = R.filter(isEvaluationOfCategoryType(keyCategory, keyCategoryType), widgetFilteredEvals);
+
+              widget.categoryTypes[valueCategory].forEach(function (valueCategoryType) {
+                var valueCategoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: valueCategoryType});
+
+                valueCategoryTypeFlatKids.forEach(function (flatValueCategoryType) {
+                  if (flatValueCategoryType.obj.selected) {
 
 
+                    var nowEvals = R.filter(isEvaluationOfCategoryType(valueCategory, valueCategoryType), keyEvaluations);
 
-      widget.categoryTypes[keyCategory].forEach(function (keyCategoryType) {
-        var keyCategoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: keyCategoryType});
+                    var lensPathArr;
 
-        keyCategoryTypeFlatKids.forEach(function (flatKeyCategoryType) {
-          if (flatKeyCategoryType.obj.selected) {
-            var newObj = {
-              key: flatKeyCategoryType.obj.label,
-              values: []
-            };
+                    if (keyCategoryType === 'templates' || valueCategoryType === 'templates') {
+                      var lensObj = keyCategory === 'templates' ? flatKeyCategoryType : flatValueCategoryType;
+                      var flatEval = flattenPathObj(['questions', 'blocks'], [], {
+                        path: ['questionnaire_repr'],
+                        obj: nowEvals[0].questionnaire_repr
+                      });
 
-            widget.categoryTypes[valueCategory].forEach(function (valueCategoryType) {
-              var valueCategoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: valueCategoryType});
+                      var actEval = R.filter(function (block) {
+                        return block.obj.title === lensObj.obj.label || block.obj.question_body === lensObj.obj.label
+                      }, flatEval);
 
-              valueCategoryTypeFlatKids.forEach(function (flatValueCategoryType) {
-                if (flatValueCategoryType.obj.selected) {
-                  var flt = R.allPass([
-                    isEvaluationOfCategoryType(keyCategory, keyCategoryType),
-                    isEvaluationOfCategoryType(valueCategory, valueCategoryType)
-                  ]);
-
-                  var nowEvals = R.filter(flt, evaluations);
+                      lensPathArr = actEval[0].path.concat('score');
+                    }
+                    else {
+                      lensPathArr = ['questionnaire_repr', 'score'];
+                    }
 
 
-                  var lensObj = keyCategory === 'templates' ? flatKeyCategoryType : flatValueCategoryType;
-                  var flatEval = flattenPathObj(['questions', 'blocks'], [], {path: ['questionnaire_repr'], obj: nowEvals[0].questionnaire_repr});
+                    var averageValue = getAverageOfEvaluationArray(R.lensPath(lensPathArr), nowEvals);
 
-                  var actEval = R.filter(function (block) {
-                    return block.obj.title === lensObj.obj.label || block.obj.question_body === lensObj.obj.label
-                  }, flatEval);
-
-                  var averageValue = getAverageOfEvaluationArray(R.lensPath(actEval[0].path.concat('score')), nowEvals);
-
-                  newObj.values.push({
-                    label: valueCategoryType.label + ': ' + flatValueCategoryType.obj.label,
-                    value: averageValue
-                  });
-                }
+                    newObj.values.push({
+                      label: valueCategoryType.label + ': ' + flatValueCategoryType.obj.label,
+                      value: averageValue
+                    });
+                  }
+                });
               });
-            });
 
-            newData.push(newObj);
-          }
+              newData.push(newObj);
+            }
+          });
         });
-      });
 
-      widget.data = newData;
+        widget.data = newData;
+      }
     }
 
     function categoriesList () {
