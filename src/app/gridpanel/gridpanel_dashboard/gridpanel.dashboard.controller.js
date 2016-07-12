@@ -29,6 +29,62 @@
     vm.showWidgetSettingsDialog = showWidgetSettingsDialog;
     vm.showDashboardSettingsDialog = showDashboardSettingsDialog;
 
+    vm.sunOptions = {
+      chart: {
+        type: 'sunburstChart',
+        // height: 450,
+        color: d3.scale.category20c(),
+        duration: 250,
+        mode: "size"
+      }
+    };
+    vm.sunData = [
+    {
+      "size": 82.5,
+      "name": "Test questionnaire",
+      "children": [
+        {
+          "size": 37.5,
+          "name": "ASPECTUL EXTERIOR AL REPREZENTANȚEI",
+          "children": [
+            {
+              "size": 45,
+              "name": "Iluminarea generală",
+              "children": [
+                {
+                  "size": 75,
+                  "name": "Iluminarea străzii?"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "size": 45,
+          "name": "ASPECTUL INTERIOR AL REPREZENTANȚEI",
+          "children": [
+            {
+              "size": 75,
+              "name": "Curățenie în sală"
+            },
+            {
+              "size": 75,
+              "name": "Atmosfera corespunzătoare"
+            },
+            {
+              "size": 100,
+              "name": "Lipsa golurilor în vitrine"
+            },
+            {
+              "size": 100,
+              "name": "Prezența etichetelor de preț"
+            }
+          ]
+        }
+      ]
+    }
+    ]
+
     vm.widgets = [];
 
     if (!vm.isNewDashboard) {

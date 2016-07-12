@@ -40,15 +40,15 @@
           </div>
         </md-toolbar>
 
-        <div style="height: 60%">
-          <nvd3 options="vm.chartOptions" data="widget.data" api="widget.api">
+        <!--<div style="height: 60%">-->
+          <!--<nvd3 options="vm.chartOptions" data="widget.data" api="widget.api">-->
 
-          </nvd3>
+          <!--</nvd3>-->
+        <!--</div>-->
+
+        <div style="height: 60%; ">
+          <nvd3 options="vm.sunOptions" data="vm.sunData" api="widget.api" class="with-3d-shadow with-transitions"></nvd3>
         </div>
-
-        <test-d3 data="widget.data" sup="hello">
-
-        </test-d3>
 
 
         <hr style="margin: 2px;"/>
