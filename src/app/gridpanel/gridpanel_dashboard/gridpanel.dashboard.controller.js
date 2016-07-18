@@ -92,12 +92,9 @@
       rawWidgets.forEach(function (rawWidget) {
         var widget = addWidget(rawWidget);
 
-        if (widget.graphType == 'places,templates') {
-          ClassificationManager.setWidgetData(widget, 'places', 'templates', evaluations);
-        }
-        else {
-          ClassificationManager.setWidgetData(widget, 'templates', 'places', evaluations);
-        }
+        var splitted = widget.graphDataType.split(',');
+
+        ClassificationManager.setWidgetData(widget, splitted[0], splitted[1], evaluations);
 
         vm.triggerResize(widget);
       });
@@ -105,7 +102,7 @@
 
     vm.chartOptions = {
       chart: {
-        type: 'multiBarChart',
+        type: 'pieChart',
         // height: 450,
 
         margin : {
@@ -135,7 +132,8 @@
         },
         x: function (d) {return d.label},
         y: function (d) {return d.value},
-        showValue: true
+        showValue: true,
+        showLabels: false
       }
     };
 
@@ -189,7 +187,7 @@
 
       var rawWidgets = _.map(vm.widgets,
         function (widget) {
-          var rawWidget = _.pick(widget, ['position', 'title', 'categoryTypes', 'comments', 'currentCommentIndex']);
+          var rawWidget = _.pick(widget, ['position', 'title', 'categoryTypes', 'graphDataType', 'graphType', 'comments', 'currentCommentIndex']);
           rawWidget.position.actualWidget = undefined;
           return rawWidget;
         });
@@ -230,7 +228,8 @@
 
         },
 
-        graphType: rawWidget.graphType || 'places,templates'
+        graphDataType: rawWidget.graphDataType || 'places,templates',
+        graphType: rawWidget.graphType || 'bar-chart'
       };
 
       newWidget.position.actualWidget = newWidget;
