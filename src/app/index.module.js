@@ -19,7 +19,10 @@
       'RecursionHelper',
       angularDragula(angular),
       'toastr',
-      'ngFileUpload'
+      'ngFileUpload',
+      'gridster',
+      'nvd3',
+      'ivh.treeview'
     ]);
 
 })();

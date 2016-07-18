@@ -14,9 +14,9 @@
         RU: 'Rus'
       },
       CONTENT_TYPE: {
-        24: 'Department',
-        25: 'Entity',
-        26: 'Section',
+        25: 'Department',
+        26: 'Entity',
+        27: 'Section',
         17: 'Client project manager',
         18: 'Manager',
         19: 'Employee',
@@ -57,7 +57,8 @@
           NO_PROJECTS: 'No projects to manage',
           PROJECTS_TO_MANAGE: 'Choose a project to manage',
           PLAN_EVALUATIONS: 'Plan evaluations',
-          ASSESS_EVALUATIONS: 'Assess evaluations'
+          ASSESS_EVALUATIONS: 'Assess evaluations',
+          EDIT_GRID_PANEL: 'Grid Panel'
         },
         CLIENT_MANAGEMENT: {
           HEADING: 'Client Management',
@@ -74,6 +75,10 @@
           SCRIPTS: 'Scripts',
           CREATE_SCRIPT: 'Create scripts',
           LIST_SCRIPTS: 'List scripts'
+        },
+        GRIDPANEL_MANAGEMENT: {
+          CREATE_GRIDPANEL: 'Create GridPanel',
+          LIST_GRIDPANELS: 'List GridPanels'
         },
         METHODOLOGY_TOOLS: {
           HEADING: 'Methodology'
@@ -274,6 +279,7 @@
             DATE: 'Date'
           },
           HEADING: 'Question',
+          HEADING_PLURAL: 'Questions',
           QUESTION_BODY: 'Question body',
           COMMENTS: 'Comments',
           CHOICES: 'Choices',
@@ -366,7 +372,8 @@
       VALIDATION_MESSAGE: {
         GENERIC: {
           FIELD_IS_REQUIRED: 'This field is required.',
-          AT_LEAST_ONE_REQUIRED: 'At least one {ITEM} is required'
+          AT_LEAST_ONE_REQUIRED: 'At least one {ITEM} is required',
+          ALL_ARE_REQUIRED: 'All {ITEMS} are required'
         },
         SPECIFIC_FIELD_IS_REQUIRED: 'Field "{FIELD_NAME}" is required.',
         DATE: {

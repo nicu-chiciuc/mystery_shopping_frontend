@@ -27,6 +27,7 @@
       restangularizeCollection: restangularizeCollection,
       restangularCopy: restangularCopy,
       crossIndexTemplates: crossIndexTemplates,
+      dashboardTemplates: dashboardTemplates,
       manager: modelManager
     };
 
@@ -95,6 +96,10 @@
 
     function crossIndexTemplates () {
       return Restangular.service('crossindextemplates');
+    }
+
+    function dashboardTemplates () {
+      return Restangular.service('dashboard/templates');
     }
 
     function restangularizeElement ( parent, object, model ) {

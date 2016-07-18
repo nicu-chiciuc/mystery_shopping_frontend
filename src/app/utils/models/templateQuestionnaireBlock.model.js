@@ -12,8 +12,7 @@
       initialize: initialize,
       addQuestion: addQuestion,
       updateQuestionWeights: updateQuestionWeights,
-      gatherUpdateDataOfSiblings: gatherUpdateDataOfSiblings,
-      prepareForSave: prepareForSave,
+      getUpdateDataOfSiblings: getUpdateDataOfSiblings,
       createSendingBlock: createSendingBlock,
       setParentBlock: setParentBlock,
       updateChildQuestionsParentBlock: updateChildQuestionsParentBlock,
@@ -66,7 +65,7 @@
       //});
     }
 
-    function gatherUpdateDataOfSiblings () {
+    function getUpdateDataOfSiblings () {
       return _.map(sibilingsWithUpdates(this), chooseIdAndWeight);
 
       function sibilingsWithUpdates (block) {
@@ -79,26 +78,9 @@
       function chooseIdAndWeight (obj) {
         return {
           block_id: obj.id,
-          block_changed: obj.weight
+          block_changes: {'weight': obj.weight}
         }
       }
-    }
-
-    function  prepareForSave () {
-      var block = this;
-
-      // block.gatherUpdateDataOfSiblings();
-      block.sibilings = block.gatherUpdateDataOfSiblings();
-      block.parentBlock = null;
-      _.forEach(block.template_questions, function (question) {
-        question.parentBlock = null;
-      });
-
-      _.forEach(block.template_blocks, function (block) {
-        block.parentBlock = null;
-      });
-
-      checkWeightValidity(block);
     }
 
     function createSendingBlock () {
@@ -107,9 +89,9 @@
         "template_questions" : [],
         "parent_order_number": this.parent_order_number,
         "order_number": this.order_number,
-        "siblings": this.gatherUpdateDataOfSiblings(),
+        "siblings": this.getUpdateDataOfSiblings(),
         "title": this.title,
-        "weight": this.weight,
+        "weight": this.weight.toFixed(2),
         "order": this.order,
         "questionnaire_template": this.questionnaire_template,
         "parent_block": this.parent_block

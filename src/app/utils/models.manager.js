@@ -26,7 +26,8 @@
     CompanyEmployeeModel,
     ShopperModel,
     EvaluationModel,
-    EvaluationAssessmentLevelModel
+    EvaluationAssessmentLevelModel,
+    DashboardTemplate
   ) {
     var manager = {
       ProjectModel: ProjectModel,
@@ -48,7 +49,8 @@
       CompanyEmployeeModel: CompanyEmployeeModel,
       ShopperModel: ShopperModel,
       EvaluationModel: EvaluationModel,
-      EvaluationAssessmentLevelModel: EvaluationAssessmentLevelModel
+      EvaluationAssessmentLevelModel: EvaluationAssessmentLevelModel,
+      DashboardTemplate: DashboardTemplate
     };
 
     return manager;

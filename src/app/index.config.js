@@ -6,9 +6,18 @@
     .config(config);
 
   /** @ngInject */
-  function config ( $httpProvider, $logProvider, $mdDateLocaleProvider, toastrConfig, RestangularProvider, localStorageServiceProvider, $translateProvider, urls, $mdThemingProvider ) {
+  function config ( $httpProvider, ivhTreeviewOptionsProvider, $logProvider, $mdDateLocaleProvider, toastrConfig, RestangularProvider, localStorageServiceProvider, $translateProvider, urls, $mdThemingProvider ) {
     // Enable log
     $logProvider.debugEnabled(true);
+
+    // Config the look of ivhTreeviewOptionsProvider
+    ivhTreeviewOptionsProvider.set({
+      defaultSelectedState: false,
+      // validate: true,
+      twistieCollapsedTpl: '<ng-md-icon icon="keyboard_arrow_right"></ng-md-icon>',
+      twistieExpandedTpl: '<ng-md-icon icon="keyboard_arrow_down"></ng-md-icon>',
+      twistieLeafTpl: '<span style="cursor: default;">&#8192;&#8192;&#8192;</span>'
+    });
 
     // Config Angular Material date locale format
     //$mdDateLocaleProvider.formatDate = function(date) {

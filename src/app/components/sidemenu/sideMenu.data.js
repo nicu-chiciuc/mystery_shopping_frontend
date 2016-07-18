@@ -146,6 +146,23 @@
       state: 'evaluations.assess'
     };
 
+    var gridPanelChildObject = {
+      name: $filter('translate')('MENU.PROJECT_PLANNING.EDIT_GRID_PANEL'),
+      type: 'toggle',
+      pages: [
+        {
+          name: $filter('translate')('MENU.GRIDPANEL_MANAGEMENT.CREATE_GRIDPANEL'),
+          state: 'gridpanel.create',
+          type: 'link'
+        },
+        {
+          name: $filter('translate')('MENU.GRIDPANEL_MANAGEMENT.LIST_GRIDPANELS'),
+          state: 'gridpanel.list',
+          type: 'link'
+        }
+      ]
+    };
+
     // Project creation child object
     var projectCreateChildObject = {
       name: 'New project',
@@ -179,6 +196,7 @@
         assessEvaluationsChildObject: assessEvaluationsChildObject,
         projectCreateChildObject: projectCreateChildObject,
         projectsToManageSubHeader: projectsToManageSubHeader,
+        gridPanelChildObject: gridPanelChildObject,
         companiesToManageSubHeader: companiesToManageSubHeader
       },
       methods: {
@@ -195,6 +213,7 @@
       var projectSectionElements = [
         planEvaluationsChildObject,
         assessEvaluationsChildObject,
+        gridPanelChildObject,
         projectsToManageSubHeader
       ];
       if ( principal.canCreateProjects() ) {
@@ -270,6 +289,7 @@
       // Show evaluation menu items
       self.childObjects.planEvaluationsChildObject.hidden = !state;
       self.childObjects.assessEvaluationsChildObject.hidden = !state;
+      self.childObjects.gridPanelChildObject.hidden = !state;
     }
 
     function setChosenProjectMenuState () {

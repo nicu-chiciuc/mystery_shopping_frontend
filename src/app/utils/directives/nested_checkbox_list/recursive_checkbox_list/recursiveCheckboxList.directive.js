@@ -45,29 +45,13 @@
 
 
       function checkboxToggle ( project, item, itemOptions, itemValue ) {
-        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], function (listItem) {
-          var selectionCondition = true;
-          _.forOwn(itemValue, function (value, key) {
-            if ( value !== listItem[key] ) {
-              selectionCondition = false;
-            }
-          });
-          return selectionCondition;
-        });
+        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], itemValue);
 
         toggleItem(project, item, itemOptions, itemValue, !selectedObj);
       }
 
       function checkboxState ( project, item, itemOptions, itemValue ) {
-        return _.find(project.listOfSpecificType[itemOptions.type], function (listItem) {
-          var selectionCondition = true;
-          _.forOwn(itemValue, function (value, key) {
-            if ( value !== listItem[key] ) {
-              selectionCondition = false;
-            }
-          });
-          return selectionCondition;
-        });
+        return _.find(project.listOfSpecificType[itemOptions.type], itemValue);
       }
 
       /**
@@ -97,24 +81,17 @@
       function toggleItem (project, item, itemOptions, itemValue, isSelectAction) {
 
         // Find out which is the clicked object.
-        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], function (listItem) {
+        var selectedObj = _.find(project.listOfSpecificType[itemOptions.type], itemValue);
 
-          // Because list of places and people is more detailed when it is returned from
-          // the server (it contains more info besides type and id), the selection condition
-          // resides in checking whether the keys from itemValue (which are [place|person]_type
-          // and [place|person]_id) have the same values with the same keys in the list of
-          // items that are already selected.
-          var selectionCondition = true;
-          _.forOwn(itemValue, function (value, key) {
+        // The the find function will use the _.matches function if passed an object
+        //// Because list of places and people is more detailed when it is returned from
+        //// the server (it contains more info besides type and id), the selection condition
+        //// resides in checking whether the keys from itemValue (which are [place|person]_type
+        //// and [place|person]_id) have the same values with the same keys in the list of
+        //// items that are already selected.
+        //// In case at least one item is found that has the same keys not equal, this means
+        //// that the current item in the _.find loop is different than the itemValue.
 
-            // In case at least one item is found that has the same keys not equal, this means
-            // that the current item in the _.find loop is different than the itemValue.
-            if ( value !== listItem[key] ) {
-              selectionCondition = false;
-            }
-          });
-          return selectionCondition;
-        });
 
         // If the item is not selected AND the action to execute is to select child items, do this.
         if ( !selectedObj && isSelectAction ) {
@@ -128,15 +105,7 @@
 
           // If the item is already selected and the action is to not select items,
           // remove the item from the corresponding target list.
-          _.remove(project.listOfSpecificType[itemOptions.type], function (targetListItem) {
-            var selectionCondition = true;
-            _.forOwn(itemValue, function (value, key) {
-              if ( value !== targetListItem[key] ) {
-                selectionCondition = false;
-              }
-            });
-            return selectionCondition;
-          });
+          _.remove(project.listOfSpecificType[itemOptions.type], _.matches(itemValue));
 
         }
 

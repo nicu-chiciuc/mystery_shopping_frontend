@@ -1,0 +1,87 @@
+<div flex="100">
+  <div flex="100" layout-padding>
+    <strong>{{vm.currentDashboard.title}}</strong>
+  </div>
+
+  <md-button class="md-raised" ng-click="vm.addWidget()">
+    Add widget
+  </md-button>
+
+  <md-button class="md-raised" ng-click="vm.saveDashboard()">
+    Save Dashboard
+  </md-button>
+
+  <md-button class="md-raised" ng-click="vm.showDashboardSettingsDialog($event)">
+    Edit Dashboard
+  </md-button>
+
+  <div gridster="vm.gridsterOpts">
+    <ul>
+      <!-- TODO replace inline style with a class of some sort -->
+      <li layout="row" style="background-color: #fff;"
+          class="md-whiteframe-3dp"
+          gridster-item="widget.position"
+          ng-repeat="widget in vm.widgets">
+
+        <md-toolbar flex="100" class="ms-height-sm">
+          <div class="md-toolbar-tools">
+            <h2>
+              <span>{{widget.title}}</span>
+            </h2>
+            <span flex></span>
+
+            <md-button class="md-icon-button" aria-label="Set input data" ng-click="vm.showWidgetSettingsDialog($event, widget)">
+              <md-icon class="material-icons">settings</md-icon>
+            </md-button>
+
+            <md-button class="md-icon-button" aria-label="Delete widget" ng-click="vm.deleteWidget(widget)">
+              <md-icon class="material-icons">delete</md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+
+        <!--<div style="height: 60%">-->
+          <!--<nvd3 options="vm.chartOptions" data="widget.data" api="widget.api">-->
+
+          <!--</nvd3>-->
+        <!--</div>-->
+
+        <div style="height: 60%; ">
+          <nvd3 options="vm.sunOptions" data="vm.sunData" api="widget.api" class="with-3d-shadow with-transitions"></nvd3>
+        </div>
+
+
+        <hr style="margin: 2px;"/>
+
+        <md-content flex>
+          <md-button ng-click="widget.currentCommentIndex = $index" class="small-button" ng-repeat="comment in widget.comments">
+            {{comment.date | date : 'mediumDate'}}
+          </md-button>
+          <md-button ng-click="widget.addingNewComment = true" class="small-button">+</md-button>
+        </md-content>
+
+        <md-content flex style="height: 20%;">
+          <div ng-if="!widget.addingNewComment">
+            <p class="no-margin md-subhead">{{widget.comments[widget.currentCommentIndex].date | date : 'mediumDate'}} - {{widget.comments[widget.currentCommentIndex].author}}</p>
+            <p class="md-caption">{{widget.comments[widget.currentCommentIndex].text}}</p>
+          </div>
+
+          <div ng-if="widget.addingNewComment" layout="row">
+            <md-input-container flex="85" class="md-block">
+              <!--<label>Biography</label>-->
+              <textarea class="md-subhead" ng-model="widget.newComment" md-select-on-focus=""></textarea>
+            </md-input-container>
+
+            <div flex="15" layout="column">
+              <md-button ng-click="vm.addNewComment(widget)" class="small-button">save</md-button>
+              <md-button class="small-button">cancel</md-button>
+            </div>
+          </div>
+
+        </md-content>
+
+      </li>
+
+    </ul>
+  </div>
+</div>

@@ -14,7 +14,7 @@
   </p>
 
   <!-- Other options menu -->
-  <md-menu>
+  <md-menu ng-if="vm.questionnaire.is_editable">
     <md-button aria-label="{{ 'QUESTIONNAIRE.OPEN_QUESTION_MENU' | translate }}"
                class="md-icon-button"
                ng-click="vm.openMenu($mdOpenMenu, $event)">

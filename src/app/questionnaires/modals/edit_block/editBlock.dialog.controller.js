@@ -78,17 +78,11 @@
 
     $scope.saveBlockChanges = function( block, isValid ) {
       if ( isValid ) {
-        block = models.restangularizeElement(null, block, 'templateblocks');
-        block.prepareForSave();
         var sendBlock = block.createSendingBlock();
-        console.log(sendBlock);
-        console.log(block);
 
         models.restangularizeElement(null, sendBlock, 'templateblocks');
-        console.log(sendBlock);
 
         sendBlock[sendBlock.id ? 'put' : 'post']().then(saveBlockSuccessFn, saveBlockErrorFn);
-        // block[block.id ? 'put' : 'post']().then(saveBlockSuccessFn, saveBlockErrorFn);
       }
 
       function saveBlockSuccessFn ( response ) {
@@ -96,8 +90,6 @@
           block.id = response.id;
         }
         block.weight = response.weight;
-        block.setParentBlock($scope.parentBlock);
-        block.updateChildQuestionsParentBlock();
         block.updateAvailableWeight();
 
         $mdToast.show(
@@ -116,10 +108,6 @@
             .theme('fail-toast')
             .hideDelay(5000)
         );
-      }
-
-      function resetConnections () {
-
       }
     };
 

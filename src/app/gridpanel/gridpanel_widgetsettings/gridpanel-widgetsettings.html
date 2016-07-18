@@ -1,0 +1,76 @@
+<md-dialog>
+  <md-dialog-content layout="column">
+    <md-input-container>
+    <label>Widget Title</label>
+    <input ng-model="vm.widget.title">
+    </md-input-container>
+    <div layout="column">
+      <div layout="row">
+        <div flex="33" layout-padding layout="column">
+          <h2>Places</h2>
+
+          <md-checkbox ng-model="place.selected"
+                 ng-repeat="place in vm.widget.categoryTypes['places']"
+                 ng-disabled="!place.available"
+                 ng-change="vm.categoryTypeClick('places', place)">
+            <span>{{place.idObj.content_type | translate}}: {{place.label}}</span>
+          </md-checkbox>
+        </div>
+
+        <div flex="50" layout-padding>
+          <h2>Questionnaire Templates</h2>
+
+          <!--<md-checkbox ng-model="template.selected"-->
+                 <!--ng-repeat="template in vm.widget.categoryTypes['templates']"-->
+                 <!--ng-disabled="!template.available"-->
+                 <!--ng-change="vm.categoryTypeClick('templates', template)">-->
+            <!--{{template.label}}-->
+          <!--</md-checkbox>-->
+
+          <span ng-repeat="template in vm.widget.categoryTypes['templates']">
+            <ms-material-ivh-treeview tree="template"
+                                      node-click="vm.childCallback(root, node, selected)">
+
+            </ms-material-ivh-treeview>
+          </span>
+
+
+
+
+        </div>
+
+        <div flex="20" layout-padding>
+          <h2>Waves</h2>
+
+          <md-checkbox ng-model="wave.selected"
+                       ng-repeat="wave in vm.widget.categoryTypes['waves']"
+                       ng-disabled="!wave.available"
+                       ng-change="vm.categoryTypeClick('waves', wave)">
+            Project {{wave.idObj.id}}, {{wave.label}}
+          </md-checkbox>
+        </div>
+        </div>
+
+      <div layot="column">
+
+      <md-radio-group ng-model="vm.widget.graphType">
+        <md-radio-button value="places,templates">key Places, value Templates</md-radio-button>
+        <md-radio-button value="templates,places">key Templates, value Places</md-radio-button>
+        <!--<md-radio-button value="waves,templates">key Project, value Templates</md-radio-button>-->
+        <!--<md-radio-button value="waves,places">key Project, value Places</md-radio-button>-->
+        <!--<md-radio-button value="places,waves">key Places, value Project</md-radio-button>-->
+      </md-radio-group>
+      </div>
+    </div>
+  </md-dialog-content>
+
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button ng-click="vm.save()" class="md-primary md-raised">
+      {{ 'BUTTON.SAVE' | translate }}
+    </md-button>
+    <md-button ng-click="vm.cancel()" md-autofocus class="md-raised">
+      {{ 'BUTTON.CANCEL' | translate }}
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>
