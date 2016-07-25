@@ -31,8 +31,8 @@
 
 
     function save () {
-      var splitted = vm.widget.graphType.split(',');
-
+      var splitted = vm.widget.graphDataType.split(',');
+      
       ClassificationManager.setWidgetData(widget, splitted[0], splitted[1], evaluations);
 
       $mdDialog.hide();

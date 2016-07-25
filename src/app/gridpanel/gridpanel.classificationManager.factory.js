@@ -178,10 +178,6 @@
       }
     }
 
-    function getScoreOfEvaluationByCategoryTypeOrKid (categoryTypeKid, evaluation) {
-
-    }
-
     function updateCategoryTypesOfWidget (widget, evaluations) {
       categoriesList().forEach(function (category) {
         var availableCategoryTypes = getCategoryTypesByEvaluations(category, evaluations);
@@ -198,8 +194,8 @@
     var flattenPathObj = R.curry(function (recursiveProperties, acc, currentPathObj) {
       acc.push(currentPathObj);
 
-      recursiveProperties.forEach(function (recProp) {
-        (currentPathObj.obj[recProp] || []).forEach(function (subObject, index) {
+      _.forEach(recursiveProperties, function (recProp) {
+        _.forEach((currentPathObj.obj[recProp] || []), function (subObject, index) {
           flattenPathObj(recursiveProperties, acc, {
             path: currentPathObj.path.concat([recProp, index]),
             obj: subObject
@@ -230,36 +226,28 @@
     });
 
     function createScoreObjectList (widget, evaluations) {
-      var scoreObjects = [];
-
       var goodPlaces    = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes.places);
       var goodTemplates = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes.templates);
       var goodWaves     = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes.waves);
 
+      //Create all combinations between places, templates and waves
       var combos = R.map(R.unnest, R.xprod(R.xprod(goodPlaces, goodTemplates), goodWaves));
 
-      combos.forEach(function (combo) {
-        combo.places = combo[0];
-        delete combo[0];
-
-        combo.templates = combo[1];
-        delete combo[1];
-
-        combo.waves = combo[2];
-        delete combo[2];
-
+      //Change the naming from 0, 1, 2 to places, templates, waves
+      combos = combos.map(function (combo) {
+        return {
+          places: combo[0],
+          templates: combo[1],
+          waves: combo[2]
+        }
       });
 
+      //Filter the evaluations per combination of category type
       combos.forEach(function (combo) {
-        combo.evals = [];
-
-        evaluations.forEach(function (evaluation) {
-          if (isEvaluationOfCategoryType('places', combo['places'], evaluation) &&
+        combo.evals = evaluations.filter(function (evaluation) {
+          return isEvaluationOfCategoryType('places', combo['places'], evaluation) &&
             isEvaluationOfCategoryType('templates', combo['templates'], evaluation) &&
-            isEvaluationOfCategoryType('waves', combo['waves'], evaluation))
-          {
-            combo.evals.push(evaluation);
-          }
+            isEvaluationOfCategoryType('waves', combo['waves'], evaluation);
         });
       });
 
@@ -276,17 +264,21 @@
 
             var average = R.sum(R.map(R.prop('score'), test)) / test.length;
 
-            // Replace questions and blocks with children for better compatibility
+            // Replace 'questions' and 'blocks' with 'children' for better compatibility
             var goodPath = R.map(function (path) {
               return path === 'questions' || path === 'blocks' ? 'children' : path;
             }, flatt.path);
+
+            // When replacing blocks and questions, they can have the same last index
+            // so this should be checked (or the whole algorithm changed)
+            while (goodPath.length > 0 && R.view(R.lensPath(goodPath), obj) !== undefined) {
+              goodPath[goodPath.length - 1] ++;
+            }
 
             obj = R.set(R.lensPath(goodPath), {
               score: average,
               label: R.prop('title', test[0]) || R.prop('question_body', test[0])
             }, obj);
-
-            console.log(test);
           });
 
           combo.data = obj;
@@ -298,86 +290,143 @@
 
 
     function setWidgetData(widget, keyCategory, valueCategory, evaluations) {
-      var newData = [];
-
-      var widgetFilteredEvals = R.filter(isEvaluationOfWidget(widget), evaluations);
 
       var combos = createScoreObjectList(widget, evaluations);
-      console.log(combos);
-
-      var comboCompare  = R.curry(function (category, categoryType1, categoryType2) {
-        return isEqualCategoryType(categoryType1[category], categoryType2[category]);
-      });
 
 
-      var dataNow = R.map(R.groupWith(comboCompare(valueCategory)), R.groupWith(comboCompare(keyCategory), combos));
+      widget.chartOptions.chart.type = widget.graphType;
 
-      console.log(dataNow);
+      switch (widget.graphType) {
+        case 'pieChart':
+          widget.data = getPieChartData(widget, keyCategory, combos);
+          break;
 
-      combos.forEach(function (combo) {
-
-      });
-
-      if (widgetFilteredEvals.length > 0) {
-
-        widget.categoryTypes[keyCategory].forEach(function (keyCategoryType) {
-          var keyCategoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: keyCategoryType});
-
-          keyCategoryTypeFlatKids.forEach(function (flatKeyCategoryType) {
-            if (flatKeyCategoryType.obj.selected) {
-              var newObj = {
-                key: flatKeyCategoryType.obj.label,
-                values: []
-              };
-
-              var keyEvaluations = R.filter(isEvaluationOfCategoryType(keyCategory, keyCategoryType), widgetFilteredEvals);
-
-              widget.categoryTypes[valueCategory].forEach(function (valueCategoryType) {
-                var valueCategoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: valueCategoryType});
-
-                valueCategoryTypeFlatKids.forEach(function (flatValueCategoryType) {
-                  if (flatValueCategoryType.obj.selected) {
+        case 'cumulativeLineChart':
+          if (valueCategory === 'waves') {
+            widget.data = getLineChartData(widget, keyCategory, valueCategory, combos);
+          }
+          else {
+            console.log('no line chart if waves are not selected');
+          }
+          break;
 
 
-                    var nowEvals = R.filter(isEvaluationOfCategoryType(valueCategory, valueCategoryType), keyEvaluations);
-
-                    var lensPathArr;
-
-                    if (keyCategoryType === 'templates' || valueCategoryType === 'templates') {
-                      var lensObj = keyCategory === 'templates' ? flatKeyCategoryType : flatValueCategoryType;
-                      var flatEval = flattenPathObj(['questions', 'blocks'], [], {
-                        path: ['questionnaire_repr'],
-                        obj: nowEvals[0].questionnaire_repr
-                      });
-
-                      var actEval = R.filter(function (block) {
-                        return block.obj.title === lensObj.obj.label || block.obj.question_body === lensObj.obj.label
-                      }, flatEval);
-
-                      lensPathArr = actEval[0].path.concat('score');
-                    }
-                    else {
-                      lensPathArr = ['questionnaire_repr', 'score'];
-                    }
+        default:
+          widget.data = getBarChartData(widget, keyCategory, valueCategory, combos);
+          break;
+      }
 
 
-                    var averageValue = getAverageOfEvaluationArray(R.lensPath(lensPathArr), nowEvals);
+    }
 
-                    newObj.values.push({
-                      label: valueCategoryType.label + ': ' + flatValueCategoryType.obj.label,
-                      value: averageValue
-                    });
-                  }
-                });
-              });
+    function getBarChartData(widget, keyCategory, valueCategory, combos) {
+      return mapFlatCategoryType(widget, keyCategory, function (keyCategoryType, flatKeyCategoryType) {
 
-              newData.push(newObj);
-            }
-          });
+        var newObj = {
+          key: flatKeyCategoryType.obj.label,
+          values: []
+        };
+
+        var keyCombos = R.filter(function (combo) {
+          return isEqualCategoryType(keyCategoryType, combo[keyCategory])
+        }) (combos);
+
+        newObj.values = mapFlatCategoryType(widget, valueCategory, function (valueCategoryType, flatValueCategoryType) {
+          var nowCombos = R.filter(function (combo) {
+            return isEqualCategoryType(valueCategoryType, combo[valueCategory]);
+          }) (keyCombos);
+
+          var nowCombo = nowCombos[0];
+
+          var lensComboArr;
+
+          if (keyCategory === 'templates' || valueCategory === 'templates') {
+            var lensObj = keyCategory === 'templates' ? flatKeyCategoryType : flatValueCategoryType;
+
+            var flatCombo = flattenPathObj(['children'], [], {
+              path: [],
+              obj: nowCombo.data
+            });
+
+            var actCombo = R.filter(function (block) {
+              return block.obj.label === lensObj.obj.label
+            }, flatCombo);
+
+            lensComboArr = actCombo[0].path.concat('score');
+          }
+          else {
+            lensComboArr = ['score'];
+          }
+
+          var comboAverageValue = R.view(R.lensPath(lensComboArr), nowCombo.data);
+
+
+          return {
+            label: valueCategoryType.label + ': ' + flatValueCategoryType.obj.label,
+            value: comboAverageValue
+          };
         });
 
-        widget.data = newData;
-      }
+        return newObj;
+      });
+    }
+
+    function mapFlatCategoryType(widget, category, callback) {
+      var data = [];
+
+      widget.categoryTypes[category].forEach(function (categoryType) {
+        var categoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: categoryType});
+
+        categoryTypeFlatKids .forEach(function (flatCategoryType) {
+          if (flatCategoryType.obj.selected) {
+            data.push(callback(categoryType, flatCategoryType));
+          }
+        })
+      });
+
+      return data;
+    }
+
+    function getPieChartData(widget, valueCategory, combos) {
+      return mapFlatCategoryType(widget, valueCategory, function (valueCategoryType, flatValueCategoryType) {
+        var nowCombos = R.filter(function (combo) {
+          return isEqualCategoryType(valueCategoryType, combo[valueCategory]);
+        }) (combos);
+
+        var nowCombo = nowCombos[0];
+
+        var lensComboArr;
+
+        if (valueCategory === 'templates') {
+          var lensObj = flatValueCategoryType;
+
+          var flatCombo = flattenPathObj(['children'], [], {
+            path: [],
+            obj: nowCombo.data
+          });
+
+          var actCombo = R.filter(function (block) {
+            return block.obj.label === lensObj.obj.label
+          }, flatCombo);
+
+          lensComboArr = actCombo[0].path.concat('score');
+        }
+        else {
+          lensComboArr = ['score'];
+        }
+
+        var comboAverageValue = R.view(R.lensPath(lensComboArr), nowCombo.data);
+
+
+        return {
+          label: flatValueCategoryType.obj.label + ': ' + valueCategoryType.label,
+          value: comboAverageValue
+        };
+      });
+    }
+
+    function getLineChartData (widget, keyCategory, valueCategory, combos) {
+
     }
 
     function categoriesList () {

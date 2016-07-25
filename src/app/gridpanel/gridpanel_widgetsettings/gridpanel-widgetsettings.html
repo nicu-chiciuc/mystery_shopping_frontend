@@ -4,7 +4,7 @@
     <label>Widget Title</label>
     <input ng-model="vm.widget.title">
     </md-input-container>
-    <div layout="column">
+    <div>
       <div layout="row">
         <div flex="33" layout-padding layout="column">
           <h2>Places</h2>
@@ -39,7 +39,7 @@
 
         </div>
 
-        <div flex="20" layout-padding>
+        <div flex layout-padding>
           <h2>Waves</h2>
 
           <md-checkbox ng-model="wave.selected"
@@ -51,15 +51,22 @@
         </div>
         </div>
 
-      <div layot="column">
+      <div layout="row">
 
-      <md-radio-group ng-model="vm.widget.graphType">
-        <md-radio-button value="places,templates">key Places, value Templates</md-radio-button>
-        <md-radio-button value="templates,places">key Templates, value Places</md-radio-button>
-        <!--<md-radio-button value="waves,templates">key Project, value Templates</md-radio-button>-->
-        <!--<md-radio-button value="waves,places">key Project, value Places</md-radio-button>-->
-        <!--<md-radio-button value="places,waves">key Places, value Project</md-radio-button>-->
-      </md-radio-group>
+        <md-radio-group layout-padding ng-model="vm.widget.graphDataType">
+          <md-radio-button value="places,templates">key Places, value Templates</md-radio-button>
+          <md-radio-button value="templates,places">key Templates, value Places</md-radio-button>
+          <md-radio-button value="waves,templates">key Project, value Templates</md-radio-button>
+          <md-radio-button value="waves,places">key Project, value Places</md-radio-button>
+          <md-radio-button value="places,waves">key Places, value Project</md-radio-button>
+        </md-radio-group>
+
+        <md-radio-group layout-padding ng-model="vm.widget.graphType">
+          <md-radio-button value="pieChart">Pie-chart</md-radio-button>
+          <md-radio-button value="multiBarChart">Bar-chart</md-radio-button>
+          <md-radio-button value="cumulativeLineChart">Cummulative Line Chart</md-radio-button>
+          <md-radio-button value="sun-burst">Sunburst</md-radio-button>
+        </md-radio-group>
       </div>
     </div>
   </md-dialog-content>
