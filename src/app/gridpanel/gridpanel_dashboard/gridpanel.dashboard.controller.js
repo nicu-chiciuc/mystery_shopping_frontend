@@ -29,62 +29,6 @@
     vm.showWidgetSettingsDialog = showWidgetSettingsDialog;
     vm.showDashboardSettingsDialog = showDashboardSettingsDialog;
 
-    vm.sunOptions = {
-      chart: {
-        type: 'sunburstChart',
-        // height: 450,
-        color: d3.scale.category20c(),
-        duration: 250,
-        mode: "size"
-      }
-    };
-    vm.sunData = [
-    {
-      "size": 82.5,
-      "name": "Test questionnaire",
-      "children": [
-        {
-          "size": 37.5,
-          "name": "ASPECTUL EXTERIOR AL REPREZENTANȚEI",
-          "children": [
-            {
-              "size": 45,
-              "name": "Iluminarea generală",
-              "children": [
-                {
-                  "size": 75,
-                  "name": "Iluminarea străzii?"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "size": 45,
-          "name": "ASPECTUL INTERIOR AL REPREZENTANȚEI",
-          "children": [
-            {
-              "size": 75,
-              "name": "Curățenie în sală"
-            },
-            {
-              "size": 75,
-              "name": "Atmosfera corespunzătoare"
-            },
-            {
-              "size": 100,
-              "name": "Lipsa golurilor în vitrine"
-            },
-            {
-              "size": 100,
-              "name": "Prezența etichetelor de preț"
-            }
-          ]
-        }
-      ]
-    }
-    ]
-
     vm.widgets = [];
 
     if (!vm.isNewDashboard) {
@@ -99,43 +43,6 @@
         vm.triggerResize(widget);
       });
     }
-
-    vm.chartOptions = {
-      chart: {
-        type: 'pieChart',
-        // height: 450,
-
-        margin : {
-          top: 20,
-          right: 20,
-          //
-          bottom: 45,
-          left: 40
-        },
-        // clipEdge: true,
-        staggerLabels: true,
-        duration: 500,
-        stacked: true,
-        xAxis: {
-          axisLabel: 'Time (ms)',
-          showMaxMin: false,
-          // tickFormat: function(d){
-          //   return d3.format(',f')(d);
-          // }
-        },
-        yAxis: {
-          axisLabel: 'Y Axis',
-          axisLabelDistance: -20,
-          // tickFormat: function(d){
-          //   return d3.format(',.1f')(d);
-          // }
-        },
-        x: function (d) {return d.label},
-        y: function (d) {return d.value},
-        showValue: true,
-        showLabels: false
-      }
-    };
 
     function showWidgetSettingsDialog (event, widget) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && vm.customFullscreen;
@@ -181,18 +88,17 @@
       _.remove(vm.widgets, widget);
     }
 
+    function getSavableWidgetData (widget) {
+      var rawWidget = _.pick(widget, ['position', 'title', 'categoryTypes', 'graphDataType', 'graphType', 'comments', 'currentCommentIndex']);
+      delete rawWidget.position.actualWidget;
+      return rawWidget;
+    }
+
     function saveDashboard () {
 
       models.restangularizeElement(null, vm.currentDashboard, 'dashboard/templates');
 
-      var rawWidgets = _.map(vm.widgets,
-        function (widget) {
-          var rawWidget = _.pick(widget, ['position', 'title', 'categoryTypes', 'graphDataType', 'graphType', 'comments', 'currentCommentIndex']);
-          rawWidget.position.actualWidget = undefined;
-          return rawWidget;
-        });
-
-      vm.currentDashboard.widgets = JSON.stringify(rawWidgets);
+      vm.currentDashboard.widgets = JSON.stringify(vm.widgets.map(getSavableWidgetData));
       vm.currentDashboard.title = vm.currentDashboard.title || 'check it';
       vm.currentDashboard.project = project.id;
       vm.currentDashboard.tenant = 2;
@@ -229,7 +135,42 @@
         },
 
         graphDataType: rawWidget.graphDataType || 'places,templates',
-        graphType: rawWidget.graphType || 'bar-chart'
+        graphType: rawWidget.graphType || 'barChart'
+      };
+
+      newWidget.chartOptions = {
+        chart: {
+          type: 'pieChart',
+
+          margin : {
+            top: 20,
+            right: 20,
+            bottom: 45,
+            left: 40
+          },
+          // clipEdge: true,
+          staggerLabels: true,
+          duration: 500,
+          stacked: true,
+          xAxis: {
+            axisLabel: 'Time (ms)',
+            showMaxMin: false,
+            // tickFormat: function(d){
+            //   return d3.format(',f')(d);
+            // }
+          },
+          yAxis: {
+            axisLabel: 'Y Axis',
+            axisLabelDistance: -20,
+            // tickFormat: function(d){
+            //   return d3.format(',.1f')(d);
+            // }
+          },
+          x: function (d) {return d.label},
+          y: function (d) {return d.value},
+          showValue: true,
+          showLabels: false
+        }
       };
 
       newWidget.position.actualWidget = newWidget;

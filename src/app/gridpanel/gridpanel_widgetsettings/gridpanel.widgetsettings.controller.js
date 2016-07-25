@@ -33,7 +33,6 @@
     function save () {
       var splitted = vm.widget.graphDataType.split(',');
       
-      dashboard.chartOptions.chart.type = vm.widget.graphType;
       ClassificationManager.setWidgetData(widget, splitted[0], splitted[1], evaluations);
 
       $mdDialog.hide();

@@ -230,8 +230,10 @@
       var goodTemplates = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes.templates);
       var goodWaves     = R.filter(isCategoryTypeSelectedIncludingChildren, widget.categoryTypes.waves);
 
+      //Create all combinations between places, templates and waves
       var combos = R.map(R.unnest, R.xprod(R.xprod(goodPlaces, goodTemplates), goodWaves));
 
+      //Change the naming from 0, 1, 2 to places, templates, waves
       combos = combos.map(function (combo) {
         return {
           places: combo[0],
@@ -240,16 +242,12 @@
         }
       });
 
+      //Filter the evaluations per combination of category type
       combos.forEach(function (combo) {
-        combo.evals = [];
-
-        evaluations.forEach(function (evaluation) {
-          if (isEvaluationOfCategoryType('places', combo['places'], evaluation) &&
+        combo.evals = evaluations.filter(function (evaluation) {
+          return isEvaluationOfCategoryType('places', combo['places'], evaluation) &&
             isEvaluationOfCategoryType('templates', combo['templates'], evaluation) &&
-            isEvaluationOfCategoryType('waves', combo['waves'], evaluation))
-          {
-            combo.evals.push(evaluation);
-          }
+            isEvaluationOfCategoryType('waves', combo['waves'], evaluation);
         });
       });
 
@@ -266,11 +264,13 @@
 
             var average = R.sum(R.map(R.prop('score'), test)) / test.length;
 
-            // Replace questions and blocks with children for better compatibility
+            // Replace 'questions' and 'blocks' with 'children' for better compatibility
             var goodPath = R.map(function (path) {
               return path === 'questions' || path === 'blocks' ? 'children' : path;
             }, flatt.path);
 
+            // When replacing blocks and questions, they can have the same last index
+            // so this should be checked (or the whole algorithm changed)
             while (goodPath.length > 0 && R.view(R.lensPath(goodPath), obj) !== undefined) {
               goodPath[goodPath.length - 1] ++;
             }
@@ -279,8 +279,6 @@
               score: average,
               label: R.prop('title', test[0]) || R.prop('question_body', test[0])
             }, obj);
-
-            console.log(test);
           });
 
           combo.data = obj;
@@ -295,18 +293,22 @@
 
       var combos = createScoreObjectList(widget, evaluations);
 
-      var comboCompare  = R.curry(function (category, combo1, combo2) {
-        return isEqualCategoryType(combo1[category], combo2[category]);
-      });
 
-
-      var dataNow = R.map(R.groupWith(comboCompare(valueCategory)), R.groupWith(comboCompare(keyCategory), combos));
+      widget.chartOptions.chart.type = widget.graphType;
 
       switch (widget.graphType) {
         case 'pieChart':
           widget.data = getPieChartData(widget, keyCategory, combos);
           break;
 
+        case 'cumulativeLineChart':
+          if (valueCategory === 'waves') {
+            widget.data = getLineChartData(widget, keyCategory, valueCategory, combos);
+          }
+          else {
+            console.log('no line chart if waves are not selected');
+          }
+          break;
 
 
         default:
@@ -318,9 +320,7 @@
     }
 
     function getBarChartData(widget, keyCategory, valueCategory, combos) {
-      var newData = [];
-
-      forEachFlatCategoryType(widget, keyCategory, function (keyCategoryType, flatKeyCategoryType) {
+      return mapFlatCategoryType(widget, keyCategory, function (keyCategoryType, flatKeyCategoryType) {
 
         var newObj = {
           key: flatKeyCategoryType.obj.label,
@@ -331,7 +331,7 @@
           return isEqualCategoryType(keyCategoryType, combo[keyCategory])
         }) (combos);
 
-        forEachFlatCategoryType(widget, valueCategory, function (valueCategoryType, flatValueCategoryType) {
+        newObj.values = mapFlatCategoryType(widget, valueCategory, function (valueCategoryType, flatValueCategoryType) {
           var nowCombos = R.filter(function (combo) {
             return isEqualCategoryType(valueCategoryType, combo[valueCategory]);
           }) (keyCombos);
@@ -361,36 +361,34 @@
           var comboAverageValue = R.view(R.lensPath(lensComboArr), nowCombo.data);
 
 
-          newObj.values.push({
+          return {
             label: valueCategoryType.label + ': ' + flatValueCategoryType.obj.label,
             value: comboAverageValue
-          });
-        })
+          };
+        });
 
-        newData.push(newObj);
+        return newObj;
       });
-
-      return newData;
     }
 
-    function forEachFlatCategoryType(widget, category, callback) {
+    function mapFlatCategoryType(widget, category, callback) {
+      var data = [];
 
       widget.categoryTypes[category].forEach(function (categoryType) {
         var categoryTypeFlatKids = flattenPathObj(['children'], [], {path: [], obj: categoryType});
 
-        categoryTypeFlatKids .forEach(function (flatValueCategoryType) {
-          if (flatValueCategoryType.obj.selected) {
-            callback(categoryType, flatValueCategoryType);
+        categoryTypeFlatKids .forEach(function (flatCategoryType) {
+          if (flatCategoryType.obj.selected) {
+            data.push(callback(categoryType, flatCategoryType));
           }
         })
       });
 
+      return data;
     }
 
     function getPieChartData(widget, valueCategory, combos) {
-      var newObj = [];
-
-      forEachFlatCategoryType(widget, valueCategory, function (valueCategoryType, flatValueCategoryType) {
+      return mapFlatCategoryType(widget, valueCategory, function (valueCategoryType, flatValueCategoryType) {
         var nowCombos = R.filter(function (combo) {
           return isEqualCategoryType(valueCategoryType, combo[valueCategory]);
         }) (combos);
@@ -420,13 +418,11 @@
         var comboAverageValue = R.view(R.lensPath(lensComboArr), nowCombo.data);
 
 
-        newObj.push({
+        return {
           label: flatValueCategoryType.obj.label + ': ' + valueCategoryType.label,
           value: comboAverageValue
-        });
+        };
       });
-
-      return newObj;
     }
 
     function getLineChartData (widget, keyCategory, valueCategory, combos) {
